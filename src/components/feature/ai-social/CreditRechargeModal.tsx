@@ -125,11 +125,26 @@ export default function CreditRechargeModal({
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR')
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('razorpay')
   const [offlineRef, setOfflineRef] = useState('')
+  const [offlineNotes, setOfflineNotes] = useState('')
+  const [offlineSubmitted, setOfflineSubmitted] = useState(false)
+  const [submittedRef, setSubmittedRef] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
 
   const [addCreditsMutation, { isLoading: isMutating }] = useAddCreditsMutation()
 
   const activeUser = profileData?.user || authUser || authUtils.getUser()
+
+  // Reset state on open/close
+  useEffect(() => {
+    if (!open) {
+      setTimeout(() => {
+        setOfflineSubmitted(false)
+        setSubmittedRef('')
+        setOfflineRef('')
+        setOfflineNotes('')
+      }, 200)
+    }
+  }, [open])
 
   const getResolvedUserId = (): string | null => {
     if (activeUser?._id) return activeUser._id
@@ -176,7 +191,7 @@ export default function CreditRechargeModal({
     }
   }, [])
 
-  // Execute Credit Grant API
+  // Execute Credit Grant API (for instant online methods)
   const executeCreditGrant = async (methodLabel: string, txId?: string) => {
     const finalUserId = getResolvedUserId()
 
@@ -199,14 +214,8 @@ export default function CreditRechargeModal({
       }
     } catch (err: any) {
       setIsProcessing(false)
-      const errorMsg = err?.data?.message || err?.error || 'Credit recharge processed successfully.'
-      // If error is network or session related, still give user friendly feedback
-      if (err?.status === 200 || err?.data?.success) {
-        toast.success(`🎉 Successfully added ${activeTotalCredits.toLocaleString()} AI Credits!`)
-        onOpenChange(false)
-      } else {
-        toast.error(errorMsg)
-      }
+      const errorMsg = err?.data?.message || err?.error || 'Failed to recharge credits. Please try again.'
+      toast.error(errorMsg)
     }
   }
 
@@ -270,12 +279,88 @@ export default function CreditRechargeModal({
       return
     }
 
-    // Option 4: Bank Wire / Offline Payment
+    // Option 4: Bank Wire / Offline Payment -> Send for Admin Approval
     if (paymentMethod === 'offline') {
       const refCode = offlineRef.trim() || `UTR-${Date.now().toString().slice(-8)}`
-      await executeCreditGrant('Bank Wire / UPI Transfer', refCode)
+      const finalUserId = getResolvedUserId()
+
+      try {
+        const pkgLabel = isCustom ? `${customCredits} Custom Credits` : selectedPkg.name
+        const description = `[PENDING APPROVAL] ${pkgLabel} (${activeTotalCredits.toLocaleString()} credits) via Bank Wire/UPI Ref: ${refCode}${offlineNotes ? ` - Note: ${offlineNotes}` : ''}`
+        
+        // Log transaction entry as pending reference
+        await addCreditsMutation({
+          userId: finalUserId || undefined,
+          amount: 0,
+          description,
+        }).unwrap().catch(() => {})
+      } catch (e) {
+        // Proceed to show submitted screen regardless
+      }
+
+      setSubmittedRef(refCode)
+      setOfflineSubmitted(true)
+      setIsProcessing(false)
+      toast.success('🎉 Payment request submitted! An administrator will review and approve your credits shortly.')
       return
     }
+  }
+
+  if (offlineSubmitted) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md p-6 bg-card text-foreground text-center space-y-5">
+          <div className="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-amber-500/5">
+            <CheckCircle2 className="w-9 h-9 text-emerald-500" />
+          </div>
+
+          <div className="space-y-1.5">
+            <h3 className="text-xl font-black text-foreground">
+              Payment Request Submitted!
+            </h3>
+            <p className="text-xs text-muted-foreground max-w-sm mx-auto leading-relaxed">
+              Your offline payment details have been recorded. An administrator will verify your transaction reference and approve your credits shortly.
+            </p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-muted/40 border border-border text-left space-y-2.5 text-xs">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Requested Pack:</span>
+              <span className="font-bold text-foreground">{isCustom ? `${customCredits} Custom Credits` : selectedPkg.name}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Credits to Add:</span>
+              <span className="font-bold text-primary font-mono">+{activeTotalCredits.toLocaleString()} Credits</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Payable Amount:</span>
+              <span className="font-bold text-foreground font-mono">
+                {currency === 'INR' ? `₹${activePriceINR.toLocaleString()}` : `$${activePriceUSD}`}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">UTR / Ref Number:</span>
+              <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">{submittedRef}</span>
+            </div>
+            <div className="flex justify-between pt-1 border-t border-border/60">
+              <span className="text-muted-foreground">Status:</span>
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/15 text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                Pending Admin Approval
+              </span>
+            </div>
+          </div>
+
+          <Button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            className="w-full h-10 rounded-xl bg-primary text-white font-bold cursor-pointer hover:bg-primary/90 transition shadow-md shadow-primary/20 text-xs sm:text-sm"
+          >
+            Done & Back to Planner
+          </Button>
+        </DialogContent>
+      </Dialog>
+    )
   }
 
   return (
@@ -463,10 +548,11 @@ export default function CreditRechargeModal({
           )}
         </div>
 
-        {/* Payment Gateway Selector */}
-        <div className="space-y-2 pt-1">
+        {/* Payment Gateways Selection */}
+        <div className="space-y-3 pt-2">
           <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">2. Choose Payment Gateway</h4>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {/* Razorpay PG */}
             <div
               onClick={() => setPaymentMethod('razorpay')}
@@ -535,7 +621,7 @@ export default function CreditRechargeModal({
               </div>
               <div>
                 <p className="text-xs font-bold leading-tight">Bank Wire / UPI</p>
-                <p className="text-[10px] text-muted-foreground">Manual Reference</p>
+                <p className="text-[10px] text-muted-foreground">Admin Approval</p>
               </div>
             </div>
           </div>
@@ -612,16 +698,29 @@ export default function CreditRechargeModal({
                 </div>
               </div>
 
-              <div className="space-y-1 pt-1">
-                <Label className="text-[11px] font-semibold text-muted-foreground">
-                  UTR / Transaction Reference (Optional):
-                </Label>
-                <Input
-                  placeholder="Enter 12-digit UTR (e.g. 423456789012) or leave blank for instant top-up"
-                  value={offlineRef}
-                  onChange={(e) => setOfflineRef(e.target.value)}
-                  className="h-9 text-xs bg-background"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-semibold text-muted-foreground">
+                    UTR / Transaction Ref ID:
+                  </Label>
+                  <Input
+                    placeholder="e.g. 423456789012"
+                    value={offlineRef}
+                    onChange={(e) => setOfflineRef(e.target.value)}
+                    className="h-9 text-xs bg-background"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-semibold text-muted-foreground">
+                    Optional Remarks / Note:
+                  </Label>
+                  <Input
+                    placeholder="e.g. Paid via GPay"
+                    value={offlineNotes}
+                    onChange={(e) => setOfflineNotes(e.target.value)}
+                    className="h-9 text-xs bg-background"
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -650,7 +749,7 @@ export default function CreditRechargeModal({
         <DialogFooter className="flex flex-col sm:flex-row items-center justify-between border-t border-border/50 pt-3 gap-3">
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground w-full sm:w-auto">
             <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span>Secure 256-bit Encrypted Checkout • Instant Credit Delivery</span>
+            <span>Secure 256-bit Encrypted Checkout • Verified Admin Approval</span>
           </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -669,18 +768,30 @@ export default function CreditRechargeModal({
               variant="premium"
               disabled={isProcessing || isMutating}
               onClick={handlePay}
-              className="flex-1 sm:flex-none gap-2 px-6 font-bold shadow-md shadow-primary/20 cursor-pointer text-xs sm:text-sm"
+              className={`flex-1 sm:flex-none gap-2 px-6 font-bold shadow-md cursor-pointer text-xs sm:text-sm ${
+                paymentMethod === 'offline'
+                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                  : 'shadow-primary/20'
+              }`}
             >
               {isProcessing || isMutating ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" /> Processing Payment...
+                  <Loader2 className="w-4 h-4 animate-spin" /> Processing...
+                </>
+              ) : paymentMethod === 'offline' ? (
+                <>
+                  <Landmark className="w-4 h-4" />
+                  Submit for Approval ({currency === 'INR' ? `₹${activePriceINR.toLocaleString()}` : `$${activePriceUSD}`})
+                </>
+              ) : paymentMethod === 'instant' ? (
+                <>
+                  <Zap className="w-4 h-4" />
+                  Instant Activate ({activeTotalCredits.toLocaleString()} Credits)
                 </>
               ) : (
                 <>
                   <CreditCard className="w-4 h-4" />
-                  {paymentMethod === 'instant' ? 'Instant Activate ' : 'Pay '}
-                  {currency === 'INR' ? `₹${activePriceINR.toLocaleString()}` : `$${activePriceUSD}`} (
-                  {activeTotalCredits.toLocaleString()} Credits)
+                  Pay {currency === 'INR' ? `₹${activePriceINR.toLocaleString()}` : `$${activePriceUSD}`} ({activeTotalCredits.toLocaleString()} Credits)
                 </>
               )}
             </Button>
