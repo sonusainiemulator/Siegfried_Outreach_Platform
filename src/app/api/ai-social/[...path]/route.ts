@@ -89,10 +89,17 @@ export async function POST(
         );
       }
 
+      const parsedAmount = parseInt(jsonBody.amount, 10);
       const payload = {
         userId: finalUserId,
-        amount: parseInt(jsonBody.amount, 10) || 500,
+        amount: isNaN(parsedAmount) ? 0 : parsedAmount,
         description: jsonBody.description || "Credit Recharge",
+        payableAmount: jsonBody.payableAmount,
+        currency: jsonBody.currency,
+        reference: jsonBody.reference,
+        paymentMethod: jsonBody.paymentMethod,
+        isPendingOffline: jsonBody.isPendingOffline,
+        packageName: jsonBody.packageName,
       };
 
       const backendRes = await fetch(`${BACKEND_API_URL}/ai-social/credits/add`, {

@@ -219,10 +219,16 @@ export default function CreditRechargeModal({
     try {
       const pkgLabel = isCustom ? `${customCredits} Custom Credits` : selectedPkg.name
       const description = `${pkgLabel} via ${methodLabel}${txId ? ` [${txId}]` : ''}`
+      const finalPrice = currency === 'INR' ? activePriceINR : activePriceUSD
 
       const res: any = await addCreditsMutation({
         userId: finalUserId || undefined,
         amount: activeTotalCredits,
+        payableAmount: finalPrice,
+        currency: currency,
+        paymentMethod: paymentMethod,
+        reference: txId || `TXN-${Date.now().toString().slice(-8)}`,
+        packageName: pkgLabel,
         description,
       }).unwrap()
 
@@ -304,19 +310,27 @@ export default function CreditRechargeModal({
     if (paymentMethod === 'offline') {
       const refCode = offlineRef.trim() || `UTR-${Date.now().toString().slice(-8)}`
       const finalUserId = getResolvedUserId()
+      const finalPrice = currency === 'INR' ? activePriceINR : activePriceUSD
 
       try {
         const pkgLabel = isCustom ? `${customCredits} Custom Credits` : selectedPkg.name
         const description = `[PENDING APPROVAL] ${pkgLabel} (${activeTotalCredits.toLocaleString()} credits) via Bank Wire/UPI Ref: ${refCode}${offlineNotes ? ` - Note: ${offlineNotes}` : ''}`
         
-        // Log transaction entry as pending reference
+        // Log transaction entry as pending reference and create pending payment
         await addCreditsMutation({
           userId: finalUserId || undefined,
           amount: 0,
+          payableAmount: finalPrice,
+          currency: currency,
+          paymentMethod: 'offline',
+          isPendingOffline: true,
+          reference: refCode,
+          notes: offlineNotes,
+          packageName: pkgLabel,
           description,
-        }).unwrap().catch(() => {})
+        }).unwrap()
       } catch (e) {
-        // Proceed to show submitted screen regardless
+        console.warn('Offline recharge submission notice:', e)
       }
 
       setSubmittedRef(refCode)
