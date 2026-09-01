@@ -1,0 +1,1 @@
+export const steps = ['Details', 'Audience', 'Content', 'Review']

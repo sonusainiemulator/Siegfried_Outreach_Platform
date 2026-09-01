@@ -1,0 +1,48 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Testing & Build
+/coverage
+/.next/
+/out/
+/build
+dist
+
+# Environment variables
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel & Editor
+.vercel
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+next_dev.log
+*.log
+
+# Temporary / Scratch & Archives
+*.zip
+*.tar.gz
+scratch-*.js
+fix_nav.js
+replace_pixel.js
+postizsonu
+.user.ini
+tsconfig.tsbuildinfo
