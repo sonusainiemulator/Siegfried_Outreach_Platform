@@ -89,10 +89,25 @@ export default function ApprovalCenterPage() {
   const items: any[] = (data as any)?.data?.items || []
   const filtered = filter === 'All' ? items : items.filter((i: any) => i.status === filter)
 
+  const publishNow = async (item: any) => {
+    try {
+      if (!item.caption) {
+        toast.info('Generating AI caption and hook before publishing...')
+        await generateCaption({ contentItemId: item._id }).unwrap()
+      }
+      await updateStatus({ id: item._id, status: 'Published' }).unwrap()
+      toast.success(`🎉 Successfully published post for ${item.platform}!`)
+      refetch()
+    } catch (err: any) {
+      toast.error(err?.data?.message || 'Failed to publish post')
+    }
+  }
+
   const approve = async (item: any) => {
     try {
       await updateStatus({ id: item._id, status: 'Approved' }).unwrap()
       toast.success('Approved!')
+      refetch()
     } catch {
       toast.error('Failed to approve')
     }
@@ -100,9 +115,13 @@ export default function ApprovalCenterPage() {
 
   const approveAndSchedule = async (item: any) => {
     try {
+      if (!item.caption) {
+        await generateCaption({ contentItemId: item._id }).unwrap()
+      }
       await updateStatus({ id: item._id, status: 'Approved' }).unwrap()
       await scheduleContent(item._id).unwrap()
-      toast.success('Approved and queued for n8n execution!')
+      toast.success('Approved and queued for automated publishing!')
+      refetch()
     } catch {
       toast.error('Scheduling failed')
     }
@@ -112,6 +131,7 @@ export default function ApprovalCenterPage() {
     try {
       await updateStatus({ id: item._id, status: 'Draft', rejectionNote: 'Needs manual revision' }).unwrap()
       toast.info('Sent back to draft for adjustments')
+      refetch()
     } catch {
       toast.error('Failed to reject')
     }
@@ -266,27 +286,69 @@ export default function ApprovalCenterPage() {
 
                 {/* Actions */}
                 <div className="flex flex-row md:flex-col gap-2 shrink-0 w-full md:w-auto justify-end pt-2 md:pt-0">
+                  {/* DRAFT STATE */}
+                  {item.status === 'Draft' && (
+                    <>
+                      <Button
+                        variant="premium"
+                        size="sm"
+                        disabled={generatingCaption || scheduling}
+                        onClick={() => publishNow(item)}
+                        className="gap-1.5 text-xs h-9 font-bold cursor-pointer"
+                      >
+                        {generatingCaption ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                        Publish Now
+                      </Button>
+
+                      {!item.caption && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          disabled={generatingCaption}
+                          onClick={() => regen(item)}
+                          className="gap-1.5 text-xs h-9 font-semibold text-primary border-primary/30 hover:bg-primary/10 cursor-pointer"
+                        >
+                          <Sparkles className="w-3.5 h-3.5 text-primary" />
+                          Generate Copy
+                        </Button>
+                      )}
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={scheduling}
+                        onClick={() => approveAndSchedule(item)}
+                        className="gap-1.5 text-xs h-9 cursor-pointer"
+                      >
+                        <Clock className="w-3.5 h-3.5 text-amber-500" />
+                        Approve & Schedule
+                      </Button>
+                    </>
+                  )}
+
+                  {/* REVIEW STATE */}
                   {(item.status === 'Owner_Review' || item.status === 'AI_Review') && (
                     <>
                       <Button
                         variant="premium"
                         size="sm"
-                        disabled={scheduling}
-                        onClick={() => approveAndSchedule(item)}
-                        className="gap-1.5 text-xs h-9"
+                        disabled={scheduling || generatingCaption}
+                        onClick={() => publishNow(item)}
+                        className="gap-1.5 text-xs h-9 font-bold cursor-pointer"
                       >
-                        {scheduling ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-                        Approve & Schedule
+                        <Send className="w-3.5 h-3.5" />
+                        Publish Now
                       </Button>
 
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => approve(item)}
-                        className="gap-1.5 text-xs h-9"
+                        disabled={scheduling}
+                        onClick={() => approveAndSchedule(item)}
+                        className="gap-1.5 text-xs h-9 cursor-pointer"
                       >
-                        <Check className="w-3.5 h-3.5 text-emerald-500" />
-                        Approve Only
+                        <Clock className="w-3.5 h-3.5 text-amber-500" />
+                        Approve & Schedule
                       </Button>
 
                       <div className="flex gap-2">
@@ -295,7 +357,7 @@ export default function ApprovalCenterPage() {
                           size="sm"
                           disabled={generatingCaption}
                           onClick={() => regen(item)}
-                          className="text-xs h-8 flex-1 text-primary hover:bg-primary/10"
+                          className="text-xs h-8 flex-1 text-primary hover:bg-primary/10 cursor-pointer"
                         >
                           <RefreshCw className="w-3.5 h-3.5 mr-1" />
                           Regen
@@ -304,7 +366,7 @@ export default function ApprovalCenterPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => reject(item)}
-                          className="text-xs h-8 flex-1 text-destructive hover:bg-destructive/10"
+                          className="text-xs h-8 flex-1 text-destructive hover:bg-destructive/10 cursor-pointer"
                         >
                           <X className="w-3.5 h-3.5 mr-1" />
                           Reject
@@ -313,17 +375,44 @@ export default function ApprovalCenterPage() {
                     </>
                   )}
 
+                  {/* APPROVED STATE */}
                   {item.status === 'Approved' && (
-                    <Button
-                      variant="premium"
-                      size="sm"
-                      disabled={scheduling}
-                      onClick={() => scheduleContent(item._id)}
-                      className="gap-1.5 text-xs h-9"
-                    >
-                      <Clock className="w-3.5 h-3.5" />
-                      Queue to n8n
-                    </Button>
+                    <>
+                      <Button
+                        variant="premium"
+                        size="sm"
+                        onClick={() => publishNow(item)}
+                        className="gap-1.5 text-xs h-9 font-bold cursor-pointer"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                        Publish Now
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={scheduling}
+                        onClick={() => scheduleContent(item._id)}
+                        className="gap-1.5 text-xs h-9 cursor-pointer"
+                      >
+                        <Clock className="w-3.5 h-3.5 text-blue-500" />
+                        Queue to Publisher
+                      </Button>
+                    </>
+                  )}
+
+                  {/* PUBLISHED STATE */}
+                  {item.status === 'Published' && (
+                    <div className="flex flex-col items-end gap-1">
+                      <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 gap-1 text-xs py-1 px-2.5">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Published
+                      </Badge>
+                      {item.publishedAt && (
+                        <span className="text-[10px] text-muted-foreground">
+                          {new Date(item.publishedAt).toLocaleDateString()}
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
               </CardContent>
