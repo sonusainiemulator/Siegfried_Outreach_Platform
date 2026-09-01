@@ -21,6 +21,8 @@ export const aiSocialApi = baseApi.injectEndpoints({
     getCreditBalance: builder.query({ query: () => '/ai-social/credits/balance', providesTags: ['AiSocialCredits'] as any }),
     getCreditHistory: builder.query({ query: (params?: any) => ({ url: '/ai-social/credits/history', params }), providesTags: ['AiSocialCredits'] as any }),
     addCredits: builder.mutation({ query: (data: any) => ({ url: '/ai-social/credits/add', method: 'POST', body: data }), invalidatesTags: ['AiSocialCredits'] as any }),
+    getAiModels: builder.query({ query: () => '/ai-social/ai/models', providesTags: ['AiSocialModels'] as any }),
+    updateAiModels: builder.mutation({ query: (data: any) => ({ url: '/ai-social/ai/models', method: 'POST', body: data }), invalidatesTags: ['AiSocialModels'] as any }),
     getAnalyticsDashboard: builder.query({ query: ({ businessId, month, year }: any) => `/ai-social/analytics/business/${businessId}?month=${month}&year=${year}`, providesTags: ['AiSocialAnalytics'] as any }),
   }),
 })
@@ -35,5 +37,7 @@ export const {
   useCreateTemplateMutation, useUpdateTemplateMutation,
   useDeleteTemplateMutation, useUseTemplateMutation,
   useGetCreditBalanceQuery, useGetCreditHistoryQuery,
-  useAddCreditsMutation, useGetAnalyticsDashboardQuery,
+  useAddCreditsMutation, useGetAiModelsQuery, useUpdateAiModelsMutation,
+  useGetAnalyticsDashboardQuery,
 } = aiSocialApi
+

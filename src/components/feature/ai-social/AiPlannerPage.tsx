@@ -32,12 +32,64 @@ import {
   useGetBusinessProfileQuery,
   useGeneratePlanMutation,
   useGetCreditBalanceQuery,
+  useGetAiModelsQuery,
 } from '@/redux/api/aiSocialApi'
 import CreditRechargeModal from './CreditRechargeModal'
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
+]
+
+const DEFAULT_AI_MODELS = [
+  {
+    modelId: 'google/gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash',
+    provider: 'google',
+    description: 'Fast, highly accurate & economical model for daily content',
+    badge: 'Popular',
+    multiplier: 1.0,
+  },
+  {
+    modelId: 'anthropic/claude-3.5-sonnet',
+    name: 'Claude 3.5 Sonnet',
+    provider: 'anthropic',
+    description: 'Industry standard for marketing copywriting & persuasive hooks',
+    badge: 'Top Copywriter',
+    multiplier: 2.5,
+  },
+  {
+    modelId: 'openai/gpt-4o',
+    name: 'GPT-4o',
+    provider: 'openai',
+    description: 'Flagship multimodal reasoning & strategic campaign planning',
+    badge: 'Advanced Intelligence',
+    multiplier: 2.5,
+  },
+  {
+    modelId: 'deepseek/deepseek-chat',
+    name: 'DeepSeek V3 / R1',
+    provider: 'deepseek',
+    description: 'High performance reasoning with balanced credit economy',
+    badge: 'Cost Efficient',
+    multiplier: 1.0,
+  },
+  {
+    modelId: 'google/gemini-1.5-pro',
+    name: 'Gemini 1.5 Pro',
+    provider: 'google',
+    description: 'Deep strategic planning with massive context comprehension',
+    badge: 'Deep Strategy',
+    multiplier: 2.0,
+  },
+  {
+    modelId: 'meta-llama/llama-3.3-70b-instruct',
+    name: 'Llama 3.3 70B',
+    provider: 'meta',
+    description: 'High-speed open weight intelligence for social creatives',
+    badge: 'High Speed',
+    multiplier: 1.2,
+  },
 ]
 
 export default function AiPlannerPage() {
@@ -49,17 +101,23 @@ export default function AiPlannerPage() {
   const [reels, setReels] = useState(8)
   const [stories, setStories] = useState(12)
   const [leads, setLeads] = useState(20)
+  const [selectedModelId, setSelectedModelId] = useState('google/gemini-2.5-flash')
   const [generatedPlan, setGeneratedPlan] = useState<any>(null)
   const [showRechargeModal, setShowRechargeModal] = useState(false)
 
   const { data: profileData } = useGetBusinessProfileQuery(undefined)
   const { data: creditData } = useGetCreditBalanceQuery(undefined)
+  const { data: modelsData } = useGetAiModelsQuery(undefined)
   const [generatePlan, { isLoading }] = useGeneratePlanMutation()
 
   const business = (profileData as any)?.data
   const credits = (creditData as any)?.data?.balance ?? 0
 
-  const estimatedCredits = posts * 5 + reels * 15 + stories * 2
+  const availableModels = (modelsData as any)?.data?.length ? (modelsData as any).data : DEFAULT_AI_MODELS
+  const selectedModel = availableModels.find((m: any) => m.modelId === selectedModelId) || availableModels[0] || DEFAULT_AI_MODELS[0]
+
+  const baseCredits = posts * 5 + reels * 15 + stories * 2
+  const estimatedCredits = Math.round(baseCredits * (selectedModel?.multiplier || 1.0))
   const hasInsufficientCredits = credits < estimatedCredits
 
   const handleGenerate = async () => {
@@ -93,10 +151,11 @@ export default function AiPlannerPage() {
         targetLeads: leads,
         month,
         year,
+        model: selectedModelId,
       }).unwrap()
 
       setGeneratedPlan(res.data)
-      toast.success(`🎉 Marketing Plan generated! ${res.count} items added to calendar.`)
+      toast.success(`🎉 Marketing Plan generated using ${selectedModel.name}! ${res.count} items added to calendar.`)
     } catch (e: any) {
       const errMsg = e?.data?.error || e?.data?.message || 'Failed to generate plan'
       if (errMsg.toLowerCase().includes('credit') || errMsg.toLowerCase().includes('balance') || errMsg.toLowerCase().includes('insufficient')) {
@@ -105,6 +164,7 @@ export default function AiPlannerPage() {
       toast.error(errMsg)
     }
   }
+
 
   const contentMix = [
     { label: 'Educational (Tips & How-to)', count: Math.round(posts * 0.27), icon: FileText, color: 'text-blue-500' },
@@ -253,6 +313,82 @@ export default function AiPlannerPage() {
               </div>
             </div>
 
+            {/* AI Intelligence Model Selector */}
+            <div className="space-y-3 pt-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-bold text-foreground flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> AI Strategy Engine & Model
+                  </Label>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Choose the intelligence tier for your content plan. Multiplier adjusts credit cost accordingly.
+                  </p>
+                </div>
+                {selectedModel && (
+                  <Badge variant="outline" className="font-mono text-xs font-bold border-primary/40 text-primary bg-primary/5">
+                    {selectedModel.multiplier}x Multiplier
+                  </Badge>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                {availableModels.map((m: any) => {
+                  const isSelected = m.modelId === selectedModelId
+                  return (
+                    <div
+                      key={m.modelId}
+                      onClick={() => setSelectedModelId(m.modelId)}
+                      className={`relative flex flex-col justify-between p-3 rounded-xl border transition-all cursor-pointer select-none ${
+                        isSelected
+                          ? 'border-primary bg-primary/10 ring-2 ring-primary/40 shadow-sm'
+                          : 'border-border/60 hover:border-border hover:bg-muted/40 bg-background/50'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <span className="font-bold text-xs sm:text-sm text-foreground block truncate">
+                            {m.name}
+                          </span>
+                          <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                            {m.provider}
+                          </span>
+                        </div>
+                        <Badge
+                          variant="secondary"
+                          className={`text-[10px] font-bold px-1.5 py-0 shrink-0 ${
+                            isSelected
+                              ? 'bg-primary text-white'
+                              : 'bg-muted text-muted-foreground'
+                          }`}
+                        >
+                          {m.multiplier}x
+                        </Badge>
+                      </div>
+
+                      {m.description && (
+                        <p className="text-[11px] text-muted-foreground line-clamp-2 mt-1.5 leading-snug">
+                          {m.description}
+                        </p>
+                      )}
+
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border/30">
+                        {m.badge ? (
+                          <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-primary/10 text-primary">
+                            {m.badge}
+                          </span>
+                        ) : <span />}
+                        {isSelected && (
+                          <span className="text-[10px] font-bold text-primary flex items-center gap-0.5">
+                            <CheckCircle2 className="w-3 h-3" /> Selected
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
             {/* Sliders */}
             <div className="space-y-4 pt-2">
               <div className="space-y-2">
@@ -330,7 +466,7 @@ export default function AiPlannerPage() {
                 <div>
                   <span className="text-muted-foreground font-medium block">Estimated Generation Cost</span>
                   <span className="text-xs text-muted-foreground">
-                    ({posts} images × 5 + {reels} reels × 15 + {stories} stories × 2)
+                    ({posts} images × 5 + {reels} reels × 15 + {stories} stories × 2) × {selectedModel?.multiplier || 1.0}x ({selectedModel?.name})
                   </span>
                 </div>
                 <div className="flex items-center gap-3">

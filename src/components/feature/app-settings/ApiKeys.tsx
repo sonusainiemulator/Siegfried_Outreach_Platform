@@ -10,6 +10,7 @@ import { ArrowLeft, Key, Loader2, Save } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import AdminAiModelsCard from './api/AdminAiModelsCard'
 import DefaultAiProviderCard from './api/DefaultAiProviderCard'
 import GeminiCard from './api/GeminiCard'
 import GrokCard from './api/GrokCard'
@@ -109,6 +110,7 @@ const ApiIntegration = () => {
                     <StableDiffusionCard />
                     <HuggingFaceCard />
                     <WinstonAiCard />
+                    <AdminAiModelsCard />
                   </div>
 
                   <div className="flex justify-end pt-6 border-t border-border/10">
@@ -132,3 +134,4 @@ const ApiIntegration = () => {
 }
 
 export default ApiIntegration
+
