@@ -55,11 +55,24 @@ export const userApi = baseApi.injectEndpoints({
         body: body || {},
       }),
     }),
+    getUserFullDetails: builder.query<{ success: boolean; data: any }, string>({
+      query: (id) => `/user/${id}/full-details`,
+      providesTags: ['User', 'AiSocialCredits'] as any,
+    }),
+    adjustUserCredits: builder.mutation<{ success: boolean; message: string; data: any }, { id: string; amount: number; type: 'add' | 'deduct'; reason?: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/user/${id}/adjust-credits`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['User', 'AiSocialCredits'] as any,
+    }),
     getImpersonationLogs: builder.query<{ data: any[]; total: number; page: number; totalPages: number }, { page?: number; limit?: number }>({
       query: (params) => ({
         url: '/user/impersonation-logs',
         params,
       }),
+      providesTags: ['User'],
     }),
   }),
 })
@@ -73,4 +86,6 @@ export const {
   useLoginAsUserMutation,
   useStopImpersonatingMutation,
   useGetImpersonationLogsQuery,
+  useGetUserFullDetailsQuery,
+  useAdjustUserCreditsMutation,
 } = userApi

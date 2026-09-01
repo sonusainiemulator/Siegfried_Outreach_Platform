@@ -1,6 +1,6 @@
 'use client'
 
-import { MemberModal } from '@/components/feature/members/MemberModal'
+import { MemberManagementModal } from '@/components/feature/members/MemberManagementModal'
 import { SendCustomPushModal } from '@/components/feature/members/SendCustomPushModal'
 import { ImpersonateConfirmationModal } from '@/components/feature/members/ImpersonateConfirmationModal'
 import { CopyEmailCell } from '@/components/reusable/CopyEmailCell'
@@ -17,7 +17,7 @@ import { cn, getAvatarColorClass } from '@/lib/utils'
 import { useDeleteUsersMutation, useGetUsersQuery, useUpdateUserStatusMutation, useLoginAsUserMutation } from '@/redux/api/userApi'
 import { ApiError, Column, User } from '@/types'
 import { formatDate, getMediaUrl, authUtils } from '@/utils'
-import { Pencil, Plus, Trash2, LogIn, Bell } from 'lucide-react'
+import { Pencil, Plus, Trash2, LogIn, Bell, Coins, Package, Shield } from 'lucide-react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -209,6 +209,56 @@ export default function UsersPage() {
       },
     },
     {
+      header: 'AI Credits & Last Request',
+      className: 'xl1199:min-w-[240px]',
+      cell: (row: any) => {
+        const lastReq = row.lastCreditRequest;
+        return (
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-1.5 font-bold font-mono text-sm text-foreground">
+              <Coins className="w-4 h-4 text-amber-500" />
+              {(row.creditBalance || 0).toLocaleString()} Credits
+            </div>
+            {lastReq ? (
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span>Last: ₹{lastReq.amount}</span>
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    'text-[9px] font-bold px-1.5 py-0 uppercase',
+                    lastReq.status === 'completed'
+                      ? 'border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/5'
+                      : lastReq.status === 'pending_approval'
+                      ? 'border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 animate-pulse'
+                      : 'border-rose-500/40 text-rose-600 dark:text-rose-400 bg-rose-500/5'
+                  )}
+                >
+                  {lastReq.status === 'pending_approval' ? 'Pending' : lastReq.status}
+                </Badge>
+              </div>
+            ) : (
+              <span className="text-[11px] text-muted-foreground italic">No recharge requests</span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      header: 'Plan',
+      className: 'xl1199:min-w-[130px]',
+      cell: (row: any) => {
+        const plan = row.activePlan?.planName || 'Free';
+        return (
+          <Badge
+            variant="outline"
+            className="text-xs font-semibold uppercase tracking-wider border-purple-500/30 text-purple-600 dark:text-purple-400 bg-purple-500/5"
+          >
+            {plan}
+          </Badge>
+        );
+      },
+    },
+    {
       header: t('status'),
       className: 'xl1199:min-w-[135px]',
       accessorKey: 'isActive',
@@ -240,16 +290,16 @@ export default function UsersPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                className=" h-8 w-8 bg-edit-color/10 hover:text-white text-text-edit  hover:bg-edit-color"
+                className=" h-8 w-8 bg-edit-color/10 hover:text-white text-text-edit  hover:bg-edit-color cursor-pointer"
                 onClick={() => handleEdit(row)}
-                title={t('edit')}
+                title="Manage Member Hub"
               >
                 <Pencil className="h-4 w-4" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-destructive h-8 w-8 bg-destructive/10 hover:bg-destructive hover:text-white"
+                className="text-destructive h-8 w-8 bg-destructive/10 hover:bg-destructive hover:text-white cursor-pointer"
                 onClick={() => handleDelete(row.id)}
                 title={t('delete')}
               >
@@ -259,7 +309,7 @@ export default function UsersPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors"
+                  className="h-8 w-8 bg-primary/10 hover:bg-primary hover:text-white text-primary transition-colors cursor-pointer"
                   onClick={() => setUserToImpersonate(row)}
                   title={t('login_as_member') || 'Login As Member'}
                 >
@@ -279,7 +329,7 @@ export default function UsersPage() {
     <>
       <TableLayout
         title={t('members')}
-        subtitle={t('manage_members')}
+        subtitle="Manage member accounts, credit balances, offline recharge proofs, and administrative actions."
         primaryAction={
           canManage
             ? {
@@ -294,7 +344,7 @@ export default function UsersPage() {
           canManage ? (
             <Button
               onClick={() => setIsPushModalOpen(true)}
-              className="sm:h-12 h-10 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-[8px] flex items-center gap-2"
+              className="sm:h-12 h-10 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-[8px] flex items-center gap-2 cursor-pointer"
             >
               <Bell className="w-4 h-4" />
               Send Push Notification
@@ -337,7 +387,15 @@ export default function UsersPage() {
         onDownloadTemplate={() => downloadTemplate('/api/user/export-template', 'excel', 'users_template')}
       />
 
-      <MemberModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={selectedUser} />
+      <MemberManagementModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false)
+          refetch()
+        }}
+        user={selectedUser}
+        onImpersonate={(u) => setUserToImpersonate(u)}
+      />
 
       <SendCustomPushModal isOpen={isPushModalOpen} onClose={() => setIsPushModalOpen(false)} />
 
