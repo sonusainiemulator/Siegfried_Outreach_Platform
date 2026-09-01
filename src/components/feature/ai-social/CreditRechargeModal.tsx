@@ -17,6 +17,8 @@ import {
   Landmark,
   Check,
   Copy,
+  Wallet,
+  Banknote,
 } from 'lucide-react'
 
 import { useSelector } from 'react-redux'
@@ -37,8 +39,10 @@ import Input from '@/components/ui/input'
 import Label from '@/components/ui/label'
 import { useAddCreditsMutation } from '@/redux/api/aiSocialApi'
 import { useGetProfileQuery } from '@/redux/api/authApi'
+import { useGetUserSettingsQuery } from '@/redux/api/userSettingApi'
 import { authUtils } from '@/utils'
 import useSettings from '@/hooks/useSettings'
+
 
 export interface CreditPackage {
   id: string
@@ -117,7 +121,24 @@ export default function CreditRechargeModal({
 }: CreditRechargeModalProps) {
   const authUser = useSelector((state: any) => state.auth?.user)
   const { data: profileData } = useGetProfileQuery(undefined, { skip: !open })
+  const { data: userSettingsData } = useGetUserSettingsQuery(undefined, { skip: !open })
   const { settings } = useSettings()
+
+  const offlineConfig = React.useMemo(() => {
+    const userOff = userSettingsData?.setting?.offline
+    const appOff = (settings as any)?.offline
+    return {
+      enabled: userOff?.enabled ?? appOff?.enabled ?? true,
+      bank_name: userOff?.bank_name || appOff?.bank_name || 'ICICI Bank',
+      account_name: userOff?.account_name || appOff?.account_name || 'Siegfried Technologies Pvt Ltd',
+      account_number: userOff?.account_number || appOff?.account_number || '987654321098',
+      ifsc_swift: userOff?.ifsc_swift || appOff?.ifsc_swift || 'ICIC0001234',
+      upi_id: userOff?.upi_id || appOff?.upi_id || 'siegfried@icici',
+      upi_qr_url: userOff?.upi_qr_url || appOff?.upi_qr_url || '',
+      cash_instructions: userOff?.cash_instructions || appOff?.cash_instructions || '',
+      instructions: userOff?.instructions || appOff?.instructions || '',
+    }
+  }, [userSettingsData, settings])
 
   const [selectedPackageId, setSelectedPackageId] = useState<string>('growth')
   const [isCustom, setIsCustom] = useState(false)
@@ -632,73 +653,133 @@ export default function CreditRechargeModal({
               <div className="flex items-center justify-between font-bold text-foreground pb-1 border-b border-emerald-500/20">
                 <div className="flex items-center gap-1.5 text-emerald-500">
                   <Building2 className="w-4 h-4" />
-                  <span>Bank & UPI Payment Details</span>
+                  <span>Bank, UPI & Offline Transfer Details</span>
                 </div>
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-500 px-2 py-0.5 rounded-full font-mono">
-                  Siegfried Technologies Pvt Ltd
-                </span>
+                {offlineConfig.account_name && (
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-500 px-2 py-0.5 rounded-full font-mono truncate max-w-[200px]">
+                    {offlineConfig.account_name}
+                  </span>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <div className="flex items-center justify-between p-2 rounded-lg bg-background/80 border border-border">
-                  <div>
-                    <span className="text-muted-foreground block text-[10px]">A/C Number (ICICI Bank):</span>
-                    <span className="font-mono font-bold text-foreground">987654321098</span>
+                {/* Bank Name */}
+                {offlineConfig.bank_name && (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-background/80 border border-border col-span-1 sm:col-span-2">
+                    <div>
+                      <span className="text-muted-foreground block text-[10px]">Beneficiary Bank:</span>
+                      <span className="font-bold text-foreground text-xs">{offlineConfig.bank_name}</span>
+                    </div>
+                    {offlineConfig.account_name && (
+                      <div className="text-right">
+                        <span className="text-muted-foreground block text-[10px]">Account Name:</span>
+                        <span className="font-semibold text-foreground text-xs">{offlineConfig.account_name}</span>
+                      </div>
+                    )}
                   </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      navigator.clipboard.writeText('987654321098')
-                      toast.success('Account Number copied!')
-                    }}
-                    className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground cursor-pointer"
-                  >
-                    <Copy className="w-3 h-3 mr-1" /> Copy
-                  </Button>
-                </div>
+                )}
 
-                <div className="flex items-center justify-between p-2 rounded-lg bg-background/80 border border-border">
-                  <div>
-                    <span className="text-muted-foreground block text-[10px]">IFSC Code:</span>
-                    <span className="font-mono font-bold text-foreground">ICIC0001234</span>
+                {/* Account Number */}
+                {offlineConfig.account_number && (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-background/80 border border-border">
+                    <div>
+                      <span className="text-muted-foreground block text-[10px]">Account Number:</span>
+                      <span className="font-mono font-bold text-foreground">{offlineConfig.account_number}</span>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        navigator.clipboard.writeText(offlineConfig.account_number)
+                        toast.success('Account Number copied!')
+                      }}
+                      className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3 mr-1" /> Copy
+                    </Button>
                   </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      navigator.clipboard.writeText('ICIC0001234')
-                      toast.success('IFSC Code copied!')
-                    }}
-                    className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground cursor-pointer"
-                  >
-                    <Copy className="w-3 h-3 mr-1" /> Copy
-                  </Button>
-                </div>
+                )}
 
-                <div className="flex items-center justify-between p-2 rounded-lg bg-background/80 border border-border col-span-1 sm:col-span-2">
-                  <div>
-                    <span className="text-muted-foreground block text-[10px]">UPI ID (GPay, PhonePe, Paytm):</span>
-                    <span className="font-mono font-bold text-emerald-500">siegfried@icici</span>
+                {/* IFSC / SWIFT */}
+                {offlineConfig.ifsc_swift && (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-background/80 border border-border">
+                    <div>
+                      <span className="text-muted-foreground block text-[10px]">IFSC / SWIFT Code:</span>
+                      <span className="font-mono font-bold text-foreground">{offlineConfig.ifsc_swift}</span>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        navigator.clipboard.writeText(offlineConfig.ifsc_swift)
+                        toast.success('IFSC Code copied!')
+                      }}
+                      className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3 mr-1" /> Copy
+                    </Button>
                   </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      navigator.clipboard.writeText('siegfried@icici')
-                      toast.success('UPI ID copied!')
-                    }}
-                    className="h-7 px-2 text-[11px] text-emerald-500 hover:text-emerald-400 cursor-pointer"
-                  >
-                    <Copy className="w-3 h-3 mr-1" /> Copy UPI
-                  </Button>
-                </div>
+                )}
+
+                {/* UPI ID & QR Code */}
+                {(offlineConfig.upi_id || offlineConfig.upi_qr_url) && (
+                  <div className="p-2.5 rounded-lg bg-background/80 border border-border col-span-1 sm:col-span-2 flex flex-col sm:flex-row items-center gap-3">
+                    {offlineConfig.upi_qr_url && (
+                      <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-border bg-white p-1 shrink-0 flex items-center justify-center">
+                        <Image
+                          src={offlineConfig.upi_qr_url}
+                          alt="UPI QR Code"
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    )}
+                    <div className="flex-1 w-full space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground text-[10px]">Instant UPI ID (GPay / PhonePe / Paytm):</span>
+                        {offlineConfig.upi_id && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              navigator.clipboard.writeText(offlineConfig.upi_id)
+                              toast.success('UPI ID copied!')
+                            }}
+                            className="h-6 px-2 text-[11px] text-emerald-500 hover:text-emerald-400 cursor-pointer"
+                          >
+                            <Copy className="w-3 h-3 mr-1" /> Copy UPI
+                          </Button>
+                        )}
+                      </div>
+                      {offlineConfig.upi_id && (
+                        <p className="font-mono font-bold text-emerald-500 text-sm">{offlineConfig.upi_id}</p>
+                      )}
+                      <p className="text-[10px] text-muted-foreground">
+                        Transfer to UPI ID or scan QR code, then submit your transaction UTR reference below.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Cash / Manual Verification Instructions */}
+                {(offlineConfig.cash_instructions || offlineConfig.instructions) && (
+                  <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 col-span-1 sm:col-span-2 space-y-1">
+                    <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-bold text-[11px]">
+                      <Banknote className="w-3.5 h-3.5" />
+                      <span>Cash / Manual Admin Verification Instructions</span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground whitespace-pre-wrap">
+                      {offlineConfig.cash_instructions || offlineConfig.instructions}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-emerald-500/20">
                 <div className="space-y-1">
                   <Label className="text-[11px] font-semibold text-muted-foreground">
                     UTR / Transaction Ref ID:
@@ -715,7 +796,7 @@ export default function CreditRechargeModal({
                     Optional Remarks / Note:
                   </Label>
                   <Input
-                    placeholder="e.g. Paid via GPay"
+                    placeholder="e.g. Paid via Bank Transfer / UPI / Cash"
                     value={offlineNotes}
                     onChange={(e) => setOfflineNotes(e.target.value)}
                     className="h-9 text-xs bg-background"
