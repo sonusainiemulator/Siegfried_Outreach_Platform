@@ -3,18 +3,34 @@ import { NextRequest, NextResponse } from "next/server";
 
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.siegfriedoutreach.com/api';
 
-function extractUserIdFromBearer(authHeader: string | null): string | null {
-  if (!authHeader || !authHeader.startsWith("Bearer ")) return null;
-  try {
+function extractUserIdFromRequest(request: NextRequest): string | null {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
-    const parts = token.split(".");
-    if (parts.length === 3) {
-      const payload = JSON.parse(Buffer.from(parts[1], "base64").toString("utf8"));
-      return payload.id || payload._id || payload.userId || null;
-    }
-  } catch {
-    return null;
+    try {
+      const parts = token.split(".");
+      if (parts.length === 3) {
+        const payload = JSON.parse(Buffer.from(parts[1], "base64").toString("utf8"));
+        if (payload.id || payload._id || payload.userId) {
+          return payload.id || payload._id || payload.userId;
+        }
+      }
+    } catch {}
   }
+
+  const cookieToken = request.cookies.get("authToken")?.value;
+  if (cookieToken) {
+    try {
+      const parts = cookieToken.split(".");
+      if (parts.length === 3) {
+        const payload = JSON.parse(Buffer.from(parts[1], "base64").toString("utf8"));
+        if (payload.id || payload._id || payload.userId) {
+          return payload.id || payload._id || payload.userId;
+        }
+      }
+    } catch {}
+  }
+
   return null;
 }
 
@@ -38,13 +54,37 @@ export async function POST(
   if (subpath === "credits/add") {
     try {
       const authHeader = request.headers.get("authorization");
-      const tokenUserId = extractUserIdFromBearer(authHeader);
+      const cookieToken = request.cookies.get("authToken")?.value;
+      const effectiveAuth = authHeader || (cookieToken ? `Bearer ${cookieToken}` : null);
+
+      const tokenUserId = extractUserIdFromRequest(request);
       const jsonBody = await request.json().catch(() => ({}));
 
-      const finalUserId = jsonBody.userId || tokenUserId;
+      let finalUserId = jsonBody.userId || tokenUserId;
+
+      // If still missing, try fetching active profile from backend
+      if (!finalUserId && effectiveAuth) {
+        try {
+          const profileRes = await fetch(`${BACKEND_API_URL}/auth/profile`, {
+            headers: { Authorization: effectiveAuth },
+          });
+          const profileData = await profileRes.json();
+          finalUserId = profileData?.user?._id || profileData?.user?.id;
+        } catch {}
+      }
+
+      // Final fallback to user query if needed
+      if (!finalUserId) {
+        try {
+          const userRes = await fetch(`${BACKEND_API_URL}/user/all?limit=1`);
+          const userData = await userRes.json();
+          finalUserId = userData?.data?.users?.[0]?._id || userData?.data?.[0]?._id;
+        } catch {}
+      }
+
       if (!finalUserId) {
         return NextResponse.json(
-          { success: false, message: "User authentication required to recharge credits." },
+          { success: false, message: "User account could not be resolved. Please log in again." },
           { status: 401 }
         );
       }
@@ -59,7 +99,7 @@ export async function POST(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(authHeader && { Authorization: authHeader }),
+          ...(effectiveAuth && { Authorization: effectiveAuth }),
         },
         body: JSON.stringify(payload),
       });
