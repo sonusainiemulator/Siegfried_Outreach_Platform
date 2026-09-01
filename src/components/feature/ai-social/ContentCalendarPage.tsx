@@ -63,13 +63,73 @@ const PLATFORM_EMOJI: Record<string, string> = {
   Facebook: '📘 Facebook',
   LinkedIn: '💼 LinkedIn',
   YouTube: '▶️ YouTube',
+  Twitter: '𝕏 X (Twitter)',
   GoogleBusinessProfile: '📍 Google Business',
+  Google: '📍 Google Business',
+  WhatsApp: '🟢 WhatsApp',
+  Telegram: '✈️ Telegram',
+  Threads: '🧵 Threads',
+  TikTok: '🎵 TikTok',
+  Pinterest: '📌 Pinterest',
+  Reddit: '🤖 Reddit',
+  WordPress: '📰 WordPress',
   instagram: '📸 Instagram',
   facebook: '📘 Facebook',
   linkedin: '💼 LinkedIn',
   youtube: '▶️ YouTube',
+  twitter: '𝕏 X (Twitter)',
+  google: '📍 Google Business',
   whatsapp: '🟢 WhatsApp',
-  twitter: '𝕏 Twitter',
+  telegram: '✈️ Telegram',
+  threads: '🧵 Threads',
+  tiktok: '🎵 TikTok',
+  pinterest: '📌 Pinterest',
+  reddit: '🤖 Reddit',
+  wordpress: '📰 WordPress',
+}
+
+export interface ChannelMeta {
+  id: string
+  name: string
+  label: string
+  emoji: string
+  color: string
+}
+
+const ALL_CHANNELS: ChannelMeta[] = [
+  { id: 'All', name: 'All Channels', label: '🌐 All Channels', emoji: '🌐', color: 'text-primary' },
+  { id: 'Instagram', name: 'Instagram', label: '📸 Instagram', emoji: '📸', color: 'text-rose-500' },
+  { id: 'Facebook', name: 'Facebook', label: '📘 Facebook', emoji: '📘', color: 'text-blue-600' },
+  { id: 'LinkedIn', name: 'LinkedIn', label: '💼 LinkedIn', emoji: '💼', color: 'text-blue-700' },
+  { id: 'Twitter', name: 'X (Twitter)', label: '𝕏 X (Twitter)', emoji: '𝕏', color: 'text-sky-400' },
+  { id: 'YouTube', name: 'YouTube', label: '▶️ YouTube', emoji: '▶️', color: 'text-red-600' },
+  { id: 'GoogleBusinessProfile', name: 'Google Business', label: '📍 Google Business', emoji: '📍', color: 'text-emerald-600' },
+  { id: 'WhatsApp', name: 'WhatsApp', label: '🟢 WhatsApp', emoji: '🟢', color: 'text-emerald-500' },
+  { id: 'Telegram', name: 'Telegram', label: '✈️ Telegram', emoji: '✈️', color: 'text-sky-500' },
+  { id: 'Threads', name: 'Threads', label: '🧵 Threads', emoji: '🧵', color: 'text-neutral-800 dark:text-neutral-200' },
+  { id: 'TikTok', name: 'TikTok', label: '🎵 TikTok', emoji: '🎵', color: 'text-pink-500' },
+  { id: 'Pinterest', name: 'Pinterest', label: '📌 Pinterest', emoji: '📌', color: 'text-red-500' },
+  { id: 'Reddit', name: 'Reddit', label: '🤖 Reddit', emoji: '🤖', color: 'text-orange-500' },
+  { id: 'WordPress', name: 'WordPress', label: '📰 WordPress / Web', emoji: '📰', color: 'text-blue-500' },
+]
+
+export const normalizePlatform = (p: string | undefined): string => {
+  if (!p) return ''
+  const lower = p.toLowerCase()
+  if (lower.includes('insta')) return 'instagram'
+  if (lower.includes('face') || lower === 'fb') return 'facebook'
+  if (lower.includes('link')) return 'linkedin'
+  if (lower.includes('you') || lower === 'yt') return 'youtube'
+  if (lower.includes('twit') || lower === 'x') return 'twitter'
+  if (lower.includes('goog') || lower.includes('gbp')) return 'google'
+  if (lower.includes('whats') || lower === 'wa') return 'whatsapp'
+  if (lower.includes('tele') || lower === 'tg') return 'telegram'
+  if (lower.includes('thread')) return 'threads'
+  if (lower.includes('tik')) return 'tiktok'
+  if (lower.includes('pin')) return 'pinterest'
+  if (lower.includes('red')) return 'reddit'
+  if (lower.includes('word') || lower.includes('blog') || lower.includes('web')) return 'wordpress'
+  return lower
 }
 
 const STATUS_BADGE_VARIANTS: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
@@ -154,16 +214,37 @@ export default function ContentCalendarPage() {
   // Filter planned items by platform
   const filteredPlanned = useMemo(() => {
     if (platformFilter === 'All') return plannedItems
-    return plannedItems.filter((i: any) => i.platform?.toLowerCase() === platformFilter.toLowerCase())
+    const target = normalizePlatform(platformFilter)
+    return plannedItems.filter((i: any) => normalizePlatform(i.platform) === target)
   }, [plannedItems, platformFilter])
 
   // Filter social posts by platform
   const filteredPosts = useMemo(() => {
     if (platformFilter === 'All') return socialPosts
-    return socialPosts.filter((p: any) =>
-      p.platforms?.some((plat: any) => plat.platform?.toLowerCase() === platformFilter.toLowerCase())
-    )
+    const target = normalizePlatform(platformFilter)
+    return socialPosts.filter((p: any) => {
+      const directMatch = normalizePlatform(p.platform) === target
+      const arrayMatch = p.platforms?.some((plat: any) => normalizePlatform(plat.platform || plat.id || plat) === target)
+      return directMatch || arrayMatch
+    })
   }, [socialPosts, platformFilter])
+
+  // Dynamic count of items per channel
+  const channelCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: plannedItems.length + socialPosts.length }
+    ALL_CHANNELS.forEach((ch) => {
+      if (ch.id === 'All') return
+      const target = normalizePlatform(ch.id)
+      const plannedCount = plannedItems.filter((i: any) => normalizePlatform(i.platform) === target).length
+      const postsCount = socialPosts.filter((p: any) => {
+        const directMatch = normalizePlatform(p.platform) === target
+        const arrayMatch = p.platforms?.some((plat: any) => normalizePlatform(plat.platform || plat.id || plat) === target)
+        return directMatch || arrayMatch
+      }).length
+      counts[ch.id] = plannedCount + postsCount
+    })
+    return counts
+  }, [plannedItems, socialPosts])
 
   // Generate calendar grid days
   const calendarDays = useMemo(() => {
@@ -368,23 +449,37 @@ export default function ContentCalendarPage() {
       </div>
 
       {/* Filter by Platform Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-        <span className="text-xs font-bold text-muted-foreground mr-1 shrink-0">Channels:</span>
-        {['All', 'Instagram', 'Facebook', 'LinkedIn', 'YouTube', 'GoogleBusinessProfile'].map((p) => {
-          const isSelected = platformFilter.toLowerCase() === p.toLowerCase()
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border/50">
+        <span className="text-xs font-bold text-muted-foreground mr-1 shrink-0 flex items-center gap-1">
+          <Filter className="w-3.5 h-3.5 text-primary" /> Channels:
+        </span>
+        {ALL_CHANNELS.map((ch) => {
+          const isSelected = platformFilter.toLowerCase() === ch.id.toLowerCase()
+          const count = channelCounts[ch.id] || 0
+
           return (
             <button
-              key={p}
+              key={ch.id}
               type="button"
-              onClick={() => setPlatformFilter(p)}
+              onClick={() => setPlatformFilter(ch.id)}
               className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer shrink-0',
+                'px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer shrink-0 flex items-center gap-1.5',
                 isSelected
-                  ? 'bg-primary text-white border-primary shadow-sm shadow-primary/30'
-                  : 'bg-card/70 hover:bg-card border-border/50 text-muted-foreground hover:text-foreground'
+                  ? 'bg-primary text-white border-primary shadow-sm shadow-primary/30 scale-[1.02]'
+                  : 'bg-card/80 hover:bg-card border-border/60 text-muted-foreground hover:text-foreground'
               )}
             >
-              {p === 'All' ? '🌐 All Channels' : PLATFORM_EMOJI[p] || p}
+              <span>{ch.label}</span>
+              {count > 0 && (
+                <span
+                  className={cn(
+                    'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold',
+                    isSelected ? 'bg-white/20 text-white' : 'bg-muted text-muted-foreground'
+                  )}
+                >
+                  {count}
+                </span>
+              )}
             </button>
           )
         })}
