@@ -10,6 +10,16 @@ export interface ApiIntegrationForm {
   grok_api_key: string
   stable_diffusion_api_key: string
   aiProvider: string
+  openai_image_api_key?: string
+  openai_image_quality?: string
+  openai_image_style?: string
+  heygen_api_key?: string
+  heygen_avatar_id?: string
+  heygen_voice_id?: string
+  imagen_api_key?: string
+  remotion_render_url?: string
+  default_image_provider?: string
+  default_video_provider?: string
 }
 
 export interface ImageUploadItemProps {

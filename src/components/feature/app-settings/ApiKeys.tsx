@@ -11,12 +11,16 @@ import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import AdminAiModelsCard from './api/AdminAiModelsCard'
+import DallE3ImageCard from './api/DallE3ImageCard'
 import DefaultAiProviderCard from './api/DefaultAiProviderCard'
 import GeminiCard from './api/GeminiCard'
 import GrokCard from './api/GrokCard'
 import GroqCard from './api/GroqCard'
+import HeyGenCard from './api/HeyGenCard'
 import HuggingFaceCard from './api/HuggingFaceCard'
+import ImagenCard from './api/ImagenCard'
 import OpenRouterCard from './api/OpenRouterCard'
+import RemotionVideoCard from './api/RemotionVideoCard'
 import StableDiffusionCard from './api/StableDiffusionCard'
 import WinstonAiCard from './api/WinstonAiCard'
 
@@ -36,6 +40,16 @@ const ApiIntegration = () => {
     grok_api_key: userData?.setting?.grok_api_key || '',
     stable_diffusion_api_key: userData?.setting?.stable_diffusion_api_key || '',
     aiProvider: userData?.setting?.aiProvider || 'gemini',
+    openai_image_api_key: userData?.setting?.openai_image_api_key || '',
+    openai_image_quality: userData?.setting?.openai_image_quality || 'standard',
+    openai_image_style: userData?.setting?.openai_image_style || 'vivid',
+    heygen_api_key: userData?.setting?.heygen_api_key || '',
+    heygen_avatar_id: userData?.setting?.heygen_avatar_id || 'josh_lite_20230714',
+    heygen_voice_id: userData?.setting?.heygen_voice_id || 'en-US-JennyNeural',
+    imagen_api_key: userData?.setting?.imagen_api_key || '',
+    remotion_render_url: userData?.setting?.remotion_render_url || '',
+    default_image_provider: userData?.setting?.default_image_provider || 'dall-e-3',
+    default_video_provider: userData?.setting?.default_video_provider || 'heygen',
   }
 
   const onSubmit = async (values: ApiIntegrationForm) => {
@@ -107,8 +121,12 @@ const ApiIntegration = () => {
                     <GroqCard />
                     <OpenRouterCard />
                     <GrokCard />
+                    <DallE3ImageCard />
+                    <ImagenCard />
                     <StableDiffusionCard />
                     <HuggingFaceCard />
+                    <HeyGenCard />
+                    <RemotionVideoCard />
                     <WinstonAiCard />
                     <AdminAiModelsCard />
                   </div>
