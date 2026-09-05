@@ -31,6 +31,20 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
     })
     : []
 
+  const getLiveUrl = (p: any) => {
+    if (!p) return null
+    if (p.postUrl) return p.postUrl
+    if (p.url) return p.url
+    const plat = p.platform?.toLowerCase()
+    if (plat === 'facebook' && p.postId) return `https://www.facebook.com/${p.postId}`
+    if (plat === 'wordpress') return 'https://christophersiegfried.com'
+    if (plat === 'twitter' && p.postId) return `https://x.com/i/status/${p.postId}`
+    if (plat === 'linkedin' && p.postId) return `https://www.linkedin.com/feed/update/${p.postId}`
+    if (plat === 'reddit' && p.postId) return `https://reddit.com${p.postId}`
+    if (plat === 'youtube' && p.postId) return `https://youtube.com/watch?v=${p.postId}`
+    return null
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between px-2 flex-wrap">
@@ -81,6 +95,8 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
                       : typeof post.mediaUrls === 'string'
                         ? post.mediaUrls
                         : null
+                    const isPublished = post.status === 'published' || post.status === 'partial'
+                    const primaryLink = post.postUrl || post.publishedUrl || post.platforms?.map(getLiveUrl).find(Boolean) || null
 
                     return (
                       <TableRow key={post.id} className="border-border/10 hover:bg-primary/5 transition-colors">
@@ -115,7 +131,7 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
                               const platformKey = p.platform?.toLowerCase() || ''
                               const Icon = platformIcons[platformKey] || Globe
                               const iconColor = platformColors[platformKey] || 'text-primary'
-                              const itemUrl = p.postUrl || p.url || (p.platform === 'wordpress' ? post.postUrl || post.publishedUrl : null)
+                              const itemUrl = getLiveUrl(p)
 
                               return itemUrl ? (
                                 <a
@@ -146,15 +162,15 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
                           <Badge
                             className={cn(
                               'text-[8px] font-black uppercase px-2 py-0.5 border-none',
-                              post.status === 'published'
+                              isPublished
                                 ? 'bg-emerald-500/10 text-emerald-500'
                                 : post.status === 'failed'
                                   ? 'bg-destructive/10 text-destructive'
                                   : 'bg-amber-500/10 text-amber-500',
                             )}
                           >
-                            {post.status === 'published'
-                              ? t('social_published')
+                            {isPublished
+                              ? post.status === 'partial' ? 'Published (Live)' : t('social_published')
                               : post.status === 'failed'
                                 ? t('failed')
                                 : t('social_scheduled')}
@@ -165,16 +181,16 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end items-center gap-1.5">
-                            {post.status === 'published' && (post.postUrl || post.platforms?.some((p: any) => p.postUrl || p.platform === 'wordpress')) && (
+                            {isPublished && primaryLink && (
                               <a
-                                href={post.postUrl || post.platforms?.find((p: any) => p.postUrl || p.platform === 'wordpress')?.postUrl || '#'}
+                                href={primaryLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="h-8 px-2.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase flex items-center gap-1 transition-all"
-                                title="Open Live Post / Blog"
+                                title="Open Live Post"
                                 onClick={(e) => e.stopPropagation()}
                               >
-                                <span>{post.platforms?.some((p: any) => p.platform === 'wordpress') ? 'Blog' : 'Live'}</span>
+                                <span>Live</span>
                                 <ExternalLink className="w-3 h-3" />
                               </a>
                             )}

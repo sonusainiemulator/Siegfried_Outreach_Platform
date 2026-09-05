@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "siegfried-social": {
+      "command": "node",
+      "args": [
+        "/root/mcp-siegfried-social/index.js"
+      ],
+      "env": {
+        "SIEGFRIED_API_KEY": "sig_live_b5b79f2a69e57b97fbbf2fc9242931615bfd0c4a4ce2d67e",
+        "BACKEND_PORT": "3001"
+      }
+    }
+  }
+}

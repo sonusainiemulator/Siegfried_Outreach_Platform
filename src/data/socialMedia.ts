@@ -1,11 +1,32 @@
+import React from 'react'
 import { PlatformConfig } from "@/types"
-import { AtSign, Facebook, Globe, Instagram, Linkedin, MessageCircle, MessageSquare, Send, Store, Twitter, Video, Youtube } from "lucide-react"
+import { AtSign, Facebook, Globe, Instagram, Linkedin, MessageCircle, MessageSquare, Send, Store, Video, Youtube } from "lucide-react"
+
+export const TwitterXIcon = ({ className, ...props }: React.SVGProps<SVGSVGElement>) =>
+  React.createElement(
+    'svg',
+    {
+      viewBox: '0 0 24 24',
+      width: 24,
+      height: 24,
+      fill: 'currentColor',
+      'aria-hidden': 'true',
+      className,
+      ...props,
+    },
+    React.createElement('path', {
+      d: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z',
+    })
+  )
+
+export const XIcon = TwitterXIcon
 
 export const platformColors: Record<string, string> = {
   facebook: 'text-blue-600',
   instagram: 'text-rose-500',
   linkedin: 'text-blue-700',
-  twitter: 'text-sky-400',
+  twitter: 'text-neutral-900 dark:text-white',
+  x: 'text-neutral-900 dark:text-white',
   google: 'text-emerald-600',
   tiktok: 'text-pink-500',
   youtube: 'text-red-600',
@@ -20,7 +41,8 @@ export const platformBgColors: Record<string, string> = {
   facebook: 'bg-blue-600/10',
   instagram: 'bg-rose-500/10',
   linkedin: 'bg-blue-700/10',
-  twitter: 'bg-sky-400/10',
+  twitter: 'bg-neutral-900/10 dark:bg-white/10',
+  x: 'bg-neutral-900/10 dark:bg-white/10',
   google: 'bg-emerald-600/10',
   tiktok: 'bg-pink-500/10',
   youtube: 'bg-red-600/10',
@@ -68,10 +90,10 @@ export const platforms: PlatformConfig[] = [
   {
     id: 'twitter',
     name: 'social_twitter',
-    icon: Twitter,
-    color: 'text-sky-400',
-    bgColor: 'bg-sky-400/10',
-    borderColor: 'border-sky-400/30',
+    icon: TwitterXIcon,
+    color: 'text-neutral-900 dark:text-white',
+    bgColor: 'bg-neutral-900/10 dark:bg-white/10',
+    borderColor: 'border-neutral-900/30 dark:border-white/30',
     description: 'social_twitter_desc',
     features: ['Posts', 'Analytics'],
     isAvailable: true,
@@ -170,6 +192,8 @@ export const platformIcons: Record<string, React.ComponentType<{ className?: str
   facebook: Facebook,
   instagram: Instagram,
   linkedin: Linkedin,
+  twitter: TwitterXIcon,
+  x: TwitterXIcon,
   google: Store,
   tiktok: Video,
   youtube: Youtube,
@@ -183,6 +207,16 @@ export const platformIcons: Record<string, React.ComponentType<{ className?: str
 export const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export const multiplePlatformColors: Record<string, { color: string; bgColor: string; borderColor: string }> = {
+  twitter: {
+    color: 'text-neutral-900 dark:text-white',
+    bgColor: 'bg-neutral-900/10 dark:bg-white/10',
+    borderColor: 'border-neutral-900/30 dark:border-white/30',
+  },
+  x: {
+    color: 'text-neutral-900 dark:text-white',
+    bgColor: 'bg-neutral-900/10 dark:bg-white/10',
+    borderColor: 'border-neutral-900/30 dark:border-white/30',
+  },
   facebook: {
     color: 'text-facebook',
     bgColor: 'bg-facebook/10',

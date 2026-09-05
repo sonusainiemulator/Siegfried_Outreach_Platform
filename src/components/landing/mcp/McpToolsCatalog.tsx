@@ -30,6 +30,8 @@ const categories = [
   'Videos and Images',
   'Content Extraction',
   'Media and Credits',
+  'Reddit',
+  'WordPress',
 ]
 
 export default function McpToolsCatalog() {
@@ -58,15 +60,17 @@ export default function McpToolsCatalog() {
   return (
     <section id="tools" className="py-24 bg-[#070A10] relative overflow-hidden">
       {/* Background elements */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-indigo-400 text-xs font-semibold">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono">
             <Terminal className="w-3.5 h-3.5" />
-            <span>28 MCP Tools • Full Specification</span>
+            <span>32 MCP Tools • Full Specification</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-outfit">
-            The Exact 28 Tools Your Agent Can Call
+            The Exact 32 Tools Your Agent Can Call
           </h2>
           <p className="text-gray-400 text-base sm:text-lg">
             Your AI agent autonomously invokes these tools based on your natural language prompt. Complete JSON-RPC 2.0
@@ -83,7 +87,7 @@ export default function McpToolsCatalog() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 28 tools by name or purpose (e.g., 'create_post', 'carousel', 'analytics')..."
+              placeholder="Search 32 tools by name or purpose (e.g., 'create_post', 'wordpress', 'reddit', 'analytics')..."
               className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-mono"
             />
           </div>
@@ -108,7 +112,7 @@ export default function McpToolsCatalog() {
 
         {/* Tools Count & Grid */}
         <div className="mb-4 flex items-center justify-between text-xs text-gray-400 font-mono">
-          <span>Showing {filteredTools.length} of 28 tools</span>
+          <span>Showing {filteredTools.length} of {mcpToolsCatalog.length} tools</span>
           <span>JSON-RPC 2.0 Compliant</span>
         </div>
 

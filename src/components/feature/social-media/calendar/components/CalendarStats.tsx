@@ -15,7 +15,7 @@ const CalendarStats = ({ stats, onMetricClick }: CalendarStatsProps) => {
         </div>
         <h3 className="text-xl font-medium dark:text-white  text-title-color">{t('calendar_metrics')}</h3>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4">
         <div 
           onClick={() => onMetricClick?.('thisMonth')}
           className="text-center p-2 md:p-4 rounded-border-radius bg-primary/5 border border-primary/10 cursor-pointer hover:bg-primary/10 transition-colors"
@@ -38,8 +38,15 @@ const CalendarStats = ({ stats, onMetricClick }: CalendarStatsProps) => {
           <p className="text-[10px] md:text-xs font-medium text-muted-foreground truncate">{t('published')}</p>
         </div>
         <div 
+          onClick={() => onMetricClick?.('draft')}
+          className="text-center p-2 md:p-4 rounded-border-radius bg-purple-500/5 border border-purple-500/10 cursor-pointer hover:bg-purple-500/15 hover:border-purple-500/30 transition-all group"
+        >
+          <p className="text-lg md:text-2xl font-medium text-purple-500 group-hover:scale-105 transition-transform">{stats.draft}</p>
+          <p className="text-[10px] md:text-xs font-medium text-muted-foreground truncate">{t('drafts', { defaultValue: 'Drafts' })}</p>
+        </div>
+        <div 
           onClick={() => onMetricClick?.('failed')}
-          className="text-center p-2 md:p-4 rounded-border-radius bg-destructive/5 border border-destructive/10 cursor-pointer hover:bg-destructive/10 transition-colors"
+          className="text-center p-2 md:p-4 rounded-border-radius bg-destructive/5 border border-destructive/10 cursor-pointer hover:bg-destructive/10 transition-colors col-span-2 sm:col-span-1"
         >
           <p className="text-lg md:text-2xl font-medium text-destructive">{stats.failed}</p>
           <p className="text-[10px] md:text-xs font-medium text-muted-foreground truncate">{t('failed')}</p>

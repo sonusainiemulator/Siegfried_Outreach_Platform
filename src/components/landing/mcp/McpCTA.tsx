@@ -28,7 +28,7 @@ export default function McpCTA() {
           </h2>
 
           <p className="text-gray-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            One hosted endpoint. 28 tools. 9 platforms. Connect Claude Code, Cursor, Codex, or Antigravity in seconds.
+            One hosted endpoint. 32 tools. 11 platforms. Connect Claude Code, Cursor, Codex, or Antigravity in seconds.
           </p>
 
           {/* Buttons */}

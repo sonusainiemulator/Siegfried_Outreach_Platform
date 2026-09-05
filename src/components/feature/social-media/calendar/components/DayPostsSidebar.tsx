@@ -56,17 +56,20 @@ const DayPostsSidebar = ({
   selectedDate,
   posts,
   notes = [],
+  allDrafts = [],
   onPostClick,
   onNoteClick,
   onAddNote,
   onToggleChecklistItem,
   onDeleteNote,
+  onEditPost,
 }: DayPostsSidebarProps) => {
   const { t } = useTranslation()
-  const [activeTab, setActiveTab] = useState<'all' | 'posts' | 'notes'>('all')
+  const [activeTab, setActiveTab] = useState<'all' | 'posts' | 'notes' | 'drafts'>('all')
 
   const showPosts = activeTab === 'all' || activeTab === 'posts'
   const showNotes = activeTab === 'all' || activeTab === 'notes'
+  const showDrafts = activeTab === 'drafts'
 
   const totalItems = posts.length + notes.length
 
@@ -84,7 +87,9 @@ const DayPostsSidebar = ({
                 {selectedDate ? formatDate(selectedDate) : 'Day Timeline'}
               </h3>
               <p className="text-xs text-muted-foreground truncate">
-                {selectedDate ? `${posts.length} posts • ${notes.length} notes` : 'Select a date'}
+                {selectedDate
+                  ? `${posts.length} posts • ${notes.length} notes • ${allDrafts.length} drafts`
+                  : `${allDrafts.length} Drafts available`}
               </p>
             </div>
           </div>
@@ -103,54 +108,163 @@ const DayPostsSidebar = ({
         </div>
 
         {/* Tab Filters */}
-        {selectedDate && (
-          <div className="flex items-center gap-1 mt-3 p-1 rounded-lg bg-muted/20 border border-border/10">
-            <button
-              type="button"
-              onClick={() => setActiveTab('all')}
-              className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all ${
-                activeTab === 'all'
-                  ? 'bg-background shadow-xs text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              All ({totalItems})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('posts')}
-              className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all ${
-                activeTab === 'posts'
-                  ? 'bg-background shadow-xs text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              Posts ({posts.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('notes')}
-              className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all ${
-                activeTab === 'notes'
-                  ? 'bg-background shadow-xs text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              Notes ({notes.length})
-            </button>
-          </div>
-        )}
+        <div className="flex items-center gap-1 mt-3 p-1 rounded-lg bg-muted/20 border border-border/10 overflow-x-auto">
+          {selectedDate && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveTab('all')}
+                className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all shrink-0 ${
+                  activeTab === 'all'
+                    ? 'bg-background shadow-xs text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                All ({totalItems})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('posts')}
+                className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all shrink-0 ${
+                  activeTab === 'posts'
+                    ? 'bg-background shadow-xs text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Posts ({posts.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('notes')}
+                className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all shrink-0 ${
+                  activeTab === 'notes'
+                    ? 'bg-background shadow-xs text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Notes ({notes.length})
+              </button>
+            </>
+          )}
+          <button
+            type="button"
+            onClick={() => setActiveTab('drafts')}
+            className={`flex-1 py-1 text-xs font-semibold rounded-md transition-all shrink-0 ${
+              activeTab === 'drafts'
+                ? 'bg-purple-500 text-white shadow-xs'
+                : 'text-purple-600 dark:text-purple-400 hover:text-purple-500'
+            }`}
+          >
+            Drafts ({allDrafts.length})
+          </button>
+        </div>
       </div>
 
       {/* Content Area */}
       <ScrollArea>
         <div className="sm:p-5 p-4 space-y-3 custom-scrollbar overflow-auto max-h-[420px]">
           {!selectedDate ? (
-            <div className="text-center py-12">
-              <CalendarDays className="w-12 h-12 mx-auto text-muted-foreground/20 mb-4" />
-              <p className="text-sm font-medium text-subtitle-color">
-                {t('choose_a_date_to_view_posts')}
-              </p>
+            <div className="space-y-4">
+              <div className="text-center py-6 border-b border-border/10">
+                <CalendarDays className="w-10 h-10 mx-auto text-muted-foreground/30 mb-2" />
+                <p className="text-xs font-medium text-subtitle-color">
+                  {t('choose_a_date_to_view_posts')}
+                </p>
+              </div>
+              {allDrafts.length > 0 && (
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between px-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5" /> Draft Posts ({allDrafts.length})
+                    </span>
+                    <Link
+                      href={ROUTES.SOCIAL_MEDIA.CREATE_POST}
+                      className="text-[10px] font-bold text-primary hover:underline"
+                    >
+                      + New
+                    </Link>
+                  </div>
+                  {allDrafts.map((draft) => (
+                    <div
+                      key={draft.id}
+                      onClick={() => onPostClick(draft as any)}
+                      className="p-3 rounded-xl border border-purple-500/20 bg-purple-500/5 hover:border-purple-500/40 transition-all cursor-pointer group"
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <Badge className="text-[8px] font-black uppercase px-2 py-0.5 border-none bg-purple-500/15 text-purple-600 dark:text-purple-300">
+                          <FileText className="w-3 h-3 mr-1" />
+                          DRAFT
+                        </Badge>
+                        {onEditPost && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onEditPost(draft.id)
+                            }}
+                            className="text-[10px] font-bold text-primary hover:underline flex items-center gap-1"
+                          >
+                            <Edit2 className="w-2.5 h-2.5" /> Edit
+                          </button>
+                        )}
+                      </div>
+                      <h4 className="font-semibold text-xs truncate group-hover:text-primary transition-colors">
+                        {draft.title}
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 mt-1 opacity-80">
+                        {draft.content}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : showDrafts ? (
+            <div className="space-y-2.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1 flex items-center gap-1.5">
+                <FileText className="w-3.5 h-3.5" /> Draft Posts ({allDrafts.length})
+              </div>
+              {allDrafts.length === 0 ? (
+                <div className="text-center py-10">
+                  <FileText className="w-10 h-10 mx-auto text-muted-foreground/20 mb-3" />
+                  <p className="text-xs text-muted-foreground">No draft posts found</p>
+                </div>
+              ) : (
+                allDrafts.map((draft) => (
+                  <div
+                    key={draft.id}
+                    onClick={() => onPostClick(draft as any)}
+                    className="p-3.5 rounded-xl border border-purple-500/20 bg-purple-500/5 hover:border-purple-500/40 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge className="text-[8px] font-black uppercase px-2 py-0.5 border-none bg-purple-500/15 text-purple-600 dark:text-purple-300">
+                        <FileText className="w-3 h-3 mr-1" />
+                        DRAFT
+                      </Badge>
+                      {onEditPost && (
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onEditPost(draft.id)
+                          }}
+                          className="h-6 px-2 text-[10px] font-bold rounded border-purple-500/30 text-purple-600 hover:bg-purple-500/10 gap-1"
+                        >
+                          <Edit2 className="w-2.5 h-2.5" /> Edit & Schedule
+                        </Button>
+                      )}
+                    </div>
+                    <h4 className="font-semibold text-sm truncate group-hover:text-primary transition-colors">
+                      {draft.title}
+                    </h4>
+                    <p className="text-xs text-muted-foreground line-clamp-2 mt-1 opacity-70">
+                      {draft.content}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
           ) : totalItems === 0 ? (
             <div className="text-center py-10">
@@ -323,7 +437,9 @@ const DayPostsSidebar = ({
                                 ? 'bg-destructive/10 text-destructive'
                                 : post.status === 'cancelled'
                                   ? 'bg-slate-500/20 text-slate-500'
-                                  : 'bg-amber-500/10 text-amber-500',
+                                  : post.status === 'draft'
+                                    ? 'bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30'
+                                    : 'bg-amber-500/10 text-amber-500',
                           )}
                         >
                           {post.status === 'published' ? (
@@ -332,6 +448,8 @@ const DayPostsSidebar = ({
                             <AlertCircle className="w-3 h-3 mr-1" />
                           ) : post.status === 'cancelled' ? (
                             <XCircle className="w-3 h-3 mr-1" />
+                          ) : post.status === 'draft' ? (
+                            <FileText className="w-3 h-3 mr-1" />
                           ) : (
                             <Clock className="w-3 h-3 mr-1" />
                           )}

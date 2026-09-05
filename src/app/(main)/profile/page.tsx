@@ -299,13 +299,18 @@ const ProfilePage = () => {
         </Card>
 
         <Card className="md:col-span-3 glass-card glass-dark-card border-glass-border bg-glass-bg backdrop-blur-xl rounded-border-radius animate-in fade-in slide-in-from-bottom duration-500">
-          <CardHeader>
-            <CardTitle>{t('security', { defaultValue: 'Security' })}</CardTitle>
-            <CardDescription>
+          <CardHeader className="p-6 pb-4 border-b border-border/20">
+            <CardTitle className="text-lg font-bold flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center">
+                <Lock className="w-4 h-4" />
+              </div>
+              <span>{t('security', { defaultValue: 'Password & Security' })}</span>
+            </CardTitle>
+            <CardDescription className="text-xs text-muted-foreground mt-1">
               {t('change_password_desc', { defaultValue: 'Update your password to keep your account secure.' })}
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <Formik
               initialValues={passwordInitialValues}
               validationSchema={profileSchemas.changePassword(t)}
@@ -313,24 +318,22 @@ const ProfilePage = () => {
             >
               {({ errors, touched, dirty }) => (
                 <Form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div className="space-y-2 group flex flex-col">
                       <Label htmlFor="oldPassword" className="text-xs font-medium text-foreground">
-                        {t('old_password')}
+                        {t('old_password', { defaultValue: 'Old Password' })}
                       </Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50 z-10" />
-                        <Field
-                          as={PasswordInput}
-                          id="oldPassword"
-                          name="oldPassword"
-                          placeholder={t('enter_old_password', { defaultValue: 'Enter old password' })}
-                          className={cn(
-                            'pl-10 rounded-[8px]',
-                            errors.oldPassword && touched.oldPassword && 'border-destructive/50',
-                          )}
-                        />
-                      </div>
+                      <Field
+                        as={PasswordInput}
+                        id="oldPassword"
+                        name="oldPassword"
+                        icon={Lock}
+                        placeholder={t('enter_old_password', { defaultValue: 'Enter old password' })}
+                        className={cn(
+                          'rounded-xl h-10',
+                          errors.oldPassword && touched.oldPassword && 'border-destructive/50',
+                        )}
+                      />
                       <ErrorMessage
                         name="oldPassword"
                         component="div"
@@ -340,21 +343,19 @@ const ProfilePage = () => {
 
                     <div className="space-y-2 group flex flex-col">
                       <Label htmlFor="newPassword" className="text-xs font-medium text-foreground">
-                        {t('new_password')}
+                        {t('new_password', { defaultValue: 'New Password' })}
                       </Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50 z-10" />
-                        <Field
-                          as={PasswordInput}
-                          id="newPassword"
-                          name="newPassword"
-                          placeholder={t('enter_new_password', { defaultValue: 'Enter new password' })}
-                          className={cn(
-                            'pl-10 rounded-[8px]',
-                            errors.newPassword && touched.newPassword && 'border-destructive/50',
-                          )}
-                        />
-                      </div>
+                      <Field
+                        as={PasswordInput}
+                        id="newPassword"
+                        name="newPassword"
+                        icon={Lock}
+                        placeholder={t('enter_new_password', { defaultValue: 'Enter new password' })}
+                        className={cn(
+                          'rounded-xl h-10',
+                          errors.newPassword && touched.newPassword && 'border-destructive/50',
+                        )}
+                      />
                       <ErrorMessage
                         name="newPassword"
                         component="div"
@@ -366,19 +367,17 @@ const ProfilePage = () => {
                       <Label htmlFor="confirmPassword" className="text-xs font-medium text-foreground">
                         {t('confirm_new_password', { defaultValue: 'Confirm New Password' })}
                       </Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50 z-10" />
-                        <Field
-                          as={PasswordInput}
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          placeholder={t('confirm_password_placeholder')}
-                          className={cn(
-                            'pl-10 rounded-[8px]',
-                            errors.confirmPassword && touched.confirmPassword && 'border-destructive/50',
-                          )}
-                        />
-                      </div>
+                      <Field
+                        as={PasswordInput}
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        icon={Lock}
+                        placeholder={t('confirm_password_placeholder', { defaultValue: 'Confirm password' })}
+                        className={cn(
+                          'rounded-xl h-10',
+                          errors.confirmPassword && touched.confirmPassword && 'border-destructive/50',
+                        )}
+                      />
                       <ErrorMessage
                         name="confirmPassword"
                         component="div"
@@ -391,13 +390,12 @@ const ProfilePage = () => {
                     <Button
                       type="submit"
                       disabled={isChangingPassword || !dirty}
-                      variant="premium"
-                      className="w-full md:w-auto min-w-40 h-11 rounded-xl shadow-lg shadow-primary/20 font-bold uppercase tracking-widest text-[10px] active:scale-95 disabled:opacity-50"
+                      className="w-full md:w-auto min-w-44 h-10 px-5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold text-xs shadow-md shadow-indigo-500/20 active:scale-95 disabled:opacity-50 cursor-pointer"
                     >
                       {isChangingPassword ? (
                         <>
                           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          {t('changing')}
+                          {t('changing', { defaultValue: 'Updating...' })}
                         </>
                       ) : (
                         <>

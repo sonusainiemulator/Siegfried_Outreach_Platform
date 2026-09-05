@@ -2,13 +2,13 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
+import { TwitterXIcon } from '@/data/socialMedia'
 import {
   Check,
   Sparkles,
   Instagram,
   Facebook,
   Linkedin,
-  Twitter,
   Youtube,
   Play,
   Share2,
@@ -87,7 +87,7 @@ export default function SocialMediaPlatforms() {
                   { name: 'Instagram', color: 'text-pink-500', icon: Instagram },
                   { name: 'Facebook', color: 'text-blue-500', icon: Facebook },
                   { name: 'LinkedIn', color: 'text-sky-600', icon: Linkedin },
-                  { name: 'X', color: 'text-foreground', icon: Twitter },
+                  { name: 'X', color: 'text-foreground', icon: TwitterXIcon },
                   { name: 'YouTube', color: 'text-red-500', icon: Youtube },
                   { name: 'TikTok', color: 'text-cyan-400', icon: Video },
                   { name: 'Threads', color: 'text-foreground', icon: AtSign },
@@ -379,7 +379,7 @@ export default function SocialMediaPlatforms() {
             <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg border border-white/20">
-                  <Twitter className="w-6 h-6 text-white" />
+                  <TwitterXIcon className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black tracking-tight">X (Twitter)</h3>

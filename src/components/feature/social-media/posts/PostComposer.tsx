@@ -27,7 +27,10 @@ import {
   Wand2,
   CheckCircle2,
   Info,
-  Palette
+  Palette,
+  Bookmark,
+  FileText,
+  Clock
 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
@@ -89,6 +92,7 @@ const PostComposer = () => {
   const [inlineActionLoading, setInlineActionLoading] = useState<string | null>(null)
   const [generateSocialCaption, { isLoading: isGeneratingInline }] = useGenerateSocialCaptionMutation()
   const [activeTab, setActiveTab] = useState<'composer' | 'preview'>('composer')
+  const [isSavingDraft, setIsSavingDraft] = useState(false)
 
   const handlePostTypeChange = (accountId: string, type: string) => {
     setPostTypes((prev) => ({
@@ -216,6 +220,80 @@ const PostComposer = () => {
       }
     },
   })
+
+  // Save as Draft Handler (Does not require platforms or immediate publishing)
+  const handleSaveDraft = async () => {
+    const titleVal = formik.values.title?.trim()
+    const contentVal = formik.values.content?.trim()
+
+    if (!titleVal && !contentVal && slides.length === 0) {
+      toast.error(
+        t('draft_min_content_needed', {
+          defaultValue: 'Please enter a title, content, or add media before saving a draft.',
+        })
+      )
+      return
+    }
+
+    try {
+      setIsSavingDraft(true)
+      const formData = new FormData()
+      formData.append('title', titleVal || 'Untitled Draft')
+      formData.append('content', contentVal || '')
+      formData.append('status', 'draft')
+      formData.append('isDraft', 'true')
+      formData.append('isImmediate', 'false')
+      formData.append('postTypes', JSON.stringify(postTypes))
+
+      if (isScheduled && scheduledDate && scheduledTime) {
+        const date = new Date(scheduledDate)
+        const [hours, minutes] = scheduledTime.split(':')
+        date.setHours(parseInt(hours), parseInt(minutes))
+        formData.append('scheduledDateTime', date.toISOString())
+      }
+
+      formik.values.platforms.forEach((platform) => {
+        formData.append('platformAccounts', platform)
+      })
+
+      // Append media in exact sequence
+      slides.forEach((slide) => {
+        if (slide.isExisting && slide.url) {
+          formData.append('mediaUrls', slide.url)
+        } else if (slide.file) {
+          formData.append('files', slide.file)
+        }
+      })
+
+      if (formik.values.mediaUrls) {
+        const urls = formik.values.mediaUrls
+          .split(',')
+          .map((u) => u.trim())
+          .filter(Boolean)
+        urls.forEach((url) => formData.append('mediaUrls', url))
+      }
+
+      if (formik.values.autoReplyConfig?.isEnabled) {
+        formData.append('autoReplyConfig', JSON.stringify(formik.values.autoReplyConfig))
+      }
+
+      if (editId) {
+        const res = await updatePost({ id: editId, data: formData }).unwrap()
+        toast.success(res.message || t('draft_updated_success', { defaultValue: 'Draft updated successfully!' }))
+      } else {
+        const res = await createPost(formData).unwrap()
+        toast.success(res.message || t('draft_saved_success', { defaultValue: 'Post saved as draft! You can edit, schedule, or publish anytime.' }))
+      }
+
+      router.push(ROUTES.SOCIAL_MEDIA.CALENDAR)
+    } catch (error) {
+      const apiError = error as ApiError
+      console.error('Save draft error:', error)
+      toast.error(apiError?.data?.message || t('failed_to_save_draft', { defaultValue: 'Failed to save draft' }))
+    } finally {
+      setIsSavingDraft(false)
+    }
+  }
 
   // Detect if any selected platform is set to Carousel format
   const isCarouselSelected = Object.entries(postTypes).some(([accId, type]) => {
@@ -588,6 +666,12 @@ const PostComposer = () => {
                 </div>
 
                 <div className="flex items-center gap-2 flex-wrap">
+                  {editPostData?.socialPost?.status === 'draft' && (
+                    <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/30 flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold">
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>{t('draft_mode', { defaultValue: 'Draft Post' })}</span>
+                    </Badge>
+                  )}
                   {isCarouselSelected && (
                     <Badge className="bg-primary/20 text-primary border-primary/30 flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold">
                       <Layers className="w-3.5 h-3.5" />
@@ -762,6 +846,33 @@ const PostComposer = () => {
                       isCarouselMode={isCarouselSelected}
                     />
                   </div>
+
+                  {/* YouTube Studio Suite (Auto Thumbnail Extraction & AI Studio) */}
+                  {selectedAccountObjects.some((a: any) => a.platform?.toLowerCase() === 'youtube') && (
+                    <div className="pt-2">
+                      <YouTubeStudioOptions
+                        config={youTubeConfig}
+                        onChange={setYouTubeConfig}
+                        currentTitle={formik.values.title}
+                        currentContent={formik.values.content}
+                        slides={slides}
+                        onApplyAITitle={(val) => formik.setFieldValue('title', val)}
+                        onApplyAIDescription={(val) => formik.setFieldValue('content', val)}
+                        onAddThumbnailToSlides={(thumbFile) => {
+                          const newSlide: CarouselSlideItem = {
+                            id: 'yt-thumb-' + Date.now(),
+                            url: URL.createObjectURL(thumbFile),
+                            isExisting: false,
+                            originalIndex: 0,
+                            file: thumbFile,
+                            type: 'image',
+                          }
+                          setSlides((prev) => [newSlide, ...prev.filter(s => !s.id.startsWith('yt-thumb-'))])
+                          toast.success(t('youtube_thumbnail_applied', { defaultValue: 'Auto 16:9 Thumbnail applied as primary cover!' }))
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               </form>
             </CardContent>
@@ -813,44 +924,76 @@ const PostComposer = () => {
           </Card>
         </div>
 
-        {/* Submit & Deploy Button */}
-        <div className="lg:col-span-8">
-          <Button
-            form="post-form"
-            type="submit"
-            onClick={() => {
-              if (!formik.values.title?.trim() || !formik.values.content?.trim()) {
-                formik.setFieldTouched('title', true)
-                formik.setFieldTouched('content', true)
-                if (!formik.values.title?.trim() && !formik.values.content?.trim()) {
-                  toast.error(t('title_and_caption_required', { defaultValue: 'Please enter a Post Title and Caption before publishing.' }))
-                } else if (!formik.values.title?.trim()) {
-                  toast.error(t('title_required', { defaultValue: 'Please enter a Post Title.' }))
-                } else if (!formik.values.content?.trim()) {
-                  toast.error(t('caption_required', { defaultValue: 'Please enter a Post Caption / Copy.' }))
+        {/* Submit, Draft & Deploy Action Bar */}
+        <div className="lg:col-span-12 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border/20">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span>
+              {editId && editPostData?.socialPost?.status === 'draft'
+                ? t('editing_draft_mode_hint', { defaultValue: 'Draft Mode: Update your draft, or publish/schedule to live channels when ready.' })
+                : t('draft_mode_hint', { defaultValue: 'Draft posts can be edited, scheduled, or published anytime from Calendar & Dashboard.' })}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3 w-full sm:w-auto sm:ml-auto">
+            {/* Save as Draft Button */}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSaveDraft}
+              disabled={isLoading || isSavingDraft}
+              className="sm:h-12 h-11 flex-1 sm:flex-initial px-5 rounded-[10px] border-amber-500/30 hover:border-amber-500/60 bg-amber-500/5 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold transition-all text-sm flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+            >
+              {isSavingDraft ? (
+                <Loader2 className="w-4 h-4 animate-spin text-amber-500" />
+              ) : (
+                <Bookmark className="w-4 h-4 text-amber-500" />
+              )}
+              <span>
+                {editId && editPostData?.socialPost?.status === 'draft'
+                  ? t('update_draft_btn', { defaultValue: 'Update Draft' })
+                  : t('save_as_draft_btn', { defaultValue: 'Save as Draft' })}
+              </span>
+            </Button>
+
+            {/* Main Publish / Schedule Broadcast Button */}
+            <Button
+              form="post-form"
+              type="submit"
+              onClick={() => {
+                if (!formik.values.title?.trim() || !formik.values.content?.trim()) {
+                  formik.setFieldTouched('title', true)
+                  formik.setFieldTouched('content', true)
+                  if (!formik.values.title?.trim() && !formik.values.content?.trim()) {
+                    toast.error(t('title_and_caption_required', { defaultValue: 'Please enter a Post Title and Caption before publishing.' }))
+                  } else if (!formik.values.title?.trim()) {
+                    toast.error(t('title_required', { defaultValue: 'Please enter a Post Title.' }))
+                  } else if (!formik.values.content?.trim()) {
+                    toast.error(t('caption_required', { defaultValue: 'Please enter a Post Caption / Copy.' }))
+                  }
                 }
-              }
-              if (formik.values.platforms.length === 0) {
-                toast.error(t('hub_selection_required', { defaultValue: 'Please select at least one social account to publish to.' }))
-              }
-            }}
-            disabled={isLoading}
-            className={cn(
-              'sm:h-12 h-11 w-full md:w-auto rounded-[10px] p-button-padding! btn-color md:ml-auto text-white font-semibold transition-all text-sm border-none gap-2 flex items-center justify-center shadow-xl cursor-pointer',
-              isLoading && 'opacity-50 cursor-not-allowed',
-            )}
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : editId ? (
-              t('social_redeploy_sequence', { defaultValue: 'Update Post' })
-            ) : isScheduled ? (
-              t('social_initiate_queue', { defaultValue: 'Schedule Broadcast' })
-            ) : (
-              t('social_execute_broadcast', { defaultValue: 'Publish Immediately' })
-            )}
-            {!isLoading && <ArrowRight className="w-5 h-5" />}
-          </Button>
+                if (formik.values.platforms.length === 0) {
+                  toast.error(t('hub_selection_required', { defaultValue: 'Please select at least one social account to publish to.' }))
+                }
+              }}
+              disabled={isLoading || isSavingDraft}
+              className={cn(
+                'sm:h-12 h-11 flex-1 sm:flex-initial rounded-[10px] p-button-padding! btn-color text-white font-semibold transition-all text-sm border-none gap-2 flex items-center justify-center shadow-xl cursor-pointer',
+                (isLoading || isSavingDraft) && 'opacity-50 cursor-not-allowed',
+              )}
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : editId && editPostData?.socialPost?.status !== 'draft' ? (
+                t('social_redeploy_sequence', { defaultValue: 'Update Post' })
+              ) : isScheduled ? (
+                t('social_initiate_queue', { defaultValue: 'Schedule Broadcast' })
+              ) : (
+                t('social_execute_broadcast', { defaultValue: 'Publish Immediately' })
+              )}
+              {!isLoading && <ArrowRight className="w-5 h-5" />}
+            </Button>
+          </div>
         </div>
       </div>
 

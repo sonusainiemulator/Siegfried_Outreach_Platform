@@ -61,6 +61,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       '/social/select-pages',
       '/ai-social',
       '/ai-agent-skills',
+      ROUTES.MCP_STUDIO,
+      '/mcp-studio',
     ]
     const isHiddenAllowed = HIDDEN_ALLOWED_PATHS.some(
       (path) => pathname === path || (path !== '/' && pathname.startsWith(`${path}/`)),

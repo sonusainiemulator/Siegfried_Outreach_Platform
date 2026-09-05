@@ -163,6 +163,8 @@ export interface PostModalProps {
   posts?: CalendarDayPost[]
   onEdit: (id: string) => void
   onDelete: (id: string) => void
+  onRetry?: (id: string, socialAccountId?: string) => Promise<void> | void
+  isRetrying?: boolean
 }
 
 export interface DashboardStatsCardsProps {
@@ -379,6 +381,8 @@ export interface CalendarPageHeaderProps {
   onGoToToday: () => void
   onOpenBatchModal?: () => void
   onOpenNewNote?: () => void
+  onOpenDraftsModal?: () => void
+  draftsCount?: number
 }
 
 export interface CalendarHeaderProps {
@@ -386,6 +390,10 @@ export interface CalendarHeaderProps {
   onNavigatePrevious: () => void
   onNavigateNext: () => void
   notesCount?: number
+  draftsCount?: number
+  activeFilter?: 'all' | 'scheduled' | 'published' | 'draft' | 'failed'
+  onFilterChange?: (filter: 'all' | 'scheduled' | 'published' | 'draft' | 'failed') => void
+  onViewDrafts?: () => void
 }
 
 export interface CalendarGridProps {
@@ -398,6 +406,7 @@ export interface CalendarGridProps {
   onPostClick: (post: CalendarDayPost) => void
   onNoteClick?: (note: CalendarNote) => void
   onAddNoteForDate?: (date: Date) => void
+  activeFilter?: 'all' | 'scheduled' | 'published' | 'draft' | 'failed'
 }
 
 export interface CalendarStatsProps {
@@ -406,20 +415,24 @@ export interface CalendarStatsProps {
     published: number
     thisMonth: number
     failed: number
+    draft: number
   }
   notesCount?: number
-  onMetricClick?: (type: 'thisMonth' | 'scheduled' | 'published' | 'failed') => void
+  draftsCount?: number
+  onMetricClick?: (type: 'thisMonth' | 'scheduled' | 'published' | 'failed' | 'draft') => void
 }
 
 export interface DayPostsSidebarProps {
   selectedDate: Date | null
   posts: CalendarDayPost[]
   notes?: CalendarNote[]
+  allDrafts?: Post[]
   onPostClick: (post: CalendarDayPost) => void
   onNoteClick?: (note: CalendarNote) => void
   onAddNote?: (date: Date) => void
   onToggleChecklistItem?: (noteId: string, itemId: string, completed: boolean) => void
   onDeleteNote?: (noteId: string) => void
+  onEditPost?: (postId: string) => void
 }
 
 export interface FormikProps {
@@ -464,6 +477,8 @@ export interface PostTimelineItemProps {
   post: SocialPost
   onEdit: (id: string) => void
   onDelete: (id: string) => void
+  onRetry?: (id: string, socialAccountId?: string) => Promise<void> | void
+  isRetrying?: boolean
 }
 
 export interface MetricsPostsModalProps {

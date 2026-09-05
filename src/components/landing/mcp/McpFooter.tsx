@@ -22,7 +22,7 @@ export default function McpFooter() {
               <span className="text-lg font-bold text-white font-outfit">{appName} MCP</span>
             </div>
             <p className="text-gray-400 text-xs leading-relaxed">
-              Autonomous social media infrastructure for AI agents. One unified endpoint, 28 tools, 9 official platforms.
+              Autonomous social media infrastructure for AI agents. One unified endpoint, 32 tools, 11 official platforms.
             </p>
             <div className="text-[11px] font-mono text-gray-500">
               Endpoint: <code className="text-indigo-400">api.siegfriedoutreach.com/mcp</code>
@@ -55,7 +55,7 @@ export default function McpFooter() {
               <li><a href="#platforms" className="hover:text-white transition-colors">X (Twitter) v2 API</a></li>
               <li><a href="#platforms" className="hover:text-white transition-colors">TikTok Content Posting</a></li>
               <li><a href="#platforms" className="hover:text-white transition-colors">YouTube Data v3</a></li>
-              <li><a href="#platforms" className="hover:text-white transition-colors">Facebook Pages API</a></li>
+              <li><a href="#platforms" className="hover:text-white transition-colors">Reddit API & WordPress REST</a></li>
             </ul>
           </div>
 
@@ -65,7 +65,7 @@ export default function McpFooter() {
               Developers & Legal
             </h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#tools" className="hover:text-white transition-colors">28 MCP Tools Reference</a></li>
+              <li><a href="#tools" className="hover:text-white transition-colors">32 MCP Tools Reference</a></li>
               <li><a href="#playground" className="hover:text-white transition-colors">Interactive Playground</a></li>
               <li><Link href="/plans" className="hover:text-white transition-colors">Flat Rate Pricing</Link></li>
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>

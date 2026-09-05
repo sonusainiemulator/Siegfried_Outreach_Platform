@@ -15,6 +15,7 @@ import {
   ExternalLink,
   Globe,
   ImageIcon,
+  Play,
   Settings,
   X,
   XCircle,
@@ -28,17 +29,27 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
   const isScheduled = statusLower === 'scheduled'
   const isFailed = statusLower === 'failed'
   const isCancelled = statusLower === 'cancelled'
-  const isPublished = statusLower === 'published'
+  const isPublished = statusLower === 'published' || statusLower === 'partial'
 
-  // Extract direct platform URL (e.g. WordPress blog URL, Twitter URL, YouTube link)
-  const publishedPlatform = post.platforms?.find(
-    (p: any) => p.postUrl || p.url || (p.platform?.toLowerCase() === 'wordpress' && (p.postUrl || p.postId))
-  )
+  const getPlatformUrl = (p: any) => {
+    if (!p) return null
+    if (p.postUrl) return p.postUrl
+    if (p.url) return p.url
+    const plat = p.platform?.toLowerCase()
+    if (plat === 'facebook' && p.postId) return `https://www.facebook.com/${p.postId}`
+    if (plat === 'wordpress') return 'https://christophersiegfried.com'
+    if (plat === 'twitter' && p.postId) return `https://x.com/i/status/${p.postId}`
+    if (plat === 'linkedin' && p.postId) return `https://www.linkedin.com/feed/update/${p.postId}`
+    if (plat === 'reddit' && p.postId) return `https://reddit.com${p.postId}`
+    if (plat === 'youtube' && p.postId) return `https://youtube.com/watch?v=${p.postId}`
+    return null
+  }
+
+  // Extract direct platform URL (e.g. WordPress blog URL, Facebook, Twitter URL, YouTube link)
   const directLink =
-    publishedPlatform?.postUrl ||
-    publishedPlatform?.url ||
     (post as any)?.postUrl ||
     (post as any)?.publishedUrl ||
+    post.platforms?.map(getPlatformUrl).find(Boolean) ||
     null
 
   const isWordPress = post.platforms?.some(
@@ -57,15 +68,29 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
       )}
     >
       <div>
-        <div className="relative aspect-video w-full bg-muted/20 overflow-hidden">
+        <div className="relative aspect-video w-full bg-muted/20 overflow-hidden flex items-center justify-center">
           {post.mediaUrls?.[0] ? (
-            <Image
-              src={getUploadPreviewUrl(post.mediaUrls[0])}
-              alt="Post preview"
-              fill
-              className="object-cover transition-transform duration-700 group-hover/card:scale-110"
-              unoptimized
-            />
+            Boolean(post.mediaUrls[0] && /\.(mp4|webm|mov|ogg|m4v|avi|mkv)$/i.test(post.mediaUrls[0])) ? (
+              <div className="relative w-full h-full bg-black flex items-center justify-center">
+                <video
+                  src={getUploadPreviewUrl(post.mediaUrls[0])}
+                  className="w-full h-full object-cover opacity-80"
+                  muted
+                  preload="metadata"
+                />
+                <div className="absolute w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center pointer-events-none shadow-md">
+                  <Play className="w-4 h-4 fill-white ml-0.5" />
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={getUploadPreviewUrl(post.mediaUrls[0])}
+                alt="Post preview"
+                fill
+                className="object-cover transition-transform duration-700 group-hover/card:scale-110"
+                unoptimized
+              />
+            )
           ) : (
             <div className="absolute inset-0 flex items-center justify-center opacity-20 bg-gradient-to-br from-primary/5 to-transparent">
               <ImageIcon className="w-10 h-10" />
@@ -126,9 +151,10 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
                 const platformKey = p.platform?.toLowerCase() || ''
                 const Icon = platformIcons[platformKey] || Globe
                 const iconColor = platformColors[platformKey] || 'text-primary'
-                const itemUrl = p.postUrl || p.url || (p.platform === 'wordpress' ? directLink : null)
+                const itemUrl = getPlatformUrl(p)
+                const isSuccess = p.status === 'published' || (!p.status && isPublished)
 
-                return itemUrl ? (
+                return itemUrl && isSuccess ? (
                   <a
                     key={i}
                     href={itemUrl}
@@ -149,9 +175,10 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
                     key={i}
                     className={cn(
                       'w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm border border-border/10',
-                      'bg-white dark:bg-muted/40 hover:scale-110'
+                      'bg-white dark:bg-muted/40 hover:scale-110',
+                      p.status === 'failed' && 'opacity-60 border-destructive/30'
                     )}
-                    title={`${p.platform ? p.platform.toUpperCase() : 'Social'}: ${p.accountName || ''}`}
+                    title={`${p.platform ? p.platform.toUpperCase() : 'Social'}: ${p.accountName || ''}${p.status === 'failed' ? ' (Failed)' : ''}`}
                   >
                     <Icon className={cn('w-4 h-4', iconColor)} />
                   </div>
@@ -180,7 +207,7 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
               ) : (
                 <Clock className="w-3 h-3" />
               )}
-              {isPublished ? t('social_published') : isFailed ? t('failed') : isCancelled ? t('cancelled') : t('social_scheduled')}
+              {isPublished ? (statusLower === 'partial' ? 'Published (Live)' : t('social_published')) : isFailed ? t('failed') : isCancelled ? t('cancelled') : t('social_scheduled')}
             </Badge>
 
             {/* Direct Published Link Button */}

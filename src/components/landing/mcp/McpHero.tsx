@@ -82,14 +82,14 @@ export default function McpHero() {
           {/* Top Badge */}
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-semibold backdrop-blur-md shadow-lg shadow-indigo-950/50 animate-fade-in">
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Hosted MCP Server • 28 Tools • 9 Platforms • JSON-RPC 2.0</span>
+            <span>Hosted MCP Server • 32 Tools • 11 Platforms • JSON-RPC 2.0</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] font-outfit">
             Social Media MCP Server:{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">
-              Publish to 9 Platforms
+              Publish to 11 Platforms
             </span>{' '}
             With Any AI Agent
           </h1>
@@ -97,7 +97,7 @@ export default function McpHero() {
           {/* Subtext */}
           <p className="text-lg sm:text-xl text-gray-300 font-normal leading-relaxed max-w-3xl mx-auto">
             Claude can write a post. It cannot publish one.{' '}
-            <strong className="text-white font-semibold">Siegfried MCP closes that gap</strong>. 28 official tools,
+            <strong className="text-white font-semibold">Siegfried MCP closes that gap</strong>. 32 official tools,
             zero web scraping, unmetered publishing, and real-time analytics for{' '}
             <span className="text-indigo-300 font-medium">Claude Code, Cursor, Codex, Antigravity</span>, and more.
           </p>

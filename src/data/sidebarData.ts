@@ -2,6 +2,7 @@ import { PERMISSIONS } from '@/constants/permissions'
 import { ROUTES } from '@/constants/routes'
 import { MenuSection } from '@/types'
 import {
+  Activity,
   BarChart3,
   Bot,
   Building2,
@@ -10,6 +11,8 @@ import {
   Calendar,
   Clock,
   Code,
+  Compass,
+  Cpu,
   CreditCard,
   Database,
   FileText,
@@ -33,16 +36,20 @@ import {
   Podcast,
   Presentation,
   Quote,
+  Search,
   Send,
   Settings,
   Share2,
+  Shield,
   ShieldAlert,
   ShieldCheck,
   Sparkles,
+  Terminal,
   TicketCheck,
   Type,
   Users,
   Video,
+  Wrench,
   Zap,
 } from 'lucide-react'
 
@@ -213,6 +220,8 @@ export const sidebarMenuData: MenuSection[] = [
       { id: 'ai-social-setup', label: 'Business Setup', icon: 'Building2', path: '/ai-social/setup' },
       { id: 'ai-social-indian-festivals', label: '🇮🇳 India Festivals Auto-Pilot', icon: 'Flame', path: '/ai-social/indian-festivals' },
       { id: 'ai-social-planner', label: 'AI Planner', icon: 'Sparkles', path: '/ai-social/planner' },
+      { id: 'ai-social-team', label: 'AI Team', icon: 'Bot', path: '/ai-social/team' },
+      { id: 'ai-social-reference', label: 'Reference Brain', icon: 'Globe', path: '/ai-social/reference' },
       { id: 'ai-social-calendar', label: 'Content Calendar', icon: 'Calendar', path: '/ai-social/calendar' },
       { id: 'ai-social-approval', label: 'Approval Center', icon: 'CheckCircle2', path: '/ai-social/approval' },
       { id: 'ai-social-templates', label: 'Templates', icon: 'Layers', path: '/ai-social/templates' },
@@ -228,6 +237,13 @@ export const sidebarMenuData: MenuSection[] = [
         label: 'Dashboard',
         icon: 'LayoutDashboard',
         path: ROUTES.SOCIAL_MEDIA.DASHBOARD,
+        requiredPermission: PERMISSIONS.MANAGE_POSTS,
+      },
+      {
+        id: 'social-advanced-analytics',
+        label: 'Advanced Analytics',
+        icon: 'BarChart3',
+        path: ROUTES.SOCIAL_MEDIA.ANALYTICS,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
       },
       {
@@ -252,6 +268,13 @@ export const sidebarMenuData: MenuSection[] = [
         requiredPermission: PERMISSIONS.SCHEDULED_POSTS,
       },
       {
+        id: 'social-logs-telemetry',
+        label: 'Publishing Logs',
+        icon: 'Activity',
+        path: ROUTES.SOCIAL_MEDIA.LOGS,
+        requiredPermission: PERMISSIONS.MANAGE_POSTS,
+      },
+      {
         id: 'social-post-wizard',
         label: 'Create Post',
         icon: 'Sparkles',
@@ -263,6 +286,27 @@ export const sidebarMenuData: MenuSection[] = [
         label: 'Meta Ads Manager',
         icon: 'Megaphone',
         path: ROUTES.SOCIAL_MEDIA.ADS_MANAGER,
+        requiredPermission: PERMISSIONS.MANAGE_POSTS,
+      },
+      {
+        id: 'tiktok-ads-manager',
+        label: 'TikTok Ads Manager',
+        icon: 'Video',
+        path: ROUTES.SOCIAL_MEDIA.TIKTOK_ADS,
+        requiredPermission: PERMISSIONS.MANAGE_POSTS,
+      },
+      {
+        id: 'reddit-ads-manager',
+        label: 'Reddit Ads Manager',
+        icon: 'Globe',
+        path: ROUTES.SOCIAL_MEDIA.REDDIT_ADS,
+        requiredPermission: PERMISSIONS.MANAGE_POSTS,
+      },
+      {
+        id: 'google-ads-manager',
+        label: 'Google Ads Manager',
+        icon: 'Search',
+        path: ROUTES.SOCIAL_MEDIA.GOOGLE_ADS,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
       },
       {
@@ -371,6 +415,43 @@ export const sidebarMenuData: MenuSection[] = [
   },
 
   {
+    title: 'Model Context Protocol',
+    items: [
+      {
+        id: 'mcp-suite',
+        label: 'MCP Studio',
+        icon: 'Cpu',
+        children: [
+          {
+            id: 'mcp-overview',
+            label: 'Overview & Connect',
+            icon: 'Compass',
+            path: ROUTES.MCP_STUDIO,
+          },
+          {
+            id: 'mcp-talent',
+            label: 'Talent Playbook',
+            icon: 'Sparkles',
+            path: `${ROUTES.MCP_STUDIO}?tab=talent`,
+          },
+          {
+            id: 'mcp-admin',
+            label: 'Admin Diagnostics',
+            icon: 'ShieldCheck',
+            path: `${ROUTES.MCP_STUDIO}?tab=admin`,
+          },
+          {
+            id: 'mcp-keys',
+            label: 'API Keys & Access',
+            icon: 'Key',
+            path: `${ROUTES.MCP_STUDIO}?tab=keys`,
+          },
+        ],
+      },
+    ],
+  },
+
+  {
     title: 'Billing & Plans',
     items: [
       {
@@ -450,6 +531,8 @@ export const sidebarMenuData: MenuSection[] = [
 ]
 
 export const iconMap = {
+  Activity,
+  Cpu,
   BarChart3,
   Building2,
   CheckCircle2,
@@ -490,8 +573,13 @@ export const iconMap = {
   TicketCheck,
   Podcast,
   Send,
+  Search,
   MessageCircle,
   Presentation,
+  Compass,
+  Shield,
+  Terminal,
+  Wrench,
 }
 
 export const rightSidebarData = [

@@ -33,13 +33,13 @@ import {
   Edit3,
   Sun,
   Moon,
-  Twitter,
   Layout,
   Grid,
   Search,
   BookOpen,
   Star
 } from 'lucide-react'
+import { TwitterXIcon } from '@/data/socialMedia'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import Input from '@/components/ui/input'
@@ -270,8 +270,8 @@ const VISUAL_THEMES = [
   },
   {
     id: 'tweet_card',
-    name: 'Viral X / Tweet Style',
-    icon: Twitter,
+    name: 'Viral X Style',
+    icon: TwitterXIcon,
   },
   {
     id: 'gradient_mesh',

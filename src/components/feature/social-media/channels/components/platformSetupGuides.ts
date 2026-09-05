@@ -73,7 +73,7 @@ export const platformSetupGuides: Record<string, SetupGuideItem> = {
     ],
   },
   twitter: {
-    title: 'Twitter (X) Setup Guide',
+    title: 'X (Twitter) Setup Guide',
     redirectUri: `${apiBase}/api/social-auth/twitter/callback`,
     steps: [
       'Create a Project and App in the X Developer Portal (developer.x.com).',

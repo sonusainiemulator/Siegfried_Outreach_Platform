@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   Clock,
   Facebook,
+  FileText,
   Globe,
   Instagram,
   Linkedin,
@@ -84,7 +85,9 @@ const MetricsPostsModal = ({
                               ? 'bg-destructive/15 text-destructive'
                               : post.status === 'cancelled'
                                 ? 'bg-slate-500/20 text-slate-500'
-                                : 'bg-amber-500/15 text-amber-500',
+                                : post.status === 'draft'
+                                  ? 'bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30'
+                                  : 'bg-amber-500/15 text-amber-500',
                         )}
                       >
                         {post.status === 'published' ? (
@@ -93,6 +96,8 @@ const MetricsPostsModal = ({
                           <AlertCircle className="w-3.5 h-3.5 mr-1.5" />
                         ) : post.status === 'cancelled' ? (
                           <XCircle className="w-3.5 h-3.5 mr-1.5" />
+                        ) : post.status === 'draft' ? (
+                          <FileText className="w-3.5 h-3.5 mr-1.5" />
                         ) : (
                           <Clock className="w-3.5 h-3.5 mr-1.5" />
                         )}

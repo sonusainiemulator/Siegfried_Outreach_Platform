@@ -47,6 +47,7 @@ const CalendarGrid = ({
   onPostClick,
   onNoteClick,
   onAddNoteForDate,
+  activeFilter = 'all',
 }: CalendarGridProps) => {
   const router = useRouter()
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null)
@@ -107,7 +108,10 @@ const CalendarGrid = ({
       <div className="grid grid-cols-7 relative">
         {calendarDays.map((day, idx) => {
           const dateStr = format(day, 'yyyy-MM-dd')
-          const dayPosts = postsByDate[dateStr] || []
+          const rawDayPosts = postsByDate[dateStr] || []
+          const dayPosts = activeFilter && activeFilter !== 'all'
+            ? rawDayPosts.filter((p) => p.status === activeFilter)
+            : rawDayPosts
           const dayNotes = notesByDate[dateStr] || []
           const isCurrentMonth = isSameMonth(day, currentMonth)
           const isSelected = selectedDate && isSameDay(day, selectedDate)
@@ -115,6 +119,7 @@ const CalendarGrid = ({
           const hasScheduled = dayPosts.some((p) => p.status === 'scheduled')
           const hasPublished = dayPosts.some((p) => p.status === 'published')
           const hasFailed = dayPosts.some((p) => p.status === 'failed')
+          const hasDraft = dayPosts.some((p) => p.status === 'draft')
           const hasNotes = dayNotes.length > 0
           const hasPinnedNote = dayNotes.some((n) => n.isPinned)
 
@@ -153,13 +158,16 @@ const CalendarGrid = ({
                   {dayPosts.length > 0 && (
                     <div className="flex gap-0.5 md:gap-1">
                       {hasPublished && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" title="Published" />
                       )}
                       {hasScheduled && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50" title="Scheduled" />
+                      )}
+                      {hasDraft && (
+                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-sm shadow-purple-500/50" title="Draft" />
                       )}
                       {hasFailed && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-destructive shadow-sm shadow-destructive/50" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-destructive shadow-sm shadow-destructive/50" title="Failed" />
                       )}
                     </div>
                   )}
@@ -215,15 +223,22 @@ const CalendarGrid = ({
                       onPostClick(post)
                     }}
                     className={cn(
-                      'px-1.5 py-1 rounded-md text-[9px] font-bold uppercase truncate cursor-pointer transition-all hover:scale-[1.02]',
+                      'px-1.5 py-1 rounded-md text-[9px] font-bold uppercase truncate cursor-pointer transition-all hover:scale-[1.02] flex items-center gap-1',
                       post.status === 'published'
                         ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20'
                         : post.status === 'failed'
                           ? 'bg-destructive/10 text-destructive hover:bg-destructive/20'
-                          : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20'
+                          : post.status === 'draft'
+                            ? 'bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30 hover:bg-purple-500/25'
+                            : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20'
                     )}
                   >
-                    {post.title}
+                    {post.status === 'draft' && (
+                      <span className="text-[7.5px] px-1 py-0.2 rounded bg-purple-500/20 text-purple-700 dark:text-purple-200 shrink-0 font-black">
+                        DRAFT
+                      </span>
+                    )}
+                    <span className="truncate">{post.title}</span>
                   </div>
                 ))}
 

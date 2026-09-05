@@ -37,7 +37,7 @@ const PlatformCard = ({
           <div className='flex gap-3'>
             <div
               className={cn(
-                'p-4 h-14 w-14 items-center rounded-border-radius transition-all duration-500 group-hover:scale-110 group-hover:rotate-3',
+                'p-4 h-14 w-14 flex items-center justify-center rounded-border-radius transition-all duration-500 group-hover:scale-110 group-hover:rotate-3',
                 platform.bgColor,
                 'ring-1 ring-white/5',
               )}

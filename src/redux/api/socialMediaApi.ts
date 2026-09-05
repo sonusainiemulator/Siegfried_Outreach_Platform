@@ -82,6 +82,17 @@ export const socialMediaApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['SocialPost'],
     }),
+    retrySocialPost: builder.mutation<
+      { message: string; socialPost: any },
+      { id: string; socialAccountId?: string }
+    >({
+      query: ({ id, socialAccountId }) => ({
+        url: `/social-posts/${id}/retry`,
+        method: 'POST',
+        body: { socialAccountId },
+      }),
+      invalidatesTags: ['SocialPost', 'SocialPublishLog'],
+    }),
     batchScheduleSocialPosts: builder.mutation({
       query: (data) => ({
         url: "/social-posts/batch-schedule",
@@ -184,6 +195,60 @@ export const socialMediaApi = baseApi.injectEndpoints({
         { type: 'CalendarNote', id: 'LIST' },
       ],
     }),
+
+    getTelemetryLogs: builder.query<
+      {
+        success: boolean
+        data: {
+          logs: any[]
+          pagination: {
+            total: number
+            page: number
+            limit: number
+            totalPages: number
+          }
+          summary: {
+            totalDispatches: number
+            successCount: number
+            failureCount: number
+            successRate: number
+            avgLatencyMs: number
+            systemHealth: 'healthy' | 'degraded' | 'action_required'
+            categoryBreakdown: Record<string, number>
+            platformBreakdown: Record<string, { total: number; success: number; failed: number; rate: number }>
+          }
+        }
+      },
+      {
+        platform?: string
+        status?: string
+        errorCategory?: string
+        search?: string
+        page?: number
+        limit?: number
+        startDate?: string
+        endDate?: string
+      } | void
+    >({
+      query: (params) => ({
+        url: '/social-posts/telemetry',
+        params: params || {},
+      }),
+      providesTags: ['SocialPublishLog'],
+    }),
+
+    getTelemetryLogById: builder.query<{ success: boolean; data: any }, string>({
+      query: (id) => `/social-posts/telemetry/${id}`,
+      providesTags: (result, error, id) => [{ type: 'SocialPublishLog', id }],
+    }),
+
+    clearTelemetryLogs: builder.mutation<{ success: boolean; message: string; deletedCount: number }, void>({
+      query: () => ({
+        url: '/social-posts/telemetry',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['SocialPublishLog'],
+    }),
   }),
 })
 
@@ -201,10 +266,14 @@ export const {
   useCreateSocialPostMutation,
   useUpdateSocialPostMutation,
   useDeleteSocialPostMutation,
+  useRetrySocialPostMutation,
   useBatchScheduleSocialPostsMutation,
   useGetCalendarNotesQuery,
   useCreateCalendarNoteMutation,
   useUpdateCalendarNoteMutation,
   useDeleteCalendarNoteMutation,
   useToggleChecklistItemMutation,
+  useGetTelemetryLogsQuery,
+  useGetTelemetryLogByIdQuery,
+  useClearTelemetryLogsMutation,
 } = socialMediaApi

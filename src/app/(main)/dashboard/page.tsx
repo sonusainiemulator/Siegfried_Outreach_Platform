@@ -84,7 +84,7 @@ const DashboardPage = () => {
               <PopoverContent className="w-auto p-0 bg-card/90 backdrop-blur-3xl border-white/10 shadow-2xl overflow-hidden rounded-2xl" align="end">
                 <div>
                   <Calendar
-                    initialFocus
+                    autoFocus
                     mode="range"
                     defaultMonth={date?.from}
                     selected={date}

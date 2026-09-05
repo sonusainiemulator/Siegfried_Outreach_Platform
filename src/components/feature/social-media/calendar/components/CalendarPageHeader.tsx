@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { CalendarPageHeaderProps } from '@/types'
-import { ArrowLeft, CalendarDays, Plus, Sparkles, StickyNote } from 'lucide-react'
+import { ArrowLeft, CalendarDays, FileText, Plus, Sparkles, StickyNote } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
@@ -11,12 +11,16 @@ import { useTranslation } from 'react-i18next'
 interface ExtendedCalendarHeaderProps extends CalendarPageHeaderProps {
   onOpenBatchModal?: () => void
   onOpenNewNote?: () => void
+  onOpenDraftsModal?: () => void
+  draftsCount?: number
 }
 
 const CalendarPageHeader = ({
   onGoToToday,
   onOpenBatchModal,
   onOpenNewNote,
+  onOpenDraftsModal,
+  draftsCount = 0,
 }: ExtendedCalendarHeaderProps) => {
   const router = useRouter()
   const { t } = useTranslation()
@@ -51,6 +55,19 @@ const CalendarPageHeader = ({
             >
               <StickyNote className="w-4 h-4 text-primary" />
               <span>+ Add Note</span>
+            </Button>
+          )}
+
+          {onOpenDraftsModal && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={onOpenDraftsModal}
+              className="sm:h-11 h-10 flex-1 md:flex-none rounded-border-radius p-button-padding! font-semibold text-sm gap-2 border-purple-500/40 text-purple-600 dark:text-purple-400 hover:bg-purple-500/10 transition-all cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-purple-500" />
+              <span>Drafts ({draftsCount || 0})</span>
             </Button>
           )}
 

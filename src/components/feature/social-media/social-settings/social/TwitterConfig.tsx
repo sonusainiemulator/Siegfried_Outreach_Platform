@@ -3,7 +3,7 @@
 import PasswordInput from '@/components/ui/PasswordInput'
 import Label from '@/components/ui/label'
 import { FormikProps } from '@/types'
-import { Twitter } from 'lucide-react'
+import { TwitterXIcon } from '@/data/socialMedia'
 import { useTranslation } from 'react-i18next'
 import { platformSetupGuides } from '../../channels/components/platformSetupGuides'
 import SetupGuideTooltip from './SetupGuideTooltip'
@@ -13,8 +13,8 @@ const TwitterConfig = ({ formik }: FormikProps) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <div className="p-2 rounded-[8px]! bg-twitter/10 text-twitter">
-          <Twitter className="w-5 h-5 fill-current" />
+        <div className="p-2 rounded-[8px]! bg-neutral-900/10 dark:bg-white/10 text-foreground dark:text-white">
+          <TwitterXIcon className="w-5 h-5 fill-current" />
         </div>
         <h3 className="font-medium text-[16px] text-title-color dark:text-white">{t('social_twitter_platform')}</h3>
         <SetupGuideTooltip

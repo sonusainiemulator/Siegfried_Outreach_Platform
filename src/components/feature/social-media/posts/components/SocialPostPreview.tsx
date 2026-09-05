@@ -54,6 +54,9 @@ export type PlatformType =
   | 'telegram'
   | 'wordpress'
 
+import { useAppSelector } from '@/redux/hooks'
+import { useGetSocialAccountsQuery } from '@/redux/api/socialMediaApi'
+
 interface SocialPostPreviewProps {
   title: string
   content: string
@@ -286,14 +289,30 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
     }
   }
 
-  // Find account info if available
-  const matchingAccount = selectedAccounts.find(
-    (a) => a.platform.toLowerCase() === activeTab.toLowerCase() || (activeTab === 'twitter' && a.platform.toLowerCase() === 'x')
-  )
-  const currentAccount = matchingAccount || selectedAccounts[0]
+  const { user: authUser } = useAppSelector((state) => state.auth)
+  const { data: accountsData } = useGetSocialAccountsQuery({})
+  const allConnectedAccounts: SocialAccount[] = accountsData?.socialAccounts || []
 
-  const accountName = currentAccount?.accountName || 'siegfried_growth'
-  const profilePicture = currentAccount?.profilePicture
+  // Find account info if available in selected accounts, then in all connected accounts
+  const matchingAccount =
+    selectedAccounts.find(
+      (a) => a.platform.toLowerCase() === activeTab.toLowerCase() || (activeTab === 'twitter' && a.platform.toLowerCase() === 'x')
+    ) ||
+    allConnectedAccounts.find(
+      (a) => a.platform.toLowerCase() === activeTab.toLowerCase() || (activeTab === 'twitter' && a.platform.toLowerCase() === 'x')
+    ) ||
+    selectedAccounts[0] ||
+    allConnectedAccounts[0]
+
+  const accountName =
+    matchingAccount?.accountName ||
+    authUser?.name ||
+    (authUser?.email ? authUser.email.split('@')[0] : 'My Account')
+  const profilePicture =
+    matchingAccount?.profilePicture ||
+    (authUser as any)?.avatar ||
+    (authUser as any)?.profilePicture ||
+    null
 
   const slideCount = slides.length
   const currentSlide = slides[activeSlideIndex]
@@ -547,7 +566,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               </button>
             </div>
 
-            <div className="px-3.5 text-xs font-bold">{isLiked ? '1,249 likes' : '1,248 likes'}</div>
+            <div className="px-3.5 text-xs font-bold">{isLiked ? '1 like' : 'Be the first to like'}</div>
 
             <div className="px-3.5 pt-1.5 pb-4 space-y-1 text-xs">
               <p className="leading-relaxed">
@@ -563,7 +582,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                   </>
                 )}
               </p>
-              <p className="text-[11px] text-neutral-400 pt-1">View all 42 comments</p>
+              <p className="text-[11px] text-neutral-400 pt-1">Add a comment...</p>
             </div>
           </div>
         )}
@@ -609,11 +628,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
             <div className="px-4 py-2 flex items-center justify-between text-[11px] text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-800">
               <div className="flex items-center gap-1.5">
                 <span className="w-4 h-4 rounded-full bg-blue-500 text-white flex items-center justify-center text-[9px]">👍</span>
-                <span>{isLiked ? 142 : 141}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <span>18 comments</span>
-                <span>5 shares</span>
+                <span>{isLiked ? 'Liked' : 'Like'}</span>
               </div>
             </div>
 
@@ -624,7 +639,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                 className={cn('flex items-center gap-2 py-2 px-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer transition-colors', isLiked && 'text-blue-600 font-bold')}
               >
                 <ThumbsUp className="w-4 h-4" />
-                <span>Like</span>
+                <span>{isLiked ? 'Liked' : 'Like'}</span>
               </button>
               <button type="button" className="flex items-center gap-2 py-2 px-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer transition-colors">
                 <MessageCircle className="w-4 h-4" />
@@ -651,9 +666,9 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                     <p className="text-xs font-extrabold truncate">{accountName}</p>
                     <span className="text-[10px] text-neutral-400 font-normal">• 1st</span>
                   </div>
-                  <p className="text-[10px] text-neutral-500 truncate">Founder & Growth Architect • 12,840 followers</p>
+                  <p className="text-[10px] text-neutral-500 truncate">{accountName} • Connected Account</p>
                   <p className="text-[9px] text-neutral-400 flex items-center gap-1 mt-0.5">
-                    <span>1h • Edited</span>
+                    <span>Just now</span>
                     <span>•</span>
                     <Globe className="w-2.5 h-2.5" />
                   </p>
@@ -702,9 +717,8 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                   <span className="w-4 h-4 rounded-full bg-green-500 text-white flex items-center justify-center text-[9px]">👏</span>
                   <span className="w-4 h-4 rounded-full bg-red-500 text-white flex items-center justify-center text-[9px]">❤️</span>
                 </span>
-                <span className="ml-1 font-semibold">{isLiked ? 284 : 283}</span>
+                <span className="ml-1 font-semibold">{isLiked ? 'Liked' : 'React'}</span>
               </div>
-              <div>48 comments • 12 reposts</div>
             </div>
 
             <div className="px-2 py-1.5 flex items-center justify-around text-neutral-600 dark:text-neutral-400 text-xs font-semibold">
@@ -714,7 +728,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                 className={cn('flex items-center gap-1.5 py-1.5 px-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer', isLiked && 'text-[#0077b5] font-bold')}
               >
                 <ThumbsUp className="w-3.5 h-3.5" />
-                <span>Like</span>
+                <span>{isLiked ? 'Liked' : 'Like'}</span>
               </button>
               <button type="button" className="flex items-center gap-1.5 py-1.5 px-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer">
                 <MessageCircle className="w-3.5 h-3.5" />
@@ -768,25 +782,23 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
             )}
 
             <div className="text-xs text-neutral-500 pt-1 border-b border-neutral-100 dark:border-neutral-800 pb-2">
-              9:41 AM • Aug 15, 2026 • <strong className="text-neutral-800 dark:text-neutral-200">14.2K</strong> Views
+              Live Feed Preview
             </div>
 
             <div className="flex items-center justify-between text-neutral-500 text-xs px-2 pt-1">
               <button type="button" className="flex items-center gap-1.5 hover:text-sky-500 transition-colors">
                 <MessageCircle className="w-4 h-4" />
-                <span>28</span>
               </button>
               <button type="button" className="flex items-center gap-1.5 hover:text-emerald-500 transition-colors">
                 <Repeat2 className="w-4 h-4" />
-                <span>45</span>
               </button>
               <button type="button" onClick={() => setIsLiked(!isLiked)} className={cn('flex items-center gap-1.5 hover:text-pink-500 transition-colors', isLiked && 'text-pink-500 font-bold')}>
                 <Heart className={cn('w-4 h-4', isLiked && 'fill-pink-500')} />
-                <span>{isLiked ? 312 : 311}</span>
+                <span>{isLiked ? 1 : 0}</span>
               </button>
               <button type="button" className="flex items-center gap-1.5 hover:text-sky-500 transition-colors">
                 <Bookmark className="w-4 h-4" />
-                <span>89</span>
+                <span>0</span>
               </button>
               <button type="button" className="flex items-center gap-1.5 hover:text-sky-500 transition-colors">
                 <Share2 className="w-4 h-4" />
@@ -809,7 +821,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                     <span>{accountName || 'YouTube Creator Channel'}</span>
                     <span className="text-[10px] text-red-500">✓</span>
                   </h5>
-                  <p className="text-[10px] text-neutral-400">128K subscribers • Just now</p>
+                  <p className="text-[10px] text-neutral-400">Verified Channel • Just now</p>
                 </div>
               </div>
               <Button size="sm" className="h-7 px-3.5 bg-[#FF0000] hover:bg-[#CC0000] text-white text-[11px] font-bold rounded-full shadow-xs">
@@ -822,12 +834,12 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               {title ? (
                 <h4 className="font-bold text-sm text-neutral-900 dark:text-white leading-snug">{title}</h4>
               ) : (
-                <h4 className="font-bold text-sm text-neutral-400 italic">Exploring the Future of AI 🚀</h4>
+                <h4 className="font-bold text-sm text-neutral-400 italic">YouTube Video Title</h4>
               )}
               <div className="text-xs text-neutral-600 dark:text-neutral-300 max-h-24 overflow-y-auto custom-scrollbar">
                 {content ? renderFormattedContent(content) : (
                   <p className="text-neutral-400 italic">
-                    AI is changing the world. In this video, we explore how AI is transforming content creation...
+                    Video description and notes will appear here...
                   </p>
                 )}
               </div>
@@ -852,7 +864,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                     <Play className="w-5 h-5 fill-current ml-0.5" />
                   </div>
                   <span className="text-xs font-bold text-white">YouTube 16:9 HD Video Player</span>
-                  <span className="text-[10px] text-neutral-400 mt-0.5">Upload a video or custom thumbnail in composer</span>
+                  <span className="text-[10px] text-neutral-400 mt-0.5">Upload a video or auto generate thumbnail</span>
                 </div>
               )}
             </div>
@@ -862,7 +874,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               <div className="flex items-center bg-neutral-100 dark:bg-white/10 rounded-full p-1 px-3 gap-2.5">
                 <button type="button" onClick={() => setIsLiked(!isLiked)} className={cn('flex items-center gap-1.5 cursor-pointer', isLiked && 'text-red-500 font-bold')}>
                   <ThumbsUp className={cn('w-3.5 h-3.5', isLiked && 'fill-red-500')} />
-                  <span>{isLiked ? '12.5K' : '12.4K'}</span>
+                  <span>{isLiked ? 'Liked' : 'Like'}</span>
                 </button>
                 <div className="w-px h-3.5 bg-neutral-300 dark:bg-neutral-700" />
                 <button type="button" className="cursor-pointer hover:text-neutral-900">
@@ -877,7 +889,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
 
               <div className="flex items-center bg-neutral-100 dark:bg-white/10 rounded-full p-1.5 px-3 gap-1.5 cursor-pointer ml-auto hover:bg-neutral-200 dark:hover:bg-white/15 transition-colors">
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>342</span>
+                <span>Comments</span>
               </div>
             </div>
           </div>
@@ -900,7 +912,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                       <Star key={s} className="w-3 h-3 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <span className="text-neutral-700 dark:text-neutral-300">5.0 (124 reviews)</span>
+                  
                 </div>
               </div>
               <Badge className="bg-[#4285F4]/10 text-[#4285F4] border-[#4285F4]/20 text-[10px] font-bold">
@@ -984,21 +996,21 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                 <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
                   <Heart className={cn('w-6 h-6', isLiked ? 'fill-[#fe2c55] text-[#fe2c55]' : 'text-white')} />
                 </div>
-                <span className="text-[11px] font-bold">{isLiked ? '84.2K' : '84.1K'}</span>
+                <span className="text-[11px] font-bold">{isLiked ? '1' : '0'}</span>
               </button>
 
               <div className="flex flex-col items-center gap-1 cursor-pointer">
                 <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
                   <MessageCircle className="w-6 h-6 text-white -rotate-90" />
                 </div>
-                <span className="text-[11px] font-bold">1,240</span>
+                <span className="text-[11px] font-bold">0</span>
               </div>
 
               <div className="flex flex-col items-center gap-1 cursor-pointer">
                 <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
                   <Bookmark className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-[11px] font-bold">6,520</span>
+                <span className="text-[11px] font-bold">0</span>
               </div>
 
               <div className="flex flex-col items-center gap-1 cursor-pointer">
@@ -1035,8 +1047,8 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-neutral-900 dark:text-white">r/growthmarketing</span>
-                  <span className="text-neutral-400">• 4h ago</span>
+                  <span className="font-extrabold text-neutral-900 dark:text-white">r/outreach</span>
+                  <span className="text-neutral-400">• Just now</span>
                 </div>
                 <p className="text-[10px] text-neutral-400">Posted by u/{accountName.replace(/\s+/g, '_').toLowerCase()}</p>
               </div>
@@ -1047,7 +1059,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
 
             {/* Post Title */}
             <h4 className="font-extrabold text-sm text-neutral-900 dark:text-white leading-snug">
-              {title || 'How we scaled to 10k MRR without ad spend (Full Breakdown)'}
+              {title || 'Reddit Post Title'}
             </h4>
 
             {/* Post Body */}
@@ -1072,7 +1084,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                 >
                   <ArrowBigUp className="w-5 h-5" />
                 </button>
-                <span>{342 + redditVote}</span>
+                <span>{redditVote === 1 ? '1' : redditVote === -1 ? '-1' : 'Vote'}</span>
                 <button
                   type="button"
                   onClick={() => setRedditVote(redditVote === -1 ? 0 : -1)}
@@ -1084,7 +1096,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
 
               <div className="flex items-center bg-neutral-100 dark:bg-white/5 rounded-full px-3 py-1.5 gap-1.5 cursor-pointer">
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>64 Comments</span>
+                <span>Comment</span>
               </div>
 
               <div className="flex items-center bg-neutral-100 dark:bg-white/5 rounded-full px-3 py-1.5 gap-1.5 cursor-pointer">
@@ -1177,7 +1189,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                         <span className="text-xs font-bold">{accountName || 'Official Channel'}</span>
                         <CheckCircle2 className="w-3.5 h-3.5 fill-[#25D366] text-white" />
                       </div>
-                      <span className="text-[10px] text-white/80 block">Channel • 14.8K followers</span>
+                      <span className="text-[10px] text-white/80 block">Channel • Verified Broadcast</span>
                     </div>
                   </div>
 
@@ -1239,13 +1251,13 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                     {/* Channel Emoji Reactions Bar */}
                     <div className="flex items-center gap-1.5 pt-1.5 border-t border-neutral-100 dark:border-neutral-800">
                       <span className="px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 shadow-xs cursor-pointer hover:scale-105 transition-transform">
-                        ❤️ 128
+                        ❤️
                       </span>
                       <span className="px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 shadow-xs cursor-pointer hover:scale-105 transition-transform">
-                        👍 94
+                        👍
                       </span>
                       <span className="px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 shadow-xs cursor-pointer hover:scale-105 transition-transform">
-                        🔥 67
+                        🔥
                       </span>
                     </div>
                   </div>
@@ -1356,7 +1368,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs font-bold">{accountName.replace(/\s+/g, '_').toLowerCase()}</span>
-                    <span className="text-[10px] text-neutral-400">2h</span>
+                    <span className="text-[10px] text-neutral-400">Just now</span>
                   </div>
                   <MoreHorizontal className="w-4 h-4 text-neutral-500" />
                 </div>
@@ -1379,7 +1391,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                 </div>
 
                 <div className="text-[11px] text-neutral-400 pt-0.5">
-                  14 replies &bull; {isLiked ? 149 : 148} likes
+                  {isLiked ? '1 like' : 'Be the first to like'}
                 </div>
               </div>
             </div>

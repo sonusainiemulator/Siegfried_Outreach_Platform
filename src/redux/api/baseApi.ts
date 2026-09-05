@@ -107,7 +107,15 @@ export const baseApi = createApi({
     'HermesSkill',
     'MetaAds',
     'MetaCampaigns',
-    'CalendarNote'
+    'TikTokAds',
+    'TikTokCampaigns',
+    'RedditAds',
+    'RedditCampaigns',
+    'GoogleAds',
+    'GoogleCampaigns',
+    'CalendarNote',
+    'SocialAnalytics',
+    'SocialPublishLog'
   ],
   endpoints: () => ({}),
 })

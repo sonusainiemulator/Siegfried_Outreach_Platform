@@ -4,13 +4,14 @@ import { footerLinks } from '@/data/landingSocialMedia'
 import useSettings from '@/hooks/useSettings'
 import { getMediaUrl } from '@/utils'
 import { motion } from 'framer-motion'
-import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
+import { TwitterXIcon } from '@/data/socialMedia'
+import { Facebook, Instagram, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 const SOCIALS = [
-  { icon: Twitter, label: 'Twitter' },
+  { icon: TwitterXIcon, label: 'X' },
   { icon: Instagram, label: 'Instagram' },
   { icon: Linkedin, label: 'LinkedIn' },
   { icon: Facebook, label: 'Facebook' },

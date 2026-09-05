@@ -1,3 +1,4 @@
+import { TwitterXIcon } from './socialMedia'
 import {
   Bell,
   Bot,
@@ -8,7 +9,6 @@ import {
   Mail,
   MessageSquare,
   Send,
-  Twitter,
   Users,
   Zap,
 } from 'lucide-react'
@@ -59,7 +59,7 @@ export const footerLinks = [
 
 export const socialLinks = [
   { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Twitter', icon: Twitter, href: '#' },
+  { name: 'X', icon: TwitterXIcon, href: '#' },
   { name: 'Telegram', icon: Send, href: '#' },
   { name: 'Instagram', icon: Instagram, href: '#' },
 ]

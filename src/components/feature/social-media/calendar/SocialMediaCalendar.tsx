@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ROUTES } from '@/constants/routes'
 import {
   useDeleteSocialPostMutation,
+  useRetrySocialPostMutation,
   useGetSocialPostsQuery,
   useGetCalendarNotesQuery,
   useToggleChecklistItemMutation,
@@ -41,6 +42,7 @@ const SocialMediaCalendar = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [activeFilter, setActiveFilter] = useState<'all' | 'scheduled' | 'published' | 'draft' | 'failed'>('all')
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [selectedNote, setSelectedNote] = useState<CalendarNote | null>(null)
@@ -63,6 +65,7 @@ const SocialMediaCalendar = () => {
   })
 
   const [deletePost, { isLoading: isDeleting }] = useDeleteSocialPostMutation()
+  const [retrySocialPost, { isLoading: isRetryingPost }] = useRetrySocialPostMutation()
   const [toggleChecklistItem] = useToggleChecklistItemMutation()
   const [deleteCalendarNote] = useDeleteCalendarNoteMutation()
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -70,6 +73,11 @@ const SocialMediaCalendar = () => {
 
   const posts: Post[] = data?.socialPosts || []
   const notes: CalendarNote[] = notesData?.notes || []
+
+  // Extract all drafts
+  const drafts = useMemo(() => {
+    return posts.filter((p) => p.status === 'draft')
+  }, [posts])
 
   // Generate calendar days
   const calendarDays = useMemo(() => {
@@ -85,7 +93,11 @@ const SocialMediaCalendar = () => {
   const postsByDate = useMemo(() => {
     const grouped: Record<string, Post[]> = {}
     posts.forEach((post) => {
-      const dateStr = format(new Date(post.scheduledDateTime || post.createdAt), 'yyyy-MM-dd')
+      const rawDate = post.scheduledDateTime || post.createdAt || (post as any).created_at
+      if (!rawDate) return
+      const parsed = new Date(rawDate)
+      if (isNaN(parsed.getTime())) return
+      const dateStr = format(parsed, 'yyyy-MM-dd')
       if (!grouped[dateStr]) {
         grouped[dateStr] = []
       }
@@ -99,11 +111,14 @@ const SocialMediaCalendar = () => {
     const grouped: Record<string, CalendarNote[]> = {}
     notes.forEach((note) => {
       if (note.targetDate) {
-        const dateStr = format(new Date(note.targetDate), 'yyyy-MM-dd')
-        if (!grouped[dateStr]) {
-          grouped[dateStr] = []
+        const parsed = new Date(note.targetDate)
+        if (!isNaN(parsed.getTime())) {
+          const dateStr = format(parsed, 'yyyy-MM-dd')
+          if (!grouped[dateStr]) {
+            grouped[dateStr] = []
+          }
+          grouped[dateStr].push(note)
         }
-        grouped[dateStr].push(note)
       }
     })
     return grouped
@@ -128,12 +143,16 @@ const SocialMediaCalendar = () => {
     const scheduled = posts.filter((p) => p.status === 'scheduled').length
     const published = posts.filter((p) => p.status === 'published').length
     const failed = posts.filter((p) => p.status === 'failed').length
+    const draft = posts.filter((p) => p.status === 'draft').length
     const thisMonth = posts.filter((p) => {
-      const postDate = new Date(p.scheduledDateTime || p.createdAt)
+      const rawDate = p.scheduledDateTime || p.createdAt || (p as any).created_at
+      if (!rawDate) return false
+      const postDate = new Date(rawDate)
+      if (isNaN(postDate.getTime())) return false
       return postDate.getMonth() === currentMonth.getMonth() && postDate.getFullYear() === currentMonth.getFullYear()
     }).length
 
-    return { scheduled, published, failed, thisMonth }
+    return { scheduled, published, failed, draft, thisMonth }
   }, [posts, currentMonth])
 
   // Handlers
@@ -220,14 +239,27 @@ const SocialMediaCalendar = () => {
     }
   }
 
-  const handleMetricClick = (type: 'thisMonth' | 'scheduled' | 'published' | 'failed') => {
+  const handleRetryPost = async (postId: string, socialAccountId?: string) => {
+    try {
+      const res = await retrySocialPost({ id: postId, socialAccountId }).unwrap()
+      toast.success(res?.message || 'Publishing retry initiated!')
+    } catch (error) {
+      const err = error as ApiError
+      toast.error(err?.data?.message || 'Failed to retry publishing.')
+    }
+  }
+
+  const handleMetricClick = (type: 'thisMonth' | 'scheduled' | 'published' | 'failed' | 'draft') => {
     let filtered: Post[] = []
     let title = ''
 
     switch (type) {
       case 'thisMonth':
         filtered = posts.filter((p) => {
-          const postDate = new Date(p.scheduledDateTime || p.createdAt)
+          const rawDate = p.scheduledDateTime || p.createdAt || (p as any).created_at
+          if (!rawDate) return false
+          const postDate = new Date(rawDate)
+          if (isNaN(postDate.getTime())) return false
           return postDate.getMonth() === currentMonth.getMonth() && postDate.getFullYear() === currentMonth.getFullYear()
         })
         title = `${format(currentMonth, 'MMMM yyyy')} Posts`
@@ -239,6 +271,10 @@ const SocialMediaCalendar = () => {
       case 'published':
         filtered = posts.filter((p) => p.status === 'published')
         title = 'Published Posts'
+        break
+      case 'draft':
+        filtered = posts.filter((p) => p.status === 'draft')
+        title = 'Draft Posts'
         break
       case 'failed':
         filtered = posts.filter((p) => p.status === 'failed')
@@ -277,12 +313,15 @@ const SocialMediaCalendar = () => {
         onGoToToday={handleGoToToday}
         onOpenBatchModal={() => setIsBatchModalOpen(true)}
         onOpenNewNote={() => handleOpenNewNote(selectedDate || new Date())}
+        onOpenDraftsModal={() => handleMetricClick('draft')}
+        draftsCount={drafts.length}
       />
 
       {/* Stats Cards */}
       <CalendarStats
         stats={stats}
         notesCount={notes.length}
+        draftsCount={drafts.length}
         onMetricClick={handleMetricClick}
       />
 
@@ -297,6 +336,10 @@ const SocialMediaCalendar = () => {
                 onNavigatePrevious={handleNavigatePrevious}
                 onNavigateNext={handleNavigateNext}
                 notesCount={notes.length}
+                draftsCount={drafts.length}
+                activeFilter={activeFilter}
+                onFilterChange={setActiveFilter}
+                onViewDrafts={() => handleMetricClick('draft')}
               />
               <CalendarGrid
                 currentMonth={currentMonth}
@@ -308,6 +351,7 @@ const SocialMediaCalendar = () => {
                 onPostClick={handlePostClick}
                 onNoteClick={handleNoteClick}
                 onAddNoteForDate={handleOpenNewNote}
+                activeFilter={activeFilter}
               />
             </CardContent>
           </Card>
@@ -319,11 +363,13 @@ const SocialMediaCalendar = () => {
             selectedDate={selectedDate}
             posts={selectedDatePosts}
             notes={selectedDateNotes}
+            allDrafts={drafts}
             onPostClick={handlePostClick}
             onNoteClick={handleNoteClick}
             onAddNote={handleOpenNewNote}
             onToggleChecklistItem={handleToggleChecklist}
             onDeleteNote={handleDeleteNote}
+            onEditPost={handleEditPost}
           />
         </div>
       </div>
@@ -342,11 +388,13 @@ const SocialMediaCalendar = () => {
       {/* Post Details Modal */}
       {selectedPost && (
         <PostModal
-          post={selectedPost}
+          post={posts.find((p) => p.id === selectedPost.id) || selectedPost}
           isOpen={isPostModalOpen}
           onClose={handlePostModalClose}
           onEdit={handleEditPost}
           onDelete={handleDeletePost}
+          onRetry={handleRetryPost}
+          isRetrying={isRetryingPost}
         />
       )}
 

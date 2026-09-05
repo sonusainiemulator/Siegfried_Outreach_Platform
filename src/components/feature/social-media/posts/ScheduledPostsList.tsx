@@ -2,24 +2,34 @@
 
 import { DeleteConfirmationModal } from '@/components/reusable/DeleteConfirmationModal'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { ROUTES } from '@/constants/routes'
-import { useDeleteSocialPostMutation, useGetSocialPostsQuery } from '@/redux/api/socialMediaApi'
+import { useDeleteSocialPostMutation, useRetrySocialPostMutation, useGetSocialPostsQuery } from '@/redux/api/socialMediaApi'
 import { ApiError } from '@/types'
 import { SocialPost } from '@/types/components/socialMedia'
-import { ArrowLeft, Plus } from 'lucide-react'
+import { AlertCircle, ArrowLeft, CheckCircle2, Clock, FileText, Layers, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 import { EmptyPostState } from './components/EmptyPostState'
 import { PostQueueSummary } from './components/PostQueueSummary'
 import { PostTimelineItem } from './components/PostTimelineItem'
 
 export default function ScheduledPostsList() {
   const { t } = useTranslation()
-  const { data, isLoading, refetch } = useGetSocialPostsQuery({ status: 'scheduled' })
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'scheduled' | 'published' | 'draft' | 'failed'>('all')
+
+  const queryArgs = useMemo(() => {
+    if (selectedFilter === 'all') return {}
+    return { status: selectedFilter }
+  }, [selectedFilter])
+
+  const { data, isLoading, refetch } = useGetSocialPostsQuery(queryArgs)
   const [deletePost, { isLoading: isDeleting }] = useDeleteSocialPostMutation()
+  const [retrySocialPost, { isLoading: isRetrying }] = useRetrySocialPostMutation()
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [postToDelete, setPostToDelete] = useState<string | null>(null)
   const posts: SocialPost[] = data?.socialPosts || []
@@ -28,15 +38,22 @@ export default function ScheduledPostsList() {
   const [timeLeft, setTimeLeft] = useState({ h: '00', m: '00', s: '00' })
 
   const sortedPosts = useMemo(() => {
-    return [...posts].sort(
-      (a, b) => new Date(a.scheduledDateTime!).getTime() - new Date(b.scheduledDateTime!).getTime(),
-    )
-  }, [posts])
+    return [...posts].sort((a, b) => {
+      const timeA = new Date(a.scheduledDateTime || (a as any).createdAt || Date.now()).getTime()
+      const timeB = new Date(b.scheduledDateTime || (b as any).createdAt || Date.now()).getTime()
+      if (selectedFilter === 'scheduled') {
+        return timeA - timeB
+      }
+      return timeB - timeA
+    })
+  }, [posts, selectedFilter])
 
-  const nextPost = sortedPosts[0]
+  const nextPost = useMemo(() => {
+    return posts.find((p) => p.status === 'scheduled' && p.scheduledDateTime) || sortedPosts[0]
+  }, [posts, sortedPosts])
 
   useEffect(() => {
-    if (!nextPost) {
+    if (!nextPost || !nextPost.scheduledDateTime) {
       setTimeLeft({ h: '00', m: '00', s: '00' })
       return
     }
@@ -85,6 +102,16 @@ export default function ScheduledPostsList() {
     }
   }
 
+  const handleRetry = async (id: string, socialAccountId?: string) => {
+    try {
+      const res = await retrySocialPost({ id, socialAccountId }).unwrap()
+      toast.success(res?.message || 'Publishing retry initiated!')
+      refetch()
+    } catch (err: any) {
+      toast.error(err?.data?.message || 'Failed to retry publishing.')
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-vh-50">
@@ -129,25 +156,104 @@ export default function ScheduledPostsList() {
       </div>
 
       {/* Summary Cards */}
-      <PostQueueSummary postsCount={posts.length} nextPost={nextPost} timeLeft={timeLeft} />
+      <PostQueueSummary postsCount={posts.filter((p) => p.status === 'scheduled').length} nextPost={nextPost} timeLeft={timeLeft} />
 
       {/* Timeline Section */}
-      <div className="space-y-6 pt-8 max-w-[1100px] m-auto">
-        <div className="flex items-center justify-between mb-2">
+      <div className="space-y-6 pt-4 max-w-[1100px] m-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/10 pb-4">
           <div className="flex items-center gap-3">
             <h2 className="text-xl font-medium tracking-tight text-title-color capitalize dark:text-white">
-              {t('social_roadmap') || 'Upcoming Timeline'}
+              {selectedFilter === 'scheduled'
+                ? t('social_roadmap') || 'Upcoming Queue'
+                : selectedFilter === 'published'
+                ? 'Published & Live Posts'
+                : selectedFilter === 'draft'
+                ? 'Draft Posts'
+                : 'All Social Posts'}
             </h2>
+            <Badge variant="outline" className="text-xs font-mono">
+              {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+            </Badge>
           </div>
 
+          {/* Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none bg-muted/30 p-1.5 rounded-xl border border-border/10">
+            <button
+              onClick={() => setSelectedFilter('all')}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap',
+                selectedFilter === 'all'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+              )}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>All Posts</span>
+            </button>
+            <button
+              onClick={() => setSelectedFilter('scheduled')}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap',
+                selectedFilter === 'scheduled'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+              )}
+            >
+              <Clock className="w-3.5 h-3.5" />
+              <span>Scheduled Queue</span>
+            </button>
+            <button
+              onClick={() => setSelectedFilter('published')}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap',
+                selectedFilter === 'published'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+              )}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Published & Live</span>
+            </button>
+            <button
+              onClick={() => setSelectedFilter('draft')}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap',
+                selectedFilter === 'draft'
+                  ? 'bg-primary text-white shadow-md shadow-primary/20'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+              )}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Drafts</span>
+            </button>
+            <button
+              onClick={() => setSelectedFilter('failed')}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap',
+                selectedFilter === 'failed'
+                  ? 'bg-destructive text-white shadow-md shadow-destructive/20'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+              )}
+            >
+              <AlertCircle className="w-3.5 h-3.5" />
+              <span>Failed & Issues</span>
+            </button>
+          </div>
         </div>
 
         <div className="grid gap-6">
-          {posts.length === 0 ? (
+          {sortedPosts.length === 0 ? (
             <EmptyPostState />
           ) : (
-            posts.map((post) => (
-              <PostTimelineItem key={post.id} post={post} onEdit={(id) => router.push(`${ROUTES.SOCIAL_MEDIA.CREATE_POST}?edit=${id}`)} onDelete={handleDelete} />
+            sortedPosts.map((post) => (
+              <PostTimelineItem
+                key={post.id}
+                post={post}
+                onEdit={(id) => router.push(`${ROUTES.SOCIAL_MEDIA.CREATE_POST}?edit=${id}`)}
+                onDelete={handleDelete}
+                onRetry={handleRetry}
+                isRetrying={isRetrying}
+              />
             ))
           )}
         </div>

@@ -31,12 +31,21 @@ const SidebarItem: FC<ExtendedSidebarItemProps> = ({ item, depth = 0, isCollapse
 
   const matchesPath = (itemPath: string) => {
     const [basePath, queryString] = itemPath.split('?')
-    const isBaseMatch = basePath === pathname || pathname.startsWith(basePath + '/')
+    const isBaseMatch = basePath === pathname || (basePath !== '/' && pathname.startsWith(basePath + '/'))
     if (!isBaseMatch) return false
-    if (!queryString) return true // no query constraint — just match pathname
+    if (!queryString) {
+      // If itemPath has no query, but current URL has discriminating query params like 'tab' or 'type',
+      // only consider it a match if those specific params are empty.
+      const currentTab = searchParams.get('tab')
+      const currentTypeParam = searchParams.get('type')
+      if (currentTab || currentTypeParam) return false
+      return true
+    }
     const itemParams = new URLSearchParams(queryString)
-    const itemType = itemParams.get('type')
-    return itemType === currentType
+    for (const [key, val] of itemParams.entries()) {
+      if (searchParams.get(key) !== val) return false
+    }
+    return true
   }
 
   const isActive =
@@ -69,7 +78,7 @@ const SidebarItem: FC<ExtendedSidebarItemProps> = ({ item, depth = 0, isCollapse
         setLocalIsOpen(true)
       }, 100)
     }
-  }, [pathname, currentType, isActive, isTopLevel, item.id, setOpenMenuId])
+  }, [pathname, searchParams, isActive, isTopLevel, item.id, setOpenMenuId])
 
   useEffect(() => {
     if (isBrowser) {

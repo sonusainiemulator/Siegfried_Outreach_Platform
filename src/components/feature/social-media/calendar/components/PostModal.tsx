@@ -18,15 +18,28 @@ import {
   Clock,
   Edit,
   ExternalLink,
+  FileText,
   Globe,
+  RotateCcw,
   Trash,
   XCircle
 } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useRetrySocialPostMutation } from '@/redux/api/socialMediaApi'
+import { toast } from 'sonner'
 
-const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModalProps) => {
+const PostModal = ({
+  isOpen,
+  onClose,
+  post,
+  posts,
+  onEdit,
+  onDelete,
+  onRetry,
+  isRetrying: externalIsRetrying
+}: PostModalProps) => {
   const allPosts = posts && posts.length > 0 ? posts : post ? [post] : []
 
   const initialIndex =
@@ -39,8 +52,32 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
 
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const [mediaIndex, setMediaIndex] = useState(0)
+  const [retryingTarget, setRetryingTarget] = useState<string | null>(null)
+  const [retrySocialPostMutation, { isLoading: isMutationRetrying }] = useRetrySocialPostMutation()
   const { t } = useTranslation()
   const current: any = allPosts[currentIndex]
+
+  const isRetrying = externalIsRetrying || isMutationRetrying
+
+  const handleExecuteRetry = async (postId: string, socialAccountId?: string) => {
+    const targetKey = socialAccountId || 'all'
+    setRetryingTarget(targetKey)
+    try {
+      if (onRetry) {
+        await onRetry(postId, socialAccountId)
+      } else {
+        const res = await retrySocialPostMutation({ id: postId, socialAccountId }).unwrap()
+        toast.success(res?.message || 'Publishing retry initiated!')
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || err?.message || 'Failed to retry publishing.')
+    } finally {
+      setRetryingTarget(null)
+    }
+  }
+
+  const failedPlatforms = current?.platforms?.filter((p: any) => p.status === 'failed') || []
+  const hasFailed = current?.status === 'failed' || current?.status === 'partial' || failedPlatforms.length > 0
 
   // Sync index when initialIndex changes (e.g. modal re-opens with different post)
   useEffect(() => {
@@ -57,17 +94,19 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
   }, [currentIndex])
 
 
+  const isVideoUrl = (url?: string) => Boolean(url && /\.(mp4|webm|mov|ogg|m4v|avi|mkv)$/i.test(url))
+
   useEffect(() => {
     const urls = current?.mediaUrls || []
-
     if (!isOpen || urls.length <= 1) return
+    if (isVideoUrl(urls[mediaIndex])) return
 
     const interval = setInterval(() => {
       setMediaIndex((prev) => (prev + 1) % urls.length)
-    }, 3000)
+    }, 4000)
 
     return () => clearInterval(interval)
-  }, [isOpen, currentIndex])
+  }, [isOpen, currentIndex, mediaIndex, current?.mediaUrls])
 
   if (allPosts.length === 0) return null
 
@@ -94,7 +133,9 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
                           ? 'bg-destructive text-white'
                           : current.status === 'cancelled'
                             ? 'bg-slate-500/70 text-white'
-                            : 'bg-amber-500 text-white',
+                            : current.status === 'draft'
+                              ? 'bg-purple-600 text-white shadow-sm shadow-purple-500/30'
+                              : 'bg-amber-500 text-white',
                     )}
                   >
                     {current.status === 'published' ? (
@@ -103,6 +144,8 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
                       <AlertCircle className="w-3 h-3 mr-1" />
                     ) : current.status === 'cancelled' ? (
                       <XCircle className="w-3 h-3 mr-1" />
+                    ) : current.status === 'draft' ? (
+                      <FileText className="w-3 h-3 mr-1" />
                     ) : (
                       <Clock className="w-3 h-3 mr-1" />
                     )}
@@ -120,7 +163,20 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
               </div>
 
               {current.status !== 'published' && (
-                <div className="flex gap-2 shrink-0 mr-8 sm:mr-12!">
+                <div className="flex items-center gap-2 shrink-0 mr-8 sm:mr-12!">
+                  {hasFailed && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 md:h-10 px-3 rounded-[8px] bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:border-amber-500/50 font-semibold gap-1.5 transition-all shadow-xs"
+                      onClick={() => handleExecuteRetry(current.id)}
+                      disabled={isRetrying}
+                      title="Retry publishing failed post / channels"
+                    >
+                      <RotateCcw className={cn('w-3.5 h-3.5', isRetrying && retryingTarget === 'all' && 'animate-spin')} />
+                      <span className="text-xs font-semibold">Retry</span>
+                    </Button>
+                  )}
                   <Button
                     variant="outline"
                     size="icon"
@@ -146,14 +202,24 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
 
           <div className="sm:p-6 p-4 pt-0! space-y-6 overflow-auto custom-scrollbar">
             {current.mediaUrls && current.mediaUrls.length > 0 && (
-              <div className="relative aspect-video rounded-border-radius overflow-hidden bg-muted/20 border border-border/10 group shadow-inner focus-within:ring-2 ring-primary/20">
-                <Image
-                  src={getUploadPreviewUrl(current.mediaUrls[mediaIndex])}
-                  alt={`Slide ${mediaIndex + 1}`}
-                  fill
-                  className="object-cover transition-opacity duration-500"
-                  unoptimized
-                />
+              <div className="relative aspect-video rounded-border-radius overflow-hidden bg-black/90 border border-border/10 group shadow-inner focus-within:ring-2 ring-primary/20 flex items-center justify-center">
+                {isVideoUrl(current.mediaUrls[mediaIndex]) ? (
+                  <video
+                    key={current.mediaUrls[mediaIndex]}
+                    src={getUploadPreviewUrl(current.mediaUrls[mediaIndex])}
+                    controls
+                    playsInline
+                    className="w-full h-full object-contain max-h-[360px]"
+                  />
+                ) : (
+                  <Image
+                    src={getUploadPreviewUrl(current.mediaUrls[mediaIndex])}
+                    alt={`Slide ${mediaIndex + 1}`}
+                    fill
+                    className="object-cover transition-opacity duration-500"
+                    unoptimized
+                  />
+                )}
 
                 {current.mediaUrls.length > 1 && (
                   <>
@@ -208,6 +274,47 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
               </div>
             )}
 
+            {hasFailed && (
+              <div className="p-3.5 sm:p-4 rounded-xl bg-destructive/10 border border-destructive/25 text-destructive backdrop-blur-sm space-y-2">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-2.5 min-w-0">
+                    <AlertCircle className="w-5 h-5 shrink-0 text-destructive mt-0.5" />
+                    <div className="space-y-1 min-w-0">
+                      <p className="text-xs font-bold uppercase tracking-wider text-destructive">
+                        Publishing Failed
+                      </p>
+                      {failedPlatforms.length > 0 ? (
+                        <div className="space-y-1">
+                          {failedPlatforms.map((p: any, idx: number) => (
+                            <p key={idx} className="text-xs text-foreground/90 break-words">
+                              <span className="font-semibold capitalize text-destructive">
+                                {p.platform || p.accountName}:
+                              </span>{' '}
+                              <span className="opacity-90">{p.error || 'Failed to publish to channel. Check connection or credentials.'}</span>
+                            </p>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-xs text-foreground/80">
+                          One or more channels failed during publishing. Click below to retry.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="h-8 px-3 text-xs shrink-0 rounded-lg gap-1.5 font-semibold shadow-sm hover:scale-105 active:scale-95 transition-all"
+                    onClick={() => handleExecuteRetry(current.id)}
+                    disabled={isRetrying}
+                  >
+                    <RotateCcw className={cn('w-3.5 h-3.5', isRetrying && retryingTarget === 'all' && 'animate-spin')} />
+                    <span>Retry All</span>
+                  </Button>
+                </div>
+              </div>
+            )}
+
             <div className="space-y-3">
               <h4 className="text-sm font-medium text-foreground">{t('content')}</h4>
               <p className="text-sm text-foreground leading-relaxed inner-card glass-dark-card p-2 rounded-[8px]  border border-border/10">
@@ -231,13 +338,16 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
                   </a>
                 )}
               </div>
-              <div className="flex flex-wrap gap-2 max-h-[100px] overflow-auto">
+              <div className="flex flex-wrap gap-2 max-h-[140px] overflow-auto">
                 {current.platforms?.map((p: any, i: number) => {
                   const platformKey = p.platform?.toLowerCase() || ''
                   const Icon = platformIcons[platformKey] || Globe
                   const itemUrl = p.postUrl || p.url || (platformKey === 'wordpress' ? current.postUrl || current.publishedUrl : null)
+                  const isFailedPlatform = p.status === 'failed'
+                  const channelAccountId = p.id || p.socialAccountId
+                  const isRetryingChannel = isRetrying && retryingTarget === channelAccountId
 
-                  return itemUrl ? (
+                  return itemUrl && !isFailedPlatform ? (
                     <a
                       key={i}
                       href={itemUrl}
@@ -260,18 +370,58 @@ const PostModal = ({ isOpen, onClose, post, posts, onEdit, onDelete }: PostModal
                     <div
                       key={i}
                       className={cn(
-                        'px-4 py-2 rounded-xl flex items-center gap-2 border border-border/10',
-                        platformBgColors[platformKey] || 'bg-muted/20',
+                        'px-3.5 py-2 rounded-xl flex items-center gap-2 border transition-all',
+                        isFailedPlatform
+                          ? 'border-destructive/40 bg-destructive/10'
+                          : 'border-border/10 ' + (platformBgColors[platformKey] || 'bg-muted/20'),
                       )}
+                      title={p.error ? `${p.accountName}: ${p.error}` : p.accountName}
                     >
-                      <Icon className={cn('w-4 h-4', platformColors[platformKey])} />
-                      <span className={cn('text-xs font-medium', platformColors[platformKey])}>
+                      <Icon className={cn('w-4 h-4', isFailedPlatform ? 'text-destructive' : platformColors[platformKey])} />
+                      <span className={cn('text-xs font-medium', isFailedPlatform ? 'text-destructive font-semibold' : platformColors[platformKey])}>
                         {p.accountName}
                       </span>
+                      {isFailedPlatform && (
+                        <div className="flex items-center gap-1.5 ml-1">
+                          <span className="text-[10px] font-bold uppercase text-destructive bg-destructive/20 px-1.5 py-0.5 rounded">
+                            Failed
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 px-1.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-500/15 rounded-md gap-1"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleExecuteRetry(current.id, channelAccountId)
+                            }}
+                            disabled={isRetrying}
+                            title={`Retry publishing to ${p.accountName}`}
+                          >
+                            <RotateCcw className={cn('w-3 h-3', isRetryingChannel && 'animate-spin')} />
+                            <span>Retry</span>
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   )
                 })}
               </div>
+
+              {current.platforms?.some((p: any) => p.status === 'failed' && p.error) && (
+                <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/25 flex flex-col gap-1.5 mt-2">
+                  <div className="flex items-center gap-2 text-destructive font-semibold text-xs">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>Publishing Error Details</span>
+                  </div>
+                  {current.platforms
+                    .filter((p: any) => p.status === 'failed' && p.error)
+                    .map((p: any, idx: number) => (
+                      <p key={idx} className="text-xs text-destructive/90 leading-relaxed pl-6">
+                        <strong className="text-destructive font-bold">{p.accountName} ({p.platform}):</strong> {p.error}
+                      </p>
+                    ))}
+                </div>
+              )}
             </div>
 
             {current.scheduledDateTime && (
