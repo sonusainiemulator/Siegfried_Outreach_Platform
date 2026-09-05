@@ -2,11 +2,11 @@
 
 ## 🤖 Directives for AI Agents & Pair Programmers
 
-1. **Always Update CHANGELOG.md with Date & Time**:
-   - Whenever any feature, bugfix, UI change, or documentation update is made, you MUST immediately log the change in `CHANGELOG.md` with the exact date, timestamp, and detailed bullet points before committing.
+1. **ALWAYS AUTO-PUSH TO GITHUB (Zero-Prompt Auto-Push)**:
+   - After completing ANY code edit, bugfix, UI change, or documentation update in either repository, you MUST ALWAYS build (`npm run build`), log changes in `CHANGELOG.md` with date & time, commit, and push to GitHub (`git push origin main`) **AUTOMATICALLY without waiting for or asking the user**. The user should NEVER have to say "push to github".
 
-2. **Auto-Push Documentation to GitHub**:
-   - Whenever `/www/wwwroot/siegfriedoutreach-docs` is edited, you must run `npm run build` and `git push origin main` to keep the live GitHub repository (`sonusainiemulator/siegfriedoutreach-docs`) 100% in sync.
+2. **Always Update CHANGELOG.md with Date & Time**:
+   - Whenever any feature, bugfix, UI change, or documentation update is made, you MUST immediately log the change in `CHANGELOG.md` with the exact date, timestamp, and detailed bullet points before committing.
 
 3. **Full-Feature Coverage & Bilingual Standards**:
    - Every platform module (Social Studio, AI Social Manager, AI Tools, Campaign Hub, Security & Passkeys, MCP Studio, Analytics) must be thoroughly documented in both **English** and **हिंदी**.
