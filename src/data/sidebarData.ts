@@ -27,6 +27,7 @@ import {
   LayoutDashboard,
   ListFilter,
   Mail,
+  MapPin,
   Megaphone,
   MessageCircle,
   MessageSquare,
@@ -452,6 +453,20 @@ export const sidebarMenuData: MenuSection[] = [
   },
 
   {
+    title: 'AI Employee Hub',
+    items: [
+      { id: 'ai-emp-dashboard', label: 'Command Center', icon: 'Cpu', path: ROUTES.AI_EMPLOYEES.DASHBOARD },
+      { id: 'ai-emp-onboarding', label: 'Business Setup', icon: 'Building2', path: ROUTES.AI_EMPLOYEES.ONBOARDING },
+      { id: 'ai-emp-website', label: 'Website Builder', icon: 'Globe', path: ROUTES.AI_EMPLOYEES.WEBSITE_BUILDER },
+      { id: 'ai-emp-seo', label: 'SEO Agent', icon: 'Search', path: ROUTES.AI_EMPLOYEES.SEO_AGENT },
+      { id: 'ai-emp-server', label: 'Server Agent', icon: 'Database', path: ROUTES.AI_EMPLOYEES.SERVER_AGENT },
+      { id: 'ai-emp-maintenance', label: 'Maintenance Bot', icon: 'Wrench', path: ROUTES.AI_EMPLOYEES.MAINTENANCE_AGENT },
+      { id: 'ai-emp-social', label: 'Social Media Agent', icon: 'Share2', path: ROUTES.AI_EMPLOYEES.SOCIAL_AGENT },
+      { id: 'ai-emp-google', label: 'Google Business', icon: 'MapPin', path: ROUTES.AI_EMPLOYEES.GOOGLE_BUSINESS },
+      { id: 'ai-emp-credits', label: 'Credits', icon: 'Coins', path: ROUTES.AI_EMPLOYEES.CREDITS },
+    ],
+  },
+  {
     title: 'Billing & Plans',
     items: [
       {
@@ -555,6 +570,7 @@ export const iconMap = {
   ImageIcon,
   Palette,
   Mail,
+  MapPin,
   Users,
   ListFilter,
   Layers,

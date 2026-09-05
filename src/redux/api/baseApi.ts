@@ -115,7 +115,17 @@ export const baseApi = createApi({
     'GoogleCampaigns',
     'CalendarNote',
     'SocialAnalytics',
-    'SocialPublishLog'
+    'SocialPublishLog',
+    'AiEmployee',
+    'Onboarding',
+    'WebsiteBuilder',
+    'SeoAgent',
+    'ServerAgent',
+    'MaintenanceAgent',
+    'SocialAgent',
+    'GoogleBusiness',
+    'AiEmployeeCredits',
+    'Draft',
   ],
   endpoints: () => ({}),
 })

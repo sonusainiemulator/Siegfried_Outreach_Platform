@@ -4,6 +4,50 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 🤖 [2026-09-05 22:38:00 CEST] — AI Employee Ecosystem — Full Business Automation Platform
+
+### 🚀 1. AI Employee Hub — 6 Specialized AI Agents
+- **AI Website Builder Agent** 🌐 — Pre-built template gallery (9 business types), AI content generation, credit-based website creation with real-time generation progress overlay.
+- **AI SEO Expert Agent** 🔍 — On-page SEO audit with scoring (0-100), keyword research table, issue detection (critical/warning/info), bulk fix application, and admin agent training interface.
+- **AI Server Manager Agent** 🖥️ — Server plan selection (Basic/Pro/Enterprise), domain configuration, one-click deployment with step-by-step progress, live Core Web Vitals monitoring.
+- **AI Maintenance Bot Agent** 🔧 — Automated maintenance scheduling (weekly/biweekly/monthly), 6 task types (content, security, performance, design, SEO, backup), approval mode (auto/manual), rollback capability, maintenance logs.
+- **Social Media AI Agent** 📱 — Viral content ideas with viral score, content creation hub (post/reel/video/carousel), competitor analysis, trending topics feed, content queue with scheduling & publishing.
+- **AI Google Business Expert** 📍 — Google Profile audit with completeness checklist, local keyword ranking tracker, NAP citation management, Google Posts creation.
+
+### 🧙‍♂️ 2. Client Onboarding Wizard (4-Step)
+- Step 1: Business Type Selection — 15 industry categories (Restaurant, E-Commerce, Healthcare, Real Estate, EdTech, Agency, B2B SaaS, etc.)
+- Step 2: Business Details Form — Name, description, target audience, Google Business link, reference/competitor sites, media upload.
+- Step 3: AI Employee Selection — Choose which AI agents to activate, credit cost preview, animated selection cards.
+- Step 4: Review & Launch — Summary of business profile + selected agents, total credit cost, one-click activation.
+- Save Draft available at every step.
+
+### 🎛️ 3. Command Center Dashboard
+- All 6 AI agents shown as status cards with active/idle/working states.
+- Credit balance with usage progress bar.
+- Monthly task count with mini bar chart.
+- Recent activity feed (real-time AI agent actions).
+- Saved drafts manager with resume capability.
+
+### 💰 4. Credit Management System
+- Credit balance overview with animated progress bars.
+- Usage breakdown per AI agent with visual bar charts.
+- 4 credit purchase packages (Starter/Growth/Pro/Enterprise) with pricing.
+- Full transaction history with agent emoji identification.
+
+### 🗂️ 5. Infrastructure & API Layer
+- **7 new RTK Query API files**: `onboardingApi.ts`, `aiEmployeeApi.ts`, `websiteBuilderApi.ts`, `seoAgentApi.ts`, `serverAgentApi.ts`, `maintenanceAgentApi.ts`, `socialAgentApi.ts`, `googleBusinessApi.ts`
+- **10 new tag types** added to `baseApi.ts` for cache management.
+- **9 new routes** added to `routes.ts` under `AI_EMPLOYEES` namespace.
+- **AI Employee Hub** sidebar section with 9 navigation items.
+- Layout `HIDDEN_ALLOWED_PATHS` updated for AI Employee routes.
+
+### 📁 Files Created (~35 new files)
+- `src/redux/api/`: 7 new API files
+- `src/components/feature/ai-employees/`: 8 component files (OnboardingWizard, CommandCenter, WebsiteBuilder, SeoAgent, ServerAgent, MaintenanceAgent, SocialAgent, GoogleBusiness, Credits)
+- `src/app/(main)/ai-employees/`: 9 route pages (onboarding, dashboard, website-builder, seo-agent, server-agent, maintenance-agent, social-agent, google-business, credits)
+
+---
+
 ## 🚀 [2026-09-05 21:56:00 CEST] — September 5, 2026 (Executive Profile Update & Official Authority Badges)
 
 ### 👤 1. Executive Leadership & Company Details Update

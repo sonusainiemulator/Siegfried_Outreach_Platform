@@ -118,5 +118,16 @@ export const ROUTES = {
     ADMIN_TEMPLATES: '/ai-social/admin/templates',
     ADMIN_CREDITS: '/ai-social/admin/credits',
   },
+  AI_EMPLOYEES: {
+    ONBOARDING: '/ai-employees/onboarding',
+    DASHBOARD: '/ai-employees/dashboard',
+    WEBSITE_BUILDER: '/ai-employees/website-builder',
+    SEO_AGENT: '/ai-employees/seo-agent',
+    SERVER_AGENT: '/ai-employees/server-agent',
+    MAINTENANCE_AGENT: '/ai-employees/maintenance-agent',
+    SOCIAL_AGENT: '/ai-employees/social-agent',
+    GOOGLE_BUSINESS: '/ai-employees/google-business',
+    CREDITS: '/ai-employees/credits',
+  },
   HOME: '/',
 } as const
