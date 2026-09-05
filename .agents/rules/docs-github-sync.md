@@ -1,36 +1,17 @@
-# Mandatory Rule: Documentation Updates & Automatic GitHub Push
+# AGENTS.md — Siegfried Outreach Platform Agent Directives
 
-## 🎯 Scope & Trigger
-Whenever any documentation file (`.mdx`, `.json`, `.tsx`, `.ts`, or assets) inside `/www/wwwroot/siegfriedoutreach-docs` is created, updated, or deleted, you **MUST ALWAYS** follow these steps:
+## 🤖 Directives for AI Agents & Pair Programmers
 
----
+1. **Always Update CHANGELOG.md with Date & Time**:
+   - Whenever any feature, bugfix, UI change, or documentation update is made, you MUST immediately log the change in `CHANGELOG.md` with the exact date, timestamp, and detailed bullet points before committing.
 
-## 📋 Mandatory Execution Steps:
+2. **Auto-Push Documentation to GitHub**:
+   - Whenever `/www/wwwroot/siegfriedoutreach-docs` is edited, you must run `npm run build` and `git push origin main` to keep the live GitHub repository (`sonusainiemulator/siegfriedoutreach-docs`) 100% in sync.
 
-1. **Verify Build**:
-   ```bash
-   cd /www/wwwroot/siegfriedoutreach-docs
-   npm run build
-   ```
-   Ensure `0 errors` and all static pages (SSG) compile cleanly.
+3. **Full-Feature Coverage & Bilingual Standards**:
+   - Every platform module (Social Studio, AI Social Manager, AI Tools, Campaign Hub, Security & Passkeys, MCP Studio, Analytics) must be thoroughly documented in both **English** and **हिंदी**.
+   - Every single feature guide must feature concrete **Real-World Industry Use Cases & Case Studies** (D2C E-Commerce, Agencies, Healthcare, Real Estate, EdTech, B2B SaaS).
 
-2. **Stage & Commit**:
-   ```bash
-   cd /www/wwwroot/siegfriedoutreach-docs
-   git add .
-   git commit -m "docs: <concise summary of changes>"
-   ```
-
-3. **Automatic Push to GitHub**:
-   ```bash
-   cd /www/wwwroot/siegfriedoutreach-docs
-   git push origin main
-   ```
-   Always ensure local updates are pushed immediately to `https://github.com/sonusainiemulator/siegfriedoutreach-docs.git`.
-
-4. **Bilingual Requirement**:
-   - All documentation guides MUST contain dual-language (**English & हिंदी**) tabs using `<Tabs items={['English Guide', 'हिंदी गाइड']}>`.
-   - Every feature must include a dedicated **"🏢 Real-World Use Cases & Practical Case Studies (वास्तविक उपयोग और केस स्टडी)"** section.
-
-5. **AI Assistant Sync**:
-   - Ensure `AiDocsAssistant.tsx` knowledge base is updated if new key features or routes are added.
+4. **Production Stability & Verification**:
+   - Always run `npm run build` before restarting PM2 services (`pm2 restart all` or `pm2 restart frontend-app`).
+   - Maintain 0 TypeScript and 0 Lint errors across both frontend and docs portals.

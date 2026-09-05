@@ -4,6 +4,25 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 🚀 [2026-09-05 2026-09-05 21:33:00 CEST] — September 5, 2026
+
+### 🔐 1. Passkeys & WebAuthn Biometric Security Overhaul
+- **Modern Security UX**: Re-architected `PasskeyManager.tsx` with hardware-backed WebAuthn biometric security (Apple Touch ID, Face ID, Windows Hello, YubiKey).
+- **Passkey State & Telemetry**: Added real-time registered device management, instant passkey revocation, and zero-password authentication flow.
+
+### 📊 2. Omnichannel Ads Managers (Google, TikTok, Reddit)
+- **Google Ads Hub**: Added `/social-media/google-ads` with Search/Display campaign creation, AI ad copywriter, and Google Tag tracking modal.
+- **TikTok Ads Studio**: Added `/social-media/tiktok-ads` with vertical video ad previews, AI hook generation, and TikTok Pixel integration.
+- **Reddit Ads Studio**: Added `/social-media/reddit-ads` with subreddit ad targeting, carousel ad cards, and conversion event tracking.
+
+### 📈 3. Advanced Social Analytics Suite
+- **Visual Analytics Dashboard**: Added `/social-media/analytics` featuring weekly/monthly post density heatmaps, demographic donut charts, and platform performance tabs (Instagram, Facebook, YouTube, X, TikTok).
+
+### 📡 4. Publishing Logs & Queue Telemetry
+- **Telemetry Dashboard**: Built `/social-media/logs` with real-time status filtering (Success, Failed, Retrying, Queued), automated error parsing, and instant single/bulk retry engine.
+
+---
+
 ## 🚀 [2026-09-01] — September 1, 2026
 
 ### 🎨 1. Landing Page Design & UI Polish
