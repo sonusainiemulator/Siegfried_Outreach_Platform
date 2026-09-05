@@ -4,6 +4,19 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 🚀 [2026-09-05 2026-09-05 21:39:00 CEST] — September 5, 2026 (46 Feature Slider & Header Theme Switcher)
+
+### 🎛️ 1. Interactive 46-Feature Carousel Slider (`FeatureSlider.tsx`)
+- **Complete Feature Matrix (46 Total)**: Integrated all 46 platform feature docs into an interactive multi-slide carousel.
+- **Dynamic Category Filtering**: Added 8 quick-filter pills (`All (46)`, `Social Studio`, `AI Social Manager`, `AI Studio Tools`, `Campaign Hub`, `Developer & MCP`, `Security & Auth`, `Growth Playbooks`, `Analytics`).
+- **Live Search & Pagination**: Added instant in-slider search filter, previous/next slide navigation arrows, and pagination indicator dots.
+
+### 🌓 2. Header Dark & Light Mode Toggle (`ThemeToggle.tsx`)
+- **Direct Header Switcher**: Added an interactive client-side theme switcher (`Light`, `Dark`, `System`) right in the landing page top navigation header.
+- **Zero-Flicker Transitions**: Fully synchronized with Next.js & Fumadocs theme state.
+
+---
+
 ## 🚀 [2026-09-05 2026-09-05 21:35:00 CEST] — September 5, 2026 (Enterprise UI/UX & Dark/Light Mode)
 
 ### 🎨 1. Enterprise Dark & Light Mode Overhaul (Linear / Stripe Grade)
