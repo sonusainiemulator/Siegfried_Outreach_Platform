@@ -4,6 +4,21 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 🚀 [2026-09-05 21:56:00 CEST] — September 5, 2026 (Executive Profile Update & Official Authority Badges)
+
+### 👤 1. Executive Leadership & Company Details Update
+- **Founder & Managing Director**: Updated executive identity to **Trilochan Triphaty** across the entire platform, consultation booking system, and AI directives.
+- **Corporate Entity**: **TT INFOTECHS PVT LTD** – Leading Software & IT Company in Bhubaneswar.
+- **Registered Office**: Santoshi Vihar, Laxmisagar, Bhubaneswar, Odisha 751006, India.
+- **Direct WhatsApp Contact**: Configured direct WhatsApp hotline & admin recipient to **+91 93213 19079** (`https://wa.me/919321319079`).
+
+### 🛡️ 2. Official Authority Badges & Trust Accreditations
+- **Govt Approved**: Prominently featured Government of India / MCA & MSME Registered badge.
+- **Official Meta Partner**: Certified Meta Business Partner for WhatsApp Cloud API & Instagram Graph API integration.
+- **Sales & Outreach Experts**: Certified 100x Omni-Channel Growth Specialists badge.
+
+---
+
 ## 🚀 [2026-09-05 21:52:00 CEST] — September 5, 2026 (Zender WhatsApp API Integration & Automated Lead Notifications)
 
 ### 💬 1. Zender WhatsApp Gateway API Integration (`zender.bhadracity.com`)
