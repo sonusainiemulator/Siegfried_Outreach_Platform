@@ -3,6 +3,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { PieChart } from 'lucide-react'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -19,6 +20,27 @@ export const DemographicDonutChart: React.FC<DemographicDonutProps> = ({
   series,
   colors = ['#3B82F6', '#EC4899', '#8B5CF6', '#10B981', '#F59E0B']
 }) => {
+  const total = (series || []).reduce((a, b) => a + (Number(b) || 0), 0)
+
+  if (!series || series.length === 0 || total === 0) {
+    return (
+      <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md overflow-hidden">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-semibold text-foreground/90">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[240px] flex flex-col items-center justify-center text-center p-4">
+            <PieChart className="w-8 h-8 text-muted-foreground/30 mb-2" />
+            <p className="text-xs text-muted-foreground font-medium">No recorded telemetry data</p>
+            <p className="text-[11px] text-muted-foreground/60 mt-1 max-w-[200px]">
+              Publish posts or import CSV telemetry to generate demographic breakdown
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: 'donut',
@@ -77,3 +99,5 @@ export const DemographicDonutChart: React.FC<DemographicDonutProps> = ({
     </Card>
   )
 }
+
+export default DemographicDonutChart

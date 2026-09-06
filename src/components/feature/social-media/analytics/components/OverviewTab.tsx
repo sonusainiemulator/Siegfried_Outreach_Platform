@@ -115,7 +115,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       icon: Heart,
       color: 'text-pink-500',
       bg: 'bg-pink-500/10 border-pink-500/20',
-      sub: '+14.2% from last period',
+      sub: 'Live audience reactions',
     },
     {
       label: 'Comments',
@@ -147,7 +147,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       icon: TrendingUp,
       color: 'text-primary',
       bg: 'bg-primary/10 border-primary/20',
-      sub: 'Industry top benchmark',
+      sub: 'Cross-channel average',
     },
   ]
 
@@ -157,35 +157,35 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       name: 'Facebook',
       color: 'text-[#1877F2]',
       bgColor: 'bg-[#1877F2]/10 border-[#1877F2]/20',
-      stat: platformEngagement.facebook || { engagements: 1420, rate: '4.2%', change: '+12.4%', posts: 4 },
+      stat: platformEngagement.facebook || { engagements: 0, rate: '0.0%', change: '0.0%', posts: 0 },
     },
     {
       key: 'instagram',
       name: 'Instagram',
       color: 'text-[#E4405F]',
       bgColor: 'bg-[#E4405F]/10 border-[#E4405F]/20',
-      stat: platformEngagement.instagram || { engagements: 2850, rate: '5.8%', change: '+18.1%', posts: 8 },
+      stat: platformEngagement.instagram || { engagements: 0, rate: '0.0%', change: '0.0%', posts: 0 },
     },
     {
       key: 'tiktok',
       name: 'TikTok',
       color: 'text-[#00F2FE]',
       bgColor: 'bg-[#00F2FE]/10 border-[#00F2FE]/20',
-      stat: platformEngagement.tiktok || { engagements: 4610, rate: '7.4%', change: '+24.6%', posts: 6 },
+      stat: platformEngagement.tiktok || { engagements: 0, rate: '0.0%', change: '0.0%', posts: 0 },
     },
     {
       key: 'twitter',
       name: 'X (Twitter)',
       color: 'text-[#38BDF8]',
       bgColor: 'bg-[#38BDF8]/10 border-[#38BDF8]/20',
-      stat: platformEngagement.twitter || { engagements: 980, rate: '3.6%', change: '+8.2%', posts: 7 },
+      stat: platformEngagement.twitter || { engagements: 0, rate: '0.0%', change: '0.0%', posts: 0 },
     },
     {
       key: 'youtube',
       name: 'YouTube',
       color: 'text-[#EF4444]',
       bgColor: 'bg-[#EF4444]/10 border-[#EF4444]/20',
-      stat: platformEngagement.youtube || { engagements: 1740, rate: '6.1%', change: '+15.3%', posts: 3 },
+      stat: platformEngagement.youtube || { engagements: 0, rate: '0.0%', change: '0.0%', posts: 0 },
     },
   ]
 

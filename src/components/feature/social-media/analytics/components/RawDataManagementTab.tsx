@@ -56,15 +56,15 @@ export const RawDataManagementTab: React.FC<RawDataTabProps> = ({ targetUserId }
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
   const [metricType, setMetricType] = useState('daily_summary')
   const [metrics, setMetrics] = useState({
-    impressions: 1200,
-    reach: 950,
-    engagements: 140,
-    reactions: 85,
-    comments: 22,
-    shares: 15,
-    clicks: 34,
-    views: 850,
-    followers: 4500,
+    impressions: 0,
+    reach: 0,
+    engagements: 0,
+    reactions: 0,
+    comments: 0,
+    shares: 0,
+    clicks: 0,
+    views: 0,
+    followers: 0,
   })
 
   // Import Form State

@@ -4,6 +4,77 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 📊 [2026-09-06 22:54:00 CEST] — Social Media Analytics: 100% Real REST API Data Migration & Demo Data Removal
+
+### 🚀 1. Complete Removal of Demo Data Across All Analytics Dashboards (`/social-media/analytics`)
+- **Zero Fallback Demo Numbers**: Removed all hardcoded synthetic values across all 6 platform tabs (Facebook `4820 fans`, `28.4K impressions`, `1180 reactions`; Instagram `7850 followers`, `48.9K impressions`, `3410 engagements`; TikTok `12.4K followers`, `142.6K views`; X/Twitter `48 posts`, `5410 followers`; YouTube `3.6K subscribers`, `64.2K views`; Overview `1420 Facebook engagements`, `2850 Instagram engagements`).
+- **Clean Real-State Handling**: All metrics now display actual integers/percentages (`0`, `0.0%`, or calculated values from real connected accounts and posts), with contextual prompts to connect social channels and publish live content.
+- **Empty State UX in Demographics**: Replaced broken/demo donut and pie charts in `DemographicDonutChart.tsx` with clean empty state indicators when no telemetry has been logged yet.
+- **Real Post Density Heatmap**: Updated `DailyPostDensityHeatmap.tsx` to accept real `densityData` per day of week instead of generating artificial `Math.random()` numbers.
+
+### 🌐 2. Backend REST API Aggregation Overhaul (`controllers/social-analytics.controller.js`)
+- **Live MongoDB Telemetry Aggregation**:
+  - `getOverviewAnalytics`: Aggregates real `SocialPost` engagement (likes, comments, shares, views), real `SocialAccount` follower counts, and real `SocialAnalyticsRaw` logs.
+  - Generates actual 14-day daily post impression trends based on actual publication timestamps.
+  - Computes real cross-platform engagement rates: `(reactions + comments + shares) / impressions`.
+- **Granular Platform Metrics**:
+  - `getPlatformAnalytics`: Computes platform-specific metrics for Facebook, Instagram, TikTok, X (Twitter), and YouTube from published posts and active accounts.
+  - Lists real published posts in the live engagement table with actual post impressions, reactions, and conversation rates.
+- **Live Synchronization via REST APIs**:
+  - `syncPlatformAnalytics`: Fetches real-time post metrics directly from Facebook Graph API, Instagram Graph API, Twitter API v2, and YouTube Data API v3 via `SocialMediaApis`.
+  - Persists real snapshot records into `SocialAnalyticsRaw`.
+
+### ⚡ 3. Frontend Multi-API Integration (`AdvancedSocialAnalytics.tsx`)
+- Combined `useGetOverviewAnalyticsQuery`, `useGetPlatformAnalyticsQuery`, `useGetSocialAccountsQuery`, `useGetSocialPostsQuery`, and `useGetDashboardDataQuery` into a single reactive live feed.
+- Added Next.js API catch-all proxy routes (`/api/social-analytics/[...path]` and `/api/social-analytics`) via `apiHandler` for consistent routing across all environments.
+- Verified Next.js Turbopack build with 0 TypeScript and 0 Lint errors, restarted PM2 services.
+
+---
+
+## 🎨 [2026-09-05 22:52:00 CEST] — Readymade Website Design Templates Gallery (36+ Designs) & Interactive Device Preview
+
+### 🌐 1. Comprehensive 36+ Readymade Website Templates Catalog (`src/data/websiteTemplatesData.ts`)
+- **12 Full Industries Covered with 20–40 Curated Designs**:
+  - **Restaurant & Food** (4 templates: Fine Dining Bistro, Artisanal Cafe & Bakehouse, Gourmet Burger Bar & Taproom, Plant-Based Bowl Bar)
+  - **E-Commerce & D2C** (4 templates: Minimalist Luxury Fashion, Clean Skincare & Wellness, Consumer Electronics & Smart Gadgets, Scandinavian Furniture)
+  - **Healthcare & Clinics** (4 templates: Multi-Specialty Dental Clinic, Prana Ayurveda Sanctuary, Pediatric & Family Medicine, Precision Diagnostics Lab)
+  - **Real Estate & Living** (4 templates: Elysian Luxury Penthouses, UrbanNest Modern Condos, Atelier Forma Architecture & Interiors, Haven Co-Living Communities)
+  - **EdTech & Coaching** (4 templates: CodeCraft Full-Stack Tech Bootcamp, Zenith Competitive Exam Prep, Little Explorers STEM Robotics, LinguaFluency AI Language)
+  - **Digital Agency & Creative** (4 templates: Nexus Void Cyberpunk Agency, Kanso Minimalist Brand Strategy, GrowthEngine Performance Lab, Prism 3D Motion Studio)
+  - **B2B SaaS & Tech** (4 templates: CognitiveOS AI Copilot, CloudArmor DevSecOps Compliance, LedgerFlow Global Payroll, PipelinePro Sales CRM)
+  - **Fitness & Sports** (3 templates: IronForge CrossFit Arena, Serenity Reformer Pilates, Apex Strike Boxing Academy)
+  - **Legal & Finance** (3 templates: Vanguard Corporate Law & M&A, Apex Wealth Advisory & Tax, Horizon Venture Capital)
+  - **Beauty, Salon & Spa** (3 templates: Luxe Locks Hair Atelier, Aura MedSpa & Laser, The Gentry Barber Lounge)
+  - **Travel & Hospitality** (3 templates: Villa Paradiso Boutique Resort, WildPeak Adventure Treks, Monarch VIP Chauffeur)
+- **Deep Production-Grade Metadata**:
+  - Conversion badges (e.g. `🔥 4.2x Table Bookings`, `💎 3.9x Average Order Value`, `⚡ 99/100 Mobile Speed`)
+  - Color palette swatches with hex codes
+  - Style theme categorization (Dark Luxury, Minimalist, Cyber & Tech, Warm Earthy, Clean Corporate)
+  - Credit token cost preview (5–7 credits per generation)
+  - Realistic rendered mockup data (Hero headline, subtitle, CTAs, stats bar, included feature modules, client testimonial)
+
+### 📱 2. Interactive Responsive Device Preview Modal (`TemplatePreviewModal.tsx`)
+- **Triple-Device Switcher**: Toggle instantly between **Desktop (1200px)**, **Tablet (768px)**, and **Mobile (375px)** viewport frames.
+- **Browser Simulation Bar**: Realistic mock browser window with security lock and simulated live URL.
+- **Live Mockup Rendering**: Rendered typography, accent colors, stats counters, included services, and client testimonials.
+- **Template Spec Drawer**: Credit cost, Lighthouse score (99/100), included pages list, feature checklist, and color palette dots.
+- **1-Click Selection**: "Use This Template" button directly transfers into generation or onboarding.
+
+### 🎛️ 3. Upgraded AI Website Builder Agent (`WebsiteBuilderAgent.tsx`)
+- **Horizontally Scrollable Industry Filter Bar**: 12 category chips with design counters.
+- **Real-Time Search Bar**: Instant search across names, tags, features, and descriptions.
+- **Style Theme & Sort Dropdowns**: Filter by theme and sort by Popularity, Rating, Credit Cost, or Newest.
+- **Grid / List View Modes**: Switch between 3-column card view and detailed list view.
+- **Sticky Bottom Action Bar**: Live selected template status with 1-click AI generation pipeline.
+
+### 🧙‍♂️ 4. Upgraded Client Onboarding Wizard (`OnboardingWizard.tsx`)
+- **New Step 1 — "Select Template"**: After choosing business industry, customer immediately views 20–40 curated readymade website designs.
+- Integrated interactive device preview modal directly in the onboarding flow.
+- Pre-selects top template matching the chosen business industry.
+- Chosen template carries forward to review step and AI generation activation.
+
+---
+
 ## 🤖 [2026-09-05 22:38:00 CEST] — AI Employee Ecosystem — Full Business Automation Platform
 
 ### 🚀 1. AI Employee Hub — 6 Specialized AI Agents

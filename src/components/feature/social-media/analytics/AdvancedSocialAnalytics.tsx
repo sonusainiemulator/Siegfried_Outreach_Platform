@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -25,6 +25,11 @@ import {
   useGetAnalyticsWorkspacesQuery,
   useSyncPlatformAnalyticsMutation,
 } from '@/redux/api/socialAnalyticsApi'
+import {
+  useGetSocialAccountsQuery,
+  useGetSocialPostsQuery,
+  useGetDashboardDataQuery,
+} from '@/redux/api/socialMediaApi'
 import { OverviewTab } from './components/OverviewTab'
 import { FacebookAnalyticsTab } from './components/FacebookAnalyticsTab'
 import { InstagramAnalyticsTab } from './components/InstagramAnalyticsTab'
@@ -54,10 +59,11 @@ export const AdvancedSocialAnalytics: React.FC = () => {
   const [timeframe, setTimeframe] = useState<string>('30d')
   const [targetWorkspace, setTargetWorkspace] = useState<string>('all')
 
-  // Queries
+  // Workspaces query
   const { data: workspacesData } = useGetAnalyticsWorkspacesQuery()
   const workspaces = workspacesData?.workspaces || []
 
+  // Overview Analytics REST query
   const {
     data: overviewData,
     isLoading: isOverviewLoading,
@@ -67,6 +73,7 @@ export const AdvancedSocialAnalytics: React.FC = () => {
     { skip: activeTab !== 'overview' }
   )
 
+  // Platform Analytics REST query
   const isPlatformTab = ['facebook', 'instagram', 'tiktok', 'twitter', 'youtube'].includes(activeTab)
   const {
     data: platformData,
@@ -81,16 +88,23 @@ export const AdvancedSocialAnalytics: React.FC = () => {
     { skip: !isPlatformTab }
   )
 
+  // Real Social Accounts & Posts REST Queries
+  const { data: accountsData, refetch: refetchAccounts } = useGetSocialAccountsQuery(undefined)
+  const { data: postsData, refetch: refetchPosts } = useGetSocialPostsQuery({ limit: 200 })
+  const { data: dashboardData } = useGetDashboardDataQuery(undefined)
+
   const [syncPlatform, { isLoading: isSyncing }] = useSyncPlatformAnalyticsMutation()
 
-  // Handlers
+  // Live Sync Handler
   const handleSyncAll = async () => {
     try {
       const targetPlat = isPlatformTab ? activeTab : 'overview'
       const res = await syncPlatform({ platform: targetPlat }).unwrap()
       toast.success(res.message || 'Live analytics synchronized successfully!')
-      if (activeTab === 'overview') refetchOverview()
-      else refetchPlatform()
+      refetchOverview()
+      refetchPlatform()
+      refetchAccounts()
+      refetchPosts()
     } catch (err: any) {
       toast.error(err?.data?.message || 'Sync failed')
     }
@@ -114,6 +128,33 @@ export const AdvancedSocialAnalytics: React.FC = () => {
     { id: 'settings', label: 'Settings', icon: Settings, color: 'text-slate-400' },
   ]
 
+  // Merge real data
+  const realOverview = overviewData?.data || {
+    summary: {
+      totalPosts: dashboardData?.totalPosts || 0,
+      postsPublished: dashboardData?.totalPublished || 0,
+      totalReactions: 0,
+      totalShares: 0,
+      totalComments: 0,
+      totalViews: 0,
+      totalEngagements: 0,
+      engagementRate: '0.0%',
+    },
+    dailyPostImpressionTrend: [],
+    accountPerformance: (accountsData?.data || accountsData || []).map((a: any) => ({
+      id: a._id || a.id,
+      accountName: a.accountName,
+      platform: a.platform,
+      followers: a.followersCount || 0,
+      growth: '+0.0%',
+      impressions: 0,
+      engagements: 0,
+      engagementRate: '0.0%',
+      status: a.isActive ? 'Active' : 'Disconnected',
+    })),
+    platformEngagement: {},
+  }
+
   return (
     <div className="space-y-6 pb-12">
       {/* Top Header Card */}
@@ -126,17 +167,17 @@ export const AdvancedSocialAnalytics: React.FC = () => {
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
               <Badge className="bg-primary/20 text-primary border border-primary/30 text-xs px-2.5 py-0.5 font-semibold">
-                <Sparkles className="w-3 h-3 mr-1 animate-pulse" /> Advanced Social Intelligence
+                <Sparkles className="w-3 h-3 mr-1 animate-pulse" /> Live Telemetry Analytics
               </Badge>
               <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs font-mono">
-                Live Data Active
+                100% Real REST API Data
               </Badge>
             </div>
             <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-foreground">
               Social Media Analytics
             </h1>
             <p className="text-xs text-muted-foreground max-w-2xl">
-              Deep multi-platform performance metrics, audience demographics, daily density trends, and raw data management for businesses and agencies.
+              Live multi-platform metrics, post engagement telemetry, audience demographics, and raw data pipeline computed from your connected social channels.
             </p>
           </div>
 
@@ -230,7 +271,7 @@ export const AdvancedSocialAnalytics: React.FC = () => {
       <div className="transition-all duration-300">
         {activeTab === 'overview' && (
           <OverviewTab
-            data={overviewData?.data}
+            data={realOverview}
             isLoading={isOverviewLoading}
             onSelectPlatform={(plat) => setActiveTab(plat)}
           />

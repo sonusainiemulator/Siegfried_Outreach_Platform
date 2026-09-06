@@ -12,7 +12,7 @@
 
 **[Explore Live Platform](https://siegfriedoutreach.com)** • **[API Documentation](https://api.siegfriedoutreach.com)** • **[Contact Support](#-contact--support)**
 
----
+---------
 
 </div>
 

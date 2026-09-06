@@ -35,7 +35,7 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
   const growthSeries = [
     {
       name: 'Total Followers',
-      data: growth.map((g: any) => g.followers),
+      data: growth.map((g: any) => g.followers || 0),
     },
   ]
   const growthOptions: ApexCharts.ApexOptions = {
@@ -58,7 +58,6 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
     yaxis: {
       labels: {
         style: { colors: '#94A3B8', fontSize: '11px' },
-        formatter: (v) => `${(v / 1000).toFixed(1)}k`,
       },
     },
     grid: { borderColor: 'rgba(255, 255, 255, 0.05)' },
@@ -84,15 +83,15 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
   }
   const densitySeries = [
     {
-      name: 'Posts Density',
-      data: density.map((d: any) => d.posts),
+      name: 'Posts Published',
+      data: density.map((d: any) => d.posts || 0),
     },
   ]
 
   const mentions = x.awarenessThroughMentions || {
-    mentionsCount: 142,
-    sentimentScore: '78% Positive',
-    reachEst: 28400,
+    mentionsCount: 0,
+    sentimentScore: 'Neutral',
+    reachEst: 0,
   }
 
   const postsList = x.publishedPostsWithEngagement || []
@@ -105,8 +104,8 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Send className="w-3.5 h-3.5 text-sky-400" /> Posts
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{x.posts?.toLocaleString() || 48}</div>
-          <span className="text-[10px] text-emerald-500 font-semibold">+6 this week</span>
+          <div className="text-xl font-black text-foreground mt-1">{(x.posts ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-muted-foreground">Published posts</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5 hover:border-sky-500/30 transition-all">
@@ -114,16 +113,16 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
             <Users className="w-3.5 h-3.5 text-sky-400" /> Followers
           </div>
           <div className="text-xl font-black text-foreground mt-1">
-            {(x.totalFollowers || x.follower || 5410).toLocaleString()}
+            {((x.totalFollowers || x.follower) ?? 0).toLocaleString()}
           </div>
-          <span className="text-[10px] text-emerald-500 font-semibold">+4.2% growth</span>
+          <span className="text-[10px] text-muted-foreground">Connected profile</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5 hover:border-sky-500/30 transition-all">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Users className="w-3.5 h-3.5 text-indigo-400" /> Following
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{x.following?.toLocaleString() || 420}</div>
+          <div className="text-xl font-black text-foreground mt-1">{(x.following ?? 0).toLocaleString()}</div>
           <span className="text-[10px] text-muted-foreground font-medium">Curated peers</span>
         </Card>
 
@@ -131,8 +130,8 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Repeat className="w-3.5 h-3.5 text-emerald-400" /> Retweets
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{x.retweets?.toLocaleString() || 384}</div>
-          <span className="text-[10px] text-emerald-500 font-semibold">+18.4% share rate</span>
+          <div className="text-xl font-black text-foreground mt-1">{(x.retweets ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-muted-foreground">Reposts & shares</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5 hover:border-sky-500/30 transition-all">
@@ -140,24 +139,24 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
             <TrendingUp className="w-3.5 h-3.5 text-amber-400" /> Engagements
           </div>
           <div className="text-xl font-black text-foreground mt-1">
-            {(x.totalEngagement || x.engagements || 2140).toLocaleString()}
+            {((x.totalEngagement || x.engagements) ?? 0).toLocaleString()}
           </div>
-          <span className="text-[10px] text-amber-400 font-semibold">Active replies</span>
+          <span className="text-[10px] text-amber-400 font-semibold">Active replies & likes</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5 hover:border-sky-500/30 transition-all">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Zap className="w-3.5 h-3.5 text-yellow-400" /> Eng. Rate
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{x.engagementRate || '3.9%'}</div>
-          <span className="text-[10px] text-emerald-500 font-semibold">+0.6% vs avg</span>
+          <div className="text-xl font-black text-foreground mt-1">{x.engagementRate || '0.0%'}</div>
+          <span className="text-[10px] text-muted-foreground">Per post interaction</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5 hover:border-sky-500/30 transition-all">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" /> Ratio
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{x.followersFollowingRate || '12.8x'}</div>
+          <div className="text-xl font-black text-foreground mt-1">{x.followersFollowingRate || '0.0x'}</div>
           <span className="text-[10px] text-purple-400 font-medium">Follower ratio</span>
         </Card>
       </div>
@@ -180,11 +179,11 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
           <div className="flex items-center gap-6">
             <div className="text-center px-4 py-2 rounded-xl bg-background/40 border border-border/30">
               <span className="text-[11px] text-muted-foreground uppercase font-semibold">Total Mentions</span>
-              <div className="text-lg font-black text-foreground">{mentions.mentionsCount}</div>
+              <div className="text-lg font-black text-foreground">{mentions.mentionsCount || 0}</div>
             </div>
             <div className="text-center px-4 py-2 rounded-xl bg-background/40 border border-border/30">
               <span className="text-[11px] text-muted-foreground uppercase font-semibold">Estimated Reach</span>
-              <div className="text-lg font-black text-sky-400">{mentions.reachEst?.toLocaleString()}</div>
+              <div className="text-lg font-black text-sky-400">{(mentions.reachEst ?? 0).toLocaleString()}</div>
             </div>
           </div>
         </div>
@@ -197,87 +196,80 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-sky-400" /> Audience Growth (Followers Over Time)
             </CardTitle>
-            <Badge variant="secondary" className="text-[11px] font-mono">
-              +5.6% MoM
-            </Badge>
           </CardHeader>
           <CardContent className="pt-2">
-            <Chart options={growthOptions} series={growthSeries} type="area" height={260} />
+            <div className="h-[260px]">
+              <Chart options={growthOptions} series={growthSeries} type="area" height={250} width="100%" />
+            </div>
           </CardContent>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md">
           <CardHeader className="pb-2 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <BarChart2 className="w-4 h-4 text-sky-500" /> Post Density – Daily Cadence
+              <BarChart2 className="w-4 h-4 text-sky-400" /> Daily Post Activity by Day of Week
             </CardTitle>
-            <Badge variant="secondary" className="text-[11px] font-mono">
-              Avg 4.1 Posts/Day
-            </Badge>
           </CardHeader>
           <CardContent className="pt-2">
-            <Chart options={densityOptions} series={densitySeries} type="bar" height={260} />
+            <div className="h-[260px]">
+              <Chart options={densityOptions} series={densitySeries} type="bar" height={250} width="100%" />
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Published Posts with Engagement Table */}
+      {/* Published Tweets List Table */}
       <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md overflow-hidden">
-        <CardHeader className="pb-3 flex flex-row items-center justify-between border-b border-border/30">
-          <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Send className="w-4 h-4 text-sky-400" /> Published Posts With Engagement
-          </CardTitle>
-          <span className="text-xs text-muted-foreground">Showing top 10 recent tweets</span>
+        <CardHeader className="pb-3 flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-base font-bold text-foreground">
+              Published Posts & Tweet Engagement
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">
+              Live impressions, retweets, replies, and calculated engagement rates from connected account
+            </p>
+          </div>
+          <Badge variant="outline" className="text-xs text-sky-400 border-sky-400/30">
+            X API v2 Connected
+          </Badge>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-muted/30 text-muted-foreground uppercase font-semibold text-[10px] tracking-wider border-b border-border/30">
+            <table className="w-full text-left text-sm">
+              <thead className="border-b border-border/10 bg-muted/20 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                 <tr>
-                  <th className="py-3 px-4">Post Content / Snippet</th>
-                  <th className="py-3 px-4">Published Date</th>
+                  <th className="py-3 px-4">Tweet Content / Title</th>
+                  <th className="py-3 px-4">Date</th>
                   <th className="py-3 px-4 text-right">Impressions</th>
                   <th className="py-3 px-4 text-right">Retweets</th>
                   <th className="py-3 px-4 text-right">Replies</th>
                   <th className="py-3 px-4 text-right">Likes</th>
-                  <th className="py-3 px-4 text-right">Eng. Rate</th>
+                  <th className="py-3 px-4 text-right">Rate</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
-                {postsList.length > 0 ? (
-                  postsList.map((post: any, idx: number) => (
-                    <tr key={post.id || idx} className="hover:bg-muted/20 transition-colors">
-                      <td className="py-3 px-4 font-medium text-foreground max-w-[280px] truncate">
-                        {post.title || `Campaign Announcement & Product Updates #${idx + 1}`}
-                      </td>
-                      <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
-                        {post.date ? new Date(post.date).toLocaleDateString() : 'Recent'}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-foreground font-semibold">
-                        {(post.impressions || 650 + idx * 80).toLocaleString()}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-emerald-400">
-                        {post.retweets || 14 + idx}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-sky-400">
-                        {post.replies || 8 + idx}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-pink-400">
-                        {post.likes || 42 + idx * 6}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono font-bold text-foreground">
-                        <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-400 bg-emerald-500/10">
-                          {post.engagementRate || '3.8%'}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+              <tbody className="divide-y divide-border/10">
+                {postsList.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="py-8 text-center text-muted-foreground text-xs">
-                      No published posts tracked yet. Synchronize X account to populate feed.
+                    <td colSpan={7} className="text-center py-8 text-muted-foreground text-xs italic">
+                      No published posts on X (Twitter) yet.
                     </td>
                   </tr>
+                ) : (
+                  postsList.map((p: any, idx: number) => (
+                    <tr key={idx} className="hover:bg-muted/10 transition-colors">
+                      <td className="py-3 px-4 font-semibold text-foreground max-w-[280px] truncate">
+                        {p.title}
+                      </td>
+                      <td className="py-3 px-4 text-xs text-muted-foreground font-mono">
+                        {p.date ? new Date(p.date).toLocaleDateString() : 'Recent'}
+                      </td>
+                      <td className="py-3 px-4 text-right font-mono text-xs">{p.impressions?.toLocaleString() || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-emerald-400">{p.retweets || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-sky-400">{p.replies || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-pink-500 font-semibold">{p.likes || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-emerald-400 font-bold">{p.engagementRate || '0.0%'}</td>
+                    </tr>
+                  ))
                 )}
               </tbody>
             </table>
@@ -287,3 +279,5 @@ export const XAnalyticsTab: React.FC<XAnalyticsTabProps> = ({ data, isLoading })
     </div>
   )
 }
+
+export default XAnalyticsTab

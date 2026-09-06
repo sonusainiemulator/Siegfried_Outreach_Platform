@@ -17,6 +17,7 @@ import {
   Meh,
   Calendar,
   Layers,
+  Facebook,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { DemographicDonutChart } from './DemographicDonutChart'
@@ -37,7 +38,7 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
   const growthSeries = [
     {
       name: 'Page Fans',
-      data: (fb.audienceGrowth || []).map((g: any) => g.fans),
+      data: (fb.audienceGrowth || []).map((g: any) => g.fans || g.followers || 0),
     },
   ]
   const growthChartOptions: ApexCharts.ApexOptions = {
@@ -58,14 +59,14 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
   const activeDays = (fb.activeUsersByDay || []).map((a: any) => a.day)
   const activeUsersSeries = [
     {
-      name: 'Active Users',
+      name: 'Active Interactions',
       type: 'column',
-      data: (fb.activeUsersByDay || []).map((a: any) => a.active),
+      data: (fb.activeUsersByDay || []).map((a: any) => a.active || 0),
     },
     {
       name: 'Engagement Rate (%)',
       type: 'line',
-      data: (fb.engagementRateByDay || []).map((e: any) => e.rate),
+      data: (fb.engagementRateByDay || []).map((e: any) => e.rate || 0),
     },
   ]
   const activeUsersOptions: ApexCharts.ApexOptions = {
@@ -75,7 +76,7 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
     plotOptions: { bar: { columnWidth: '45%', borderRadius: 6 } },
     xaxis: { categories: activeDays, labels: { style: { colors: '#94A3B8', fontSize: '11px' } } },
     yaxis: [
-      { labels: { style: { colors: '#94A3B8', fontSize: '11px' } }, title: { text: 'Users', style: { color: '#94A3B8' } } },
+      { labels: { style: { colors: '#94A3B8', fontSize: '11px' } }, title: { text: 'Interactions', style: { color: '#94A3B8' } } },
       { opposite: true, labels: { style: { colors: '#10B981', fontSize: '11px' } }, title: { text: 'Rate (%)', style: { color: '#10B981' } } },
     ],
     grid: { borderColor: 'rgba(255, 255, 255, 0.05)' },
@@ -84,8 +85,8 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
   }
 
   // Fan by Age chart
-  const ageLabels = Object.keys(fb.fanByAge || { '18-24': 16, '25-34': 42, '35-44': 24, '45-54': 12, '55+': 6 })
-  const ageValues = Object.values(fb.fanByAge || { '18-24': 16, '25-34': 42, '35-44': 24, '45-54': 12, '55+': 6 }) as number[]
+  const ageLabels = Object.keys(fb.fanByAge || {})
+  const ageValues = Object.values(fb.fanByAge || {}) as number[]
   const ageChartOptions: ApexCharts.ApexOptions = {
     chart: { type: 'bar', height: 220, toolbar: { show: false }, background: 'transparent' },
     colors: ['#38BDF8'],
@@ -97,74 +98,71 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
   }
 
   // Reactions breakdown
-  const reactions = fb.reactionsOverview || { like: 64, love: 22, haha: 7, wow: 5, sad: 1, angry: 1 }
+  const reactions = fb.reactionsOverview || { like: 0, love: 0, haha: 0, wow: 0, sad: 0, angry: 0 }
+  const totalReactionSum = (reactions.like || 0) + (reactions.love || 0) + (reactions.haha || 0) + (reactions.wow || 0) + (reactions.sad || 0) + (reactions.angry || 0)
+
+  // Sentiment data
+  const sentiment = fb.sentiment || { positive: 0, neutral: 0, negative: 0 }
+  const hasSentiment = (sentiment.positive + sentiment.neutral + sentiment.negative) > 0
 
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Top Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
-            <Users className="w-3.5 h-3.5 text-[#1877F2]" /> Fans
+            <Users className="w-3.5 h-3.5 text-[#1877F2]" /> Page Fans
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.fans?.toLocaleString() || 4820}</div>
-          <span className="text-[10px] text-emerald-500 font-semibold">+4.2% growth</span>
+          <div className="text-xl font-black text-foreground mt-1">{(fb.fans ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-muted-foreground">Connected page total</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Eye className="w-3.5 h-3.5 text-purple-400" /> Impressions
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.impressions?.toLocaleString() || '28.4K'}</div>
-          <span className="text-[10px] text-muted-foreground">Post & Story views</span>
+          <div className="text-xl font-black text-foreground mt-1">{(fb.impressions ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-muted-foreground">Real post & reach views</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <Heart className="w-3.5 h-3.5 text-pink-500" /> Reactions
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.reactions?.toLocaleString() || 1180}</div>
-          <span className="text-[10px] text-pink-500 font-semibold">Likes & Loves</span>
+          <div className="text-xl font-black text-foreground mt-1">{(fb.reactions ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-pink-500 font-semibold">Post likes & loves</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <MessageSquare className="w-3.5 h-3.5 text-blue-400" /> Comments
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.comments?.toLocaleString() || 290}</div>
-          <span className="text-[10px] text-muted-foreground">High response rate</span>
+          <div className="text-xl font-black text-foreground mt-1">{(fb.comments ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-muted-foreground">User responses</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <MousePointer className="w-3.5 h-3.5 text-emerald-400" /> Clicks
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.clicks?.toLocaleString() || 420}</div>
-          <span className="text-[10px] text-emerald-500 font-semibold">Link / CTA Clicks</span>
+          <div className="text-xl font-black text-foreground mt-1">{(fb.clicks ?? 0).toLocaleString()}</div>
+          <span className="text-[10px] text-emerald-500 font-semibold">Link & CTA Clicks</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <TrendingUp className="w-3.5 h-3.5 text-amber-400" /> Rate
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.engagementRate || '4.6%'}</div>
-          <span className="text-[10px] text-emerald-500 font-semibold">+0.6% vs benchmark</span>
+          <div className="text-xl font-black text-foreground mt-1">{fb.engagementRate || '0.0%'}</div>
+          <span className="text-[10px] text-muted-foreground">Real interaction %</span>
         </Card>
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
           <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
             <MessageSquare className="w-3.5 h-3.5 text-indigo-400" /> Messages
           </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.messageCount || 56}</div>
+          <div className="text-xl font-black text-foreground mt-1">{(fb.messageCount ?? 0).toLocaleString()}</div>
           <span className="text-[10px] text-muted-foreground">Direct inquiries</span>
-        </Card>
-
-        <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-3.5">
-          <div className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5 uppercase">
-            <Calendar className="w-3.5 h-3.5 text-sky-400" /> Total Posts
-          </div>
-          <div className="text-xl font-black text-foreground mt-1">{fb.totalPosts || 24}</div>
-          <span className="text-[10px] text-muted-foreground">{fb.postRate || '1.4 / day'}</span>
         </Card>
       </div>
 
@@ -173,7 +171,7 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-bold text-foreground">Facebook Audience Growth</CardTitle>
-            <p className="text-xs text-muted-foreground">Cumulative page fan acquisition over the last 30 days</p>
+            <p className="text-xs text-muted-foreground">Live page fan progression over time</p>
           </CardHeader>
           <CardContent>
             <div className="h-[260px]">
@@ -185,7 +183,7 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-bold text-foreground">Active Users & Engagement Rate by Day</CardTitle>
-            <p className="text-xs text-muted-foreground">Interaction intensity across days of the week</p>
+            <p className="text-xs text-muted-foreground">Real day-of-week posting and interaction distribution</p>
           </CardHeader>
           <CardContent>
             <div className="h-[260px]">
@@ -201,46 +199,52 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-5 flex flex-col justify-between">
           <div>
             <h4 className="text-sm font-bold text-foreground mb-1">Audience Sentiment Analysis</h4>
-            <p className="text-xs text-muted-foreground mb-4">NLP classification of comments and page mentions</p>
-            <div className="space-y-3">
-              <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1">
-                  <span className="flex items-center gap-1.5 text-emerald-500">
-                    <Smile className="w-4 h-4" /> Positive ({fb.sentiment?.positive || 71}%)
-                  </span>
+            <p className="text-xs text-muted-foreground mb-4">NLP classification of real comments and reactions</p>
+            {hasSentiment ? (
+              <div className="space-y-3">
+                <div>
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
+                    <span className="flex items-center gap-1.5 text-emerald-500">
+                      <Smile className="w-4 h-4" /> Positive ({sentiment.positive}%)
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted/30 h-2 rounded-full overflow-hidden">
+                    <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${sentiment.positive}%` }} />
+                  </div>
                 </div>
-                <div className="w-full bg-muted/30 h-2 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${fb.sentiment?.positive || 71}%` }} />
-                </div>
-              </div>
 
-              <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1">
-                  <span className="flex items-center gap-1.5 text-amber-500">
-                    <Meh className="w-4 h-4" /> Neutral ({fb.sentiment?.neutral || 21}%)
-                  </span>
+                <div>
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
+                    <span className="flex items-center gap-1.5 text-amber-500">
+                      <Meh className="w-4 h-4" /> Neutral ({sentiment.neutral}%)
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted/30 h-2 rounded-full overflow-hidden">
+                    <div className="bg-amber-500 h-full rounded-full" style={{ width: `${sentiment.neutral}%` }} />
+                  </div>
                 </div>
-                <div className="w-full bg-muted/30 h-2 rounded-full overflow-hidden">
-                  <div className="bg-amber-500 h-full rounded-full" style={{ width: `${fb.sentiment?.neutral || 21}%` }} />
-                </div>
-              </div>
 
-              <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1">
-                  <span className="flex items-center gap-1.5 text-rose-500">
-                    <Frown className="w-4 h-4" /> Negative ({fb.sentiment?.negative || 8}%)
-                  </span>
-                </div>
-                <div className="w-full bg-muted/30 h-2 rounded-full overflow-hidden">
-                  <div className="bg-rose-500 h-full rounded-full" style={{ width: `${fb.sentiment?.negative || 8}%` }} />
+                <div>
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
+                    <span className="flex items-center gap-1.5 text-rose-500">
+                      <Frown className="w-4 h-4" /> Negative ({sentiment.negative}%)
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted/30 h-2 rounded-full overflow-hidden">
+                    <div className="bg-rose-500 h-full rounded-full" style={{ width: `${sentiment.negative}%` }} />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="py-8 text-center text-xs text-muted-foreground italic">
+                No sentiment feedback recorded yet.
+              </div>
+            )}
           </div>
           <div className="mt-4 pt-3 border-t border-border/10 text-[11px] text-muted-foreground flex items-center justify-between">
-            <span>Overall Brand Perception</span>
-            <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 text-[10px]">
-              Strong Positive
+            <span>Overall Sentiment</span>
+            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-[10px]">
+              {hasSentiment ? (sentiment.positive >= sentiment.negative ? 'Positive' : 'Action Needed') : 'Neutral'}
             </Badge>
           </div>
         </Card>
@@ -248,36 +252,36 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
         {/* Reactions Overview */}
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-5">
           <h4 className="text-sm font-bold text-foreground mb-1">Reactions Overview</h4>
-          <p className="text-xs text-muted-foreground mb-4">Emotional reaction distribution on published posts</p>
+          <p className="text-xs text-muted-foreground mb-4">Live emotional reaction breakdown on published posts</p>
           <div className="grid grid-cols-3 gap-3 text-center">
             <div className="p-2.5 rounded-xl bg-muted/20 border border-border/10">
               <span className="text-xl">👍</span>
-              <div className="text-base font-bold text-foreground mt-1">{reactions.like}%</div>
+              <div className="text-base font-bold text-foreground mt-1">{(reactions.like || 0).toLocaleString()}</div>
               <span className="text-[10px] text-muted-foreground">Like</span>
             </div>
             <div className="p-2.5 rounded-xl bg-muted/20 border border-border/10">
               <span className="text-xl">❤️</span>
-              <div className="text-base font-bold text-pink-500 mt-1">{reactions.love}%</div>
+              <div className="text-base font-bold text-pink-500 mt-1">{(reactions.love || 0).toLocaleString()}</div>
               <span className="text-[10px] text-muted-foreground">Love</span>
             </div>
             <div className="p-2.5 rounded-xl bg-muted/20 border border-border/10">
               <span className="text-xl">😆</span>
-              <div className="text-base font-bold text-amber-500 mt-1">{reactions.haha}%</div>
+              <div className="text-base font-bold text-amber-500 mt-1">{(reactions.haha || 0).toLocaleString()}</div>
               <span className="text-[10px] text-muted-foreground">Haha</span>
             </div>
             <div className="p-2.5 rounded-xl bg-muted/20 border border-border/10">
               <span className="text-xl">😮</span>
-              <div className="text-base font-bold text-sky-400 mt-1">{reactions.wow}%</div>
+              <div className="text-base font-bold text-sky-400 mt-1">{(reactions.wow || 0).toLocaleString()}</div>
               <span className="text-[10px] text-muted-foreground">Wow</span>
             </div>
             <div className="p-2.5 rounded-xl bg-muted/20 border border-border/10">
               <span className="text-xl">😢</span>
-              <div className="text-base font-bold text-muted-foreground mt-1">{reactions.sad}%</div>
+              <div className="text-base font-bold text-muted-foreground mt-1">{(reactions.sad || 0).toLocaleString()}</div>
               <span className="text-[10px] text-muted-foreground">Sad</span>
             </div>
             <div className="p-2.5 rounded-xl bg-muted/20 border border-border/10">
               <span className="text-xl">😡</span>
-              <div className="text-base font-bold text-rose-500 mt-1">{reactions.angry}%</div>
+              <div className="text-base font-bold text-rose-500 mt-1">{(reactions.angry || 0).toLocaleString()}</div>
               <span className="text-[10px] text-muted-foreground">Angry</span>
             </div>
           </div>
@@ -287,7 +291,7 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
         <DemographicDonutChart
           title="Published Post Types"
           labels={['Images & Photos', 'Videos & Reels', 'Links / Articles', 'Status Updates']}
-          series={[fb.postType?.photo || 45, fb.postType?.video || 32, fb.postType?.link || 15, fb.postType?.status || 8]}
+          series={[fb.postType?.photo || 0, fb.postType?.video || 0, fb.postType?.link || 0, fb.postType?.status || 0]}
           colors={['#1877F2', '#38BDF8', '#10B981', '#F59E0B']}
         />
       </div>
@@ -296,38 +300,52 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-4">
           <CardTitle className="text-sm font-semibold text-foreground mb-1">Fan Distribution by Age</CardTitle>
-          <div className="h-[210px]">
-            <Chart options={ageChartOptions} series={[{ name: 'Age %', data: ageValues }]} type="bar" height={200} width="100%" />
-          </div>
+          {ageLabels.length > 0 ? (
+            <div className="h-[210px]">
+              <Chart options={ageChartOptions} series={[{ name: 'Age %', data: ageValues }]} type="bar" height={200} width="100%" />
+            </div>
+          ) : (
+            <div className="h-[200px] flex items-center justify-center text-xs text-muted-foreground italic text-center p-4">
+              No age demographic data logged yet.
+            </div>
+          )}
         </Card>
 
         <DemographicDonutChart
           title="Fan Breakdown by Gender"
           labels={['Male Fans', 'Female Fans', 'Other / Undisclosed']}
-          series={[fb.fanByGender?.male || 54, fb.fanByGender?.female || 43, fb.fanByGender?.other || 3]}
+          series={[fb.fanByGender?.male || 0, fb.fanByGender?.female || 0, fb.fanByGender?.other || 0]}
           colors={['#38BDF8', '#EC4899', '#94A3B8']}
         />
 
         <Card className="rounded-2xl border-border/40 bg-card/60 backdrop-blur-md p-4 flex flex-col justify-between">
           <div>
             <CardTitle className="text-sm font-semibold text-foreground mb-3">Top Fan Countries</CardTitle>
-            <div className="space-y-2.5">
-              {(fb.topCountries || []).map((c: any, i: number) => (
-                <div key={i} className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-foreground">{c.country}</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 bg-muted/30 h-1.5 rounded-full overflow-hidden">
-                      <div className="bg-[#1877F2] h-full rounded-full" style={{ width: `${c.percentage}%` }} />
+            {(fb.topCountries || []).length > 0 ? (
+              <div className="space-y-2.5">
+                {(fb.topCountries || []).map((c: any, i: number) => (
+                  <div key={i} className="flex items-center justify-between text-xs">
+                    <span className="font-medium text-foreground">{c.country}</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-20 bg-muted/30 h-1.5 rounded-full overflow-hidden">
+                        <div className="bg-[#1877F2] h-full rounded-full" style={{ width: `${c.percentage || 0}%` }} />
+                      </div>
+                      <span className="font-mono text-muted-foreground w-8 text-right">{c.percentage || 0}%</span>
                     </div>
-                    <span className="font-mono text-muted-foreground w-8 text-right">{c.percentage}%</span>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="py-8 text-center text-xs text-muted-foreground italic">
+                No geographic telemetry recorded yet.
+              </div>
+            )}
           </div>
           <div className="pt-3 border-t border-border/10 text-[11px] text-muted-foreground flex justify-between">
             <span>Primary Audience Language</span>
-            <span className="font-semibold text-foreground">English (70%)</span>
+            <span className="font-semibold text-foreground">
+              {fb.topLanguages?.[0]?.language ? `${fb.topLanguages[0].language} (${fb.topLanguages[0].percentage}%)` : 'Not recorded'}
+            </span>
           </div>
         </Card>
       </div>
@@ -336,6 +354,7 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
       <DailyPostDensityHeatmap
         title="Facebook Engagement Heatmap by Day & Time"
         subtitle="Identifies the highest concentration of active Facebook users browsing your content"
+        densityData={fb.postDensityDaily}
       />
 
       {/* Published Posts with Engagement Data Table */}
@@ -378,11 +397,11 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
                       <td className="py-3 px-4 text-xs text-muted-foreground font-mono">
                         {p.date ? new Date(p.date).toLocaleDateString() : 'Recent'}
                       </td>
-                      <td className="py-3 px-4 text-right font-mono text-xs">{p.impressions?.toLocaleString()}</td>
-                      <td className="py-3 px-4 text-right font-mono text-xs text-pink-500 font-semibold">{p.reactions}</td>
-                      <td className="py-3 px-4 text-right font-mono text-xs text-blue-400">{p.comments}</td>
-                      <td className="py-3 px-4 text-right font-mono text-xs text-purple-400">{p.shares}</td>
-                      <td className="py-3 px-4 text-right font-mono text-xs text-emerald-500 font-bold">{p.engagementRate}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs">{p.impressions?.toLocaleString() || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-pink-500 font-semibold">{p.reactions || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-blue-400">{p.comments || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-purple-400">{p.shares || 0}</td>
+                      <td className="py-3 px-4 text-right font-mono text-xs text-emerald-500 font-bold">{p.engagementRate || '0.0%'}</td>
                     </tr>
                   ))
                 )}
@@ -394,3 +413,5 @@ export const FacebookAnalyticsTab: React.FC<FacebookTabProps> = ({ data, isLoadi
     </div>
   )
 }
+
+export default FacebookAnalyticsTab
