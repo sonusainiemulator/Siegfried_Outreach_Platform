@@ -411,6 +411,48 @@ export const WEBSITE_TEMPLATES: WebsiteDesignTemplate[] = [
       stats: [{ label: 'Tests Conducted', value: '450,000+' }, { label: 'Report Turnaround', value: '6 Hours' }, { label: 'Accuracy Score', value: '99.98%' }]
     }
   },
+  {
+    id: 'health-5',
+    name: 'Siegfried Mind & Wellness — Ethical Mental Health Clinic',
+    industryId: 'healthcare',
+    category: 'Ethical Mental Health & Psychology',
+    description: 'Evidence-based clinical psychology and outpatient therapy portal tailored for anxiety, OCD, PTSD, insomnia (CBT-I), and professional burnout. Fully HIPAA compliant and centered on client autonomy.',
+    creditCost: 5,
+    rating: 5.0,
+    reviewsCount: 312,
+    styleTheme: 'Calming Sage, Slate & Warm Stone',
+    thumbnailGradient: 'from-emerald-700 via-teal-800 to-slate-900',
+    colorPalette: ['#0f172a', '#059669', '#10b981', '#f0fdf4'],
+    conversionBadge: '🧠 Evidence-Based Clinical Care',
+    isNew: true,
+    isPremium: true,
+    features: ['Confidential Intake Portal', 'Clinician Matching System', 'HIPAA Telehealth Integration', 'Clinical Research Insights Blog', 'Insurance Benefits Verifier'],
+    pagesIncluded: ['Home', 'Clinical Specialties', 'Ethical Practice Standards', 'Our Clinicians', 'Patient Resources', 'Book Confidential Intake'],
+    previewMockup: {
+      heroTitle: 'Evidence-Based Therapy Grounded in Science, Empathy & Integrity',
+      heroSubtitle: 'Personalized clinical care for anxiety, OCD, trauma, and sleep disorders. We move beyond empty promises to deliver scientifically sound, compassionate transformation.',
+      ctaText: 'Schedule Confidential Intake',
+      secondaryCta: 'Explore Clinical Specialties',
+      accentColor: '#10b981',
+      bgMode: 'light',
+      services: [
+        { title: 'Exposure & Response Prevention (ERP)', desc: 'Gold-standard, compassionate clinical treatment for OCD and intrusive thought cycles.', icon: '🧠' },
+        { title: 'CBT for Insomnia & Sleep Disorders', desc: 'Stimulus control and circadian recalibration without lifelong medication dependency.', icon: '🌙' },
+        { title: 'Trauma & PTSD Recovery', desc: 'Expanding your window of tolerance through safe, trauma-informed evidence-based modalities.', icon: '🛡️' },
+        { title: 'Analytical & High-Achiever Burnout', desc: 'Cognitive flexibility and stress resilience for engineers, executives, and professionals.', icon: '⚡' }
+      ],
+      testimonial: { 
+        quote: 'Working with an ethical practice that values psychological science over marketing fluff restored my hope. The ERP protocol gave me my life back.', 
+        author: 'Verified Outpatient Client', 
+        role: 'Completed 16-Week Clinical Treatment' 
+      },
+      stats: [
+        { label: 'Clinical Experience', value: '10+ Years' }, 
+        { label: 'Patient Retention', value: '94%' }, 
+        { label: 'Evidence-Based Protocols', value: '100% APA' }
+      ]
+    }
+  },
 
   // ─── REAL ESTATE & ARCHITECTURE (4 templates) ───
   {

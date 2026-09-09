@@ -121,7 +121,7 @@ export default function AdminTemplatesPage() {
                   <Input
                     value={form.category}
                     onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}
-                    placeholder="e.g. Dental Clinic, Restaurant"
+                    placeholder="e.g. Ethical Mental Health Marketing, Healthcare & Clinic, Dental Clinic"
                     required
                   />
                 </div>

@@ -4,6 +4,42 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 🧠 [2026-09-09 16:15:00 CEST] — Ethical Mental Health Marketing & Clinical Psychology Social Templates Suite
+
+### 🏥 1. Ethical Mental Health Marketing Philosophy & Templates Catalog (`/ai-social/templates`)
+- **Direct Alignment with Client Clinical Values (`christophersiegfried.com`)**:
+  - Developed and seeded **19 comprehensive, clinically sound social media templates** designed specifically for licensed therapists, psychologists, psychiatric clinics, and ethical wellness practices.
+  - Formats covered across all 5 modalities: **Carousels (5-slide guides), Infographic Images, 60s Clinician Video Reels, Deep-Dive Video Scripts, and Interactive Daily Grounding Stories**.
+  - **Clinical Nuance Over Clickbait**: Templates specifically reject fear-mongering, empty promises, and diagnostic trivia; they provide scientifically backed education, demystifying gold-standard care while respecting client autonomy and HIPAA privacy.
+  - **Areas of Focus Embedded**:
+    - *Exposure & Response Prevention (ERP)* for Obsessive-Compulsive Disorder (OCD)
+    - *Cognitive Behavioral Therapy for Insomnia (CBT-I)* and circadian sleep stimulus control
+    - *Trauma & PTSD Recovery* via Window of Tolerance somatic/cognitive mapping
+    - *Panic Attack vs Anxiety Attack* autonomic nervous system differentiation and physiological sigh
+    - *Analytical Mindset & Burnout* for engineers, executives, and high-achieving perfectionists
+    - *Behavioral Activation for Depression* (small non-negotiable micro-steps over waiting for motivation)
+    - *The Anger Iceberg* and emotional de-escalation
+    - *Addiction & Substance Use* through compassionate harm-reduction and dual-diagnosis lenses
+    - *Demystifying the First Therapy Consultation* to reduce intake friction and client anxiety
+    - *Crisis Safety Protocol* with immediate national lifelines (988, Crisis Text Line)
+- **Top-Level Marketplace Category & Filter**:
+  - Added `Ethical Mental Health Marketing` as a premier filter chip and dropdown category in `TemplateMarketplacePage.tsx`.
+  - Added dedicated `Clinical Ethics` badge and emerald gradient accents for ethical psychology templates.
+
+### 🔍 2. Template Preview & Clinical Details Modal
+- **Interactive Inspect Dialog**:
+  - Added one-click **Preview Details (`Eye` icon)** on template cards, opening a modal detailing format, platform suitability, credit cost, and full AI prompt templates.
+  - Highlighted dynamic substitution variables (`{{business_name}}`, `{{service}}`, `{{location}}`, `{{phone}}`, `{{usp}}`, etc.) from the user's Business Brain.
+  - Prominently displays the **Ethical Clinical Philosophy (Christopher Siegfried Standards)** badge and guidance.
+  - Direct "Apply This Template" workflow inside the modal.
+
+### 🌐 3. Website Design Template Integration (`src/data/websiteTemplatesData.ts`)
+- **Added `health-5`: Siegfried Mind & Wellness — Ethical Mental Health Clinic**:
+  - Full-featured clinical psychology practice template with Confidential Intake Portal, Clinician Matching, HIPAA Telehealth Integration, and Insurance Benefits Verifier.
+  - Synced to backend JSON catalog (`website-templates.json`) for the AI Website Builder.
+
+---
+
 ## 📊 [2026-09-06 22:54:00 CEST] — Social Media Analytics: 100% Real REST API Data Migration & Demo Data Removal
 
 ### 🚀 1. Complete Removal of Demo Data Across All Analytics Dashboards (`/social-media/analytics`)

@@ -13,6 +13,8 @@ import {
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  Eye,
+  ShieldCheck,
 } from 'lucide-react'
 
 import { PageHeader } from '@/components/reusable/PageHeader'
@@ -20,6 +22,14 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import Input from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import {
   useGetTemplatesQuery,
   useUseTemplateMutation,
@@ -29,6 +39,8 @@ import { useRouter } from 'next/navigation'
 
 const CATEGORIES = [
   'All',
+  'Ethical Mental Health Marketing',
+  'Healthcare & Clinic',
   'Dental Clinic',
   'Restaurant & Cafe',
   'Real Estate',
@@ -38,7 +50,6 @@ const CATEGORIES = [
   'IT & Digital Agency',
   'Retail & E-commerce',
   'Automobile & Detailing',
-  'Healthcare & Clinic',
   'Finance & CA Advisory',
   'Travel & Hospitality',
   'Home Services & Interior',
@@ -65,6 +76,7 @@ export default function TemplateMarketplacePage() {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [usingId, setUsingId] = useState<string | null>(null)
+  const [previewTemplate, setPreviewTemplate] = useState<any | null>(null)
 
   const { data: profileData } = useGetBusinessProfileQuery(undefined)
   const business = (profileData as any)?.data
@@ -231,15 +243,26 @@ export default function TemplateMarketplacePage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {displayedTemplates.map((template: any) => {
           const isProcessing = usingId === template._id
+          const isEthical = template.category === 'Ethical Mental Health Marketing'
+
           return (
             <Card
               key={template._id}
-              className="border border-border overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/50 flex flex-col justify-between"
+              className={`border border-border overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col justify-between ${
+                isEthical ? 'hover:border-emerald-500/50 dark:hover:border-emerald-500/50 bg-gradient-to-b from-card to-background' : 'hover:border-primary/50'
+              }`}
             >
               {/* Preview Thumbnail */}
-              <div className="h-44 bg-muted/50 border-b border-border/40 relative flex items-center justify-center overflow-hidden">
+              <div 
+                className="h-44 bg-muted/50 border-b border-border/40 relative flex items-center justify-center overflow-hidden cursor-pointer group"
+                onClick={() => setPreviewTemplate(template)}
+              >
                 {template.previewImageUrl ? (
-                  <img src={template.previewImageUrl} alt={template.name} className="w-full h-full object-cover" />
+                  <img 
+                    src={template.previewImageUrl} 
+                    alt={template.name} 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+                  />
                 ) : (
                   <div className="text-center p-4">
                     <Sparkles className="w-8 h-8 text-primary/40 mx-auto mb-1.5" />
@@ -247,22 +270,47 @@ export default function TemplateMarketplacePage() {
                   </div>
                 )}
 
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                  <span className="bg-background/90 text-foreground text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+                    <Eye className="w-3.5 h-3.5" /> Preview Details
+                  </span>
+                </div>
+
                 <Badge
                   variant={FORMAT_BADGE_VARIANTS[template.type] || 'secondary'}
                   className="absolute top-3 right-3 text-[11px] font-bold shadow"
                 >
                   {template.type}
                 </Badge>
+
+                {isEthical && (
+                  <Badge
+                    variant="outline"
+                    className="absolute top-3 left-3 text-[10px] font-semibold bg-emerald-950/80 text-emerald-300 border-emerald-500/40 backdrop-blur-sm flex items-center gap-1 shadow"
+                  >
+                    <ShieldCheck className="w-3 h-3 text-emerald-400" /> Clinical Ethics
+                  </Badge>
+                )}
               </div>
 
               {/* Template Info */}
               <CardContent className="p-4 space-y-3 flex-1">
                 <div>
-                  <h3 className="font-bold text-sm text-foreground line-clamp-1">{template.name}</h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded">
+                  <h3 
+                    className="font-bold text-sm text-foreground line-clamp-1 cursor-pointer hover:text-primary transition-colors"
+                    onClick={() => setPreviewTemplate(template)}
+                  >
+                    {template.name}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                    <span className="text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded font-medium">
                       {template.category}
                     </span>
+                    {template.contentType && (
+                      <span className="text-[10px] text-primary/80 bg-primary/10 px-2 py-0.5 rounded font-medium">
+                        {template.contentType}
+                      </span>
+                    )}
                     {template.platform && template.platform !== 'All' && (
                       <span className="text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded">
                         {template.platform}
@@ -277,7 +325,10 @@ export default function TemplateMarketplacePage() {
                 </div>
 
                 {template.basePrompt && (
-                  <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed bg-muted/20 p-2 rounded border border-border/40 font-mono">
+                  <p 
+                    className="text-xs text-muted-foreground line-clamp-2 leading-relaxed bg-muted/20 p-2 rounded border border-border/40 font-mono cursor-pointer"
+                    onClick={() => setPreviewTemplate(template)}
+                  >
                     {template.basePrompt}
                   </p>
                 )}
@@ -291,25 +342,37 @@ export default function TemplateMarketplacePage() {
                   <span className="text-xs font-normal text-muted-foreground">credits</span>
                 </div>
 
-                <Button
-                  variant="premium"
-                  size="sm"
-                  disabled={isProcessing}
-                  onClick={() => handleUseTemplate(template)}
-                  className="gap-1.5 text-xs h-8"
-                >
-                  {isProcessing ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      Applying...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="w-3.5 h-3.5" />
-                      Use Template
-                    </>
-                  )}
-                </Button>
+                <div className="flex items-center gap-1.5">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPreviewTemplate(template)}
+                    className="h-8 px-2.5 text-xs text-muted-foreground hover:text-foreground"
+                    title="Inspect template details"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                  </Button>
+
+                  <Button
+                    variant="premium"
+                    size="sm"
+                    disabled={isProcessing}
+                    onClick={() => handleUseTemplate(template)}
+                    className="gap-1.5 text-xs h-8"
+                  >
+                    {isProcessing ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        Applying...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Use Template
+                      </>
+                    )}
+                  </Button>
+                </div>
               </CardFooter>
             </Card>
           )
@@ -356,6 +419,122 @@ export default function TemplateMarketplacePage() {
           </div>
         </div>
       )}
+
+      {/* Template Preview & Details Modal */}
+      <Dialog open={!!previewTemplate} onOpenChange={(open) => !open && setPreviewTemplate(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          {previewTemplate && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <Badge variant={FORMAT_BADGE_VARIANTS[previewTemplate.type] || 'secondary'}>
+                    {previewTemplate.type}
+                  </Badge>
+                  <Badge variant="outline">{previewTemplate.category}</Badge>
+                  {previewTemplate.platform && previewTemplate.platform !== 'All' && (
+                    <Badge variant="outline">{previewTemplate.platform}</Badge>
+                  )}
+                  {previewTemplate.category === 'Ethical Mental Health Marketing' && (
+                    <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 gap-1 flex items-center">
+                      <ShieldCheck className="w-3 h-3" /> Clinical Standard
+                    </Badge>
+                  )}
+                </div>
+                <DialogTitle className="text-lg font-bold">{previewTemplate.name}</DialogTitle>
+                <DialogDescription>
+                  Detailed generation configuration and prompt variables for this template.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4 my-2">
+                {previewTemplate.previewImageUrl && (
+                  <div className="h-56 rounded-lg overflow-hidden border border-border">
+                    <img
+                      src={previewTemplate.previewImageUrl}
+                      alt={previewTemplate.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                {previewTemplate.category === 'Ethical Mental Health Marketing' && (
+                  <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-700 dark:text-emerald-300 flex items-start gap-2">
+                    <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" />
+                    <div>
+                      <span className="font-semibold block mb-0.5">Ethical Clinical Philosophy (Christopher Siegfried Standards):</span>
+                      This template is engineered to communicate with evidence-based nuance, avoiding clickbait, empty promises, or fear-based triggers. Fully aligned with HIPAA guidelines and patient autonomy.
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
+                    AI Generation Prompt Template
+                  </h4>
+                  <div className="p-3 bg-muted/40 rounded-lg border border-border text-xs font-mono whitespace-pre-wrap leading-relaxed">
+                    {previewTemplate.basePrompt}
+                  </div>
+                </div>
+
+                {previewTemplate.variables && previewTemplate.variables.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
+                      Dynamic Variables (Substituted from Business Brain)
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {previewTemplate.variables.map((v: string) => (
+                        <code key={v} className="text-[11px] px-2 py-0.5 bg-primary/10 text-primary rounded border border-primary/20">
+                          {`{{${v}}}`}
+                        </code>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-border/40 text-xs">
+                  <div>
+                    <span className="text-muted-foreground block text-[11px]">Format</span>
+                    <span className="font-semibold">{previewTemplate.type}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground block text-[11px]">Target Platform</span>
+                    <span className="font-semibold">{previewTemplate.platform || 'All'}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground block text-[11px]">Cost</span>
+                    <span className="font-semibold text-amber-500 flex items-center gap-1">
+                      <Coins className="w-3.5 h-3.5" /> {previewTemplate.creditCost} credits
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground block text-[11px]">Usage Count</span>
+                    <span className="font-semibold">{previewTemplate.usageCount || 0} times</span>
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter className="flex items-center justify-between sm:justify-between pt-3 border-t border-border">
+                <Button variant="outline" size="sm" onClick={() => setPreviewTemplate(null)}>
+                  Close
+                </Button>
+                <Button
+                  variant="premium"
+                  size="sm"
+                  disabled={usingId === previewTemplate._id}
+                  onClick={() => {
+                    handleUseTemplate(previewTemplate)
+                    setPreviewTemplate(null)
+                  }}
+                  className="gap-1.5"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Apply This Template
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
