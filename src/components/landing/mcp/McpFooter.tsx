@@ -7,7 +7,8 @@ import useSettings from '@/hooks/useSettings'
 
 export default function McpFooter() {
   const { settings } = useSettings()
-  const appName = settings?.app_name || 'TTOS'
+  const rawAppName = settings?.app_name || 'TTOS'
+  const appName = rawAppName.toLowerCase().includes('siegfried') ? 'TTOS' : rawAppName
 
   return (
     <footer className="bg-[#05070C] border-t border-white/10 py-16 text-gray-400 text-xs">

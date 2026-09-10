@@ -38,9 +38,15 @@ next_dev.log
 *.log
 
 # Temporary / Scratch & Archives
-*.zip
 *.tar.gz
+*.zip
+*.bson
+*.json
+scratch/
 scratch-*.js
+dump/
+.htaccess
+.well-known/
 fix_nav.js
 replace_pixel.js
 postizsonu

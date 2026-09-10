@@ -20,9 +20,10 @@ export default function CampaignHubFooter() {
   const isDark = !mounted || resolvedTheme === 'dark'
 
   const logoUrl = isDark
-    ? getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/light-logo2.png'
-    : getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/dark-logo2.png'
-  const appName = settings?.app_name || 'TTOS'
+    ? (getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/light-logo2.png')
+    : (getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/dark-logo2.png')
+  const rawAppName = settings?.app_name || 'TTOS'
+  const appName = rawAppName.toLowerCase().includes('siegfried') ? 'TTOS' : rawAppName
   const { t } = useTranslation()
   const [openSection, setOpenSection] = useState<string | null>(null)
 

@@ -2,6 +2,29 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🎨 [2026-09-10 20:56:00 UTC] — True PNG Logo Asset Suite & Deep Footer Brand Sanitization
+
+### 🖼️ 1. True PNG Logo Suite Generation & Direct Downloads
+- **Converted & Validated 100% Genuine PNG Encoding**:
+  - Re-encoded all brand assets from raw format into true PNG standards (`1376x768` and `1024x1024` 8-bit RGB).
+  - Generated dedicated high-res light and dark theme logo assets:
+    - `public/images/ttos-logo-dark.png` (Sleek dark background for dark-mode headers and banners)
+    - `public/images/ttos-logo-light.png` (Crisp light background for light-mode docs and decks)
+    - `public/images/ttos-logo-dark-transparent.png` (Transparent alpha background for dark themes)
+    - `public/images/ttos-logo-light-transparent.png` (Transparent alpha background for light themes)
+    - `public/images/ttos-logo-square.png` (High-res 1024x1024 app icon)
+  - Synced existing legacy asset aliases (`dark-logo2.png`, `light-logo2.png`, `logo.png`) to true PNG format.
+  - Verified live 200 OK delivery via `https://ttai.in/images/*`.
+
+### 🛡️ 2. Deep Footer & Public Settings Brand Sanitization
+- **Public Settings API Override (`src/app/api/setting/public/route.ts`)**:
+  - Enforced `settings.app_name = 'TTOS'` to prevent legacy database entries from surfacing in client header/footer components.
+- **Landing Footers Sanitized**:
+  - `src/components/landing/mcp/McpFooter.tsx`: Enforced sanitized `appName = 'TTOS'` in copyright bar.
+  - `src/components/landing/campaign-hub/CampaignHubFooter.tsx`: Enforced sanitized `appName = 'TTOS'` in copyright bar.
+
+---
+
 ## 🔍 [2026-09-10 20:47:00 UTC] — Enterprise SEO Architecture & Global Meta Tags Suite for TTOS
 
 ### 🌐 1. Root Layout & Global Metadata Suite (`src/app/layout.tsx`)
