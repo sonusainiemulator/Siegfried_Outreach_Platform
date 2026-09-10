@@ -59,8 +59,8 @@ export default function CampaignHubHeader() {
   const isDark = !mounted || resolvedTheme === 'dark'
 
   const logoUrl = isDark
-    ? getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/light-logo2.png'
-    : getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/dark-logo2.png'
+    ? getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/ttos-logo-dark.png'
+    : getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/ttos-logo-light.png'
   const appName = settings?.app_name || 'TTOS'
   const { sectionRefs } = useSectionRefs()
   const router = useRouter()

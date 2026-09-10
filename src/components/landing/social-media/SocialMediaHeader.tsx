@@ -18,7 +18,7 @@ import { navLinks } from '../../../data/landingSocialMedia'
 
 export default function SocialMediaHeader() {
   const { settings } = useSettings()
-  const logoUrl = getMediaUrl(settings?.landing_logo_url || settings?.logo_dark_url || settings?.logo_light_url) || '/images/light-logo2.png'
+  const logoUrl = getMediaUrl(settings?.landing_logo_url || settings?.logo_dark_url || settings?.logo_light_url) || '/images/ttos-logo-dark.png'
   const appName = settings?.app_name || 'Logo'
   const { sectionRefs } = useSectionRefs()
   const router = useRouter()

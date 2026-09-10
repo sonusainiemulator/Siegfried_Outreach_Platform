@@ -171,7 +171,33 @@ export const authUtils = {
 
 export const getMediaUrl = (path: string | null | undefined): string | undefined => {
   if (!path) return undefined
-  if (path.startsWith('http') || path.startsWith('data:')) return path
+  if (path.startsWith('data:')) return path
+
+  // Map legacy Siegfried logos to new TTOS brand logos
+  if (typeof path === 'string') {
+    if (path.includes('hppdzj')) {
+      return '/images/ttos-logo-light.png'
+    }
+    if (path.includes('g4mpaw') || path.includes('0rg64h') || path.includes('h6sz3s')) {
+      return '/images/ttos-logo-dark.png'
+    }
+    if (path.includes('cqkajl') || path.includes('pexcyu') || path.includes('nnthg4') || path.includes('kxz6u4')) {
+      return '/images/ttos-logo-square.png'
+    }
+    if (path.includes('siegfried') && (path.includes('logo') || path.includes('banner') || path.includes('uploads/logos'))) {
+      return '/images/ttos-logo-dark.png'
+    }
+  }
+
+  // Handle local static assets directly
+  if (path.startsWith('/images/') || path.startsWith('/favicon') || path.startsWith('/icons/')) {
+    return path
+  }
+  if (path.startsWith('images/')) {
+    return `/${path}`
+  }
+
+  if (path.startsWith('http')) return path
 
   const baseUrl = (process.env.NEXT_PUBLIC_STORAGE_URL || '').replace(/\/$/, '')
   const cleanPath = path.startsWith('/') ? path.slice(1) : path

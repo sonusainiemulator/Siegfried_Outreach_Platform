@@ -40,7 +40,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
   const displayLogo = logoUrl 
     ? getMediaUrl(logoUrl) 
-    : (mounted && currentTheme === 'dark' ? '/images/light-logo2.png' : '/images/dark-logo2.png')
+    : (mounted && currentTheme === 'dark' ? '/images/ttos-logo-dark.png' : '/images/ttos-logo-light.png')
 
   if (shouldShowLoader || isAuthenticated) {
     return (

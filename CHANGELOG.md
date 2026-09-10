@@ -2,6 +2,19 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🔄 [2026-09-10 21:08:00 UTC] — Fix Live Brand Logo Pipelines & Eliminate Remote Legacy Siegfried Asset Routing
+
+### 🎯 Root Cause Resolution
+- **Identified Cause of Stale Remote Logo**:
+  - The public settings endpoint was serving legacy database paths pointing to remote files (`/uploads/logos/image-178610...png`).
+  - `getMediaUrl` in `src/utils/index.ts` was resolving relative and image paths against the remote `NEXT_PUBLIC_STORAGE_URL` (`https://api.siegfriedoutreach.com`), bypassing local TTOS logo files.
+- **Implemented Comprehensive Fixes**:
+  - **`src/utils/index.ts`**: Updated `getMediaUrl` to automatically intercept any legacy logo hash or Siegfried URL and map it to the corresponding local TTOS logo (`/images/ttos-logo-dark.png`, `/images/ttos-logo-light.png`, `/images/ttos-logo-square.png`). Local static paths (`/images/...`) are now served directly without remote URL prepending.
+  - **`src/app/api/setting/public/route.ts` & `src/app/api/setting/route.ts`**: Overrode all database logo fields (`logo_light_url`, `logo_dark_url`, `landing_logo_url`, `sidebar_logo_url`, `mobile_logo_url`, `favicon_url`, `favicon_notification_logo_url`, `onboarding_logo_url`) to permanently return local `/images/ttos-logo-...` assets.
+  - **Header & Footer Components**: Updated fallback and logo resolution in `CampaignHubHeader`, `CampaignHubFooter`, `SocialMediaHeader`, `SocialMediaFooter`, `SidebarLogo`, `LeftSidebar`, `DynamicMetadata`, and `AuthLayout` to use dedicated TTOS assets.
+
+---
+
 ## 🎨 [2026-09-10 20:56:00 UTC] — True PNG Logo Asset Suite & Deep Footer Brand Sanitization
 
 ### 🖼️ 1. True PNG Logo Suite Generation & Direct Downloads
