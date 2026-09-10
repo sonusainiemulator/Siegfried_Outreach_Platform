@@ -2,6 +2,31 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🧹 [2026-09-10 21:52:00 CEST] — Navigation & Dashboard Streamlining: Hidden Deprecated AI Tools, Hubs & Widgets
+
+### 🧭 1. AI Tools Sidebar Streamlining (`src/data/sidebarData.ts`)
+- **Hidden Submodules from `AI Tools` Menu**:
+  - `AI Chat Assistant`
+  - `AI Bot Studio`
+  - `AI Codex`
+  - `AI Detect`
+  - `AI Transcription`
+  - `AI File Bot`
+  - `AI Writing Assistant`
+  - `AI Avatar & Video`
+  - `Hermes Skills`
+- **Retained Core Tools**: `AI Blog Writer`, `AI Live Agent`, `AI Content Rewriter`, and `AI Slide Maker`.
+
+### 🗂️ 2. Hub Sections Removed from Sidebar (`src/data/sidebarData.ts`)
+- **AI Employee Hub**: Completely removed the section and all 9 sub-links (Command Center, Business Setup, Website Builder, SEO Agent, Server Agent, Maintenance Bot, Social Media Agent, Google Business, Credits).
+- **Billing & Plans**: Removed section from main navigation (Plans, Subscriptions, Transactions).
+
+### 📊 3. Dashboard Chart Cleanup (`DashboardCharts.tsx` & `UserDashboard.tsx`)
+- **Admin Dashboard**: Removed empty `Favorite Assistants` card and `User Subscriptions` donut chart to elevate primary revenue and distribution analytics.
+- **User Dashboard**: Removed `Favorite Assistants` card and expanded `DashboardIntelligenceOverview` to span the full grid width.
+
+---
+
 ## 🚫 [2026-09-10 21:42:00 CEST] — Admin Feature Simplification: Hidden Indian Festivals Auto-Pilot
 
 ### 🎯 Feature Scope & Navigation Streamlining

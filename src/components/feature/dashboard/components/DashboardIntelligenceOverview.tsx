@@ -12,7 +12,7 @@ export const DashboardIntelligenceOverview = ({ generatedContentChart }: Intelli
   const { t } = useTranslation()
 
   return (
-    <motion.div variants={dashboardItemVariants} className="lg:col-span-12 xl:col-span-5 relative group">
+    <motion.div variants={dashboardItemVariants} className="col-span-12 relative group">
       <Card className="rounded-border-radius glass-dark-card border border-white/10 overflow-hidden h-full relative">
         <div className="sm:p-6 p-4 rounded-border-radius h-full flex flex-col justify-between">
           <div className="space-y-4 mb-6">

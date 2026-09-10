@@ -322,20 +322,6 @@ export const sidebarMenuData: MenuSection[] = [
     title: 'AI Tools',
     items: [
       {
-        id: 'ai-chat',
-        label: 'AI Chat Assistant',
-        icon: 'MessageSquare',
-        path: ROUTES.CHAT_ASSISTANT.LIST,
-        requiredPermission: PERMISSIONS.VIEW_CHAT_CONVERSATIONS,
-      },
-      {
-        id: 'ai-chatbots',
-        label: 'AI Bot Studio',
-        icon: 'Bot',
-        path: ROUTES.CHATBOT_BUILDER,
-        requiredPermission: PERMISSIONS.VIEW_CHATBOTS,
-      },
-      {
         id: 'article-writer',
         label: 'AI Blog Writer',
         icon: 'FileText',
@@ -343,46 +329,11 @@ export const sidebarMenuData: MenuSection[] = [
         requiredPermission: PERMISSIONS.GENERATE_ARTICLE,
       },
       {
-        id: 'code-assistant',
-        label: 'AI Codex',
-        icon: 'Code',
-        path: ROUTES.CODE_ASSISTANT,
-        requiredPermission: PERMISSIONS.GENERATE_CODE,
-      },
-      {
-        id: 'detect-ai',
-        label: 'AI Detect',
-        icon: 'ShieldAlert',
-        path: ROUTES.DETECT_AI,
-        requiredPermission: PERMISSIONS.VERIFY_CONTENT,
-      },
-      {
         id: 'human-agent',
         label: 'AI Live Agent',
         icon: 'Headset',
         path: ROUTES.CHAT_ASSISTANT.LIVE_AGENT,
         requiredPermissions: [PERMISSIONS.REPLY_QUERIES, PERMISSIONS.MANAGE_AGENTS, PERMISSIONS.MANAGE_CHANNELS],
-      },
-      {
-        id: 'speech-to-text',
-        label: 'AI Transcription',
-        icon: 'Mic',
-        path: ROUTES.AI_TRANSCRIPTION,
-        requiredPermission: PERMISSIONS.GENERATE_TEXT_TRANSCRIPTS,
-      },
-      {
-        id: 'file-chat',
-        label: 'AI File Bot',
-        icon: 'FileText',
-        path: ROUTES.SMART_FILE_CHAT,
-        requiredPermission: PERMISSIONS.VIEW_FILE_CONVERSATIONS,
-      },
-      {
-        id: 'ai-writer',
-        label: 'AI Writing Assistant',
-        icon: 'Sparkles',
-        path: ROUTES.SMART_WRITER,
-        requiredPermission: PERMISSIONS.GENERATE_CONTENT,
       },
       {
         id: 'ai-rewriter',
@@ -397,19 +348,6 @@ export const sidebarMenuData: MenuSection[] = [
         icon: 'Presentation',
         path: ROUTES.SLIDE_MAKER,
         requiredPermission: PERMISSIONS.GENERATE_SLIDE,
-      },
-      {
-        id: 'ai-avatar',
-        label: 'AI Avatar & Video',
-        icon: 'Video',
-        path: ROUTES.AI_AVATAR,
-      },
-      {
-        id: 'ai-agent-skills',
-        label: 'Hermes Skills',
-        icon: 'Bot',
-        path: '/ai-agent-skills',
-        requiredRole: 'admin',
       },
     ],
   },
@@ -451,40 +389,7 @@ export const sidebarMenuData: MenuSection[] = [
     ],
   },
 
-  {
-    title: 'AI Employee Hub',
-    items: [
-      { id: 'ai-emp-dashboard', label: 'Command Center', icon: 'Cpu', path: ROUTES.AI_EMPLOYEES.DASHBOARD },
-      { id: 'ai-emp-onboarding', label: 'Business Setup', icon: 'Building2', path: ROUTES.AI_EMPLOYEES.ONBOARDING },
-      { id: 'ai-emp-website', label: 'Website Builder', icon: 'Globe', path: ROUTES.AI_EMPLOYEES.WEBSITE_BUILDER },
-      { id: 'ai-emp-seo', label: 'SEO Agent', icon: 'Search', path: ROUTES.AI_EMPLOYEES.SEO_AGENT },
-      { id: 'ai-emp-server', label: 'Server Agent', icon: 'Database', path: ROUTES.AI_EMPLOYEES.SERVER_AGENT },
-      { id: 'ai-emp-maintenance', label: 'Maintenance Bot', icon: 'Wrench', path: ROUTES.AI_EMPLOYEES.MAINTENANCE_AGENT },
-      { id: 'ai-emp-social', label: 'Social Media Agent', icon: 'Share2', path: ROUTES.AI_EMPLOYEES.SOCIAL_AGENT },
-      { id: 'ai-emp-google', label: 'Google Business', icon: 'MapPin', path: ROUTES.AI_EMPLOYEES.GOOGLE_BUSINESS },
-      { id: 'ai-emp-credits', label: 'Credits', icon: 'Coins', path: ROUTES.AI_EMPLOYEES.CREDITS },
-    ],
-  },
-  {
-    title: 'Billing & Plans',
-    items: [
-      {
-        id: 'plans',
-        label: 'Plans',
-        icon: 'Package',
-        path: ROUTES.PLANS,
-        requiredPermission: PERMISSIONS.VIEW_PLANS,
-      },
-      { id: 'subscription', label: 'Subscriptions', icon: 'TicketCheck', path: ROUTES.SUBSCRIPTIONS },
-      {
-        id: 'transactions',
-        label: 'Transactions',
-        icon: 'CreditCard',
-        path: ROUTES.TRANSACTIONS,
-        requiredRole: 'super_admin',
-      },
-    ],
-  },
+
   {
     title: 'Help & Support',
     items: [{ id: 'help', label: 'Knowledge Base', icon: 'HelpCircle', path: ROUTES.SUPPORT.KNOWLEDGE_BASE }],
