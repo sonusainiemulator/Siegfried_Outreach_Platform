@@ -25,27 +25,27 @@ const clientQuickPresets = [
   {
     id: 'claude-code',
     label: 'Claude Code',
-    cmd: 'claude mcp add --transport http Siegfried https://api.siegfriedoutreach.com/mcp',
+    cmd: 'claude mcp add --transport http TTOS https://api.ttos.com/mcp',
   },
   {
     id: 'cursor',
     label: 'Cursor JSON',
-    cmd: '{\n  "mcpServers": {\n    "siegfried": {\n      "url": "https://api.siegfriedoutreach.com/mcp",\n      "headers": { "siegfried-api-key": "YOUR_API_KEY" }\n    }\n  }\n}',
+    cmd: '{\n  "mcpServers": {\n    "ttos": {\n      "url": "https://api.ttos.com/mcp",\n      "headers": { "ttos-api-key": "YOUR_API_KEY" }\n    }\n  }\n}',
   },
   {
     id: 'claude-desktop',
     label: 'Claude Desktop',
-    cmd: 'https://api.siegfriedoutreach.com/mcp',
+    cmd: 'https://api.ttos.com/mcp',
   },
   {
     id: 'antigravity',
     label: 'Antigravity',
-    cmd: '{\n  "mcpServers": {\n    "siegfried": {\n      "url": "https://api.siegfriedoutreach.com/mcp",\n      "headers": { "siegfried-api-key": "YOUR_API_KEY" }\n    }\n  }\n}',
+    cmd: '{\n  "mcpServers": {\n    "ttos": {\n      "url": "https://api.ttos.com/mcp",\n      "headers": { "ttos-api-key": "YOUR_API_KEY" }\n    }\n  }\n}',
   },
   {
     id: 'codex',
     label: 'OpenAI Codex',
-    cmd: 'URL: https://api.siegfriedoutreach.com/mcp\nHeader: siegfried-api-key: YOUR_API_KEY',
+    cmd: 'URL: https://api.ttos.com/mcp\nHeader: ttos-api-key: YOUR_API_KEY',
   },
 ]
 
@@ -57,7 +57,7 @@ export default function McpHero() {
   const currentPreset = clientQuickPresets.find((p) => p.id === selectedClient) || clientQuickPresets[0]
 
   const copyUrl = () => {
-    navigator.clipboard.writeText('https://api.siegfriedoutreach.com/mcp')
+    navigator.clipboard.writeText('https://api.ttos.com/mcp')
     setCopiedEndpoint(true)
     toast.success('MCP Server URL copied to clipboard!')
     setTimeout(() => setCopiedEndpoint(false), 2000)
@@ -97,7 +97,7 @@ export default function McpHero() {
           {/* Subtext */}
           <p className="text-lg sm:text-xl text-gray-300 font-normal leading-relaxed max-w-3xl mx-auto">
             Claude can write a post. It cannot publish one.{' '}
-            <strong className="text-white font-semibold">Siegfried MCP closes that gap</strong>. 32 official tools,
+            <strong className="text-white font-semibold">TTOS MCP closes that gap</strong>. 32 official tools,
             zero web scraping, unmetered publishing, and real-time analytics for{' '}
             <span className="text-indigo-300 font-medium">Claude Code, Cursor, Codex, Antigravity</span>, and more.
           </p>
@@ -167,7 +167,7 @@ export default function McpHero() {
               <div className="py-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-black/60 border border-white/10 flex-1 font-mono text-sm text-indigo-300 overflow-x-auto">
                   <span className="text-gray-500 select-none">POST/GET</span>
-                  <span className="select-all font-semibold">https://api.siegfriedoutreach.com/mcp</span>
+                  <span className="select-all font-semibold">https://api.ttos.com/mcp</span>
                 </div>
 
                 <Button

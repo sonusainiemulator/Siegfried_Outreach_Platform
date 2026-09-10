@@ -22,7 +22,7 @@ import { useTestMcpToolMutation } from '@/redux/api/mcpApi'
 import { toast } from 'sonner'
 
 export default function McpPlayground() {
-  const [selectedToolName, setSelectedToolName] = useState('siegfried_get_user')
+  const [selectedToolName, setSelectedToolName] = useState('ttos_get_user')
   const [paramsJson, setParamsJson] = useState('{}')
   const [responseView, setResponseView] = useState<'formatted' | 'jsonrpc'>('formatted')
   const [copiedResponse, setCopiedResponse] = useState(false)
@@ -47,7 +47,7 @@ export default function McpPlayground() {
         defaultArgs.templateId = 'tpl_minimal_dark_quote'
       } else if (name.includes('create_post')) {
         defaultArgs.title = 'Autonomous Agent Launch'
-        defaultArgs.content = 'Publishing to 9 platforms simultaneously via Siegfried MCP server!'
+        defaultArgs.content = 'Publishing to 9 platforms simultaneously via TTOS MCP server!'
         defaultArgs.platforms = [{ platform: 'x', postType: 'post' }, { platform: 'linkedin', postType: 'post' }]
       } else if (name.includes('top_posts')) {
         defaultArgs.limit = 5
@@ -122,11 +122,11 @@ export default function McpPlayground() {
           {/* Quick Presets */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
             {[
-              { label: '�� Get User & Credits', tool: 'siegfried_get_user' },
-              { label: '🎬 Repurpose YouTube', tool: 'siegfried_create_source' },
-              { label: '🎨 AI Visual Generator', tool: 'siegfried_create_visual' },
-              { label: '📊 Top Posts Analytics', tool: 'siegfried_list_top_posts' },
-              { label: '🚀 Create Multi-Post', tool: 'siegfried_create_post' },
+              { label: '�� Get User & Credits', tool: 'ttos_get_user' },
+              { label: '🎬 Repurpose YouTube', tool: 'ttos_create_source' },
+              { label: '🎨 AI Visual Generator', tool: 'ttos_create_visual' },
+              { label: '📊 Top Posts Analytics', tool: 'ttos_list_top_posts' },
+              { label: '🚀 Create Multi-Post', tool: 'ttos_create_post' },
             ].map((preset) => (
               <button
                 key={preset.tool}

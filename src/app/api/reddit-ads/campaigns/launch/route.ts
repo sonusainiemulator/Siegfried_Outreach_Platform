@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         title: creative.title,
         bodyMarkdown: creative.bodyMarkdown || '',
         callToAction: creative.callToAction || 'LEARN_MORE',
-        destinationUrl: creative.destinationUrl || 'https://siegfriedoutreach.com',
+        destinationUrl: creative.destinationUrl || 'https://ttos.com',
         thumbnailUrl: creative.thumbnailUrl || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
         authorHandle: creative.authorHandle || '',
         flairText: creative.flairText || '🛠️ Discussion & Tool',

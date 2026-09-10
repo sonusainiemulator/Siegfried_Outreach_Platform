@@ -5,13 +5,13 @@ export async function GET(request: NextRequest) {
     {
       id: 'rdt_acc_01',
       adAccountId: 't2_948201948',
-      accountName: 'Siegfried Global (Reddit Ads)',
+      accountName: 'TTOS Global (Reddit Ads)',
       currency: 'USD',
       timezone: 'America/New_York',
       balance: 6420.00,
       accountStatus: 'ACTIVE',
       isDefault: true,
-      businessName: 'Siegfried Outreach Inc.'
+      businessName: 'TTOS Inc.'
     },
     {
       id: 'rdt_acc_02',
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       balance: 2100.00,
       accountStatus: 'ACTIVE',
       isDefault: false,
-      businessName: 'Siegfried Outreach Inc.'
+      businessName: 'TTOS Inc.'
     }
   ]
 

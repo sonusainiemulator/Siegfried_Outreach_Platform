@@ -30,10 +30,10 @@ export async function POST(request: NextRequest) {
     const negativeKeywords = ['free download', 'torrent', 'crack', 'jobs', 'internship', 'wikipedia']
 
     const sitelinks = [
-      { text: 'Live Interactive Demo', description: 'Experience the AI agent in real-time', url: 'https://siegfriedoutreach.com/demo' },
-      { text: 'Transparent Pricing', description: 'Affordable monthly plans for teams', url: 'https://siegfriedoutreach.com/pricing' },
-      { text: 'Integrations & APIs', description: 'Connect WhatsApp, Telegram, CRM', url: 'https://siegfriedoutreach.com/integrations' },
-      { text: 'Client Success Stories', description: 'Read verified 4.8x ROI case studies', url: 'https://siegfriedoutreach.com/cases' }
+      { text: 'Live Interactive Demo', description: 'Experience the AI agent in real-time', url: 'https://ttos.com/demo' },
+      { text: 'Transparent Pricing', description: 'Affordable monthly plans for teams', url: 'https://ttos.com/pricing' },
+      { text: 'Integrations & APIs', description: 'Connect WhatsApp, Telegram, CRM', url: 'https://ttos.com/integrations' },
+      { text: 'Client Success Stories', description: 'Read verified 4.8x ROI case studies', url: 'https://ttos.com/cases' }
     ]
 
     const callouts = [

@@ -141,7 +141,7 @@ export default function TemplatePreviewModal({
                   </div>
                   <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-black/40 border border-white/5 text-[11px] text-white/60 font-mono">
                     <Lock className="w-2.5 h-2.5 text-emerald-400" />
-                    https://demo.{template.industryId}.siegfriedsites.com
+                    https://demo.{template.industryId}.ttossites.com
                   </div>
                   <div className="text-[10px] uppercase font-bold text-white/30 tracking-wider">
                     {device}

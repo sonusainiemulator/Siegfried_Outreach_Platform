@@ -96,7 +96,7 @@ export default function CampaignHubCapabilities() {
               transition={{ duration: 0.8 }}
               className="text-[calc(28px+(56-28)*((100vw-320px)/(1920-320)))] font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]"
             >
-              See What Siegfried Outreach
+              See What TTOS
               <br />
               <span className="text-primary">Can Do For Your Business</span>
             </motion.h2>

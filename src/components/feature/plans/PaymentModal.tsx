@@ -76,7 +76,7 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle, onSuccess }: Paymen
       [isOneTime ? 'order_id' : 'subscription_id']: orderId,
       amount: isOneTime ? Math.round((plan?.amount || 0) * 100) : undefined,
       currency: plan?.currency || 'USD',
-      name: 'Siegfried Social Media Marketing Plateform',
+      name: 'TTOS Social Media Marketing Plateform',
       description: isOneTime ? `${t('payment_for')} ${plan?.name}` : `${t('subscription_for')} ${plan?.name}`,
       handler: async (response: any) => {
         let url = `/payment-success?payment_gateway=razorpay&razorpay_payment_id=${response.razorpay_payment_id}&razorpay_signature=${response.razorpay_signature}`

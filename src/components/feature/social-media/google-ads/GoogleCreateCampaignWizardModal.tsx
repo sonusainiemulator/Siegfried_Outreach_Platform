@@ -81,7 +81,7 @@ export const GoogleCreateCampaignWizardModal: React.FC<GoogleCreateCampaignWizar
 
   // Step 3: Creative & SERP Simulator
   const [headlines, setHeadlines] = useState<string[]>([
-    'Siegfried Outreach Platform',
+    'TTOS Platform',
     'Multi-Channel AI Automation',
     'Scale Sales & Leads Fast'
   ])
@@ -89,16 +89,16 @@ export const GoogleCreateCampaignWizardModal: React.FC<GoogleCreateCampaignWizar
     'Automate outreach across WhatsApp, Telegram, Email & Socials with 99.4% delivery.',
     'Connect CRM in 2 minutes. Transparent reporting and 24/7 dedicated support.'
   ])
-  const [finalUrl, setFinalUrl] = useState('https://siegfriedoutreach.com')
+  const [finalUrl, setFinalUrl] = useState('https://ttos.com')
   const [displayPath1, setDisplayPath1] = useState('platform')
   const [displayPath2, setDisplayPath2] = useState('ai')
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'mobile'>('desktop')
 
   const [sitelinks, setSitelinks] = useState([
-    { text: 'Live Interactive Demo', description: 'See AI agents in action', url: 'https://siegfriedoutreach.com/demo' },
-    { text: 'Transparent Pricing', description: 'Affordable monthly plans', url: 'https://siegfriedoutreach.com/pricing' },
-    { text: 'Integrations & APIs', description: 'WhatsApp, Telegram, CRM', url: 'https://siegfriedoutreach.com/integrations' },
-    { text: 'Client Success Stories', description: 'Read verified 4.8x ROI case studies', url: 'https://siegfriedoutreach.com/cases' }
+    { text: 'Live Interactive Demo', description: 'See AI agents in action', url: 'https://ttos.com/demo' },
+    { text: 'Transparent Pricing', description: 'Affordable monthly plans', url: 'https://ttos.com/pricing' },
+    { text: 'Integrations & APIs', description: 'WhatsApp, Telegram, CRM', url: 'https://ttos.com/integrations' },
+    { text: 'Client Success Stories', description: 'Read verified 4.8x ROI case studies', url: 'https://ttos.com/cases' }
   ])
 
   const [callouts, setCallouts] = useState(['24/7 Dedicated Support', '99.4% Inbox Rate', 'Official APIs Only', 'No Setup Fee'])
@@ -170,7 +170,7 @@ export const GoogleCreateCampaignWizardModal: React.FC<GoogleCreateCampaignWizar
           displayPath2,
           sitelinks,
           callouts,
-          businessName: 'Siegfried Outreach'
+          businessName: 'TTOS'
         }
       }).unwrap()
 
@@ -541,10 +541,10 @@ export const GoogleCreateCampaignWizardModal: React.FC<GoogleCreateCampaignWizar
                     </div>
                     <div>
                       <div className="flex items-center gap-1 font-bold text-xs text-neutral-800 dark:text-neutral-200">
-                        <span>Siegfried Outreach</span>
+                        <span>TTOS</span>
                       </div>
                       <div className="text-[11px] text-neutral-500 dark:text-neutral-400 font-mono">
-                        <span className="font-bold text-neutral-700 dark:text-neutral-300">Sponsored</span> • https://www.siegfriedoutreach.com › {displayPath1} › {displayPath2}
+                        <span className="font-bold text-neutral-700 dark:text-neutral-300">Sponsored</span> • https://www.ttos.com › {displayPath1} › {displayPath2}
                       </div>
                     </div>
                   </div>

@@ -413,7 +413,7 @@ export const WEBSITE_TEMPLATES: WebsiteDesignTemplate[] = [
   },
   {
     id: 'health-5',
-    name: 'Siegfried Mind & Wellness — Ethical Mental Health Clinic',
+    name: 'TTOS Mind & Wellness — Ethical Mental Health Clinic',
     industryId: 'healthcare',
     category: 'Ethical Mental Health & Psychology',
     description: 'Evidence-based clinical psychology and outpatient therapy portal tailored for anxiety, OCD, PTSD, insomnia (CBT-I), and professional burnout. Fully HIPAA compliant and centered on client autonomy.',

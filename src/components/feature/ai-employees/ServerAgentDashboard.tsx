@@ -191,7 +191,7 @@ export default function ServerAgentDashboard() {
                   <label className="text-xs text-white/40">Or use a subdomain</label>
                   <div className="flex gap-2">
                     <input type="text" placeholder="mysite" className="flex-1 h-11 px-4 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder:text-white/20 outline-none focus:border-primary/50" />
-                    <span className="h-11 px-4 bg-white/5 border border-white/10 rounded-xl text-white/40 text-sm flex items-center">.siegfried.site</span>
+                    <span className="h-11 px-4 bg-white/5 border border-white/10 rounded-xl text-white/40 text-sm flex items-center">.ttos.site</span>
                   </div>
                 </div>
               </div>

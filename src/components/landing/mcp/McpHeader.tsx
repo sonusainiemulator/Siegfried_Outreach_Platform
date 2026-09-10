@@ -31,9 +31,9 @@ export default function McpHeader() {
   }, [])
 
   const copyEndpoint = () => {
-    navigator.clipboard.writeText('https://api.siegfriedoutreach.com/mcp')
+    navigator.clipboard.writeText('https://api.ttos.com/mcp')
     setCopied(true)
-    toast.success('MCP Server URL copied: https://api.siegfriedoutreach.com/mcp')
+    toast.success('MCP Server URL copied: https://api.ttos.com/mcp')
     setTimeout(() => setCopied(false), 2000)
   }
 
@@ -56,7 +56,7 @@ export default function McpHeader() {
           <div className="flex flex-col whitespace-nowrap">
             <div className="flex items-center gap-2">
               <span className="text-lg sm:text-xl font-black tracking-tight text-white font-outfit">
-                Siegfried
+                TTOS
               </span>
               <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-sm font-mono">
                 MCP
@@ -91,7 +91,7 @@ export default function McpHeader() {
           >
             <Terminal className="w-3.5 h-3.5 text-indigo-400" />
             <span className="text-[11px] text-gray-300 group-hover:text-white">
-              api.siegfriedoutreach.com/mcp
+              api.ttos.com/mcp
             </span>
             {copied ? (
               <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -151,7 +151,7 @@ export default function McpHeader() {
               onClick={copyEndpoint}
               className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#121826] border border-white/10 text-xs font-mono text-gray-300"
             >
-              <span>api.siegfriedoutreach.com/mcp</span>
+              <span>api.ttos.com/mcp</span>
               {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-indigo-400" />}
             </button>
             <div className="grid grid-cols-2 gap-2 pt-1">

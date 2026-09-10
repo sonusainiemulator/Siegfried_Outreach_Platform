@@ -83,7 +83,7 @@ const SystemEmailConfigCard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8">
-          <TextInput name="mail_from_name" label="Sender Name" placeholder="Siegfried Social Media Marketing Plateform Support" />
+          <TextInput name="mail_from_name" label="Sender Name" placeholder="TTOS Social Media Marketing Plateform Support" />
           <TextInput name="mail_from_email" label="Sender Email" placeholder="noreply@pixelai.com" type="email" />
         </div>
 

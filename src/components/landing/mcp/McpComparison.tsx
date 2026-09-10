@@ -21,10 +21,10 @@ export default function McpComparison() {
             <span>Honest Benchmark</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-outfit">
-            How Does Siegfried MCP Compare to Other Servers?
+            How Does TTOS MCP Compare to Other Servers?
           </h2>
           <p className="text-gray-400 text-base sm:text-lg">
-            Compare Siegfried against other social media automation APIs and MCP servers.
+            Compare TTOS against other social media automation APIs and MCP servers.
           </p>
         </div>
 
@@ -38,7 +38,7 @@ export default function McpComparison() {
                   <th className="p-5 font-extrabold text-indigo-300 bg-indigo-950/40 border-x border-indigo-500/20 text-center">
                     <span className="flex items-center justify-center gap-1.5">
                       <Sparkles className="w-4 h-4 text-indigo-400" />
-                      Siegfried MCP
+                      TTOS MCP
                     </span>
                   </th>
                   <th className="p-5 font-semibold text-gray-400 text-center">Ayrshare</th>
@@ -54,14 +54,14 @@ export default function McpComparison() {
                       {row.feature}
                     </td>
 
-                    {/* Siegfried column (highlighted) */}
+                    {/* TTOS column (highlighted) */}
                     <td className="p-5 bg-indigo-950/20 border-x border-indigo-500/20 text-center">
                       <div className="flex flex-col items-center gap-1">
                         <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
                           <Check className="w-4 h-4" />
                         </span>
                         <span className="text-[11px] text-indigo-200 font-medium">
-                          {row.siegfried.note}
+                          {row.ttos.note}
                         </span>
                       </div>
                     </td>

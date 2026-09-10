@@ -86,7 +86,7 @@ export const GoogleAdsManagerDashboard: React.FC = () => {
   const accounts = accountsData?.data || [
     {
       id: 'ggl_acc_01',
-      accountName: 'Siegfried Global MCC (Google Ads)',
+      accountName: 'TTOS Global MCC (Google Ads)',
       balance: 18500.00,
       currency: 'USD'
     }

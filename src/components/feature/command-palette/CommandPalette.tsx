@@ -69,7 +69,7 @@ interface CommandPaletteProps {
   onOpenChange: (open: boolean) => void
 }
 
-const RECENT_COMMANDS_KEY = 'siegfried_recent_commands_v1'
+const RECENT_COMMANDS_KEY = 'ttos_recent_commands_v1'
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onOpenChange }) => {
   const { t } = useTranslation()
@@ -724,7 +724,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onOpenChan
             </div>
 
             <div className="flex items-center gap-1 text-primary font-bold">
-              <Sparkles className="w-3.5 h-3.5" /> Siegfried Command 2.0
+              <Sparkles className="w-3.5 h-3.5" /> TTOS Command 2.0
             </div>
           </div>
         </DialogContent>

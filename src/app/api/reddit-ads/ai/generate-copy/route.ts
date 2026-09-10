@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
 
 Most tools in the ${cleanDesc} space charge an arm and a leg while locking you into opaque black boxes. 
 
-We built **Siegfried Outreach** from the ground up to solve 3 core pain points:
+We built **TTOS** from the ground up to solve 3 core pain points:
 - **100% Official APIs**: Clean delivery rates, zero fragile headless scrapers.
 - **Unified Multi-Channel**: Manage WhatsApp, Telegram, Email & Socials in one place.
 - **Developer-First**: Webhooks, REST APIs, and instant 1-click workflows.

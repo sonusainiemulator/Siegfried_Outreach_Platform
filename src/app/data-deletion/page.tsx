@@ -4,8 +4,8 @@ import { SectionRefsProvider } from '@/context/SectionRefsContext'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Data Deletion Instructions | Siegfried Outreach',
-  description: 'Instructions on how to delete your personal data collected via Facebook Login on Siegfried Outreach.',
+  title: 'Data Deletion Instructions | TTOS',
+  description: 'Instructions on how to delete your personal data collected via Facebook Login on TTOS.',
 }
 
 export default function DataDeletionPage() {
@@ -18,13 +18,13 @@ export default function DataDeletionPage() {
           
           <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-primary hover:prose-a:text-primary/80">
             <p>
-              Siegfried Outreach uses Facebook Login to authenticate users and provide a seamless integration with Facebook social media features. 
+              TTOS uses Facebook Login to authenticate users and provide a seamless integration with Facebook social media features. 
               In compliance with Facebook's platform policies, we provide this page to instruct users on how to delete their activities and associated data from our application.
             </p>
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">How to Delete Your Data</h2>
             <p>
-              If you wish to delete your activities or request deletion of data associated with Siegfried Outreach, you can do so by following these steps:
+              If you wish to delete your activities or request deletion of data associated with TTOS, you can do so by following these steps:
             </p>
             <ol className="list-decimal pl-6 space-y-2">
               <li>
@@ -34,7 +34,7 @@ export default function DataDeletionPage() {
                 In the left menu, scroll down and click on <strong>Apps and Websites</strong>.
               </li>
               <li>
-                Find and select <strong>Siegfried Outreach</strong> from the list of active apps.
+                Find and select <strong>TTOS</strong> from the list of active apps.
               </li>
               <li>
                 Click the <strong>Remove</strong> button next to the app name.
@@ -50,7 +50,7 @@ export default function DataDeletionPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Email:</strong> <a href="mailto:chris@siegfriedmarketing.org">chris@siegfriedmarketing.org</a>
+                <strong>Email:</strong> <a href="mailto:chris@ttosmarketing.org">chris@ttosmarketing.org</a>
               </li>
               <li>
                 <strong>Subject:</strong> Facebook Data Deletion Request

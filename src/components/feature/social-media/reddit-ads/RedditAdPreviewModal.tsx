@@ -34,10 +34,10 @@ export const RedditAdPreviewModal: React.FC<RedditAdPreviewModalProps> = ({
   if (!campaign) return null
 
   const creative = campaign.creative || {
-    title: 'Siegfried Outreach Platform Demo',
+    title: 'TTOS Platform Demo',
     bodyMarkdown: 'Multi-channel automation for founders & developers.',
     callToAction: 'TRY_FREE',
-    destinationUrl: 'https://siegfriedoutreach.com',
+    destinationUrl: 'https://ttos.com',
     authorHandle: 'u/you',
     flairText: '🛠️ Case Study',
     thumbnailUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80'

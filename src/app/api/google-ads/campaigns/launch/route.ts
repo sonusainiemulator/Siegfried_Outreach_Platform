@@ -48,15 +48,15 @@ export async function POST(request: NextRequest) {
       creative: {
         headlines: creative.headlines,
         descriptions: creative.descriptions || ['Scale your customer growth with AI automation.'],
-        finalUrl: creative.finalUrl || 'https://siegfriedoutreach.com',
+        finalUrl: creative.finalUrl || 'https://ttos.com',
         displayPath1: creative.displayPath1 || 'scale',
         displayPath2: creative.displayPath2 || 'ai',
         sitelinks: creative.sitelinks || [
-          { text: 'Live Demo', description: 'See AI agents in action', url: 'https://siegfriedoutreach.com/demo' },
-          { text: 'Pricing & Plans', description: 'Transparent monthly tiers', url: 'https://siegfriedoutreach.com/pricing' }
+          { text: 'Live Demo', description: 'See AI agents in action', url: 'https://ttos.com/demo' },
+          { text: 'Pricing & Plans', description: 'Transparent monthly tiers', url: 'https://ttos.com/pricing' }
         ],
         callouts: creative.callouts || ['24/7 Priority Support', '99.4% Inbox Rate', 'Official APIs Only'],
-        businessName: creative.businessName || 'Siegfried Outreach'
+        businessName: creative.businessName || 'TTOS'
       },
       targetKeywords: targetKeywords.length > 0 ? targetKeywords : [
         { keyword: 'ai outreach platform', matchType: 'EXACT' },

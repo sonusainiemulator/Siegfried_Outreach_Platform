@@ -75,7 +75,7 @@ export default function TelegramConnectModal({ isOpen, onClose, onConnected }: T
               ]}
               links={[
                 { label: 'Bot API Core', url: 'https://core.telegram.org/bots/api' },
-                { label: 'Developer Setup Guide', url: 'file:///www/wwwroot/api.siegfriedoutreach.com/docs/TELEGRAM_DEVELOPER_GUIDE.md' }
+                { label: 'Developer Setup Guide', url: 'file:///www/wwwroot/api.ttos.com/docs/TELEGRAM_DEVELOPER_GUIDE.md' }
               ]}
             />
           </div>

@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     {
       id: 'tt_acc_01',
       adAccountId: 'adv_84920491823',
-      accountName: 'Siegfried Global Marketing (TikTok Business)',
+      accountName: 'TTOS Global Marketing (TikTok Business)',
       currency: 'USD',
       timezone: 'UTC-05:00 (Eastern Time)',
       balance: 14850.00,

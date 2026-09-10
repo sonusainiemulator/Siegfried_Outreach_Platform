@@ -4,8 +4,8 @@ import './globals.css'
 import Providers from './Providers'
 
 export const metadata: Metadata = {
-  title: 'Siegfried Outreach | AI-Powered Marketing & Outreach Platform',
-  description: 'AI-Powered Siegfried Outreach Platform for automated multi-channel marketing, social publishing, and customer engagement.',
+  title: 'TTOS | AI-Powered Marketing & Outreach Platform',
+  description: 'AI-Powered TTOS Platform for automated multi-channel marketing, social publishing, and customer engagement.',
 }
 
 const RootLayout = ({

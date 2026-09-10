@@ -71,7 +71,7 @@ export const PostTimelineItem = ({
     if (p.url) return p.url
     const plat = p.platform?.toLowerCase()
     if (plat === 'facebook' && p.postId) return `https://www.facebook.com/${p.postId}`
-    if (plat === 'wordpress') return 'https://christophersiegfried.com'
+    if (plat === 'wordpress') return 'https://christopherttos.com'
     if (plat === 'twitter' && p.postId) return `https://x.com/i/status/${p.postId}`
     if (plat === 'linkedin' && p.postId) return `https://www.linkedin.com/feed/update/${p.postId}`
     if (plat === 'reddit' && p.postId) return `https://reddit.com${p.postId}`

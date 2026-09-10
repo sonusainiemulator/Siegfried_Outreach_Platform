@@ -93,7 +93,7 @@ export const TikTokAdsManagerDashboard: React.FC = () => {
   const accounts = accountsData?.data || [
     {
       id: 'tt_acc_01',
-      accountName: 'Siegfried Global Marketing (TikTok Business)',
+      accountName: 'TTOS Global Marketing (TikTok Business)',
       balance: 14850.00,
       currency: 'USD'
     }

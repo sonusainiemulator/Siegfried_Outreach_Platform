@@ -84,7 +84,7 @@ export const ImportModal = ({
               </DialogTitle>
             </div>
             <p className="text-subtitle-color text-sm ml-13 font-medium opacity-80">
-              {t('upload_instruction', { defaultValue: 'Bring your data into Siegfried Social Media Marketing Plateform with a few clicks.' })}
+              {t('upload_instruction', { defaultValue: 'Bring your data into TTOS Social Media Marketing Plateform with a few clicks.' })}
             </p>
           </div>
         </DialogHeader>

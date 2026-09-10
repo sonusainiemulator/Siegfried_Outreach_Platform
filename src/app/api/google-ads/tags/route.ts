@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     {
       id: 'ggl_tag_001',
       tagId: 'AW-948201948',
-      tagName: 'Siegfried Global Google Tag (gtag.js)',
+      tagName: 'TTOS Global Google Tag (gtag.js)',
       status: 'ACTIVE',
       enhancedConversionsEnabled: true,
       lastPing: '1 minute ago',

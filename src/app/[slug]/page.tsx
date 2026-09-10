@@ -2,7 +2,7 @@ import PageClient from './PageClient'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Siegfried Social Media Marketing Platform',
+  title: 'TTOS Social Media Marketing Platform',
 }
 
 export default async function DynamicPage({ params }: { params: Promise<{ slug: string }> }) {

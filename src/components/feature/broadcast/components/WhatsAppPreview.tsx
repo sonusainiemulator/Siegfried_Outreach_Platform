@@ -31,7 +31,7 @@ export const WhatsAppPreview = ({ values, mediaPreview, t }: WhatsAppPreviewProp
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1">
               <p className="text-[15px] font-bold truncate leading-none">
-                {t('platform_identity', { defaultValue: 'Siegfried Social Media Marketing Plateform' })}
+                {t('platform_identity', { defaultValue: 'TTOS Social Media Marketing Plateform' })}
               </p>
               <CheckCircle2 className="w-3.5 h-3.5 fill-blue-400 text-white" />
             </div>

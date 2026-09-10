@@ -42,9 +42,9 @@ export const TikTokAdPreviewModal: React.FC<TikTokAdPreviewModalProps> = ({
     hook: 'Stop scrolling! Viral demo in action...',
     caption: 'Discover the next generation platform ⚡',
     callToAction: 'SHOP_NOW',
-    soundTitle: 'Original Sound - Siegfried Beats',
+    soundTitle: 'Original Sound - TTOS Beats',
     hashtags: ['#TikTokMadeMeBuyIt', '#Viral'],
-    brandHandle: '@siegfried_outreach',
+    brandHandle: '@ttos_outreach',
     videoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80'
   }
 
@@ -162,7 +162,7 @@ export const TikTokAdPreviewModal: React.FC<TikTokAdPreviewModalProps> = ({
           <div className="relative z-10 p-3.5 pt-0 space-y-2 text-white">
             <div className="flex items-center gap-1.5">
               <span className="font-extrabold text-xs tracking-tight">
-                {creative.brandHandle || '@siegfried_outreach'}
+                {creative.brandHandle || '@ttos_outreach'}
               </span>
               <span className="w-3.5 h-3.5 rounded-full bg-[#25F4EE] text-black flex items-center justify-center text-[9px] font-black">
                 ✓

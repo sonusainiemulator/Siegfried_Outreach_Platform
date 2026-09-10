@@ -165,9 +165,9 @@ export const TikTokCreateCampaignWizardModal: React.FC<TikTokCreateCampaignWizar
   const [hook, setHook] = useState('Stop scrolling! This 1 gadget sold out 4 times in 48 hours...')
   const [caption, setCaption] = useState('The viral product everyone on #TikTokMadeMeBuyIt is obsessed with! ⚡ Tap Shop Now for 25% OFF Summer flash discount!')
   const [callToAction, setCallToAction] = useState('SHOP_NOW')
-  const [soundTitle, setSoundTitle] = useState('Original Sound - Siegfried Viral Beats (Trending)')
-  const [brandHandle, setBrandHandle] = useState('@siegfried_outreach')
-  const [destinationUrl, setDestinationUrl] = useState('https://siegfriedoutreach.com')
+  const [soundTitle, setSoundTitle] = useState('Original Sound - TTOS Viral Beats (Trending)')
+  const [brandHandle, setBrandHandle] = useState('@ttos_outreach')
+  const [destinationUrl, setDestinationUrl] = useState('https://ttos.com')
   const [videoUrl, setVideoUrl] = useState('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80')
 
   // AI Assistant prompt

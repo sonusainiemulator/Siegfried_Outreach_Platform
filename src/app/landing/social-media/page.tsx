@@ -2,7 +2,7 @@ import SocialMediaLanding from '@/components/landing/social-media/SocialMediaLan
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Social Media Studio | Siegfried Outreach',
+  title: 'Social Media Studio | TTOS',
   description:
     'Boost your social media growth with AI. Create, schedule and publish stunning content for Instagram, Facebook, LinkedIn and Twitter/X — all from one platform.',
 }

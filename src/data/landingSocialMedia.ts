@@ -161,7 +161,7 @@ export const howItWorks = [
 export const testimonials = [
   {
     quote:
-      'We run social media for 24 luxury real estate agents. Siegfried Outreach cut our content creation time by 80% while our listing views on Instagram and LinkedIn quadrupled.',
+      'We run social media for 24 luxury real estate agents. TTOS cut our content creation time by 80% while our listing views on Instagram and LinkedIn quadrupled.',
     name: 'Verónica G.',
     role: 'Head of Social Media · Skyline Estates',
     rating: 5,
@@ -194,7 +194,7 @@ export const testimonials = [
   },
   {
     quote:
-      'Our commercial real estate team booked 14 high-value tenant meetings in 3 weeks by automating LinkedIn and Twitter industry insights with Siegfried Outreach.',
+      'Our commercial real estate team booked 14 high-value tenant meetings in 3 weeks by automating LinkedIn and Twitter industry insights with TTOS.',
     name: 'Carlos Mendez',
     role: 'Commercial Leasing VP · Metro Spaces',
     rating: 5,

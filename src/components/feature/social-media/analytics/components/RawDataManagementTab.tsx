@@ -419,7 +419,7 @@ export const RawDataManagementTab: React.FC<RawDataTabProps> = ({ targetUserId }
             <div className="space-y-1.5">
               <Label className="text-xs">Account Name</Label>
               <Input
-                placeholder="e.g. Siegfried Official Outreach"
+                placeholder="e.g. TTOS Official Outreach"
                 value={accountName}
                 onChange={(e) => setAccountName(e.target.value)}
                 className="h-9 text-xs"

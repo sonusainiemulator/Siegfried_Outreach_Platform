@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     {
       id: 'ggl_acc_01',
       customerId: '482-910-4819',
-      accountName: 'Siegfried Global MCC (Google Ads)',
+      accountName: 'TTOS Global MCC (Google Ads)',
       currency: 'USD',
       timeZone: 'America/New_York',
       balance: 18500.00,

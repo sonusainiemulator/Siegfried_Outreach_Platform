@@ -1044,7 +1044,7 @@ export default function BusinessSetupPage() {
                     Zero-Touch Autonomy Mode (Auto-Publish)
                   </Label>
                   <p className="text-xs text-muted-foreground">
-                    If enabled, Siegfried AI will autonomously generate monthly content plans, write captions, generate creatives, and publish them to your social channels 24/7.
+                    If enabled, TTOS AI will autonomously generate monthly content plans, write captions, generate creatives, and publish them to your social channels 24/7.
                   </p>
                 </div>
               </div>

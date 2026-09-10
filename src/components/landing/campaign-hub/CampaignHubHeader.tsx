@@ -61,7 +61,7 @@ export default function CampaignHubHeader() {
   const logoUrl = isDark
     ? getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/light-logo2.png'
     : getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/dark-logo2.png'
-  const appName = settings?.app_name || 'Siegfried Outreach'
+  const appName = settings?.app_name || 'TTOS'
   const { sectionRefs } = useSectionRefs()
   const router = useRouter()
   const { t } = useTranslation()

@@ -87,7 +87,7 @@ export default function IndiaFestivalAutoPilotPage() {
   }))
 
   const business = (profileData as any)?.data
-  const brandName = business?.name || 'Siegfried Outreach'
+  const brandName = business?.name || 'TTOS'
 
   // State
   const [searchQuery, setSearchQuery] = useState('')
@@ -940,7 +940,7 @@ export default function IndiaFestivalAutoPilotPage() {
               <Input
                 defaultValue={brandName}
                 className="h-10 text-xs rounded-xl"
-                placeholder="e.g. Siegfried Outreach"
+                placeholder="e.g. TTOS"
               />
             </div>
 

@@ -22,7 +22,7 @@ export default function CampaignHubFooter() {
   const logoUrl = isDark
     ? getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/light-logo2.png'
     : getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/dark-logo2.png'
-  const appName = settings?.app_name || 'Siegfried Outreach'
+  const appName = settings?.app_name || 'TTOS'
   const { t } = useTranslation()
   const [openSection, setOpenSection] = useState<string | null>(null)
 
@@ -51,7 +51,7 @@ export default function CampaignHubFooter() {
                 />
               </div>
               <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-white/90 max-w-xs leading-relaxed">
-                {t('campaign_hub_footer_title', { defaultValue: 'Siegfried Outreach' })} <br />
+                {t('campaign_hub_footer_title', { defaultValue: 'TTOS' })} <br />
                 <span className="text-sm font-normal text-slate-500 dark:text-white/50">{t('campaign_hub_footer_desc')}</span>
               </h3>
             </div>

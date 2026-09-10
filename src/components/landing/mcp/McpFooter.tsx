@@ -7,7 +7,7 @@ import useSettings from '@/hooks/useSettings'
 
 export default function McpFooter() {
   const { settings } = useSettings()
-  const appName = settings?.app_name || 'Siegfried'
+  const appName = settings?.app_name || 'TTOS'
 
   return (
     <footer className="bg-[#05070C] border-t border-white/10 py-16 text-gray-400 text-xs">
@@ -25,7 +25,7 @@ export default function McpFooter() {
               Autonomous social media infrastructure for AI agents. One unified endpoint, 32 tools, 11 official platforms.
             </p>
             <div className="text-[11px] font-mono text-gray-500">
-              Endpoint: <code className="text-indigo-400">api.siegfriedoutreach.com/mcp</code>
+              Endpoint: <code className="text-indigo-400">api.ttos.com/mcp</code>
             </div>
           </div>
 

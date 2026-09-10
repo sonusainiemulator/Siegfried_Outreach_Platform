@@ -147,7 +147,7 @@ export default function CampaignHubTestimonials() {
           className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto mb-10"
         >
           From luxury brokerages and property wholesalers to high-velocity outreach agencies, see how teams close deals
-          faster with Siegfried Outreach.
+          faster with TTOS.
         </motion.p>
 
         {/* Category Filters & Playback Controls */}

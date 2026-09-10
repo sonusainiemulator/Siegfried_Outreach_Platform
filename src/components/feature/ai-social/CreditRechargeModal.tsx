@@ -130,10 +130,10 @@ export default function CreditRechargeModal({
     return {
       enabled: userOff?.enabled ?? appOff?.enabled ?? true,
       bank_name: userOff?.bank_name || appOff?.bank_name || 'ICICI Bank',
-      account_name: userOff?.account_name || appOff?.account_name || 'Siegfried Technologies Pvt Ltd',
+      account_name: userOff?.account_name || appOff?.account_name || 'TTOS Technologies Pvt Ltd',
       account_number: userOff?.account_number || appOff?.account_number || '987654321098',
       ifsc_swift: userOff?.ifsc_swift || appOff?.ifsc_swift || 'ICIC0001234',
-      upi_id: userOff?.upi_id || appOff?.upi_id || 'siegfried@icici',
+      upi_id: userOff?.upi_id || appOff?.upi_id || 'ttos@icici',
       upi_qr_url: userOff?.upi_qr_url || appOff?.upi_qr_url || '',
       cash_instructions: userOff?.cash_instructions || appOff?.cash_instructions || '',
       instructions: userOff?.instructions || appOff?.instructions || '',
@@ -262,7 +262,7 @@ export default function CreditRechargeModal({
             key: razorpayKey,
             amount: activePriceINR * 100, // amount in paise
             currency: 'INR',
-            name: 'Siegfried Outreach AI',
+            name: 'TTOS AI',
             description: `${activeTotalCredits.toLocaleString()} AI Social Credits Top-Up`,
             handler: async (response: any) => {
               await executeCreditGrant('Razorpay PG', response.razorpay_payment_id)

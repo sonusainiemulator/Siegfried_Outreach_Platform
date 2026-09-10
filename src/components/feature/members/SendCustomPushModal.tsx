@@ -143,7 +143,7 @@ export function SendCustomPushModal({ isOpen, onClose, selectedUserIds = [] }: S
             </Label>
             <Input
               id="push-link"
-              placeholder="e.g. /dashboard or https://siegfriedoutreach.com/plans"
+              placeholder="e.g. /dashboard or https://ttos.com/plans"
               value={link}
               onChange={(e) => setLink(e.target.value)}
               className="rounded-lg h-10 font-mono text-xs"

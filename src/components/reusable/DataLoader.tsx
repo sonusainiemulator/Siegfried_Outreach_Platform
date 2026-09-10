@@ -16,7 +16,7 @@ const DataLoader = ({
   variant = 'full',
 }: DataLoaderProps) => {
   const {t} = useTranslation()
-  const app_name = 'Siegfried Outreach'
+  const app_name = 'TTOS'
 
   const containerClasses = cn(
     'flex items-center justify-center w-full',

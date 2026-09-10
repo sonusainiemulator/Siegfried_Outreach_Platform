@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     {
       id: 'tt_px_001',
       pixelId: 'C789X92L4K201M',
-      pixelName: 'Siegfried Master TikTok Pixel',
+      pixelName: 'TTOS Master TikTok Pixel',
       status: 'ACTIVE',
       lastActive: '2 minutes ago',
       eventsCount: 48920,

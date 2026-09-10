@@ -27,7 +27,7 @@ export const TelegramPreview = ({ values, mediaPreview, t }: TelegramPreviewProp
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[15px] font-bold truncate leading-none">
-              {t('platform_identity', { defaultValue: 'Siegfried Social Media Marketing Plateform' })}
+              {t('platform_identity', { defaultValue: 'TTOS Social Media Marketing Plateform' })}
             </p>
             <p className="text-[10px] opacity-80 truncate mt-0.5">
               {t('verified_partner', { defaultValue: 'Verified Partner' })}

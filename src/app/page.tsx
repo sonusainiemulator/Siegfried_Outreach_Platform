@@ -2,8 +2,8 @@ import CampaignHubLanding from '@/components/landing/campaign-hub/CampaignHubLan
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Siegfried Outreach | AI-Powered Marketing & Outreach Platform',
-  description: 'Marketing on Autopilot. Reach your customers where they are across Email, WhatsApp, Telegram, and Social Media with Siegfried Outreach.',
+  title: 'TTOS | AI-Powered Marketing & Outreach Platform',
+  description: 'Marketing on Autopilot. Reach your customers where they are across Email, WhatsApp, Telegram, and Social Media with TTOS.',
 }
 
 export default function Home() {

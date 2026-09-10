@@ -409,7 +409,7 @@ export default function CampaignHubTopTierCapabilities() {
                       <div className="w-3 h-3 rounded-full bg-amber-500/80" />
                       <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                       <span className="text-xs text-white/50 font-medium ml-2">
-                        app.siegfriedoutreach.com / {activeTab}
+                        app.ttos.com / {activeTab}
                       </span>
                     </div>
 
@@ -672,7 +672,7 @@ function EngagementMockup() {
           <div className="p-3 rounded-xl bg-primary/20 border border-primary/40 text-xs text-left">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-bold text-amber-300 flex items-center gap-1">
-                <Bot className="w-3 h-3" /> Siegfried AI Auto-Qualified Reply
+                <Bot className="w-3 h-3" /> TTOS AI Auto-Qualified Reply
               </span>
               <span className="text-[9px] text-white/40">Instant</span>
             </div>
@@ -759,7 +759,7 @@ function ReviewsMockup() {
             </div>
           </div>
           <p className="text-xs text-white/80">
-            "Siegfried Outreach helped our agency scale from 5 to 45 property campaigns without hiring extra staff."
+            "TTOS helped our agency scale from 5 to 45 property campaigns without hiring extra staff."
           </p>
         </div>
 

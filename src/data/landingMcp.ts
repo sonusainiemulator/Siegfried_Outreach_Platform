@@ -244,7 +244,7 @@ export const mcpPlatforms = [
 export const mcpToolsCatalog = [
   // Accounts
   {
-    name: 'siegfried_get_user',
+    name: 'ttos_get_user',
     alias: 'sig_get_user',
     category: 'Accounts',
     title: 'Get User Profile & Limits',
@@ -260,12 +260,12 @@ export const mcpToolsCatalog = [
         remainingCredits: 4860,
         connectedAccountsCount: 9,
         platforms: { instagram: 2, linkedin: 2, twitter: 2, facebook: 2, tiktok: 1 },
-        serverEndpoint: 'https://api.siegfriedoutreach.com/mcp',
+        serverEndpoint: 'https://api.ttos.com/mcp',
       },
     },
   },
   {
-    name: 'siegfried_list_accounts',
+    name: 'ttos_list_accounts',
     alias: 'sig_list_accounts',
     category: 'Accounts',
     title: 'List Connected Accounts',
@@ -283,7 +283,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_list_pinterest_boards',
+    name: 'ttos_list_pinterest_boards',
     alias: 'sig_list_pinterest_boards',
     category: 'Accounts',
     title: 'List Pinterest Boards',
@@ -301,7 +301,7 @@ export const mcpToolsCatalog = [
 
   // Publishing
   {
-    name: 'siegfried_create_post',
+    name: 'ttos_create_post',
     alias: 'sig_create_post',
     category: 'Publishing',
     title: 'Publish / Schedule Multi-Platform Post',
@@ -330,7 +330,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_get_post_status',
+    name: 'ttos_get_post_status',
     alias: 'sig_get_post_status',
     category: 'Publishing',
     title: 'Get Post Delivery Status',
@@ -348,7 +348,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_list_posts',
+    name: 'ttos_list_posts',
     alias: 'sig_list_posts',
     category: 'Publishing',
     title: 'List Recent Posts',
@@ -370,7 +370,7 @@ export const mcpToolsCatalog = [
 
   // Content Calendar
   {
-    name: 'siegfried_list_schedules',
+    name: 'ttos_list_schedules',
     alias: 'sig_list_schedules',
     category: 'Content Calendar',
     title: 'List Content Calendar Schedules',
@@ -389,7 +389,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_get_schedule',
+    name: 'ttos_get_schedule',
     alias: 'sig_get_schedule',
     category: 'Content Calendar',
     title: 'Get Schedule Details',
@@ -406,7 +406,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_update_schedule',
+    name: 'ttos_update_schedule',
     alias: 'sig_update_schedule',
     category: 'Content Calendar',
     title: 'Update / Reschedule Post',
@@ -423,7 +423,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_delete_schedule',
+    name: 'ttos_delete_schedule',
     alias: 'sig_delete_schedule',
     category: 'Content Calendar',
     title: 'Cancel Scheduled Post',
@@ -439,7 +439,7 @@ export const mcpToolsCatalog = [
 
   // Analytics
   {
-    name: 'siegfried_list_top_posts',
+    name: 'ttos_list_top_posts',
     alias: 'sig_list_top_posts',
     category: 'Analytics',
     title: 'List Top-Performing Posts',
@@ -459,7 +459,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_get_post_analytics',
+    name: 'ttos_get_post_analytics',
     alias: 'sig_get_post_analytics',
     category: 'Analytics',
     title: 'Get Deep Post Analytics',
@@ -485,7 +485,7 @@ export const mcpToolsCatalog = [
 
   // Comments
   {
-    name: 'siegfried_list_comments',
+    name: 'ttos_list_comments',
     alias: 'sig_list_comments',
     category: 'Comments',
     title: 'List Comments',
@@ -504,7 +504,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_get_comment',
+    name: 'ttos_get_comment',
     alias: 'sig_get_comment',
     category: 'Comments',
     title: 'Get Comment Details',
@@ -520,7 +520,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_post_comment',
+    name: 'ttos_post_comment',
     alias: 'sig_post_comment',
     category: 'Comments',
     title: 'Post Comment / Reply',
@@ -533,13 +533,13 @@ export const mcpToolsCatalog = [
     sampleResponse: {
       success: true,
       message: 'Comment posted successfully',
-      comment: { id: 'cm_new_992', postId: 'p_99', text: 'Just paste https://api.siegfriedoutreach.com/mcp into your Connectors!' },
+      comment: { id: 'cm_new_992', postId: 'p_99', text: 'Just paste https://api.ttos.com/mcp into your Connectors!' },
     },
   },
 
   // Messages & DMs
   {
-    name: 'siegfried_list_conversations',
+    name: 'ttos_list_conversations',
     alias: 'sig_list_conversations',
     category: 'Messages and DMs',
     title: 'List DM Conversations',
@@ -555,7 +555,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_get_conversation',
+    name: 'ttos_get_conversation',
     alias: 'sig_get_conversation',
     category: 'Messages and DMs',
     title: 'Get Conversation Thread',
@@ -571,7 +571,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_list_messages',
+    name: 'ttos_list_messages',
     alias: 'sig_list_messages',
     category: 'Messages and DMs',
     title: 'List Messages in Conversation',
@@ -583,12 +583,12 @@ export const mcpToolsCatalog = [
       conversationId: 'conv_01',
       messages: [
         { id: 'm1', sender: 'Elena Rostova', isOutbound: false, text: 'Hey, I commented DM on your post!' },
-        { id: 'm2', sender: 'Siegfried Bot', isOutbound: true, text: 'Here is your link: https://siegfriedoutreach.com/mcp' },
+        { id: 'm2', sender: 'TTOS Bot', isOutbound: true, text: 'Here is your link: https://ttos.com/mcp' },
       ],
     },
   },
   {
-    name: 'siegfried_get_message',
+    name: 'ttos_get_message',
     alias: 'sig_get_message',
     category: 'Messages and DMs',
     title: 'Get Message Details',
@@ -603,7 +603,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_send_message',
+    name: 'ttos_send_message',
     alias: 'sig_send_message',
     category: 'Messages and DMs',
     title: 'Send Direct Message (DM)',
@@ -622,7 +622,7 @@ export const mcpToolsCatalog = [
 
   // Videos & Images
   {
-    name: 'siegfried_list_visual_templates',
+    name: 'ttos_list_visual_templates',
     alias: 'sig_list_visual_templates',
     category: 'Videos and Images',
     title: 'List Visual Templates',
@@ -638,7 +638,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_create_visual',
+    name: 'ttos_create_visual',
     alias: 'sig_create_visual',
     category: 'Videos and Images',
     title: 'Generate Visual / Carousel Slides',
@@ -651,12 +651,12 @@ export const mcpToolsCatalog = [
     sampleResponse: {
       success: true,
       visualId: 'vis_948201',
-      mediaUrl: 'https://api.siegfriedoutreach.com/uploads/visuals/vis_948201.png',
+      mediaUrl: 'https://api.ttos.com/uploads/visuals/vis_948201.png',
       status: 'completed',
     },
   },
   {
-    name: 'siegfried_get_visual_status',
+    name: 'ttos_get_visual_status',
     alias: 'sig_get_visual_status',
     category: 'Videos and Images',
     title: 'Get Visual Rendering Status',
@@ -667,13 +667,13 @@ export const mcpToolsCatalog = [
     sampleResponse: {
       visualId: 'vis_948201',
       status: 'completed',
-      mediaUrl: 'https://api.siegfriedoutreach.com/uploads/visuals/vis_948201.png',
+      mediaUrl: 'https://api.ttos.com/uploads/visuals/vis_948201.png',
     },
   },
 
   // Content Extraction
   {
-    name: 'siegfried_create_source',
+    name: 'ttos_create_source',
     alias: 'sig_create_source',
     category: 'Content Extraction',
     title: 'Repurpose YouTube / Article to 9 Formats',
@@ -697,7 +697,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_get_source_status',
+    name: 'ttos_get_source_status',
     alias: 'sig_get_source_status',
     category: 'Content Extraction',
     title: 'Get Ingested Source Status',
@@ -714,7 +714,7 @@ export const mcpToolsCatalog = [
 
   // Media & Credits
   {
-    name: 'siegfried_create_presigned_upload_url',
+    name: 'ttos_create_presigned_upload_url',
     alias: 'sig_create_presigned_upload_url',
     category: 'Media and Credits',
     title: 'Create Presigned Media Upload URL',
@@ -724,13 +724,13 @@ export const mcpToolsCatalog = [
       { name: 'fileType', type: 'string', required: true, desc: 'MIME type (e.g., "video/mp4")' },
     ],
     sampleResponse: {
-      uploadUrl: 'https://api.siegfriedoutreach.com/api/mcp/upload-media',
-      publicUrl: 'https://api.siegfriedoutreach.com/uploads/social-posts/upload_9482.mp4',
+      uploadUrl: 'https://api.ttos.com/api/mcp/upload-media',
+      publicUrl: 'https://api.ttos.com/uploads/social-posts/upload_9482.mp4',
       expiresInSeconds: 3600,
     },
   },
   {
-    name: 'siegfried_get_credits',
+    name: 'ttos_get_credits',
     alias: 'sig_get_credits',
     category: 'Media and Credits',
     title: 'Check Credits Balance',
@@ -745,7 +745,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_buy_credits',
+    name: 'ttos_buy_credits',
     alias: 'sig_buy_credits',
     category: 'Media and Credits',
     title: 'Upgrade Plan & Buy Credits',
@@ -758,13 +758,13 @@ export const mcpToolsCatalog = [
         { id: 'starter', name: 'Starter Monthly', price: '$29/mo', posts: 'Unlimited', accounts: 10 },
         { id: 'pro', name: 'Pro Agency', price: '$79/mo', posts: 'Unlimited', accounts: 30 },
       ],
-      checkoutUrl: 'https://siegfriedoutreach.com/plans',
+      checkoutUrl: 'https://ttos.com/plans',
     },
   },
 
   // WordPress
   {
-    name: 'siegfried_publish_wordpress',
+    name: 'ttos_publish_wordpress',
     alias: 'publish_wordpress',
     category: 'WordPress',
     title: 'Publish Article to WordPress',
@@ -788,12 +788,12 @@ export const mcpToolsCatalog = [
         status: 'published',
         siteUrl: 'https://mysite.com',
         permalink: 'https://mysite.com/?p=8492',
-        featuredMedia: 'https://api.siegfriedoutreach.com/uploads/wp-feature.jpg',
+        featuredMedia: 'https://api.ttos.com/uploads/wp-feature.jpg',
       },
     },
   },
   {
-    name: 'siegfried_get_wordpress_site',
+    name: 'ttos_get_wordpress_site',
     alias: 'get_wordpress_site',
     category: 'WordPress',
     title: 'Get WordPress Site Status',
@@ -813,7 +813,7 @@ export const mcpToolsCatalog = [
 
   // Reddit
   {
-    name: 'siegfried_publish_reddit',
+    name: 'ttos_publish_reddit',
     alias: 'publish_reddit',
     category: 'Reddit',
     title: 'Submit Post to Subreddit',
@@ -840,7 +840,7 @@ export const mcpToolsCatalog = [
     },
   },
   {
-    name: 'siegfried_list_subreddits',
+    name: 'ttos_list_subreddits',
     alias: 'list_subreddits',
     category: 'Reddit',
     title: 'List Subscribed Subreddits',
@@ -864,11 +864,11 @@ export const mcpClientGuides = [
     id: 'claude-code',
     name: 'Claude Code',
     badge: 'OAuth & HTTP CLI',
-    command: 'claude mcp add --transport http Siegfried https://api.siegfriedoutreach.com/mcp',
+    command: 'claude mcp add --transport http TTOS https://api.ttos.com/mcp',
     description: 'Run one command inside your terminal session, then authenticate from the /mcp menu.',
     instructions: [
       'Open your terminal where Claude Code is installed.',
-      'Run the single-line command above to register the Siegfried MCP server.',
+      'Run the single-line command above to register the TTOS MCP server.',
       'Open Claude Code and run `/mcp` to authenticate your account.',
       'Prompt Claude: "Schedule a week of content across my LinkedIn and X accounts."',
     ],
@@ -880,10 +880,10 @@ export const mcpClientGuides = [
     command: JSON.stringify(
       {
         mcpServers: {
-          siegfried: {
-            url: 'https://api.siegfriedoutreach.com/mcp',
+          ttos: {
+            url: 'https://api.ttos.com/mcp',
             headers: {
-              'siegfried-api-key': 'YOUR_API_KEY',
+              'ttos-api-key': 'YOUR_API_KEY',
             },
           },
         },
@@ -895,7 +895,7 @@ export const mcpClientGuides = [
     instructions: [
       'Open Cursor Settings > Features > MCP.',
       'Click "Add New MCP Server" or edit your `~/.cursor/mcp.json`.',
-      'Paste the JSON snippet with your API key from the Siegfried Dashboard.',
+      'Paste the JSON snippet with your API key from the TTOS Dashboard.',
       'Ask Composer: "Publish this updated release note as an X thread and LinkedIn post."',
     ],
   },
@@ -903,12 +903,12 @@ export const mcpClientGuides = [
     id: 'claude-desktop',
     name: 'Claude Desktop & Cowork',
     badge: 'Custom Connector / OAuth',
-    command: 'https://api.siegfriedoutreach.com/mcp',
+    command: 'https://api.ttos.com/mcp',
     description: 'Customize > Connectors > Add custom connector, paste the URL, and approve access.',
     instructions: [
       'Open Claude Desktop Settings > Connectors.',
       'Click "Add Custom Connector".',
-      'Paste the server URL: `https://api.siegfriedoutreach.com/mcp`.',
+      'Paste the server URL: `https://api.ttos.com/mcp`.',
       'Click Connect. Claude will now have direct access to all 28 social tools.',
     ],
   },
@@ -916,12 +916,12 @@ export const mcpClientGuides = [
     id: 'openai-codex',
     name: 'OpenAI Codex',
     badge: 'Streamable HTTP',
-    command: 'URL: https://api.siegfriedoutreach.com/mcp\nHeader: siegfried-api-key: YOUR_API_KEY',
+    command: 'URL: https://api.ttos.com/mcp\nHeader: ttos-api-key: YOUR_API_KEY',
     description: 'Codex asks for form inputs rather than JSON. Set transport to streamable HTTP and add your API key header.',
     instructions: [
       'In Codex MCP configuration, select "Streamable HTTP".',
-      'Set Server URL to `https://api.siegfriedoutreach.com/mcp`.',
-      'Leave Bearer Token empty and add header `siegfried-api-key: YOUR_API_KEY`.',
+      'Set Server URL to `https://api.ttos.com/mcp`.',
+      'Leave Bearer Token empty and add header `ttos-api-key: YOUR_API_KEY`.',
       'Codex is now connected to publish and read social media data.',
     ],
   },
@@ -932,10 +932,10 @@ export const mcpClientGuides = [
     command: JSON.stringify(
       {
         mcpServers: {
-          siegfried: {
-            url: 'https://api.siegfriedoutreach.com/mcp',
+          ttos: {
+            url: 'https://api.ttos.com/mcp',
             headers: {
-              'siegfried-api-key': 'YOUR_API_KEY',
+              'ttos-api-key': 'YOUR_API_KEY',
             },
           },
         },
@@ -957,10 +957,10 @@ export const mcpClientGuides = [
     command: JSON.stringify(
       {
         mcpServers: {
-          siegfried: {
-            url: 'https://api.siegfriedoutreach.com/mcp',
+          ttos: {
+            url: 'https://api.ttos.com/mcp',
             headers: {
-              'siegfried-api-key': 'YOUR_API_KEY',
+              'ttos-api-key': 'YOUR_API_KEY',
             },
           },
         },
@@ -979,11 +979,11 @@ export const mcpClientGuides = [
     id: 'chatgpt',
     name: 'ChatGPT Developer Mode',
     badge: 'Web Connector / Custom Action',
-    command: 'https://api.siegfriedoutreach.com/mcp',
+    command: 'https://api.ttos.com/mcp',
     description: 'Connect via Custom GPTs or ChatGPT Developer mode web connectors.',
     instructions: [
       'In ChatGPT web interface, go to Custom GPT Builder > Actions.',
-      'Import the MCP OpenAPI schema from `https://api.siegfriedoutreach.com/mcp`.',
+      'Import the MCP OpenAPI schema from `https://api.ttos.com/mcp`.',
       'Save and publish your social marketing GPT.',
     ],
   },
@@ -992,7 +992,7 @@ export const mcpClientGuides = [
 export const mcpComparisonData = [
   {
     feature: 'Official Platform APIs (Zero Web Scraping)',
-    siegfried: { supported: true, note: 'Official Meta, LinkedIn, X, TikTok, Google APIs' },
+    ttos: { supported: true, note: 'Official Meta, LinkedIn, X, TikTok, Google APIs' },
     ayrshare: { supported: true, note: 'Official APIs' },
     zernio: { supported: true, note: 'Official APIs + Ads focus' },
     outstand: { supported: false, note: 'Browser automation / partial' },
@@ -1000,7 +1000,7 @@ export const mcpComparisonData = [
   },
   {
     feature: 'Total MCP Tools',
-    siegfried: { supported: true, note: '28 Tools (Accounts, Posts, Analytics, DMs, Visuals)' },
+    ttos: { supported: true, note: '28 Tools (Accounts, Posts, Analytics, DMs, Visuals)' },
     ayrshare: { supported: true, note: '28 Tools' },
     zernio: { supported: true, note: '18 Tools' },
     outstand: { supported: false, note: '12 Tools' },
@@ -1008,7 +1008,7 @@ export const mcpComparisonData = [
   },
   {
     feature: 'Platforms Supported',
-    siegfried: { supported: true, note: '9 Platforms (IG, LI, X, TT, YT, FB, Threads, Bluesky, Pinterest)' },
+    ttos: { supported: true, note: '9 Platforms (IG, LI, X, TT, YT, FB, Threads, Bluesky, Pinterest)' },
     ayrshare: { supported: true, note: '9 Platforms' },
     zernio: { supported: false, note: '6 Platforms' },
     outstand: { supported: false, note: '5 Platforms' },
@@ -1016,7 +1016,7 @@ export const mcpComparisonData = [
   },
   {
     feature: 'Unmetered Post Publishing (Flat Rate)',
-    siegfried: { supported: true, note: 'Unlimited posts on flat plan' },
+    ttos: { supported: true, note: 'Unlimited posts on flat plan' },
     ayrshare: { supported: true, note: '$29/mo flat' },
     zernio: { supported: false, note: 'Metered per post' },
     outstand: { supported: false, note: 'Pay per batch' },
@@ -1024,7 +1024,7 @@ export const mcpComparisonData = [
   },
   {
     feature: 'ManyChat-Style Auto-Reply DMs',
-    siegfried: { supported: true, note: 'Included on IG & FB' },
+    ttos: { supported: true, note: 'Included on IG & FB' },
     ayrshare: { supported: true, note: 'Included' },
     zernio: { supported: false, note: 'Not supported' },
     outstand: { supported: false, note: 'Not supported' },
@@ -1032,7 +1032,7 @@ export const mcpComparisonData = [
   },
   {
     feature: 'Content Repurposing (YouTube to 9 Formats)',
-    siegfried: { supported: true, note: 'Built-in `create_source`' },
+    ttos: { supported: true, note: 'Built-in `create_source`' },
     ayrshare: { supported: true, note: 'Built-in' },
     zernio: { supported: false, note: 'Requires separate pipeline' },
     outstand: { supported: false, note: 'Manual' },
@@ -1040,7 +1040,7 @@ export const mcpComparisonData = [
   },
   {
     feature: 'Interactive In-Browser MCP Playground',
-    siegfried: { supported: true, note: 'Live sandbox & JSON-RPC tester' },
+    ttos: { supported: true, note: 'Live sandbox & JSON-RPC tester' },
     ayrshare: { supported: false, note: 'Documentation only' },
     zernio: { supported: false, note: 'Documentation only' },
     outstand: { supported: false, note: 'No sandbox' },
@@ -1063,7 +1063,7 @@ export const mcpFaqs = [
   },
   {
     question: 'How do I authenticate my AI client?',
-    answer: 'Claude Code and Claude Desktop connect via standard OAuth and HTTP connectors. Developer tools like Cursor, OpenAI Codex, Windsurf, and Antigravity connect using your dedicated Siegfried API Key passed as a `siegfried-api-key` header.',
+    answer: 'Claude Code and Claude Desktop connect via standard OAuth and HTTP connectors. Developer tools like Cursor, OpenAI Codex, Windsurf, and Antigravity connect using your dedicated TTOS API Key passed as a `ttos-api-key` header.',
   },
   {
     question: 'Can I connect custom AI agents or workflow automations?',

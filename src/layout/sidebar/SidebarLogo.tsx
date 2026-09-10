@@ -26,7 +26,7 @@ const SidebarLogo = ({ isCollapsed, onClick }: { isCollapsed?: boolean; onClick?
   // Brand Logo 2: Collapsed (Small Logo/Icon)
   const collapsedLogoUrl = settings?.sidebar_logo_url ? getMediaUrl(settings.sidebar_logo_url) : '/images/logo.png'
 
-  const appName = settings?.app_name || 'Siegfried Outreach'
+  const appName = settings?.app_name || 'TTOS'
 
   return (
     <div className={cn('px-5 py-4', isCollapsed && 'px-0 py-3')} onClick={onClick}>

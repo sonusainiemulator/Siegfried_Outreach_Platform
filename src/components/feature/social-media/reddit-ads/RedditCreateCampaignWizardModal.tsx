@@ -98,9 +98,9 @@ export const RedditCreateCampaignWizardModal: React.FC<RedditCreateCampaignWizar
 
   // Step 3: Creative & Simulator
   const [postTitle, setPostTitle] = useState('How our small dev team scaled to 10k users without spending thousands on SDRs (Architecture Breakdown)')
-  const [bodyMarkdown, setBodyMarkdown] = useState('Hey r/SaaS! Most outreach tools are bloated and break your domain reputation. We built Siegfried to automate multi-channel sequences across Email, WhatsApp & Telegram while keeping delivery rates at 99.4%. Live demo is ungated below.')
+  const [bodyMarkdown, setBodyMarkdown] = useState('Hey r/SaaS! Most outreach tools are bloated and break your domain reputation. We built TTOS to automate multi-channel sequences across Email, WhatsApp & Telegram while keeping delivery rates at 99.4%. Live demo is ungated below.')
   const [callToAction, setCallToAction] = useState('TRY_FREE')
-  const [destinationUrl, setDestinationUrl] = useState('https://siegfriedoutreach.com')
+  const [destinationUrl, setDestinationUrl] = useState('https://ttos.com')
   const [authorHandle, setAuthorHandle] = useState('')
   const [flairText, setFlairText] = useState('🛠️ Tool & Case Study')
   const [thumbnailUrl, setThumbnailUrl] = useState('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80')
@@ -499,7 +499,7 @@ export const RedditCreateCampaignWizardModal: React.FC<RedditCreateCampaignWizar
                     <Input
                       value={destinationUrl}
                       onChange={(e) => setDestinationUrl(e.target.value)}
-                      placeholder="https://siegfriedoutreach.com"
+                      placeholder="https://ttos.com"
                       className="h-9 rounded-xl text-xs"
                     />
                   </div>

@@ -2,7 +2,7 @@ import SocialMediaDashboard from '@/components/feature/social-media/dashboard/So
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Social Media Dashboard | Siegfried Outreach',
+  title: 'Social Media Dashboard | TTOS',
   description: 'Manage and analytics for your social media accounts',
 }
 

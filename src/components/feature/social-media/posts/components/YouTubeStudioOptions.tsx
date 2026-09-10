@@ -113,7 +113,7 @@ export default function YouTubeStudioOptions({
     setIsGeneratingDesc(true)
     setTimeout(() => {
       const title = currentTitle || 'My YouTube Video'
-      const generated = `🔥 In this video, we break down everything you need to know about ${title}.\n\n📌 TIMESTAMPS:\n0:00 - Introduction & Overview\n01:45 - Step-by-Step Strategy\n04:30 - Key Growth Tactics & Setup\n07:15 - Pro Tips to Avoid Mistakes\n09:30 - Summary & Next Steps\n\n💬 Drop your questions in the comments below!\n👉 Don't forget to Like, Share, and Subscribe for more daily insights!\n\n#YouTubeMarketing #GrowthHacking #${config.tags.slice(0, 3).join(' #') || 'Siegfried'}`
+      const generated = `🔥 In this video, we break down everything you need to know about ${title}.\n\n📌 TIMESTAMPS:\n0:00 - Introduction & Overview\n01:45 - Step-by-Step Strategy\n04:30 - Key Growth Tactics & Setup\n07:15 - Pro Tips to Avoid Mistakes\n09:30 - Summary & Next Steps\n\n💬 Drop your questions in the comments below!\n👉 Don't forget to Like, Share, and Subscribe for more daily insights!\n\n#YouTubeMarketing #GrowthHacking #${config.tags.slice(0, 3).join(' #') || 'TTOS'}`
       onApplyAIDescription(generated)
       setIsGeneratingDesc(false)
       toast.success('Generated structured description with timestamps!')
@@ -339,7 +339,7 @@ export default function YouTubeStudioOptions({
         ctx.shadowOffsetX = 0
         ctx.shadowOffsetY = 0
 
-        // 5. YouTube & Siegfried Brand Watermark
+        // 5. YouTube & TTOS Brand Watermark
         ctx.fillStyle = 'rgba(0, 0, 0, 0.6)'
         ctx.beginPath()
         ctx.roundRect(80, 610, 320, 50, 12)
@@ -349,7 +349,7 @@ export default function YouTubeStudioOptions({
         ctx.fillText('▶', 100, 642)
         ctx.fillStyle = '#FFFFFF'
         ctx.font = 'bold 18px sans-serif'
-        ctx.fillText('Siegfried Outreach AI', 130, 642)
+        ctx.fillText('TTOS AI', 130, 642)
 
         const dataUrl = canvas.toDataURL('image/jpeg', 0.92)
         onChange({ ...config, customThumbnailUrl: dataUrl })

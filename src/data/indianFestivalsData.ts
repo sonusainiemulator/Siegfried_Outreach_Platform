@@ -72,7 +72,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `Wishing you and your family a harvest of joy, prosperous health, and soaring success this festive season! 🪁✨\n\nMay the sweetness of Til-Gur, the warmth of the Lohri bonfire, and the abundance of Pongal fill your lives with limitless positivity and new milestones. As the kites fly high, may your business and dreams reach new heights!\n\n🎁 Festive Treat: Enjoy an exclusive festive discount on all our services today!\n\n👇 Comment "SANKRANTI" below to claim your special harvest celebration voucher instantly!`,
       hashtags: ['#HappyMakarSankranti', '#HappyPongal', '#HappyLohri', '#HarvestFestival', '#IncredibleIndia', '#FestiveOffer2026', '#IndianTradition', '#FlyHigh'],
       autoReplyKeyword: 'SANKRANTI',
-      autoReplyMessage: 'Happy Makar Sankranti & Pongal! 🪁 Here is your exclusive 20% Festive Harvest Voucher: Use Code "SANKRANTI20" at checkout. Click here to explore: https://siegfriedoutreach.com 🌾',
+      autoReplyMessage: 'Happy Makar Sankranti & Pongal! 🪁 Here is your exclusive 20% Festive Harvest Voucher: Use Code "SANKRANTI20" at checkout. Click here to explore: https://ttos.com 🌾',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -86,10 +86,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Drop a 🪁 in the comments if you are celebrating today! Check bio for festive treats.'
     },
     whatsAppCampaign: {
-      messageTitle: '🌾 Happy Makar Sankranti, Pongal & Lohri from Siegfried Outreach! 🪁',
+      messageTitle: '🌾 Happy Makar Sankranti, Pongal & Lohri from TTOS! 🪁',
       body: `Dear *Valued Friend*,\n\nMay the holy festival of *Makar Sankranti, Pongal & Lohri* bring bountiful harvests of success, good health, and immense happiness to your home and enterprise! 🪁✨\n\n🌾 *Festive Harvest Gift Just For You:*\nGet flat *25% OFF* across all our premium growth plans.\n\n🎟️ Coupon Code: *SANKRANTI25*\n⏰ Valid Till: January 18th\n\nWishing you soaring achievements all through 2026! 🚀`,
       ctaButtonText: 'Claim Festive Offer 🪁',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=SANKRANTI25',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=SANKRANTI25',
       offerDiscountCode: 'SANKRANTI25'
     },
     wordPressBlog: {
@@ -127,7 +127,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `Proud, resilient, and unstoppable! 🇮🇳✨\n\nToday, we salute the visionary Constitution of India and honor the courage, diversity, and innovation that make our great nation thrive. From ancient heritage to modern tech leadership, India stands tall on the global stage.\n\nLet us pledge to innovate with integrity, build with passion, and empower every citizen towards progress.\n\nJai Hind! 🇮🇳\n\nComment "JAIHIND" below to receive our patriotic growth toolkit!`,
       hashtags: ['#RepublicDay2026', '#26January', '#ProudIndian', '#JaiHind', '#IndiaAt77', '#IncredibleIndia', '#ViksitBharat', '#UnityInDiversity'],
       autoReplyKeyword: 'JAIHIND',
-      autoReplyMessage: 'Jai Hind! 🇮🇳 Wishing you a proud Republic Day! In honor of 26th January, enjoy 26% OFF with code "REPUBLIC26". Explore here: https://siegfriedoutreach.com',
+      autoReplyMessage: 'Jai Hind! 🇮🇳 Wishing you a proud Republic Day! In honor of 26th January, enjoy 26% OFF with code "REPUBLIC26". Explore here: https://ttos.com',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -144,7 +144,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       messageTitle: '🇮🇳 Happy Republic Day 2026 — Celebrating the Pride of India!',
       body: `*Namaste and Jai Hind!* 🇮🇳\n\nOn this proud *77th Republic Day*, we honor the values of freedom, unity, and resilience enshrined in our Constitution.\n\nTo celebrate the spirit of India's unstoppable growth, we are offering an exclusive *26% Republic Day Special Benefit* across all automated marketing solutions.\n\n🇮🇳 Coupon Code: *REPUBLIC26*\n📅 Valid till: Jan 30th\n\nLet us build a self-reliant, prosperous future together. *Jai Hind!* 🇮🇳`,
       ctaButtonText: 'Celebrate With 26% OFF 🇮🇳',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=REPUBLIC26',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=REPUBLIC26',
       offerDiscountCode: 'REPUBLIC26'
     },
     wordPressBlog: {
@@ -184,7 +184,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `May the divine blessings of Goddess Saraswati illuminate your mind with wisdom, spark your creative genius, and bless your ventures with endless prosperity! 🌸🎵📖\n\nAs nature dons its vibrant yellow hues for the arrival of spring (Vasant Ritu), let us celebrate the spirit of lifelong learning, clarity of thought, and artistic brilliance.\n\n💛 Wishing you and your loved ones a blessed, joyful, and creative Vasant Panchami!\n\n👇 Comment "SARASWATI" to receive our Spring Learning & Automation guide!`,
       hashtags: ['#VasantPanchami', '#SaraswatiPuja', '#SpringSeason', '#GoddessOfWisdom', '#BasantPanchami', '#IndianFestivals', '#KnowledgeIsPower'],
       autoReplyKeyword: 'SARASWATI',
-      autoReplyMessage: '🌸 May Maa Saraswati bless your intellect and business! Enjoy our Spring Knowledge Bundle with 20% off using code "SPRING20": https://siegfriedoutreach.com',
+      autoReplyMessage: '🌸 May Maa Saraswati bless your intellect and business! Enjoy our Spring Knowledge Bundle with 20% off using code "SPRING20": https://ttos.com',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -201,7 +201,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       messageTitle: '🌸 Happy Vasant Panchami & Saraswati Puja Wishes!',
       body: `*Namaskar!* 🌸\n\nOn the auspicious occasion of *Vasant Panchami & Saraswati Puja*, may Goddess Saraswati bestow upon you the power of knowledge, wisdom, and creative victory! 📖✨\n\n🌼 *Spring Prosperity Gift:*\nUpgrade your marketing intellect with *20% OFF* on all AI automation suites.\n\n🎟️ Code: *SPRING20*\n\nMay this spring blossom into your most successful season yet! 🌻`,
       ctaButtonText: 'Unlock Spring Offer 🌸',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=SPRING20',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=SPRING20',
       offerDiscountCode: 'SPRING20'
     },
     wordPressBlog: {
@@ -239,7 +239,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `ॐ नमः शिवाय | Om Namah Shivaya 🔱✨\n\nOn this auspicious night of **Maha Shivratri**, may Lord Shiva’s cosmic energy dispel darkness, awaken supreme clarity, and bestow unwavering courage upon your journey.\n\nMay you find stillness amidst chaos, focus amidst distractions, and strength to conquer every obstacle on your path to greatness.\n\n🙏 Har Har Mahadev! Wishing you and your loved ones peace, health, and limitless divine energy.\n\n👇 Comment "SHIVA" to receive our Mahashivratri blessings and exclusive festive benefit!`,
       hashtags: ['#MahaShivratri2026', '#HarHarMahadev', '#OmNamahShivaya', '#LordShiva', '#Shivratri', '#Bholenath', '#InnerPeace', '#SpiritualIndia'],
       autoReplyKeyword: 'SHIVA',
-      autoReplyMessage: '🔱 Har Har Mahadev! May Lord Shiva bless you with immense strength and inner peace. Enjoy a special festive blessing code "SHIVOHAM" for 21% OFF: https://siegfriedoutreach.com',
+      autoReplyMessage: '🔱 Har Har Mahadev! May Lord Shiva bless you with immense strength and inner peace. Enjoy a special festive blessing code "SHIVOHAM" for 21% OFF: https://ttos.com',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -253,10 +253,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Type "🔱 HAR HAR MAHADEV" in the comments for divine blessings!'
     },
     whatsAppCampaign: {
-      messageTitle: '🔱 Maha Shivratri Greetings from Siegfried Outreach!',
+      messageTitle: '🔱 Maha Shivratri Greetings from TTOS!',
       body: `*ॐ नमः शिवाय* 🔱\n\nMay the supreme grace of *Lord Shiva* bring eternal peace, unwavering focus, and divine prosperity to your family and enterprise on this holy night of *Maha Shivratri*.\n\n🌿 *Sacred Festive Grace:*\nEnjoy a flat *21% Festive Blessing Discount* on all outreach automation.\n\n🎟️ Code: *SHIVOHAM*\n\n*Har Har Mahadev!* 🙏`,
       ctaButtonText: 'Claim Festive Blessing 🔱',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=SHIVOHAM',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=SHIVOHAM',
       offerDiscountCode: 'SHIVOHAM'
     },
     wordPressBlog: {
@@ -296,7 +296,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `Bura na mano, Holi hai! 🎨✨\n\nMay the vibrant colors of Gulal paint your life with boundless happiness, radiant health, thriving relationships, and colorful milestones!\n\nToday, let us celebrate the triumph of positivity over despair, forgive old grudges, and sweeten every bond with delicious Gujiyas and hearty laughter. As your business grows, may it shine in every spectrum of success!\n\n🌈 Have a safe, organic, and joyful Holi with your family and loved ones!\n\n👇 Comment "HOLI" below to unlock our Mega Festive Color Splash Offer! 🎁`,
       hashtags: ['#HappyHoli2026', '#HoliHai', '#FestivalOfColors', '#RangBarse', '#ColorfulIndia', '#HoliCelebration', '#GulalAndGujiya', '#JoyOfIndia'],
       autoReplyKeyword: 'HOLI',
-      autoReplyMessage: '🎨 Happy Holi! Splash your business with massive growth this spring! Enjoy 30% OFF with code "HOLI30": https://siegfriedoutreach.com 🌈',
+      autoReplyMessage: '🎨 Happy Holi! Splash your business with massive growth this spring! Enjoy 30% OFF with code "HOLI30": https://ttos.com 🌈',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -310,10 +310,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Which color represents your energy this year? Drop your favorite color emoji below! 🎨❤️💙💛'
     },
     whatsAppCampaign: {
-      messageTitle: '🎨 Happy Holi 2026 Wishes from Siegfried Outreach! 🌈',
+      messageTitle: '🎨 Happy Holi 2026 Wishes from TTOS! 🌈',
       body: `*रंग बरसे! Happy Holi!* 🎨✨\n\nMay the vibrant shades of *Holi* bring colorful prosperity, boundless laughter, and sparkling success to your home and business!\n\n🌈 *Holi Mega Color Splash Deal:*\nEnjoy a massive *30% OFF* across all growth & marketing automation packages.\n\n🎟️ Coupon Code: *HOLI30*\n⏰ Valid till: March 8th\n\nHave a safe, organic, and sweet-filled Holi with your loved ones! 🍬🥛`,
       ctaButtonText: 'Claim 30% Holi Deal 🎨',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=HOLI30',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=HOLI30',
       offerDiscountCode: 'HOLI30'
     },
     wordPressBlog: {
@@ -351,7 +351,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `Eid Mubarak to you and your beloved family! 🌙🕌✨\n\nMay the divine blessings of this auspicious day fill your home with harmony, abundant health, sweet moments, and remarkable achievements. As the crescent moon graces the sky, let us celebrate the spirit of generosity, togetherness, and heartfelt gratitude.\n\nMay your days ahead be as sweet and rich as Sheer Khurma! 🥣✨\n\n👇 Comment "EID" below to receive our festive Eidi gift voucher!`,
       hashtags: ['#EidMubarak2026', '#EidUlFitr', '#HappyEid', '#FestivalOfPeace', '#EidVibes', '#SheerKhurma', '#UnityAndLove', '#FestiveBlessings'],
       autoReplyKeyword: 'EID',
-      autoReplyMessage: '🌙 Eid Mubarak! Here is your special Eidi discount: Enjoy 25% OFF with code "EIDMUBARAK25" on all our plans: https://siegfriedoutreach.com',
+      autoReplyMessage: '🌙 Eid Mubarak! Here is your special Eidi discount: Enjoy 25% OFF with code "EIDMUBARAK25" on all our plans: https://ttos.com',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -365,10 +365,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Drop a 🌙 or write "EID MUBARAK" in the comments to spread the joy!'
     },
     whatsAppCampaign: {
-      messageTitle: '🌙 Eid Mubarak from Siegfried Outreach! ✨',
+      messageTitle: '🌙 Eid Mubarak from TTOS! ✨',
       body: `*Eid Mubarak to you & your loved ones!* 🌙🕌\n\nMay this blessed day of *Eid-ul-Fitr* bring immense joy, flourishing peace, and prosperous new beginnings to your home and endeavors.\n\n🎁 *Special Eidi Gift For You:*\nEnjoy a flat *25% Eidi Discount* on our automated outreach platform.\n\n🎟️ Code: *EIDMUBARAK25*\n📅 Valid till: March 24th\n\nHave a delightful day filled with laughter and sweet Sheer Khurma! 🥣✨`,
       ctaButtonText: 'Claim Your Eidi 🌙',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=EIDMUBARAK25',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=EIDMUBARAK25',
       offerDiscountCode: 'EIDMUBARAK25'
     },
     wordPressBlog: {
@@ -408,7 +408,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `15th August — The Day That Redefined Our Destiny! 🇮🇳✨\n\nToday, 1.4 billion hearts beat together as we salute the supreme sacrifices of our brave freedom fighters and celebrate the unstoppable rise of a modern, innovative, and self-reliant India.\n\nFrom agriculture to aerospace, micro-startups to global AI, the Indian spirit knows no boundaries. Let us pledge to innovate boldly, support local talent, and build a brighter future for every citizen.\n\nFreedom is not just a legacy; it is our responsibility to excel every single day!\n\nJai Hind! Vande Mataram! 🇮🇳\n\n👇 Comment "AZAADI" to unlock our Mega Independence Freedom Pack!`,
       hashtags: ['#IndependenceDay2026', '#15August', '#ProudIndian', '#VandeMataram', '#JaiHind', '#IndiaAt80', '#FreedomDay', '#ViksitBharat'],
       autoReplyKeyword: 'AZAADI',
-      autoReplyMessage: '🇮🇳 Happy Independence Day! Celebrate your business freedom with 35% OFF using code "AZAADI35": https://siegfriedoutreach.com',
+      autoReplyMessage: '🇮🇳 Happy Independence Day! Celebrate your business freedom with 35% OFF using code "AZAADI35": https://ttos.com',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -422,10 +422,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Type "🇮🇳 VANDE MATARAM" in the comments to salute our nation!'
     },
     whatsAppCampaign: {
-      messageTitle: '🇮🇳 Happy Independence Day 2026 from Siegfried Outreach!',
+      messageTitle: '🇮🇳 Happy Independence Day 2026 from TTOS!',
       body: `*स्वतंत्रता दिवस की हार्दिक शुभकामनाएं!* 🇮🇳\n\nOn our *80th Independence Day*, let us honor the spirit of freedom and rededicate ourselves to building a prosperous, digitally empowered India.\n\n🚀 *Mega Freedom Offer:*\nUnlock total business freedom with *35% OFF* on all outreach and AI automation plans.\n\n🎟️ Code: *AZAADI35*\n📅 Valid till: August 20th\n\n*Jai Hind! Vande Mataram!* 🇮🇳`,
       ctaButtonText: 'Claim 35% Freedom Offer 🇮🇳',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=AZAADI35',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=AZAADI35',
       offerDiscountCode: 'AZAADI35'
     },
     wordPressBlog: {
@@ -463,7 +463,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `A thread of pure love, lifelong trust, and endless laughter! 🧵✨\n\nOn the auspicious occasion of **Raksha Bandhan**, we celebrate the timeless bond between brothers and sisters. Through childhood fights, shared secrets, protective hugs, and mutual support, siblings are our first best friends and forever cheerleaders.\n\nMay this sacred thread of Rakhi protect your loved ones from all adversities and bring abundant joy, sweet health, and prosperity into your homes.\n\n🍬 Share this with your brother or sister to let them know how special they are!\n\n👇 Comment "RAKHI" to claim our Sibling Special Festive Gift Voucher!`,
       hashtags: ['#HappyRakshaBandhan', '#Rakhi2026', '#SiblingLove', '#BrotherSisterBond', '#RakhiCelebration', '#IndianTraditions', '#RakshaBandhanSpecial'],
       autoReplyKeyword: 'RAKHI',
-      autoReplyMessage: '🧵 Happy Raksha Bandhan! Treat your sibling and your business with 25% OFF using code "RAKHI25": https://siegfriedoutreach.com ❤️',
+      autoReplyMessage: '🧵 Happy Raksha Bandhan! Treat your sibling and your business with 25% OFF using code "RAKHI25": https://ttos.com ❤️',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -477,10 +477,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Tag your sibling in the comments and tell them you love them! 🧵👇'
     },
     whatsAppCampaign: {
-      messageTitle: '🧵 Happy Raksha Bandhan Wishes from Siegfried Outreach! ❤️',
+      messageTitle: '🧵 Happy Raksha Bandhan Wishes from TTOS! ❤️',
       body: `*रक्षाबंधन की हार्दिक शुभकामनाएं!* 🧵✨\n\nMay the sacred thread of *Raksha Bandhan* strengthen your bond of love, protect your family from all troubles, and bring sweet prosperity into your lives!\n\n🎁 *Sibling Special Festive Offer:*\nEnjoy flat *25% OFF* on all our marketing automation tools.\n\n🎟️ Coupon Code: *RAKHI25*\n📅 Valid till: September 1st\n\nCelebrate your loved ones with sweet memories! 🍬❤️`,
       ctaButtonText: 'Claim Rakhi Voucher 🧵',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=RAKHI25',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=RAKHI25',
       offerDiscountCode: 'RAKHI25'
     },
     wordPressBlog: {
@@ -518,7 +518,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `हाथी घोड़ा पालकी, जय कन्हैया लाल की! 🪶✨\n\nOn the auspicious occasion of **Shree Krishna Janmashtami**, may Lord Krishna steal all your worries, bless your home with divine happiness, and guide your endeavors with the timeless wisdom of the Bhagavad Gita.\n\nMay the sweet melodies of his flute fill your heart with peace, and may your goals be achieved with the courage of a true Karma Yogi.\n\n🙏 Govinda Ala Re! Wishing you and your family a joyful Janmashtami & Dahi Handi!\n\n👇 Comment "KRISHNA" to receive our festive blessing offer!`,
       hashtags: ['#HappyJanmashtami2026', '#JaiShreeKrishna', '#KrishnaJanmashtami', '#DahiHandi', '#Gokulashtami', '#BhagavadGita', '#LordKrishna', '#FestiveIndia'],
       autoReplyKeyword: 'KRISHNA',
-      autoReplyMessage: '🪶 Jai Shree Krishna! May Lord Krishna guide your business to supreme heights. Use code "KRISHNA20" for 20% OFF: https://siegfriedoutreach.com',
+      autoReplyMessage: '🪶 Jai Shree Krishna! May Lord Krishna guide your business to supreme heights. Use code "KRISHNA20" for 20% OFF: https://ttos.com',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -532,10 +532,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Write "🪶 JAI SHREE KRISHNA" in the comments for divine blessings!'
     },
     whatsAppCampaign: {
-      messageTitle: '🪶 Happy Krishna Janmashtami Wishes from Siegfried Outreach!',
+      messageTitle: '🪶 Happy Krishna Janmashtami Wishes from TTOS!',
       body: `*जय श्री कृष्णा!* 🪶✨\n\nMay *Lord Krishna* shower his divine love, wisdom, and prosperous blessings on you and your family this *Janmashtami*!\n\n🧈 *Festive Makhan Deal:*\nGet flat *20% OFF* on all AI marketing & outreach tools.\n\n🎟️ Code: *KRISHNA20*\n\n*हाथी घोड़ा पालकी, जय कन्हैया लाल की!* 🪈✨`,
       ctaButtonText: 'Claim Janmashtami Offer 🪶',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=KRISHNA20',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=KRISHNA20',
       offerDiscountCode: 'KRISHNA20'
     },
     wordPressBlog: {
@@ -575,7 +575,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ | निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा || 🐘🙏\n\nOn the auspicious arrival of Lord Ganesha, may the **Vighnaharta** eliminate all roadblocks from your life, business, and career! May **Bappa** bless you with profound wisdom, boundless creative intellect, and sweet prosperous milestones like delicious Modaks!\n\nAs you embark on new ventures, may every new beginning be blessed with auspicious fortune and high growth.\n\n🌺 Ganpati Bappa Morya! Mangal Murti Morya!\n\n👇 Comment "BAPPA" below to receive our Grand Vinayaka Blessing Offer! 🎁`,
       hashtags: ['#GaneshChaturthi2026', '#GanpatiBappaMorya', '#VinayakaChavithi', '#Vighnaharta', '#ModakLove', '#BappaBlessings', '#AuspiciousBeginnings', '#Ganeshotsav'],
       autoReplyKeyword: 'BAPPA',
-      autoReplyMessage: '🐘 Ganpati Bappa Morya! May Lord Ganesha remove all obstacles from your business growth! Use code "BAPPA25" for 25% OFF: https://siegfriedoutreach.com 🌺',
+      autoReplyMessage: '🐘 Ganpati Bappa Morya! May Lord Ganesha remove all obstacles from your business growth! Use code "BAPPA25" for 25% OFF: https://ttos.com 🌺',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -589,10 +589,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Type "🐘 GANPATI BAPPA MORYA" in the comments for Bappa’s blessings!'
     },
     whatsAppCampaign: {
-      messageTitle: '🐘 Happy Ganesh Chaturthi Wishes from Siegfried Outreach! 🌺',
+      messageTitle: '🐘 Happy Ganesh Chaturthi Wishes from TTOS! 🌺',
       body: `*गणपति बप्पा मोरया! मंगल मूर्ति मोरया!* 🐘✨\n\nMay *Lord Ganesha (Vighnaharta)* remove every hurdle from your journey and grant you unstoppable success, sharp intellect, and prosperous milestones!\n\n🥟 *Modak Special Festive Deal:*\nCelebrate auspicious beginnings with *25% OFF* across all marketing automation tools.\n\n🎟️ Code: *BAPPA25*\n📅 Valid till: Anant Chaturdashi\n\n*Wishing you and your family a blessed Ganeshotsav!* 🙏`,
       ctaButtonText: 'Claim Bappa’s Offer 🐘',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=BAPPA25',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=BAPPA25',
       offerDiscountCode: 'BAPPA25'
     },
     wordPressBlog: {
@@ -630,7 +630,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `या देवी सर्वभूतेषु शक्ति-रूपेण संस्थिता | नमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः || 🔱🌸\n\nMay the 9 divine manifestations of **Maa Durga** empower you with invincible strength, fearless courage, supreme wisdom, and prosperous victories in all your pursuits!\n\nOn this auspicious confluence of **Navratri, Durga Puja & Vijayadashami (Dussehra)**, let us celebrate the triumph of good over evil, light over darkness, and resilience over doubt. May every roadblock in your business be conquered like Mahishasura and Ravana!\n\n💃 Joyful Garba, Dandiya beats, and Shubho Bijoya to you and your loved ones!\n\n👇 Comment "SHAKTI" to claim our Mega Navratri & Dussehra Festive Discount! 🎁`,
       hashtags: ['#HappyNavratri2026', '#DurgaPuja2026', '#HappyDussehra', '#Vijayadashami', '#SubhoBijoya', '#GarbaNights', '#MaaDurgaBlessings', '#TriumphOfGood'],
       autoReplyKeyword: 'SHAKTI',
-      autoReplyMessage: '🔱 Subho Durga Puja & Happy Dussehra! Harness divine growth with 30% OFF using code "VICTORY30": https://siegfriedoutreach.com 🌸',
+      autoReplyMessage: '🔱 Subho Durga Puja & Happy Dussehra! Harness divine growth with 30% OFF using code "VICTORY30": https://ttos.com 🌸',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -647,7 +647,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       messageTitle: '🔱 Happy Navratri, Durga Puja & Dussehra Wishes! 🌸',
       body: `*जय माता दी! शुभ विजयादशमी!* 🔱✨\n\nMay *Maa Durga* bless you with fearless courage, vibrant health, and victorious growth on this auspicious occasion of *Navratri, Durga Puja & Dussehra*!\n\n🏹 *Vijayadashami Mega Victory Deal:*\nConquer your market with *30% OFF* on all outreach and growth automation.\n\n🎟️ Code: *VICTORY30*\n📅 Valid till: Dussehra Night\n\n*Shubho Bijoya & Happy Dussehra to all!* 🌸`,
       ctaButtonText: 'Claim Victory Offer 🔱',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=VICTORY30',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=VICTORY30',
       offerDiscountCode: 'VICTORY30'
     },
     wordPressBlog: {
@@ -687,7 +687,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `शुभ दीपावली | Shubh Deepavali 2026! 🪔✨🪷\n\nMay the golden glow of a thousand earthen diyas light up your path with limitless prosperity, radiant health, peace of mind, and extraordinary milestones!\n\nOn this auspicious night of **Lakshmi Puja**, may Goddess Lakshmi bless your home and business with enduring wealth (*Dhana*), wise intellect (*Buddhi*), and righteous success (*Labha*). Let us celebrate the triumph of light over darkness, hope over despair, and knowledge over ignorance.\n\n✨ Light up kindness, share sweets, and celebrate the grand homecoming of joy!\n\n🎁 Our Grand Diwali Gift For You: Enjoy our Biggest Annual Festive Benefit!\n\n👇 Comment "DIWALI" to claim your Mega Festive Discount Voucher instantly!`,
       hashtags: ['#HappyDiwali2026', '#ShubhDeepavali', '#FestivalOfLights', '#LakshmiPuja', '#Dhanteras', '#DiwaliCelebration', '#DiwaliOffer2026', '#IncredibleIndia'],
       autoReplyKeyword: 'DIWALI',
-      autoReplyMessage: '🪔 Shubh Deepavali! Light up your business with our Biggest Annual 40% OFF Diwali Special! Use code "DIWALI40" at checkout: https://siegfriedoutreach.com ✨',
+      autoReplyMessage: '🪔 Shubh Deepavali! Light up your business with our Biggest Annual 40% OFF Diwali Special! Use code "DIWALI40" at checkout: https://ttos.com ✨',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -701,10 +701,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'Drop a 🪔 in the comments and wish everyone a Happy Diwali! ✨'
     },
     whatsAppCampaign: {
-      messageTitle: '🪔 Shubh Deepavali Wishes from Siegfried Outreach! ✨',
+      messageTitle: '🪔 Shubh Deepavali Wishes from TTOS! ✨',
       body: `*दीपावली के पावन पर्व की हार्दिक शुभकामनाएं!* 🪔✨🪷\n\nMay the divine festival of *Diwali* bless your home with boundless peace, radiant good health, and glorious business prosperity under the grace of *Maa Lakshmi & Lord Ganesha*!\n\n🎆 *Mega Diwali Dhamaka Benefit:*\nUnlock our biggest annual savings with *40% OFF* on all growth & marketing automation suites.\n\n🎟️ Coupon Code: *DIWALI40*\n⏰ Valid till: Bhai Dooj\n\n*Wishing you a sparkling and joyful Diwali!* 🪔✨`,
       ctaButtonText: 'Claim 40% Diwali Dhamaka 🪔',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=DIWALI40',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=DIWALI40',
       offerDiscountCode: 'DIWALI40'
     },
     wordPressBlog: {
@@ -742,7 +742,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `वाहेगुरु जी का खालसा, वाहेगुरु जी की फतेह | ☬✨\n\nOn the auspicious occasion of **Guru Nanak Jayanti (Prakash Utsav)**, may the divine wisdom and eternal teachings of Guru Nanak Dev Ji illuminate your life with truth, compassion, humility, and selfless service.\n\n✨ 3 Golden Principles for Life & Business:\n1. **Naam Japo:** Stay centered in spiritual gratitude.\n2. **Kirat Karo:** Work honestly and diligently with total integrity.\n3. **Vand Chhako:** Share your earnings and blessings with those in need.\n\nMay Waheguru bless you and your family with peace, abundant health, and enduring prosperity.\n\n👇 Comment "GURPURAB" to receive our Gurpurab blessing benefit!`,
       hashtags: ['#GuruNanakJayanti2026', '#HappyGurpurab', '#PrakashUtsav', '#Waheguru', '#Sikhism', '#KiratKaro', '#GoldenTemple', '#EqualityAndPeace'],
       autoReplyKeyword: 'GURPURAB',
-      autoReplyMessage: '☬ Happy Gurpurab! In honor of Guru Nanak Dev Ji’s teachings of honest work, enjoy 20% OFF with code "GURPURAB20": https://siegfriedoutreach.com ✨',
+      autoReplyMessage: '☬ Happy Gurpurab! In honor of Guru Nanak Dev Ji’s teachings of honest work, enjoy 20% OFF with code "GURPURAB20": https://ttos.com ✨',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -759,7 +759,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       messageTitle: '☬ Happy Guru Nanak Jayanti (Gurpurab) Wishes! ✨',
       body: `*गुरुपर्व की लख-लख बधाइयां!* ☬✨\n\nMay the holy teachings of *Guru Nanak Dev Ji* guide your path with honesty, selfless service, and flourishing success.\n\n🌾 *Prakash Parv Blessing Deal:*\nEnjoy a flat *20% OFF* on our outreach automation tools.\n\n🎟️ Code: *GURPURAB20*\n\n*वाहेगुरु जी का खालसा, वाहेगुरु जी की फतेह!* 🙏`,
       ctaButtonText: 'Claim Gurpurab Blessing ☬',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=GURPURAB20',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=GURPURAB20',
       offerDiscountCode: 'GURPURAB20'
     },
     wordPressBlog: {
@@ -799,7 +799,7 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       caption: `Merry Christmas & Season’s Greetings to you and your family! 🎄❄️🎁\n\nMay this magical holiday season fill your home with warmth, laughter, cozy moments, and cherished memories. As the year draws to a close, we look back with immense gratitude for your trust and support.\n\nMay the coming New Year open doors to breakthrough opportunities, massive revenue growth, vibrant health, and extraordinary triumphs!\n\n🍰 Eat some plum cake, unwrap joy, and step boldly into your greatest year yet!\n\n👇 Comment "SANTA" to unwrap our Mega Year-End Holiday Gift Voucher! 🎁`,
       hashtags: ['#MerryChristmas2026', '#HappyNewYear2027', '#SeasonsGreetings', '#HolidayCheer', '#ChristmasInIndia', '#YearEndSpecial', '#FreshBeginnings', '#Gratitude'],
       autoReplyKeyword: 'SANTA',
-      autoReplyMessage: '🎄 Merry Christmas! Unwrap your Mega Holiday Gift: Enjoy 35% OFF with code "SANTA35" across all plans: https://siegfriedoutreach.com 🎁',
+      autoReplyMessage: '🎄 Merry Christmas! Unwrap your Mega Holiday Gift: Enjoy 35% OFF with code "SANTA35" across all plans: https://ttos.com 🎁',
       targetPlatforms: ['instagram', 'facebook', 'linkedin', 'twitter', 'whatsapp', 'wordpress']
     },
     reelScript: {
@@ -813,10 +813,10 @@ export const INDIAN_FESTIVALS_CALENDAR: IndianFestival[] = [
       callToAction: 'What is your #1 goal for the upcoming year? Share in the comments! 🎄👇'
     },
     whatsAppCampaign: {
-      messageTitle: '🎄 Merry Christmas & Happy New Year from Siegfried Outreach! 🎁',
+      messageTitle: '🎄 Merry Christmas & Happy New Year from TTOS! 🎁',
       body: `*Merry Christmas & Happy New Year!* 🎄✨🎅\n\nThank you for being an inspiring part of our journey this year. May your holidays be merry, bright, and filled with wonderful celebrations!\n\n🎁 *Holiday Year-End Dhamaka:* \nGet ready for next year with *35% OFF* on all outreach and automation tools.\n\n🎟️ Code: *SANTA35*\n⏰ Valid till: January 2nd\n\n*Wishing you a joyful holiday season!* ❄️🍰`,
       ctaButtonText: 'Unwrap 35% Holiday Gift 🎄',
-      ctaLinkPlaceholder: 'https://siegfriedoutreach.com/pricing?code=SANTA35',
+      ctaLinkPlaceholder: 'https://ttos.com/pricing?code=SANTA35',
       offerDiscountCode: 'SANTA35'
     },
     wordPressBlog: {

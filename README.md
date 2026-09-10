@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 Siegfried Outreach Platform
+# 🚀 TTOS Platform
 ### Autonomous AI Marketing & Omnichannel Growth Engine
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
@@ -8,9 +8,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-RTK_Query-764ABC?style=for-the-badge&logo=redux)](https://redux-toolkit.js.org/)
-[![License](https://img.shields.io/badge/License-Proprietary-amber?style=for-the-badge)](https://siegfriedoutreach.com)
+[![License](https://img.shields.io/badge/License-Proprietary-amber?style=for-the-badge)](https://ttai.in)
 
-**[Explore Live Platform](https://siegfriedoutreach.com)** • **[API Documentation](https://api.siegfriedoutreach.com)** • **[Contact Support](#-contact--support)**
+**[Explore Live Platform](https://ttai.in)** • **[API Documentation](https://api.ttai.in)** • **[Contact Support](#-contact--support)**
 
 ---------
 
@@ -18,7 +18,7 @@
 
 ## 📖 Overview
 
-**Siegfried Outreach** is an all-in-one, enterprise-grade AI marketing and omnichannel broadcast platform. It empowers businesses, marketing agencies, and growth teams to automate entire 30-day content strategies, generate hyper-contextual social copy, manage cross-platform publishing, and broadcast high-converting campaigns across WhatsApp, Telegram, and Email.
+**TTOS** is an all-in-one, enterprise-grade AI marketing and omnichannel broadcast platform. It empowers businesses, marketing agencies, and growth teams to automate entire 30-day content strategies, generate hyper-contextual social copy, manage cross-platform publishing, and broadcast high-converting campaigns across WhatsApp, Telegram, and Email.
 
 ---
 
@@ -77,17 +77,17 @@
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/siegfriedoutreach-platform.git
-cd siegfriedoutreach-platform
+git clone https://github.com/your-username/ttos-platform.git
+cd ttos-platform
 npm install
 ```
 
 ### 2. Configure Environment Variables
 Create `.env.local` in the root directory:
 ```env
-NEXT_PUBLIC_API_BASE_URL=https://api.siegfriedoutreach.com/api
-NEXT_PUBLIC_STORAGE_URL=https://api.siegfriedoutreach.com
-NEXT_PUBLIC_SOCKET_URL=https://api.siegfriedoutreach.com
+NEXT_PUBLIC_API_BASE_URL=https://api.ttai.in/api
+NEXT_PUBLIC_STORAGE_URL=https://api.ttai.in
+NEXT_PUBLIC_SOCKET_URL=https://api.ttai.in
 NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
@@ -110,7 +110,7 @@ pm2 start npm --name "frontend-app" -- start
 ## 📁 Project Structure
 
 ```
-siegfriedoutreach.com/
+ttai.in/
 ├── src/
 │   ├── app/                    # Next.js 15 App Router pages & API routes
 │   │   ├── (main)/             # Authenticated dashboard & application layouts
@@ -141,11 +141,11 @@ We are dedicated to providing enterprise support and continuous platform enhance
 
 | Channel | Details |
 |---|---|
-| 🌐 **Official Website** | [https://siegfriedoutreach.com](https://siegfriedoutreach.com) |
-| 📧 **Official Email** | [support@siegfriedoutreach.com](mailto:support@siegfriedoutreach.com) / [contact@siegfriedoutreach.com](mailto:contact@siegfriedoutreach.com) |
+| 🌐 **Official Website** | [https://ttai.in](https://ttai.in) |
+| 📧 **Official Email** | [support@ttai.in](mailto:support@ttai.in) / [contact@ttai.in](mailto:contact@ttai.in) |
 | 💬 **WhatsApp Support** | [+91 98765 43210](https://wa.me/919876543210) |
-| ✈️ **Telegram Channel** | [@SiegfriedOutreach](https://t.me/SiegfriedOutreach) |
-| 📍 **Headquarters** | Siegfried Technologies Pvt. Ltd., Tech Park, Pune, Maharashtra, India |
+| ✈️ **Telegram Channel** | [@TTOSOutreach](https://t.me/TTOSOutreach) |
+| 📍 **Headquarters** | TTOS Technologies Pvt. Ltd., Tech Park, Pune, Maharashtra, India |
 
 </div>
 
@@ -153,7 +153,7 @@ We are dedicated to providing enterprise support and continuous platform enhance
 
 <div align="center">
 
-Made with ❤️ by the **Siegfried Outreach Engineering Team**  
-*Copyright © 2026 Siegfried Outreach. All Rights Reserved.*
+Made with ❤️ by the **TTOS Engineering Team**  
+*Copyright © 2026 TTOS. All Rights Reserved.*
 
 </div>

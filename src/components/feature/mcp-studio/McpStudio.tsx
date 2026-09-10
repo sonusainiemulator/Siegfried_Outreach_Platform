@@ -65,16 +65,16 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'Bot',
     recommended: true,
     transport: 'HTTP / SSE',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'Connect Claude Desktop app directly to publish, schedule, and read analytics across all 9 social networks.',
     snippetType: 'URL',
-    getConfig: (_key: string) => 'https://api.siegfriedoutreach.com/mcp',
+    getConfig: (_key: string) => 'https://api.ttos.com/mcp',
     instructions: [
       'Open Claude Desktop on your computer (Mac or Windows).',
       'Go to Claude Desktop Settings > Connectors (or Developer Settings).',
       'Click "Add Custom Connector".',
-      'Enter Connector URL: https://api.siegfriedoutreach.com/mcp',
-      'Click Connect and approve access. Claude will now recognize all 32 Siegfried social tools.',
+      'Enter Connector URL: https://api.ttos.com/mcp',
+      'Click Connect and approve access. Claude will now recognize all 32 TTOS social tools.',
     ],
     samplePrompts: [
       'List all my connected social media accounts and their follower counts.',
@@ -89,14 +89,14 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'Terminal',
     recommended: true,
     transport: 'Streamable HTTP',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'One terminal command to hook Claude Code command-line agent directly into your social channels.',
     snippetType: 'Shell Command',
     getConfig: (_key: string) =>
-      'claude mcp add --transport http Siegfried https://api.siegfriedoutreach.com/mcp',
+      'claude mcp add --transport http TTOS https://api.ttos.com/mcp',
     instructions: [
       'Open your terminal where Claude Code CLI is installed.',
-      'Run the single command shown below to register the Siegfried MCP server.',
+      'Run the single command shown below to register the TTOS MCP server.',
       'Open Claude Code and enter /mcp to authenticate your account session.',
       'Claude CLI can now inspect your code repository and publish release updates directly to social media.',
     ],
@@ -113,17 +113,17 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'Code2',
     recommended: true,
     transport: 'HTTP + Header',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'Give Cursor AI Composer direct social media superpowers right from inside your coding workspace.',
     snippetType: 'JSON Config',
     getConfig: (key: string) =>
       JSON.stringify(
         {
           mcpServers: {
-            siegfried: {
-              url: 'https://api.siegfriedoutreach.com/mcp',
+            ttos: {
+              url: 'https://api.ttos.com/mcp',
               headers: {
-                'siegfried-api-key': key || 'YOUR_API_KEY',
+                'ttos-api-key': key || 'YOUR_API_KEY',
               },
             },
           },
@@ -150,16 +150,16 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'MessageSquare',
     recommended: false,
     transport: 'OpenAPI / HTTP',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'Connect ChatGPT via Custom GPT Actions or Developer Mode web connector to execute social tools.',
     snippetType: 'Endpoint & Header',
     getConfig: (key: string) =>
-      `URL: https://api.siegfriedoutreach.com/mcp\nHeader: siegfried-api-key: ${key || 'YOUR_API_KEY'}`,
+      `URL: https://api.ttos.com/mcp\nHeader: ttos-api-key: ${key || 'YOUR_API_KEY'}`,
     instructions: [
       'In ChatGPT web interface, navigate to Explore GPTs > Create a GPT > Configure.',
       'Under Actions, click "Create New Action".',
-      'Set Server URL to https://api.siegfriedoutreach.com/mcp and configure Authentication (API Key).',
-      'Set Auth type to Custom Header: siegfried-api-key with your API key.',
+      'Set Server URL to https://api.ttos.com/mcp and configure Authentication (API Key).',
+      'Set Auth type to Custom Header: ttos-api-key with your API key.',
       'Test the action in the preview playground and publish your custom Social Media Agent GPT.',
     ],
     samplePrompts: [
@@ -175,17 +175,17 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'Cpu',
     recommended: false,
     transport: 'HTTP + Header',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'Seamless integration with Google Antigravity agentic coding environment and sidecars.',
     snippetType: 'JSON Config',
     getConfig: (key: string) =>
       JSON.stringify(
         {
           mcpServers: {
-            siegfried: {
-              url: 'https://api.siegfriedoutreach.com/mcp',
+            ttos: {
+              url: 'https://api.ttos.com/mcp',
               headers: {
-                'siegfried-api-key': key || 'YOUR_API_KEY',
+                'ttos-api-key': key || 'YOUR_API_KEY',
               },
             },
           },
@@ -195,7 +195,7 @@ const EXTENDED_CLIENT_GUIDES = [
       ),
     instructions: [
       'Open Antigravity IDE Settings > MCP Servers.',
-      'Add a new server named "siegfried".',
+      'Add a new server named "ttos".',
       'Paste the JSON configuration snippet with your active API key.',
       'Save and reload. Antigravity can now autonomously interact with your social media marketing channels.',
     ],
@@ -212,15 +212,15 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'Terminal',
     recommended: false,
     transport: 'Streamable HTTP',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'Codex MCP transport configuration for terminal or automated server workflows.',
     snippetType: 'Config Fields',
     getConfig: (key: string) =>
-      `Server URL: https://api.siegfriedoutreach.com/mcp\nTransport: Streamable HTTP\nHeader Name: siegfried-api-key\nHeader Value: ${key || 'YOUR_API_KEY'}`,
+      `Server URL: https://api.ttos.com/mcp\nTransport: Streamable HTTP\nHeader Name: ttos-api-key\nHeader Value: ${key || 'YOUR_API_KEY'}`,
     instructions: [
       'In Codex MCP configuration settings, select transport "Streamable HTTP".',
-      'Set Server URL to https://api.siegfriedoutreach.com/mcp.',
-      'Add custom header: siegfried-api-key with your API token.',
+      'Set Server URL to https://api.ttos.com/mcp.',
+      'Add custom header: ttos-api-key with your API token.',
       'Save configuration. Codex is now authenticated and ready to run social publishing tools.',
     ],
     samplePrompts: [
@@ -236,17 +236,17 @@ const EXTENDED_CLIENT_GUIDES = [
     icon: 'Laptop',
     recommended: false,
     transport: 'JSON Config',
-    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    endpoint: 'https://api.ttos.com/mcp',
     description: 'Add to Windsurf Cascade editor to draft, format, and push social posts while coding.',
     snippetType: 'JSON Config',
     getConfig: (key: string) =>
       JSON.stringify(
         {
           mcpServers: {
-            siegfried: {
-              url: 'https://api.siegfriedoutreach.com/mcp',
+            ttos: {
+              url: 'https://api.ttos.com/mcp',
               headers: {
-                'siegfried-api-key': key || 'YOUR_API_KEY',
+                'ttos-api-key': key || 'YOUR_API_KEY',
               },
             },
           },
@@ -267,19 +267,19 @@ const EXTENDED_CLIENT_GUIDES = [
     ],
   },
   {
-    id: 'siegfried-assistant',
-    name: 'Siegfried In-App Chat Assistant',
+    id: 'ttos-assistant',
+    name: 'TTOS In-App Chat Assistant',
     badge: 'Built-in Native Chat',
     icon: 'Sparkles',
     recommended: true,
     transport: 'Native Internal Bridge',
     endpoint: 'In-App Dashboard',
-    description: 'Use the built-in Siegfried AI Chat Assistant with zero setup required—MCP tools are pre-integrated!',
+    description: 'Use the built-in TTOS AI Chat Assistant with zero setup required—MCP tools are pre-integrated!',
     snippetType: 'In-App Action',
     getConfig: (_key: string) => 'Navigate to: /ai-chat-assistant',
     instructions: [
       'No API key or external configuration required!',
-      'Click the button below to navigate directly to the Siegfried AI Chat Assistant.',
+      'Click the button below to navigate directly to the TTOS AI Chat Assistant.',
       'Select any assistant (e.g. GPT-4, Claude, or Custom Bot).',
       'Directly prompt the assistant to publish posts, schedule campaigns, or check your connected channels.',
     ],
@@ -339,13 +339,13 @@ const TALENT_PROMPT_LIBRARY = [
     category: 'Blog & Articles',
     title: 'WordPress Long-Form SEO Article & Featured Media',
     prompt:
-      'Write a comprehensive, SEO-optimized 1,200-word article on "[TOPIC]". Format with H2/H3 subheadings, actionable bullet points, meta description, and publish it directly to our connected WordPress site using siegfried_publish_wordpress as a "draft" with tags and categories.',
+      'Write a comprehensive, SEO-optimized 1,200-word article on "[TOPIC]". Format with H2/H3 subheadings, actionable bullet points, meta description, and publish it directly to our connected WordPress site using ttos_publish_wordpress as a "draft" with tags and categories.',
   },
   {
     category: 'Discussions & Communities',
     title: 'Targeted Reddit Discussion & Subreddit Value Post',
     prompt:
-      'First, list our connected subreddits using siegfried_list_subreddits. Then draft an authentic, non-promotional value-first discussion post for r/[SUBREDDIT] sharing real-world insights on "[TOPIC]". Publish or submit using siegfried_publish_reddit.',
+      'First, list our connected subreddits using ttos_list_subreddits. Then draft an authentic, non-promotional value-first discussion post for r/[SUBREDDIT] sharing real-world insights on "[TOPIC]". Publish or submit using ttos_publish_reddit.',
   },
   {
     category: 'Cross-Platform Publishing',
@@ -530,13 +530,13 @@ export default function McpStudio() {
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Button
-              onClick={() => copyToClipboard('https://api.siegfriedoutreach.com/mcp', 'endpoint-copy', 'Copied MCP Server URL!')}
+              onClick={() => copyToClipboard('https://api.ttos.com/mcp', 'endpoint-copy', 'Copied MCP Server URL!')}
               variant="outline"
               size="sm"
               className="border-border text-foreground hover:bg-muted/50 rounded-xl text-xs flex items-center gap-2 h-10 px-4"
             >
               {copiedKeyId === 'endpoint-copy' ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
-              <span className="font-mono">api.siegfriedoutreach.com/mcp</span>
+              <span className="font-mono">api.ttos.com/mcp</span>
             </Button>
 
             <Link href="/ai-chat-assistant">
@@ -863,7 +863,7 @@ export default function McpStudio() {
                       {client.id === 'antigravity' && <Cpu className="w-5 h-5" />}
                       {client.id === 'openai-codex' && <Terminal className="w-5 h-5" />}
                       {client.id === 'windsurf' && <Laptop className="w-5 h-5" />}
-                      {client.id === 'siegfried-assistant' && <Sparkles className="w-5 h-5" />}
+                      {client.id === 'ttos-assistant' && <Sparkles className="w-5 h-5" />}
                     </div>
                     {client.recommended && (
                       <span
@@ -914,7 +914,7 @@ export default function McpStudio() {
               </div>
 
               <div className="flex items-center gap-3 shrink-0">
-                {currentGuide.id === 'siegfried-assistant' ? (
+                {currentGuide.id === 'ttos-assistant' ? (
                   <Link href="/ai-chat-assistant">
                     <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs flex items-center gap-2 shadow-xs">
                       <Sparkles className="w-4 h-4" />
@@ -1022,7 +1022,7 @@ export default function McpStudio() {
               Talent & Creator Playbook
             </div>
             <h2 className="text-2xl font-bold text-foreground font-outfit">
-              How Talent & Social Media Managers Use Siegfried MCP
+              How Talent & Social Media Managers Use TTOS MCP
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground max-w-4xl leading-relaxed">
               Instead of logging into 9 separate social media dashboards, copying and pasting captions, and re-uploading media manually, MCP lets you manage your entire social media presence directly through your AI chat interface.
@@ -1057,7 +1057,7 @@ export default function McpStudio() {
               </div>
               <h3 className="text-base font-bold text-foreground">Automate & Review</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                The assistant calls Siegfried MCP tools in real-time. Posts are queued, carousels are published, and comments are answered safely.
+                The assistant calls TTOS MCP tools in real-time. Posts are queued, carousels are published, and comments are answered safely.
               </p>
             </div>
           </div>
@@ -1071,7 +1071,7 @@ export default function McpStudio() {
                   Ready-to-Use Prompt Library for Talent
                 </h3>
                 <p className="text-xs text-muted-foreground pt-1">
-                  Copy these battle-tested prompts directly into your connected chat assistant or run directly in Siegfried.
+                  Copy these battle-tested prompts directly into your connected chat assistant or run directly in TTOS.
                 </p>
               </div>
 
@@ -1152,7 +1152,7 @@ export default function McpStudio() {
                 11 Supported Social Platforms & Capabilities
               </h3>
               <p className="text-xs text-muted-foreground pt-1">
-                Overview of what your AI chat assistant can do on each connected network via Siegfried MCP.
+                Overview of what your AI chat assistant can do on each connected network via TTOS MCP.
               </p>
             </div>
 
@@ -1390,9 +1390,9 @@ export default function McpStudio() {
               <div className="p-4 rounded-xl bg-muted/40 border border-border space-y-2">
                 <span className="text-xs font-bold text-foreground font-mono">Server Endpoint</span>
                 <div className="flex items-center justify-between font-mono text-xs text-foreground bg-background p-2.5 rounded-lg border border-border">
-                  <span className="truncate pr-2">https://api.siegfriedoutreach.com/mcp</span>
+                  <span className="truncate pr-2">https://api.ttos.com/mcp</span>
                   <button
-                    onClick={() => copyToClipboard('https://api.siegfriedoutreach.com/mcp', 'endpoint-box')}
+                    onClick={() => copyToClipboard('https://api.ttos.com/mcp', 'endpoint-box')}
                     className="text-muted-foreground hover:text-foreground shrink-0"
                   >
                     {copiedKeyId === 'endpoint-box' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -1442,7 +1442,7 @@ export default function McpStudio() {
                 <Button
                   onClick={() =>
                     copyToClipboard(
-                      'npx @modelcontextprotocol/inspector https://api.siegfriedoutreach.com/mcp',
+                      'npx @modelcontextprotocol/inspector https://api.ttos.com/mcp',
                       'inspector-cmd',
                       'Copied Inspector command!'
                     )
@@ -1455,7 +1455,7 @@ export default function McpStudio() {
                 </Button>
               </div>
               <div className="font-mono text-xs text-foreground bg-card border border-border p-3 rounded-lg select-all overflow-x-auto shadow-2xs">
-                npx @modelcontextprotocol/inspector https://api.siegfriedoutreach.com/mcp
+                npx @modelcontextprotocol/inspector https://api.ttos.com/mcp
               </div>
               <p className="text-[11px] text-muted-foreground pt-1">
                 The Model Context Protocol Inspector launches a local web UI where you can inspect all tool parameters, view OpenAPI schemas, and run mock tool calls directly.

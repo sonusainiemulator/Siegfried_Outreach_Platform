@@ -60,7 +60,7 @@ const OfflineCard = () => {
               <Label className="text-xs font-medium text-foreground">Account Holder Name</Label>
               <Field name="offline.account_name">
                 {({ field }: any) => (
-                  <Input {...field} placeholder="e.g. Siegfried Tech LLC" className="h-11 rounded-[8px] text-xs" />
+                  <Input {...field} placeholder="e.g. TTOS Tech LLC" className="h-11 rounded-[8px] text-xs" />
                 )}
               </Field>
             </div>

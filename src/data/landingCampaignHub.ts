@@ -138,7 +138,7 @@ export const realEstateTestimonials: RealEstateTestimonial[] = [
   {
     id: '1',
     quote:
-      'We broadcasted our new luxury development to 2,400 VIP investors via WhatsApp with Siegfried Outreach. We booked 18 private showings in the first 4 hours. It just converts.',
+      'We broadcasted our new luxury development to 2,400 VIP investors via WhatsApp with TTOS. We booked 18 private showings in the first 4 hours. It just converts.',
     name: 'Marcus Vance',
     role: 'Principal Broker',
     company: 'Vanguard Luxury Realty',
@@ -247,7 +247,7 @@ export const realEstateTestimonials: RealEstateTestimonial[] = [
   {
     id: '8',
     quote:
-      'I send weekly off-market investment deal digests via Telegram and Email. The 68% click-through rate we see with Siegfried Outreach has helped us close $14M in deals this quarter alone.',
+      'I send weekly off-market investment deal digests via Telegram and Email. The 68% click-through rate we see with TTOS has helped us close $14M in deals this quarter alone.',
     name: 'Rishabh J.',
     role: 'Real Estate Wholesaler',
     company: 'Capital Property Group',
@@ -278,7 +278,7 @@ export const realEstateTestimonials: RealEstateTestimonial[] = [
   {
     id: '10',
     quote:
-      'Siegfried Outreach replaced 4 separate tools for email, WhatsApp, social scheduling, and AI copywriting. Cut our monthly software bill by 60% while doubling our lead velocity.',
+      'TTOS replaced 4 separate tools for email, WhatsApp, social scheduling, and AI copywriting. Cut our monthly software bill by 60% while doubling our lead velocity.',
     name: 'David K.',
     role: 'Managing Partner',
     company: 'Kensington Real Estate Advisory',
@@ -293,7 +293,7 @@ export const realEstateTestimonials: RealEstateTestimonial[] = [
   {
     id: '11',
     quote:
-      'Our team tested 5 different outreach platforms for commercial real estate tenant prospecting. Siegfried Outreach had the highest inbox deliverability and smartest segmentation by far.',
+      'Our team tested 5 different outreach platforms for commercial real estate tenant prospecting. TTOS had the highest inbox deliverability and smartest segmentation by far.',
     name: 'Carlos Mendez',
     role: 'Commercial Leasing Director',
     company: 'Prime Commercial Spaces',
@@ -395,9 +395,9 @@ export const campaignHubStats = [
 export const campaignHubFaqs = [
   {
     id: 'faq-1',
-    title: 'What is Siegfried Outreach and how does it help grow my business?',
+    title: 'What is TTOS and how does it help grow my business?',
     description:
-      'Siegfried Outreach is an all-in-one AI marketing and multi-channel automation platform. It empowers businesses, real estate professionals, and growth teams to run high-converting broadcasts across WhatsApp, Telegram, and Email, automate social media posting across 9+ networks, and deploy 24/7 AI conversational agents that qualify leads and book appointments on autopilot.',
+      'TTOS is an all-in-one AI marketing and multi-channel automation platform. It empowers businesses, real estate professionals, and growth teams to run high-converting broadcasts across WhatsApp, Telegram, and Email, automate social media posting across 9+ networks, and deploy 24/7 AI conversational agents that qualify leads and book appointments on autopilot.',
   },
   {
     id: 'faq-2',
@@ -415,13 +415,13 @@ export const campaignHubFaqs = [
     id: 'faq-4',
     title: 'Are my social media and messaging accounts safe from bans or restrictions?',
     description:
-      'Yes, 100%. Siegfried Outreach connects strictly through official enterprise APIs, including Meta Graph API, Telegram Bot API, verified email relays, and official social network developer endpoints. We never use fragile browser scrapers or unapproved automation bots, ensuring complete platform compliance and maximum deliverability.',
+      'Yes, 100%. TTOS connects strictly through official enterprise APIs, including Meta Graph API, Telegram Bot API, verified email relays, and official social network developer endpoints. We never use fragile browser scrapers or unapproved automation bots, ensuring complete platform compliance and maximum deliverability.',
   },
   {
     id: 'faq-5',
-    title: 'Can I integrate Siegfried Outreach with my existing CRM and AI tools?',
+    title: 'Can I integrate TTOS with my existing CRM and AI tools?',
     description:
-      'Yes! We provide native two-way synchronization with Perfex CRM, custom webhooks, REST APIs, and a dedicated Model Context Protocol (MCP) server. You can connect your Siegfried workflows directly with Claude Code, Cursor, Windsurf, Antigravity, and n8n/Hermes autonomous pipelines with zero setup friction.',
+      'Yes! We provide native two-way synchronization with Perfex CRM, custom webhooks, REST APIs, and a dedicated Model Context Protocol (MCP) server. You can connect your TTOS workflows directly with Claude Code, Cursor, Windsurf, Antigravity, and n8n/Hermes autonomous pipelines with zero setup friction.',
   },
   {
     id: 'faq-6',
@@ -433,7 +433,7 @@ export const campaignHubFaqs = [
     id: 'faq-7',
     title: 'Do I need coding or technical skills to build campaigns and bots?',
     description:
-      'Not at all. Siegfried Outreach is designed for non-technical users and growth teams. You get a visual drag-and-drop email builder, customizable message templates, an AI copywriting assistant for instant MLS descriptions and social captions, and a visual workflow editor for AI bots.',
+      'Not at all. TTOS is designed for non-technical users and growth teams. You get a visual drag-and-drop email builder, customizable message templates, an AI copywriting assistant for instant MLS descriptions and social captions, and a visual workflow editor for AI bots.',
   },
   {
     id: 'faq-8',
@@ -445,7 +445,7 @@ export const campaignHubFaqs = [
     id: 'faq-9',
     title: 'Can I collaborate with team members and assign custom permissions?',
     description:
-      'Yes. Siegfried Outreach offers robust role-based access control (RBAC). You can invite team members, create custom roles (such as Campaign Manager, Content Creator, Support Agent, or Admin), and restrict permissions per channel or feature.',
+      'Yes. TTOS offers robust role-based access control (RBAC). You can invite team members, create custom roles (such as Campaign Manager, Content Creator, Support Agent, or Admin), and restrict permissions per channel or feature.',
   },
   {
     id: 'faq-10',

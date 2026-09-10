@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     {
       id: 'rdt_px_001',
       pixelId: 'a2_910293841',
-      pixelName: 'Siegfried Master Reddit Conversion Pixel',
+      pixelName: 'TTOS Master Reddit Conversion Pixel',
       status: 'ACTIVE',
       lastActive: '3 minutes ago',
       eventsCount: 31200,

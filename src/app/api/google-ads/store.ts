@@ -59,7 +59,7 @@ export const INITIAL_GOOGLE_CAMPAIGNS: GoogleCampaignRecord[] = [
     searchImpressionShare: 86.4,
     creative: {
       headlines: [
-        'Siegfried Outreach Platform',
+        'TTOS Platform',
         'Multi-Channel AI Automation',
         'Scale Sales & Inquiries Fast',
         'Official WhatsApp & Email APIs',
@@ -69,15 +69,15 @@ export const INITIAL_GOOGLE_CAMPAIGNS: GoogleCampaignRecord[] = [
         'Automate outreach across WhatsApp, Telegram, Email & Socials with 99.4% inbox delivery.',
         'Connect your CRM and send AI-personalized broadcasts. Start your free trial today.'
       ],
-      finalUrl: 'https://siegfriedoutreach.com',
+      finalUrl: 'https://ttos.com',
       displayPath1: 'platform',
       displayPath2: 'ai-outreach',
-      businessName: 'Siegfried Outreach',
+      businessName: 'TTOS',
       sitelinks: [
-        { text: 'Live Demo', description: 'See AI agents in action', url: 'https://siegfriedoutreach.com/demo' },
-        { text: 'Pricing & Plans', description: 'Transparent monthly tiers', url: 'https://siegfriedoutreach.com/pricing' },
-        { text: 'Integrations', description: 'WhatsApp, Telegram, CRM', url: 'https://siegfriedoutreach.com/integrations' },
-        { text: 'Case Studies', description: '4.8x average ROI', url: 'https://siegfriedoutreach.com/cases' }
+        { text: 'Live Demo', description: 'See AI agents in action', url: 'https://ttos.com/demo' },
+        { text: 'Pricing & Plans', description: 'Transparent monthly tiers', url: 'https://ttos.com/pricing' },
+        { text: 'Integrations', description: 'WhatsApp, Telegram, CRM', url: 'https://ttos.com/integrations' },
+        { text: 'Case Studies', description: '4.8x average ROI', url: 'https://ttos.com/cases' }
       ],
       callouts: ['24/7 Priority Support', '99.4% Inbox Rate', 'Official APIs Only', 'No Setup Fee']
     },
@@ -119,17 +119,17 @@ export const INITIAL_GOOGLE_CAMPAIGNS: GoogleCampaignRecord[] = [
     creative: {
       headlines: [
         '1-Click AI Marketing Scale',
-        'Siegfried All-in-One Growth',
+        'TTOS All-in-One Growth',
         'Automate Socials & Outreach'
       ],
       descriptions: [
         'Scale your customer acquisition across Google Search, YouTube, Gmail, Maps and Display.',
         'High ROAS automation powered by machine learning and official platform integrations.'
       ],
-      finalUrl: 'https://siegfriedoutreach.com/scale',
+      finalUrl: 'https://ttos.com/scale',
       displayPath1: 'growth',
       displayPath2: 'pmax',
-      businessName: 'Siegfried AI',
+      businessName: 'TTOS AI',
       mediaUrls: [
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
         'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80'
@@ -164,16 +164,16 @@ export const INITIAL_GOOGLE_CAMPAIGNS: GoogleCampaignRecord[] = [
     searchImpressionShare: 78.0,
     creative: {
       headlines: [
-        'See How Siegfried Works in 60s',
+        'See How TTOS Works in 60s',
         'Multi-Channel AI Revolution'
       ],
       descriptions: [
         'Watch the live demo of automated campaigns across 9 major platforms.'
       ],
-      finalUrl: 'https://siegfriedoutreach.com/video-demo',
+      finalUrl: 'https://ttos.com/video-demo',
       displayPath1: 'watch',
       displayPath2: 'demo',
-      businessName: 'Siegfried Video',
+      businessName: 'TTOS Video',
       mediaUrls: ['https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80']
     },
     targetLocations: ['United States', 'United Kingdom'],

@@ -1,7 +1,7 @@
 import { apiHandler } from "@/utils/apiHandler";
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.siegfriedoutreach.com/api';
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.ttos.com/api';
 
 function extractUserIdFromRequest(request: NextRequest): string | null {
   const authHeader = request.headers.get("authorization");

@@ -37,7 +37,7 @@ export const RedditPixelModal: React.FC<RedditPixelModalProps> = ({ isOpen, onCl
     {
       id: 'rdt_px_001',
       pixelId: 'a2_910293841',
-      pixelName: 'Siegfried Master Reddit Conversion Pixel',
+      pixelName: 'TTOS Master Reddit Conversion Pixel',
       status: 'ACTIVE',
       lastActive: '3 minutes ago',
       eventsCount: 31200,

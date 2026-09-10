@@ -59,8 +59,8 @@ export async function POST(request: NextRequest) {
         videoUrl: creative.videoUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80',
         soundTitle: creative.soundTitle || 'Trending Sound - Viral TikTok Audio',
         hashtags: creative.hashtags && creative.hashtags.length > 0 ? creative.hashtags : ['#TikTokMadeMeBuyIt', '#FYP', '#Viral'],
-        brandHandle: creative.brandHandle || '@siegfried_outreach',
-        landingPageUrl: creative.landingPageUrl || 'https://siegfriedoutreach.com'
+        brandHandle: creative.brandHandle || '@ttos_outreach',
+        landingPageUrl: creative.landingPageUrl || 'https://ttos.com'
       },
       insights: {
         spend: Number((budget * 0.45).toFixed(2)),

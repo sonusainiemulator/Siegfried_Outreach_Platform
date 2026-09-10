@@ -461,7 +461,7 @@ export default function TemplateMarketplacePage() {
                   <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-700 dark:text-emerald-300 flex items-start gap-2">
                     <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" />
                     <div>
-                      <span className="font-semibold block mb-0.5">Ethical Clinical Philosophy (Christopher Siegfried Standards):</span>
+                      <span className="font-semibold block mb-0.5">Ethical Clinical Philosophy (Christopher TTOS Standards):</span>
                       This template is engineered to communicate with evidence-based nuance, avoiding clickbait, empty promises, or fear-based triggers. Fully aligned with HIPAA guidelines and patient autonomy.
                     </div>
                   </div>

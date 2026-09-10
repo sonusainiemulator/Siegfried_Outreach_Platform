@@ -87,7 +87,7 @@ export const RedditAdsManagerDashboard: React.FC = () => {
   const accounts = accountsData?.data || [
     {
       id: 'rdt_acc_01',
-      accountName: 'Siegfried Global (Reddit Ads)',
+      accountName: 'TTOS Global (Reddit Ads)',
       balance: 6420.00,
       currency: 'USD'
     }
