@@ -219,7 +219,6 @@ export const sidebarMenuData: MenuSection[] = [
     title: 'AI Social Manager',
     items: [
       { id: 'ai-social-setup', label: 'Business Setup', icon: 'Building2', path: '/ai-social/setup' },
-      { id: 'ai-social-indian-festivals', label: '🇮🇳 India Festivals Auto-Pilot', icon: 'Flame', path: '/ai-social/indian-festivals' },
       { id: 'ai-social-planner', label: 'AI Planner', icon: 'Sparkles', path: '/ai-social/planner' },
       { id: 'ai-social-team', label: 'AI Team', icon: 'Bot', path: '/ai-social/team' },
       { id: 'ai-social-reference', label: 'Reference Brain', icon: 'Globe', path: '/ai-social/reference' },

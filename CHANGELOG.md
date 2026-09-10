@@ -2,6 +2,22 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🚫 [2026-09-10 21:42:00 CEST] — Admin Feature Simplification: Hidden Indian Festivals Auto-Pilot
+
+### 🎯 Feature Scope & Navigation Streamlining
+- **Sidebar Navigation (`src/data/sidebarData.ts`)**:
+  - Removed `🇮🇳 India Festivals Auto-Pilot` (`/ai-social/indian-festivals`) from the AI Social Manager navigation menu.
+- **Command Palette (`CommandPalette.tsx`)**:
+  - Removed the `action-festivals-autopilot` quick action item and unused `Flame` icon import from the global ⌘K command search.
+- **Post Composer Header (`PostComposer.tsx`)**:
+  - Removed the `🇮🇳 Indian Festivals Auto-Pilot` quick launcher button from the composer header.
+- **Social Media Calendar Header (`CalendarPageHeader.tsx`)**:
+  - Removed the `🇮🇳 Festivals Auto-Pilot` button from the calendar actions toolbar.
+- **Content Calendar (`ContentCalendarPage.tsx`)**:
+  - Removed the top header action button and the 365-day promotional banner card for Indian Festivals.
+- **Direct Route Graceful Redirect (`src/app/(main)/ai-social/indian-festivals/page.tsx`)**:
+  - Added an automatic server/client redirect to `/ai-social/calendar` to smoothly transition any direct link requests.
+
 ---
 
 ## 🧠 [2026-09-09 16:15:00 CEST] — Ethical Mental Health Marketing & Clinical Psychology Social Templates Suite

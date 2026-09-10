@@ -360,15 +360,6 @@ export default function ContentCalendarPage() {
             </Button>
 
             <Button
-              variant="default"
-              size="sm"
-              onClick={() => router.push('/ai-social/indian-festivals')}
-              className="h-9 gap-1.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold shadow-xs hover:opacity-90"
-            >
-              <span>🇮🇳 Festivals Auto-Pilot</span>
-            </Button>
-
-            <Button
               variant="outline"
               size="sm"
               onClick={() => router.push('/ai-social/planner')}
@@ -388,31 +379,6 @@ export default function ContentCalendarPage() {
           </div>
         }
       />
-
-      {/* Indian Festivals 1-Click Auto-Pilot Banner */}
-      <Card className="border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-transparent p-3 sm:p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg shadow-sm shrink-0">
-            🪔
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-bold text-foreground">365-Day Indian Festivals Auto-Pilot Engine</h3>
-              <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/30 text-[10px] font-bold">Zero Human Approval</Badge>
-            </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Auto-generate and schedule Diwali, Raksha Bandhan, Holi, Eid, Navratri & 30+ festival posts, reels, WhatsApp campaigns & WordPress blogs in 1 click.
-            </p>
-          </div>
-        </div>
-        <Button
-          size="sm"
-          onClick={() => router.push('/ai-social/indian-festivals')}
-          className="h-8 px-3 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white shrink-0 rounded-lg"
-        >
-          Launch Festival Hub ➔
-        </Button>
-      </Card>
 
       {/* Metrics Summary Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

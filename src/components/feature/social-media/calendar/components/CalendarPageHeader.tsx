@@ -71,15 +71,6 @@ const CalendarPageHeader = ({
             </Button>
           )}
 
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => router.push('/ai-social/indian-festivals')}
-            className="sm:h-11 h-10 flex-1 md:flex-none rounded-border-radius p-button-padding! font-bold text-sm gap-2 border-none text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:opacity-95 shadow-lg shadow-orange-500/20 transition-all cursor-pointer"
-          >
-            <span>🇮🇳 Festivals Auto-Pilot</span>
-          </Button>
-
           {onOpenBatchModal && (
             <Button
               type="button"

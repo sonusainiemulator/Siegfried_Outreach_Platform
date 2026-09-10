@@ -633,14 +633,6 @@ const PostComposer = () => {
 
           <Button
             type="button"
-            onClick={() => router.push('/ai-social/indian-festivals')}
-            className="h-10 px-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:opacity-95 text-white font-bold text-xs rounded-xl shadow-lg flex items-center gap-1.5 transition-all cursor-pointer"
-          >
-            <span>🇮🇳 Indian Festivals Auto-Pilot</span>
-          </Button>
-
-          <Button
-            type="button"
             onClick={() => setIsAIModalOpen(true)}
             className="h-10 px-3.5 bg-gradient-to-r from-primary via-purple-600 to-rose-500 hover:opacity-95 text-white font-bold text-xs rounded-xl shadow-lg flex items-center gap-2 transition-all cursor-pointer"
           >
