@@ -2,14 +2,26 @@ import { Metadata } from 'next'
 import McpLanding from '@/components/landing/mcp/McpLanding'
 
 export const metadata: Metadata = {
-  title: 'Social Media MCP Server: Publish to 9 Platforms With Any AI Agent | TTOS',
+  title: 'Social Media MCP Server | Connect AI Agents to 9 Platforms',
   description:
-    'A hosted social media Model Context Protocol (MCP) server at api.ttos.com/mcp. 28 tools, 9 platforms, official APIs for Claude Code, Cursor, Codex, and Antigravity.',
+    'A hosted social media Model Context Protocol (MCP) server at ttai.in. 28 tools, 9 platforms, official APIs for Claude Code, Cursor, Codex, and Antigravity.',
+  alternates: {
+    canonical: 'https://ttai.in/mcp',
+  },
   openGraph: {
-    title: 'Social Media MCP Server: Publish to 9 Platforms With Any AI Agent',
+    title: 'Social Media MCP Server | Connect AI Agents to 9 Platforms | TTOS',
     description:
       'A hosted social media MCP server with 28 tools across 9 platforms. Connect Claude Code, Cursor, or Codex directly to your social presence.',
-    url: 'https://ttos.com/mcp',
+    url: 'https://ttai.in/mcp',
+    siteName: 'TTOS',
+    images: [
+      {
+        url: '/images/dark-logo2.png',
+        width: 1200,
+        height: 630,
+        alt: 'TTOS MCP Server',
+      },
+    ],
   },
 }
 
