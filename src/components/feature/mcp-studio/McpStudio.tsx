@@ -493,40 +493,37 @@ export default function McpStudio() {
   }
 
   return (
-    <div className="space-y-8 max-w-[1600px] mx-auto animate-fade-in p-2 sm:p-4 text-white">
+    <div className="space-y-6 max-w-[1600px] mx-auto animate-fade-in p-2 sm:p-4 text-foreground">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0E1528] via-[#12102A] to-[#0A1220] border border-white/10 p-6 sm:p-8 shadow-2xl">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 blur-[120px] pointer-events-none rounded-full" />
-        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
-
+      <div className="relative overflow-hidden rounded-2xl bg-card border border-border p-6 sm:p-8 shadow-xs">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-3xl">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-xs font-bold font-mono flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-indigo-400" />
+              <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold font-mono flex items-center gap-1.5">
+                <Cpu className="w-3.5 h-3.5 text-primary" />
                 Model Context Protocol (MCP)
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Server Online
               </span>
               {isUserAdmin ? (
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-semibold font-mono flex items-center gap-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium font-mono flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Admin Operator Access
                 </span>
               ) : (
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-xs font-semibold font-mono flex items-center gap-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium font-mono flex items-center gap-1">
                   <Sparkles className="w-3.5 h-3.5" />
                   Talent & Creator Mode
                 </span>
               )}
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white font-outfit">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground font-outfit">
               Connect Any AI Assistant to Your Social Media
             </h1>
-            <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Model Context Protocol (MCP) is the open standard that connects Claude Desktop, Cursor, ChatGPT, Codex, and Antigravity directly to your 9 connected social networks. Publish posts, generate carousels, schedule drops, and analyze engagement in natural language.
             </p>
           </div>
@@ -536,18 +533,18 @@ export default function McpStudio() {
               onClick={() => copyToClipboard('https://api.siegfriedoutreach.com/mcp', 'endpoint-copy', 'Copied MCP Server URL!')}
               variant="outline"
               size="sm"
-              className="bg-white/5 hover:bg-white/10 border-white/15 text-gray-200 rounded-xl text-xs flex items-center gap-2 h-10 px-4"
+              className="border-border text-foreground hover:bg-muted/50 rounded-xl text-xs flex items-center gap-2 h-10 px-4"
             >
-              {copiedKeyId === 'endpoint-copy' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              {copiedKeyId === 'endpoint-copy' ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
               <span className="font-mono">api.siegfriedoutreach.com/mcp</span>
             </Button>
 
             <Link href="/ai-chat-assistant">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs flex items-center gap-2 h-10 px-4 shadow-lg shadow-indigo-600/25"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs flex items-center gap-2 h-10 px-4 shadow-xs"
               >
-                <Sparkles className="w-4 h-4 text-amber-300" />
+                <Sparkles className="w-4 h-4" />
                 Launch In-App Chat
               </Button>
             </Link>
@@ -556,7 +553,7 @@ export default function McpStudio() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-gray-400 hover:text-white rounded-xl text-xs flex items-center gap-1.5 h-10"
+                className="text-muted-foreground hover:text-foreground rounded-xl text-xs flex items-center gap-1.5 h-10"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 Docs
@@ -568,83 +565,83 @@ export default function McpStudio() {
 
       {/* Metrics Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#0D121F] border border-white/10 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
-            <Cpu className="w-6 h-6" />
+        <div className="p-5 rounded-xl bg-card border border-border flex items-center gap-4 shadow-xs">
+          <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+            <Cpu className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-gray-400 font-mono">Server Status</span>
+            <span className="text-xs text-muted-foreground font-mono">Server Status</span>
             <div className="flex items-center gap-2 pt-0.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-base font-bold text-white">Live & Operational</span>
+              <span className="w-2 rounded-full h-2 bg-emerald-500 animate-pulse" />
+              <span className="text-sm sm:text-base font-bold text-foreground">Live & Operational</span>
             </div>
-            <span className="text-[11px] text-gray-500 font-mono">&lt; 28ms Latency</span>
+            <span className="text-[11px] text-muted-foreground font-mono">&lt; 28ms Latency</span>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0D121F] border border-white/10 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
-            <Layers className="w-6 h-6" />
+        <div className="p-5 rounded-xl bg-card border border-border flex items-center gap-4 shadow-xs">
+          <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+            <Layers className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-gray-400 font-mono">MCP Tool Capabilities</span>
-            <div className="text-xl font-bold text-white pt-0.5">32 Native Tools</div>
-            <span className="text-[11px] text-purple-300 font-mono">Across 11 Social Platforms</span>
+            <span className="text-xs text-muted-foreground font-mono">MCP Tool Capabilities</span>
+            <div className="text-lg sm:text-xl font-bold text-foreground pt-0.5">32 Native Tools</div>
+            <span className="text-[11px] text-muted-foreground font-mono">Across 11 Social Platforms</span>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0D121F] border border-white/10 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center shrink-0">
-            <Key className="w-6 h-6" />
+        <div className="p-5 rounded-xl bg-card border border-border flex items-center gap-4 shadow-xs">
+          <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+            <Key className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-gray-400 font-mono">Your API Keys</span>
-            <div className="text-xl font-bold text-white pt-0.5">{keys.length} Active Keys</div>
-            <span className="text-[11px] text-gray-500 font-mono">120 requests / min limit</span>
+            <span className="text-xs text-muted-foreground font-mono">Your API Keys</span>
+            <div className="text-lg sm:text-xl font-bold text-foreground pt-0.5">{keys.length} Active Keys</div>
+            <span className="text-[11px] text-muted-foreground font-mono">120 requests / min limit</span>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#0D121F] border border-white/10 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-            <Bot className="w-6 h-6" />
+        <div className="p-5 rounded-xl bg-card border border-border flex items-center gap-4 shadow-xs">
+          <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+            <Bot className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-gray-400 font-mono">Assistant Clients</span>
-            <div className="text-xl font-bold text-white pt-0.5">8 Supported Clients</div>
-            <span className="text-[11px] text-emerald-400 font-mono">Protocol 2024-11-05</span>
+            <span className="text-xs text-muted-foreground font-mono">Assistant Clients</span>
+            <div className="text-lg sm:text-xl font-bold text-foreground pt-0.5">8 Supported Clients</div>
+            <span className="text-[11px] text-muted-foreground font-mono">Protocol 2024-11-05</span>
           </div>
         </div>
       </div>
 
-      {/* Interactive Role Guide & Mode Selector: How Admin & Talent Users Use MCP */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 sm:p-6 rounded-3xl bg-[#090D18]/90 border border-white/10 backdrop-blur-xl shadow-2xl">
+      {/* Interactive Role Guide & Mode Selector */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 sm:p-6 rounded-2xl bg-card border border-border shadow-xs">
         {/* Talent Guide Card */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-purple-950/40 via-[#0E1528] to-indigo-950/30 border border-purple-500/20 flex flex-col justify-between gap-4">
+        <div className="p-5 sm:p-6 rounded-xl bg-muted/30 border border-border flex flex-col justify-between gap-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-mono font-semibold border border-purple-500/30">
-                <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono font-medium border border-primary/20">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
                 For Talent & Creators
               </span>
-              <span className="text-[11px] text-gray-400 font-mono">0 Manual UI Clicks</span>
+              <span className="text-[11px] text-muted-foreground font-mono">0 Manual UI Clicks</span>
             </div>
-            <h3 className="text-lg font-bold text-white font-outfit">
+            <h3 className="text-lg font-bold text-foreground font-outfit">
               How Talent Uses MCP: Conversational Social Co-Pilot
             </h3>
-            <p className="text-xs text-gray-300 leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Connect Claude Desktop, Cursor, or ChatGPT to publish, schedule carousels, run auto-reply campaigns, and track analytics across 9 social networks using natural language prompts.
             </p>
-            <ul className="space-y-1.5 text-xs text-gray-400">
+            <ul className="space-y-1.5 text-xs text-muted-foreground">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span>One-shot cross-platform publishing & scheduling</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span>Multi-slide Instagram & LinkedIn carousel creation</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span>Curated prompt templates with 1-click clipboard copy</span>
               </li>
             </ul>
@@ -653,7 +650,7 @@ export default function McpStudio() {
           <div className="flex items-center gap-2.5 pt-2">
             <Button
               onClick={() => setActiveTab('talent')}
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-xs font-semibold h-9 px-4 flex items-center gap-2 shadow-lg shadow-purple-600/20"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-medium h-9 px-4 flex items-center gap-2 shadow-xs"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Explore Talent Playbook</span>
@@ -662,7 +659,7 @@ export default function McpStudio() {
             <Link href="/ai-chat-assistant">
               <Button
                 variant="outline"
-                className="border-white/10 text-gray-300 hover:text-white rounded-xl text-xs h-9 px-3"
+                className="border-border text-foreground hover:bg-muted/50 rounded-xl text-xs h-9 px-3"
               >
                 In-App AI Chat
               </Button>
@@ -671,32 +668,32 @@ export default function McpStudio() {
         </div>
 
         {/* Admin Guide Card */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-950/30 via-[#0E1528] to-orange-950/20 border border-amber-500/20 flex flex-col justify-between gap-4">
+        <div className="p-5 sm:p-6 rounded-xl bg-muted/30 border border-border flex flex-col justify-between gap-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-mono font-semibold border border-amber-500/30">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono font-medium border border-primary/20">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
                 For Admin Operators
               </span>
-              <span className="text-[11px] text-gray-400 font-mono">120 req/min Rate Limit</span>
+              <span className="text-[11px] text-muted-foreground font-mono">120 req/min Rate Limit</span>
             </div>
-            <h3 className="text-lg font-bold text-white font-outfit">
+            <h3 className="text-lg font-bold text-foreground font-outfit">
               How Admins Use MCP: Governance, Auditing & Schemas
             </h3>
-            <p className="text-xs text-gray-300 leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Supervise server telemetry, inspect JSON schemas for all 32 tools, audit live tool invocations across the team, and manage API keys with instant revocation switches.
             </p>
-            <ul className="space-y-2 text-xs text-gray-400">
+            <ul className="space-y-2 text-xs text-muted-foreground">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span>Live tool execution audit logs with caller & duration telemetry</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span>Run official local CLI inspector (`npx @modelcontextprotocol/inspector`)</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span>32 native tools schema browser with parameter inspection</span>
               </li>
             </ul>
@@ -705,7 +702,7 @@ export default function McpStudio() {
           <div className="flex items-center gap-2.5 pt-2">
             <Button
               onClick={() => setActiveTab('admin')}
-              className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white rounded-xl text-xs font-semibold h-9 px-4 flex items-center gap-2 shadow-lg shadow-amber-600/20"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-medium h-9 px-4 flex items-center gap-2 shadow-xs"
             >
               <Shield className="w-3.5 h-3.5" />
               <span>Open Admin Diagnostics</span>
@@ -714,7 +711,7 @@ export default function McpStudio() {
             <Button
               onClick={() => setActiveTab('keys')}
               variant="outline"
-              className="border-white/10 text-gray-300 hover:text-white rounded-xl text-xs h-9 px-3"
+              className="border-border text-foreground hover:bg-muted/50 rounded-xl text-xs h-9 px-3"
             >
               Manage Keys
             </Button>
@@ -723,46 +720,62 @@ export default function McpStudio() {
       </div>
 
       {/* Main Tab Navigation */}
-      <div className="border-b border-white/10 pb-1">
+      <div className="border-b border-border pb-1">
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2">
           <button
             onClick={() => setActiveTab('connect')}
-            className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'connect'
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'bg-[#0D121F] text-gray-400 hover:text-white hover:bg-white/5 border border-white/5'
+                ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                : 'bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border'
             }`}
           >
             <Compass className="w-4 h-4" />
             <span>Connect Chat Assistants</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-mono">8 Clients</span>
+            <span
+              className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${
+                activeTab === 'connect' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
+              }`}
+            >
+              8 Clients
+            </span>
           </button>
 
           <button
             onClick={() => setActiveTab('talent')}
-            className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'talent'
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'bg-[#0D121F] text-gray-400 hover:text-white hover:bg-white/5 border border-white/5'
+                ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                : 'bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border'
             }`}
           >
             <Sparkles className="w-4 h-4" />
             <span>Talent & Creator Playbook</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-mono">Workflows</span>
+            <span
+              className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${
+                activeTab === 'talent' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
+              }`}
+            >
+              Workflows
+            </span>
           </button>
 
           <button
             onClick={() => setActiveTab('keys')}
-            className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'keys'
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'bg-[#0D121F] text-gray-400 hover:text-white hover:bg-white/5 border border-white/5'
+                ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                : 'bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border'
             }`}
           >
             <Key className="w-4 h-4" />
             <span>API Keys & Credentials</span>
             {keys.length > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-mono">
+              <span
+                className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${
+                  activeTab === 'keys' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
+                }`}
+              >
                 {keys.length}
               </span>
             )}
@@ -770,15 +783,19 @@ export default function McpStudio() {
 
           <button
             onClick={() => setActiveTab('admin')}
-            className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'admin'
-                ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg shadow-amber-600/30'
-                : 'bg-[#0D121F] text-gray-400 hover:text-white hover:bg-white/5 border border-white/5'
+                ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                : 'bg-card text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border'
             }`}
           >
-            <Shield className="w-4 h-4 text-amber-400" />
+            <Shield className="w-4 h-4" />
             <span>Admin Controls & Diagnostics</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono">
+            <span
+              className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${
+                activeTab === 'admin' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
+              }`}
+            >
               Inspector & 32 Tools
             </span>
           </button>
@@ -789,29 +806,29 @@ export default function McpStudio() {
       {/* TAB 1: CONNECT CHAT ASSISTANTS */}
       {/* ========================================================================= */}
       {activeTab === 'connect' && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 animate-fade-in">
           {/* Intro Card */}
-          <div className="p-6 rounded-2xl bg-[#0D121F] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-6 rounded-2xl bg-card border border-border flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
             <div className="space-y-1">
-              <h2 className="text-lg font-bold text-white flex items-center gap-2 font-outfit">
-                <Bot className="w-5 h-5 text-indigo-400" />
+              <h2 className="text-lg font-bold text-foreground flex items-center gap-2 font-outfit">
+                <Bot className="w-5 h-5 text-primary" />
                 Select Your AI Chat Assistant
               </h2>
-              <p className="text-xs sm:text-sm text-gray-400">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Choose the assistant you currently use. Configurations below automatically inject your active API key.
               </p>
             </div>
 
             {!primaryKey && (
-              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
-                <AlertCircle className="w-4 h-4 shrink-0" />
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-primary/10 border border-primary/20 text-foreground text-xs">
+                <AlertCircle className="w-4 h-4 text-primary shrink-0" />
                 <span>
                   Tip: Generate an API key in the <strong>API Keys</strong> tab to populate configs with your credentials.
                 </span>
                 <Button
                   onClick={() => setActiveTab('keys')}
                   size="sm"
-                  className="bg-amber-600 hover:bg-amber-500 text-white text-[11px] h-7 rounded-lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] h-7 rounded-lg shadow-xs"
                 >
                   Generate Key
                 </Button>
@@ -827,16 +844,16 @@ export default function McpStudio() {
                 <button
                   key={client.id}
                   onClick={() => setSelectedClient(client.id)}
-                  className={`p-4 rounded-2xl border text-start transition-all flex flex-col justify-between gap-3 ${
+                  className={`p-4 rounded-xl border text-start transition-all flex flex-col justify-between gap-3 shadow-2xs ${
                     isSelected
-                      ? 'bg-gradient-to-b from-indigo-950/60 to-purple-950/60 border-indigo-500 text-white shadow-xl shadow-indigo-500/20'
-                      : 'bg-[#0D121F] border-white/10 hover:border-white/20 text-gray-400 hover:text-white'
+                      ? 'bg-primary text-primary-foreground border-primary shadow-xs'
+                      : 'bg-card border-border hover:border-primary/40 text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                        isSelected ? 'bg-indigo-500 text-white' : 'bg-white/5 text-gray-300'
+                        isSelected ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
                       }`}
                     >
                       {client.id === 'claude-desktop' && <Bot className="w-5 h-5" />}
@@ -846,18 +863,28 @@ export default function McpStudio() {
                       {client.id === 'antigravity' && <Cpu className="w-5 h-5" />}
                       {client.id === 'openai-codex' && <Terminal className="w-5 h-5" />}
                       {client.id === 'windsurf' && <Laptop className="w-5 h-5" />}
-                      {client.id === 'siegfried-assistant' && <Sparkles className="w-5 h-5 text-amber-300" />}
+                      {client.id === 'siegfried-assistant' && <Sparkles className="w-5 h-5" />}
                     </div>
                     {client.recommended && (
-                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">
+                      <span
+                        className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${
+                          isSelected ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-primary/10 text-primary'
+                        }`}
+                      >
                         Top Pick
                       </span>
                     )}
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-xs leading-tight text-white">{client.name}</h3>
-                    <span className="text-[10px] text-gray-400 font-mono line-clamp-1 pt-0.5">
+                    <h3 className={`font-bold text-xs leading-tight ${isSelected ? 'text-primary-foreground' : 'text-foreground'}`}>
+                      {client.name}
+                    </h3>
+                    <span
+                      className={`text-[10px] font-mono line-clamp-1 pt-0.5 ${
+                        isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'
+                      }`}
+                    >
                       {client.badge}
                     </span>
                   </div>
@@ -867,21 +894,21 @@ export default function McpStudio() {
           </div>
 
           {/* Active Guide Detail Card */}
-          <div className="rounded-3xl bg-[#0D121F] border border-white/10 p-6 sm:p-8 shadow-2xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
+          <div className="rounded-2xl bg-card border border-border p-6 sm:p-8 shadow-xs space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
               <div className="space-y-1">
                 <div className="flex items-center gap-2.5">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white font-outfit">
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground font-outfit">
                     {currentGuide.name} Setup Guide
                   </h3>
-                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-semibold font-mono">
+                  <span className="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold font-mono">
                     {currentGuide.badge}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-mono">
+                  <span className="px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-border text-xs font-mono">
                     Transport: {currentGuide.transport}
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-3xl">
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-3xl">
                   {currentGuide.description}
                 </p>
               </div>
@@ -889,8 +916,8 @@ export default function McpStudio() {
               <div className="flex items-center gap-3 shrink-0">
                 {currentGuide.id === 'siegfried-assistant' ? (
                   <Link href="/ai-chat-assistant">
-                    <Button className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-amber-300" />
+                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs flex items-center gap-2 shadow-xs">
+                      <Sparkles className="w-4 h-4" />
                       Open AI Chat Assistant
                     </Button>
                   </Link>
@@ -898,9 +925,9 @@ export default function McpStudio() {
                   <Button
                     onClick={() => copySnippet(currentGuide.getConfig(primaryKey))}
                     size="sm"
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl px-4 py-2 font-mono text-xs flex items-center gap-2 shadow-md shadow-indigo-600/30"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 py-2 font-mono text-xs flex items-center gap-2 shadow-xs"
                   >
-                    {copiedSnippet ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
+                    {copiedSnippet ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                     {copiedSnippet ? 'Copied Config!' : 'Copy Configuration'}
                   </Button>
                 )}
@@ -909,19 +936,19 @@ export default function McpStudio() {
 
             {/* Code / Command Display Box */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs text-gray-400 font-mono">
+              <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
                 <span>{currentGuide.snippetType} Preview</span>
                 {primaryKey ? (
-                  <span className="text-emerald-400 flex items-center gap-1 text-[11px]">
+                  <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1 text-[11px]">
                     <CheckCircle className="w-3.5 h-3.5" /> API Key Pre-Injected
                   </span>
                 ) : (
-                  <span className="text-amber-400 flex items-center gap-1 text-[11px]">
+                  <span className="text-amber-600 dark:text-amber-400 flex items-center gap-1 text-[11px]">
                     <AlertCircle className="w-3.5 h-3.5" /> Placeholder Key (Create key in API Keys tab)
                   </span>
                 )}
               </div>
-              <div className="relative rounded-2xl bg-black/80 border border-white/10 p-5 font-mono text-xs text-indigo-300 overflow-x-auto shadow-inner">
+              <div className="relative rounded-xl bg-muted/60 border border-border p-4 sm:p-5 font-mono text-xs text-foreground overflow-x-auto shadow-2xs">
                 <pre className="whitespace-pre-wrap leading-relaxed select-all">
                   {currentGuide.getConfig(primaryKey)}
                 </pre>
@@ -930,32 +957,32 @@ export default function McpStudio() {
 
             {/* Step-by-Step Instructions */}
             <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-mono flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-indigo-400" />
+              <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground font-mono flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary" />
                 Step-by-Step Installation Walkthrough
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {currentGuide.instructions.map((step, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5 text-xs text-gray-300 leading-relaxed"
+                    className="flex items-start gap-3 p-4 rounded-xl bg-card border border-border text-xs text-muted-foreground leading-relaxed shadow-2xs"
                   >
-                    <span className="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
                       {idx + 1}
                     </span>
-                    <span>{step}</span>
+                    <span className="text-foreground">{step}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Test It: Sample Prompts */}
-            <div className="space-y-3 pt-4 border-t border-white/10">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-mono flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+            <div className="space-y-3 pt-4 border-t border-border">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground font-mono flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary" />
                 Test Prompts: Try These in {currentGuide.name}
               </h4>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-muted-foreground">
                 Once connected, paste any of these prompts directly into your chat assistant to verify tool execution:
               </p>
 
@@ -963,16 +990,16 @@ export default function McpStudio() {
                 {currentGuide.samplePrompts.map((prompt, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-xl bg-black/40 border border-white/10 flex flex-col justify-between gap-3 text-xs"
+                    className="p-4 rounded-xl bg-muted/40 border border-border flex flex-col justify-between gap-3 text-xs shadow-2xs"
                   >
-                    <p className="text-gray-300 italic leading-relaxed">&ldquo;{prompt}&rdquo;</p>
+                    <p className="text-foreground italic leading-relaxed">&ldquo;{prompt}&rdquo;</p>
                     <Button
                       onClick={() => copyPrompt(prompt, idx)}
                       variant="ghost"
                       size="sm"
-                      className="self-start text-[11px] font-mono text-indigo-400 hover:text-white p-0 h-auto flex items-center gap-1.5"
+                      className="self-start text-[11px] font-mono text-primary hover:text-primary/80 p-0 h-auto flex items-center gap-1.5"
                     >
-                      {copiedPromptIdx === idx ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copiedPromptIdx === idx ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedPromptIdx === idx ? 'Copied Prompt' : 'Copy Prompt'}</span>
                     </Button>
                   </div>
@@ -987,68 +1014,68 @@ export default function McpStudio() {
       {/* TAB 2: TALENT & CREATOR PLAYBOOK */}
       {/* ========================================================================= */}
       {activeTab === 'talent' && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 animate-fade-in">
           {/* Talent Header */}
-          <div className="p-8 rounded-3xl bg-gradient-to-r from-purple-950/40 via-[#0D121F] to-indigo-950/40 border border-white/10 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-mono">
+          <div className="p-6 sm:p-8 rounded-2xl bg-card border border-border space-y-3 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-mono font-medium">
               <Users className="w-3.5 h-3.5" />
               Talent & Creator Playbook
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-outfit">
+            <h2 className="text-2xl font-bold text-foreground font-outfit">
               How Talent & Social Media Managers Use Siegfried MCP
             </h2>
-            <p className="text-sm sm:text-base text-gray-300 max-w-4xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-4xl leading-relaxed">
               Instead of logging into 9 separate social media dashboards, copying and pasting captions, and re-uploading media manually, MCP lets you manage your entire social media presence directly through your AI chat interface.
             </p>
           </div>
 
           {/* 3-Step Talent Workflow */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#0D121F] border border-white/10 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="p-6 rounded-xl bg-card border border-border space-y-3 shadow-xs">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
                 1
               </div>
-              <h3 className="text-base font-bold text-white">Generate Your Key & Connect</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <h3 className="text-base font-bold text-foreground">Generate Your Key & Connect</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Head to the <strong>API Keys</strong> tab to generate your personal key. Follow the 1-click guide to connect Claude Desktop, Cursor, or ChatGPT.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#0D121F] border border-white/10 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm">
+            <div className="p-6 rounded-xl bg-card border border-border space-y-3 shadow-xs">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
                 2
               </div>
-              <h3 className="text-base font-bold text-white">Prompt in Natural Language</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <h3 className="text-base font-bold text-foreground">Prompt in Natural Language</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Tell your AI assistant what you need: draft a carousel, repurpose an article, schedule drops across X and LinkedIn, or fetch analytics.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#0D121F] border border-white/10 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+            <div className="p-6 rounded-xl bg-card border border-border space-y-3 shadow-xs">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
                 3
               </div>
-              <h3 className="text-base font-bold text-white">Automate & Review</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <h3 className="text-base font-bold text-foreground">Automate & Review</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 The assistant calls Siegfried MCP tools in real-time. Posts are queued, carousels are published, and comments are answered safely.
               </p>
             </div>
           </div>
 
           {/* Talent Prompt Library */}
-          <div className="rounded-3xl bg-[#0D121F] border border-white/10 p-6 sm:p-8 space-y-6">
+          <div className="rounded-2xl bg-card border border-border p-6 sm:p-8 space-y-6 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-xl font-bold text-white font-outfit flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-amber-400" />
+                <h3 className="text-xl font-bold text-foreground font-outfit flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-primary" />
                   Ready-to-Use Prompt Library for Talent
                 </h3>
-                <p className="text-xs text-gray-400 pt-1">
+                <p className="text-xs text-muted-foreground pt-1">
                   Copy these battle-tested prompts directly into your connected chat assistant or run directly in Siegfried.
                 </p>
               </div>
 
-              <span className="text-xs font-mono px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                 {filteredPrompts.length} Prompts Available
               </span>
             </div>
@@ -1060,10 +1087,10 @@ export default function McpStudio() {
                   <button
                     key={cat}
                     onClick={() => setSelectedPromptCategory(cat)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-medium transition-all whitespace-nowrap ${
                       selectedPromptCategory === cat
-                        ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/20'
-                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                        ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                        : 'bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80 border border-border'
                     }`}
                   >
                     {cat}
@@ -1076,17 +1103,17 @@ export default function McpStudio() {
               {filteredPrompts.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-5 rounded-2xl bg-black/40 border border-white/10 flex flex-col justify-between gap-4 group hover:border-indigo-500/40 transition-all"
+                  className="p-5 rounded-xl bg-muted/20 border border-border flex flex-col justify-between gap-4 group hover:border-primary/40 transition-all shadow-2xs"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-mono font-bold text-indigo-400 uppercase tracking-wider">
+                      <span className="text-[11px] font-mono font-bold text-primary uppercase tracking-wider">
                         {item.category}
                       </span>
-                      <span className="text-[10px] text-gray-500 font-mono">Template #{idx + 1}</span>
+                      <span className="text-[10px] text-muted-foreground font-mono">Template #{idx + 1}</span>
                     </div>
-                    <h4 className="text-sm font-bold text-white">{item.title}</h4>
-                    <p className="text-xs text-gray-300 font-mono bg-white/5 p-3 rounded-xl leading-relaxed">
+                    <h4 className="text-sm font-bold text-foreground">{item.title}</h4>
+                    <p className="text-xs text-foreground font-mono bg-card border border-border p-3 rounded-xl leading-relaxed">
                       &ldquo;{item.prompt}&rdquo;
                     </p>
                   </div>
@@ -1095,9 +1122,9 @@ export default function McpStudio() {
                     <Button
                       onClick={() => copyPrompt(item.prompt, 100 + idx)}
                       size="sm"
-                      className="bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-xl text-xs font-mono flex items-center gap-2 self-start"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-mono flex items-center gap-2 self-start shadow-xs"
                     >
-                      {copiedPromptIdx === 100 + idx ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copiedPromptIdx === 100 + idx ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedPromptIdx === 100 + idx ? 'Copied to Clipboard!' : 'Copy Prompt'}</span>
                     </Button>
                     <Link href="/ai-chat-assistant">
@@ -1105,9 +1132,9 @@ export default function McpStudio() {
                         onClick={() => copyPrompt(item.prompt, 100 + idx, 'Prompt copied! Opening AI Chat...')}
                         variant="ghost"
                         size="sm"
-                        className="text-xs text-gray-400 hover:text-white rounded-xl flex items-center gap-1.5"
+                        className="text-xs text-muted-foreground hover:text-foreground rounded-xl flex items-center gap-1.5"
                       >
-                        <Bot className="w-3.5 h-3.5 text-purple-400" />
+                        <Bot className="w-3.5 h-3.5 text-primary" />
                         <span>Run in AI Chat</span>
                       </Button>
                     </Link>
@@ -1118,13 +1145,13 @@ export default function McpStudio() {
           </div>
 
           {/* 11 Platforms Capability Matrix */}
-          <div className="rounded-3xl bg-[#0D121F] border border-white/10 p-6 sm:p-8 space-y-6">
+          <div className="rounded-2xl bg-card border border-border p-6 sm:p-8 space-y-6 shadow-xs">
             <div>
-              <h3 className="text-xl font-bold text-white font-outfit flex items-center gap-2">
-                <Share2 className="w-5 h-5 text-indigo-400" />
+              <h3 className="text-xl font-bold text-foreground font-outfit flex items-center gap-2">
+                <Share2 className="w-5 h-5 text-primary" />
                 11 Supported Social Platforms & Capabilities
               </h3>
-              <p className="text-xs text-gray-400 pt-1">
+              <p className="text-xs text-muted-foreground pt-1">
                 Overview of what your AI chat assistant can do on each connected network via Siegfried MCP.
               </p>
             </div>
@@ -1133,51 +1160,51 @@ export default function McpStudio() {
               {mcpPlatforms.map((platform) => (
                 <div
                   key={platform.id}
-                  className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between gap-4"
+                  className="p-5 rounded-xl bg-muted/20 border border-border flex flex-col justify-between gap-4 shadow-2xs"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-white flex items-center gap-2">
+                      <span className="text-sm font-bold text-foreground flex items-center gap-2">
                         <span
                           className="w-2.5 h-2.5 rounded-full"
                           style={{ backgroundColor: platform.color }}
                         />
                         {platform.name}
                       </span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/10 text-gray-300">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground border border-border">
                         {platform.badgeText}
                       </span>
                     </div>
 
-                    <p className="text-xs text-gray-400 leading-relaxed line-clamp-3">
+                    <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
                       {platform.description}
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-white/5 space-y-2">
+                  <div className="pt-3 border-t border-border space-y-2">
                     <div className="flex flex-wrap gap-1.5">
                       {platform.capabilities.publishing && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                           Publish
                         </span>
                       )}
                       {platform.capabilities.scheduling && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-400">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
                           Schedule
                         </span>
                       )}
                       {platform.capabilities.analytics && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/15 text-purple-400">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
                           Analytics
                         </span>
                       )}
                       {platform.capabilities.comments && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-400">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                           Comments
                         </span>
                       )}
                       {platform.capabilities.dms && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-pink-500/15 text-pink-400">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20">
                           DM Triggers
                         </span>
                       )}
@@ -1194,16 +1221,16 @@ export default function McpStudio() {
       {/* TAB 3: API KEYS & CREDENTIALS */}
       {/* ========================================================================= */}
       {activeTab === 'keys' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-fade-in">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in">
           <div className="lg:col-span-7 space-y-6">
-            <Card className="rounded-2xl bg-[#0D121F] border-white/10 shadow-2xl overflow-hidden">
-              <CardHeader className="p-6 border-b border-white/10 flex flex-row items-center justify-between">
+            <Card className="rounded-2xl bg-card border-border shadow-xs overflow-hidden">
+              <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between">
                 <div>
-                  <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-outfit">
-                    <Key className="w-5 h-5 text-indigo-400" />
+                  <CardTitle className="text-lg font-bold text-foreground flex items-center gap-2 font-outfit">
+                    <Key className="w-5 h-5 text-primary" />
                     Your MCP API Keys
                   </CardTitle>
-                  <CardDescription className="text-xs text-gray-400 pt-1">
+                  <CardDescription className="text-xs text-muted-foreground pt-1">
                     Authenticate your AI agent sessions securely with secret tokens.
                   </CardDescription>
                 </div>
@@ -1212,7 +1239,7 @@ export default function McpStudio() {
                   <Button
                     onClick={() => setIsCreatingKey(true)}
                     size="sm"
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs flex items-center gap-1.5"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs flex items-center gap-1.5 shadow-xs"
                   >
                     <Plus className="w-4 h-4" />
                     Generate New Key
@@ -1224,17 +1251,17 @@ export default function McpStudio() {
                 {isCreatingKey && (
                   <form
                     onSubmit={handleCreate}
-                    className="p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30 space-y-3 animate-fade-in"
+                    className="p-4 rounded-xl bg-primary/5 border border-primary/20 space-y-3 animate-fade-in"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                      <span className="text-xs font-bold text-foreground font-mono flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-primary" />
                         Create New MCP Key
                       </span>
                       <button
                         type="button"
                         onClick={() => setIsCreatingKey(false)}
-                        className="text-xs text-gray-400 hover:text-white"
+                        className="text-xs text-muted-foreground hover:text-foreground"
                       >
                         Cancel
                       </button>
@@ -1245,7 +1272,7 @@ export default function McpStudio() {
                       value={newKeyName}
                       onChange={(e) => setNewKeyName(e.target.value)}
                       placeholder="e.g. Claude Desktop Work / Cursor Mac Studio"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-background border border-border text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                     />
                     <div className="flex justify-end gap-2">
                       <Button
@@ -1253,7 +1280,7 @@ export default function McpStudio() {
                         variant="ghost"
                         size="sm"
                         onClick={() => setIsCreatingKey(false)}
-                        className="text-xs text-gray-400 hover:text-white"
+                        className="text-xs text-muted-foreground hover:text-foreground"
                       >
                         Cancel
                       </Button>
@@ -1261,7 +1288,7 @@ export default function McpStudio() {
                         type="submit"
                         size="sm"
                         disabled={isSubmittingKey}
-                        className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs rounded-xl"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground text-xs rounded-xl shadow-xs"
                       >
                         {isSubmittingKey ? 'Generating...' : 'Save & Generate Key'}
                       </Button>
@@ -1275,17 +1302,17 @@ export default function McpStudio() {
                   </div>
                 ) : keys.length === 0 ? (
                   <div className="text-center py-12 space-y-3">
-                    <div className="w-12 h-12 rounded-full bg-white/5 text-gray-500 flex items-center justify-center mx-auto">
+                    <div className="w-12 h-12 rounded-full bg-muted text-muted-foreground flex items-center justify-center mx-auto">
                       <Key className="w-6 h-6" />
                     </div>
-                    <h4 className="text-sm font-bold text-white">No MCP Keys Generated Yet</h4>
-                    <p className="text-xs text-gray-400 max-w-sm mx-auto">
+                    <h4 className="text-sm font-bold text-foreground">No MCP Keys Generated Yet</h4>
+                    <p className="text-xs text-muted-foreground max-w-sm mx-auto">
                       Click &ldquo;Generate New Key&rdquo; to create your first credential and start connecting your AI agents.
                     </p>
                     <Button
                       onClick={() => setIsCreatingKey(true)}
                       size="sm"
-                      className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs shadow-xs"
                     >
                       Create First Key
                     </Button>
@@ -1295,25 +1322,25 @@ export default function McpStudio() {
                     {keys.map((k) => (
                       <div
                         key={k.id}
-                        className="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-indigo-500/30 transition-all"
+                        className="p-4 rounded-xl bg-card border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-primary/40 transition-colors shadow-2xs"
                       >
-                        <div className="space-y-1">
+                        <div className="space-y-1.5">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-white">{k.name}</span>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400">
+                            <span className="text-sm font-semibold text-foreground">{k.name}</span>
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium border border-emerald-500/20">
                               Active
                             </span>
                           </div>
-                          <div className="flex items-center gap-3 text-xs font-mono text-gray-400">
-                            <code className="text-indigo-300 bg-black/40 px-2 py-0.5 rounded border border-white/5">
+                          <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
+                            <code className="text-foreground bg-muted/60 px-2.5 py-1 rounded border border-border">
                               {k.maskedKey}
                             </code>
                             <button
                               onClick={() => copyToClipboard(k.key, k.id)}
-                              className="text-gray-400 hover:text-white flex items-center gap-1 transition-colors"
+                              className="text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
                             >
                               {copiedKeyId === k.id ? (
-                                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                <Check className="w-3.5 h-3.5 text-emerald-500" />
                               ) : (
                                 <Copy className="w-3.5 h-3.5" />
                               )}
@@ -1322,13 +1349,13 @@ export default function McpStudio() {
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-3 text-xs text-gray-500 font-mono pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5">
+                        <div className="flex items-center justify-between sm:justify-end gap-3 text-xs text-muted-foreground font-mono pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
                           <span className="text-[11px]">Invocations: {k.usageCount}</span>
                           <Button
                             onClick={() => handleRevoke(k.id, k.name)}
                             variant="ghost"
                             size="sm"
-                            className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg"
+                            className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg"
                             title="Revoke Key"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -1343,32 +1370,32 @@ export default function McpStudio() {
           </div>
 
           <div className="lg:col-span-5 space-y-6">
-            <Card className="rounded-2xl bg-[#0D121F] border-white/10 shadow-2xl p-6 space-y-4">
-              <h3 className="text-base font-bold text-white flex items-center gap-2 font-outfit">
-                <ShieldCheck className="w-5 h-5 text-indigo-400" />
+            <Card className="rounded-2xl bg-card border-border shadow-xs p-6 space-y-4">
+              <h3 className="text-base font-bold text-foreground flex items-center gap-2 font-outfit">
+                <ShieldCheck className="w-5 h-5 text-primary" />
                 Security & Rate Limits
               </h3>
-              <div className="space-y-3 text-xs text-gray-400 leading-relaxed">
+              <div className="space-y-3 text-xs text-muted-foreground leading-relaxed">
                 <p>
-                  • <strong>Rate Limiting:</strong> Each key is limited to 120 requests per minute to safeguard your connected social media API quotas.
+                  • <strong className="text-foreground">Rate Limiting:</strong> Each key is limited to 120 requests per minute to safeguard your connected social media API quotas.
                 </p>
                 <p>
-                  • <strong>Encryption:</strong> Credentials are encrypted with TLS 1.3 in transit and stored hashed in our secure database.
+                  • <strong className="text-foreground">Encryption:</strong> Credentials are encrypted with TLS 1.3 in transit and stored hashed in our secure database.
                 </p>
                 <p>
-                  • <strong>Instant Revocation:</strong> Revoking a key immediately terminates any active AI sessions using that key.
+                  • <strong className="text-foreground">Instant Revocation:</strong> Revoking a key immediately terminates any active AI sessions using that key.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                <span className="text-xs font-bold text-white font-mono">Server Endpoint</span>
-                <div className="flex items-center justify-between font-mono text-xs text-indigo-300 bg-black/60 p-2.5 rounded-lg border border-white/5">
-                  <span>https://api.siegfriedoutreach.com/mcp</span>
+              <div className="p-4 rounded-xl bg-muted/40 border border-border space-y-2">
+                <span className="text-xs font-bold text-foreground font-mono">Server Endpoint</span>
+                <div className="flex items-center justify-between font-mono text-xs text-foreground bg-background p-2.5 rounded-lg border border-border">
+                  <span className="truncate pr-2">https://api.siegfriedoutreach.com/mcp</span>
                   <button
                     onClick={() => copyToClipboard('https://api.siegfriedoutreach.com/mcp', 'endpoint-box')}
-                    className="text-gray-400 hover:text-white"
+                    className="text-muted-foreground hover:text-foreground shrink-0"
                   >
-                    {copiedKeyId === 'endpoint-box' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedKeyId === 'endpoint-box' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               </div>
@@ -1381,35 +1408,35 @@ export default function McpStudio() {
       {/* TAB 4: ADMIN CONTROLS & DIAGNOSTICS */}
       {/* ========================================================================= */}
       {activeTab === 'admin' && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 animate-fade-in">
           {/* Admin Inspector Header */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-950/30 via-[#0D121F] to-orange-950/30 border border-amber-500/20 space-y-4">
+          <div className="p-6 sm:p-8 rounded-2xl bg-card border border-border space-y-4 shadow-xs">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-mono">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-mono font-medium">
                   <Shield className="w-3.5 h-3.5" />
                   Admin Diagnostics & Inspector Hub
                 </div>
-                <h2 className="text-2xl font-extrabold text-white font-outfit">
+                <h2 className="text-2xl font-bold text-foreground font-outfit">
                   Live MCP Server Inspector & 32 Tools Directory
                 </h2>
-                <p className="text-xs sm:text-sm text-gray-300">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   Inspect JSON schemas, test tool arguments, review live agent logs, and monitor server diagnostics.
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-black/50 border border-amber-500/30 text-xs font-mono text-amber-200 flex items-center gap-3">
-                <span>Protocol: 2024-11-05</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <div className="p-3 rounded-xl bg-muted/50 border border-border text-xs font-mono text-muted-foreground flex items-center gap-3">
+                <span className="text-foreground font-medium">Protocol: 2024-11-05</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span>Transport: Streamable HTTP + SSE</span>
               </div>
             </div>
 
             {/* MCP Inspector Command Box */}
-            <div className="p-4 rounded-2xl bg-black/80 border border-amber-500/30 space-y-2">
+            <div className="p-4 rounded-xl bg-muted/40 border border-border space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-mono text-amber-300 font-bold flex items-center gap-1.5">
-                  <Terminal className="w-3.5 h-3.5" />
+                <span className="font-mono text-foreground font-bold flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5 text-primary" />
                   Run Official MCP Inspector Locally
                 </span>
                 <Button
@@ -1421,44 +1448,44 @@ export default function McpStudio() {
                     )
                   }
                   size="sm"
-                  className="bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-mono h-7 px-3 flex items-center gap-1.5"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs font-mono h-8 px-3 flex items-center gap-1.5 shadow-xs"
                 >
-                  {copiedKeyId === 'inspector-cmd' ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copiedKeyId === 'inspector-cmd' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copiedKeyId === 'inspector-cmd' ? 'Copied' : 'Copy CLI Command'}</span>
                 </Button>
               </div>
-              <div className="font-mono text-xs text-amber-200 bg-white/5 p-2.5 rounded-xl select-all overflow-x-auto">
+              <div className="font-mono text-xs text-foreground bg-card border border-border p-3 rounded-lg select-all overflow-x-auto shadow-2xs">
                 npx @modelcontextprotocol/inspector https://api.siegfriedoutreach.com/mcp
               </div>
-              <p className="text-[11px] text-gray-400 pt-1">
+              <p className="text-[11px] text-muted-foreground pt-1">
                 The Model Context Protocol Inspector launches a local web UI where you can inspect all tool parameters, view OpenAPI schemas, and run mock tool calls directly.
               </p>
             </div>
           </div>
 
           {/* Real-time Tool Audit Log */}
-          <Card className="rounded-2xl bg-[#0D121F] border-white/10 shadow-2xl overflow-hidden">
-            <CardHeader className="p-6 border-b border-white/10 flex flex-row items-center justify-between">
+          <Card className="rounded-2xl bg-card border-border shadow-xs overflow-hidden">
+            <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-outfit">
-                  <Terminal className="w-5 h-5 text-indigo-400" />
+                <CardTitle className="text-lg font-bold text-foreground flex items-center gap-2 font-outfit">
+                  <Terminal className="w-5 h-5 text-primary" />
                   Live Tool Invocations Audit Feed
                 </CardTitle>
-                <CardDescription className="text-xs text-gray-400 pt-1">
+                <CardDescription className="text-xs text-muted-foreground pt-1">
                   Real-time telemetry of tool calls executed by connected AI clients.
                 </CardDescription>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="flex items-center bg-black/40 p-1 rounded-xl border border-white/10 text-[11px] font-mono">
+                <div className="flex items-center bg-muted/60 p-1 rounded-xl border border-border text-[11px] font-mono">
                   {(['all', 'success', 'failed'] as const).map((st) => (
                     <button
                       key={st}
                       onClick={() => setLogStatusFilter(st)}
                       className={`px-2.5 py-1 rounded-lg capitalize transition-all ${
                         logStatusFilter === st
-                          ? 'bg-indigo-600 text-white font-bold'
-                          : 'text-gray-400 hover:text-white'
+                          ? 'bg-primary text-primary-foreground font-bold shadow-xs'
+                          : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >
                       {st}
@@ -1469,7 +1496,7 @@ export default function McpStudio() {
                   onClick={() => refetchLogs()}
                   variant="ghost"
                   size="sm"
-                  className="text-xs text-gray-400 hover:text-white rounded-lg h-8 flex items-center gap-1.5"
+                  className="text-xs text-muted-foreground hover:text-foreground rounded-lg h-8 flex items-center gap-1.5"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Refresh Logs</span>
@@ -1483,7 +1510,7 @@ export default function McpStudio() {
                   <Spinner size="sm" />
                 </div>
               ) : displayedLogs.length === 0 ? (
-                <div className="text-center py-8 text-xs text-gray-500 font-mono">
+                <div className="text-center py-8 text-xs text-muted-foreground font-mono">
                   No MCP tool calls match the filter. Run any tool from Claude Desktop, Cursor, or ChatGPT to see telemetry.
                 </div>
               ) : (
@@ -1491,23 +1518,23 @@ export default function McpStudio() {
                   {displayedLogs.map((log) => (
                     <div
                       key={log.id}
-                      className="p-3.5 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between gap-3 text-xs font-mono"
+                      className="p-3.5 rounded-xl bg-muted/20 border border-border flex items-center justify-between gap-3 text-xs font-mono shadow-2xs"
                     >
                       <div className="flex items-center gap-3">
                         <span
                           className={`w-2.5 h-2.5 rounded-full ${
-                            log.status === 'success' ? 'bg-emerald-400' : 'bg-red-400'
+                            log.status === 'success' ? 'bg-emerald-500' : 'bg-red-500'
                           }`}
                         />
-                        <span className="font-bold text-white">{log.toolName}</span>
-                        <span className="text-[10px] text-gray-400 px-2 py-0.5 rounded bg-white/5">
+                        <span className="font-bold text-foreground">{log.toolName}</span>
+                        <span className="text-[10px] text-muted-foreground px-2 py-0.5 rounded bg-muted border border-border">
                           {log.clientAgent}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-4 text-gray-400 text-[11px]">
+                      <div className="flex items-center gap-4 text-muted-foreground text-[11px]">
                         <span>{log.durationMs}ms</span>
-                        <span className="text-gray-500">
+                        <span>
                           {new Date(log.created_at).toLocaleTimeString([], {
                             hour: '2-digit',
                             minute: '2-digit',
@@ -1523,27 +1550,27 @@ export default function McpStudio() {
           </Card>
 
           {/* 32 Tools Directory Explorer */}
-          <div className="rounded-3xl bg-[#0D121F] border border-white/10 p-6 sm:p-8 space-y-6">
+          <div className="rounded-2xl bg-card border border-border p-6 sm:p-8 space-y-6 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-xl font-bold text-white font-outfit flex items-center gap-2">
-                  <Wrench className="w-5 h-5 text-indigo-400" />
+                <h3 className="text-xl font-bold text-foreground font-outfit flex items-center gap-2">
+                  <Wrench className="w-5 h-5 text-primary" />
                   All 32 Native MCP Tools
                 </h3>
-                <p className="text-xs text-gray-400 pt-1">
+                <p className="text-xs text-muted-foreground pt-1">
                   Filter and inspect tools available across all 11 connected social networks.
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <input
                     type="text"
                     value={toolSearch}
                     onChange={(e) => setToolSearch(e.target.value)}
                     placeholder="Search tools or platforms..."
-                    className="pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-indigo-500 w-48 sm:w-64"
+                    className="pl-9 pr-4 py-2 rounded-xl bg-background border border-border text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-48 sm:w-64"
                   />
                 </div>
               </div>
@@ -1553,10 +1580,10 @@ export default function McpStudio() {
             <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
               <button
                 onClick={() => setSelectedPlatformFilter('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-medium transition-all ${
                   selectedPlatformFilter === 'all'
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-white/5 text-gray-400 hover:text-white'
+                    ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                    : 'bg-muted text-muted-foreground hover:text-foreground border border-border'
                 }`}
               >
                 All Platforms ({mcpToolsCatalog.length})
@@ -1566,10 +1593,10 @@ export default function McpStudio() {
                   <button
                     key={cat}
                     onClick={() => setSelectedPlatformFilter(cat)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-medium transition-all whitespace-nowrap ${
                       selectedPlatformFilter.toLowerCase() === cat.toLowerCase()
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white/5 text-gray-400 hover:text-white'
+                        ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                        : 'bg-muted text-muted-foreground hover:text-foreground border border-border'
                     }`}
                   >
                     {cat}
@@ -1583,36 +1610,36 @@ export default function McpStudio() {
               {filteredTools.map((tool) => (
                 <div
                   key={tool.name}
-                  className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between gap-4 group hover:border-indigo-500/40 transition-all"
+                  className="p-5 rounded-xl bg-muted/20 border border-border flex flex-col justify-between gap-4 group hover:border-primary/40 transition-all shadow-2xs"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-indigo-400 font-mono">
+                      <span className="text-xs font-bold text-primary font-mono">
                         {tool.name}
                       </span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/10 text-gray-300">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground border border-border">
                         {tool.category}
                       </span>
                     </div>
 
-                    <h4 className="text-sm font-bold text-white">{tool.title}</h4>
-                    <p className="text-xs text-gray-400 leading-relaxed line-clamp-3">
+                    <h4 className="text-sm font-bold text-foreground">{tool.title}</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
                       {tool.description}
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-white/5 space-y-2">
-                    <span className="text-[10px] font-mono text-gray-500 block">
+                  <div className="pt-3 border-t border-border space-y-2">
+                    <span className="text-[10px] font-mono text-muted-foreground block">
                       Parameters ({tool.params.length}):
                     </span>
                     <div className="flex flex-wrap gap-1">
                       {tool.params.length === 0 ? (
-                        <span className="text-[10px] font-mono text-gray-500 italic">None</span>
+                        <span className="text-[10px] font-mono text-muted-foreground italic">None</span>
                       ) : (
                         tool.params.map((p, pIdx) => (
                           <span
                             key={pIdx}
-                            className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 border border-white/5 text-gray-300"
+                            className="text-[10px] font-mono px-2 py-0.5 rounded bg-card border border-border text-foreground"
                           >
                             {p.name}
                             {p.required ? '*' : ''} ({p.type})

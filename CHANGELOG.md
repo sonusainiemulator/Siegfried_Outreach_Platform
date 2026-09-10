@@ -2,6 +2,27 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🎨 [2026-09-10 22:17:00 CEST] — MCP Studio: Unified UI with Single Brand Color & Clean Card Styling
+
+### 💎 Design System & Brand Alignment (`src/components/feature/mcp-studio/McpStudio.tsx`)
+- **Single Brand Color Architecture**:
+  - Eliminated conflicting multi-color neon AI-generated gradients (`indigo`, `purple`, `pink`, `amber`, `orange`) and hardcoded dark hex values (`#0D121F`, `#090D18`, `#0E1528`).
+  - Unified all components and interactive elements around the platform's primary brand color (`var(--primary)` / `primary`).
+  - Switched background, border, text, and muted states to standard theme tokens (`bg-card`, `border-border`, `text-foreground`, `text-muted-foreground`, `bg-muted/40`).
+- **Header Banner & Metrics**:
+  - Removed artificial glow blur spheres and replaced with an elegant, enterprise-grade `Card` with subtle borders and shadows.
+  - Standardized all 4 metric cards (`Server Status`, `MCP Tool Capabilities`, `Your API Keys`, `Assistant Clients`) with unified `bg-primary/10 text-primary` icon containers and standard text tokens.
+- **Role Guides & Tab Navigation**:
+  - Unified Talent & Admin role guide cards with consistent layout, `text-primary` checkmarks, and single-brand action buttons.
+  - Refined horizontal tab bar with active state styled with `bg-primary text-primary-foreground font-semibold shadow-xs` and inactive state styled with `bg-card text-muted-foreground border-border`.
+- **API Keys & Credentials Module (`tab=keys`)**:
+  - Redesigned the keys list, new key creation form, security specifications, and endpoint container to look clean, polished, and native to the Siegfried platform.
+  - Unified buttons, badge indicators, and copy actions with clean feedback.
+- **Client Connect, Talent Playbook & Admin Diagnostics**:
+  - Updated all client cards, setup code blocks, sample test prompts, and the 32 native tools directory with matching clean card aesthetics.
+
+---
+
 ## ⏸️ [2026-09-10 22:09:00 CEST] — Navigation Update: Commented Out In-Development Ads Manager Items
 
 ### 📝 Sidebar Menu Code Preservation (`src/data/sidebarData.ts`)
