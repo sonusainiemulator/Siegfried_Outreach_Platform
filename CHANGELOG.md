@@ -2,6 +2,17 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 👥 [2026-09-10 21:54:00 CEST] — Navigation Update: Hidden AI Team & Templates from AI Social Manager
+
+### 📱 AI Social Manager Sidebar (`src/data/sidebarData.ts`)
+- **Hidden Items**:
+  - `AI Team` (`/ai-social/team`)
+  - `Templates` (`/ai-social/templates`)
+- **Command Palette (`CommandPalette.tsx`)**:
+  - Cleaned up `page-ai-templates` quick-access shortcut from the `⌘K` palette.
+
+---
+
 ## 🧹 [2026-09-10 21:52:00 CEST] — Navigation & Dashboard Streamlining: Hidden Deprecated AI Tools, Hubs & Widgets
 
 ### 🧭 1. AI Tools Sidebar Streamlining (`src/data/sidebarData.ts`)

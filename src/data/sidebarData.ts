@@ -220,11 +220,9 @@ export const sidebarMenuData: MenuSection[] = [
     items: [
       { id: 'ai-social-setup', label: 'Business Setup', icon: 'Building2', path: '/ai-social/setup' },
       { id: 'ai-social-planner', label: 'AI Planner', icon: 'Sparkles', path: '/ai-social/planner' },
-      { id: 'ai-social-team', label: 'AI Team', icon: 'Bot', path: '/ai-social/team' },
       { id: 'ai-social-reference', label: 'Reference Brain', icon: 'Globe', path: '/ai-social/reference' },
       { id: 'ai-social-calendar', label: 'Content Calendar', icon: 'Calendar', path: '/ai-social/calendar' },
       { id: 'ai-social-approval', label: 'Approval Center', icon: 'CheckCircle2', path: '/ai-social/approval' },
-      { id: 'ai-social-templates', label: 'Templates', icon: 'Layers', path: '/ai-social/templates' },
       { id: 'ai-social-analytics', label: 'Analytics', icon: 'BarChart3', path: '/ai-social/analytics' },
       { id: 'ai-social-credits', label: 'Credits', icon: 'Coins', path: '/ai-social/credits' },
     ],

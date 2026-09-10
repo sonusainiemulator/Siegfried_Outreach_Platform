@@ -322,15 +322,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onOpenChan
       path: '/ai-social/setup',
     },
     {
-      id: 'page-ai-templates',
-      title: 'Social Template Library',
-      description: 'Curated prompt templates for marketing and promotions',
-      category: 'pages',
-      icon: Layers,
-      keywords: ['templates', 'prompt library', 'copy templates', 'designs'],
-      path: '/ai-social/templates',
-    },
-    {
       id: 'page-ai-chat-assistant',
       title: 'AI Chat Assistant',
       description: 'Interactive multi-model conversational assistant',
