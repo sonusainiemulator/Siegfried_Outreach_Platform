@@ -2,6 +2,18 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## ⏸️ [2026-09-10 22:09:00 CEST] — Navigation Update: Commented Out In-Development Ads Manager Items
+
+### 📝 Sidebar Menu Code Preservation (`src/data/sidebarData.ts`)
+- **Commented Out Modules**:
+  - `Meta Ads Manager`
+  - `TikTok Ads Manager`
+  - `Reddit Ads Manager`
+  - `Google Ads Manager`
+- Code is cleanly preserved in block comments with re-enabling instructions so it can be restored instantly in the future.
+
+---
+
 ## 🏷️ [2026-09-10 21:58:00 CEST] — Sidebar UI: Added Beta Badges to Ads Manager Modules
 
 ### 🚀 Visual Distinction for In-Development Modules

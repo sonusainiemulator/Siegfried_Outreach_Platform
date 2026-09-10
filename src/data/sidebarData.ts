@@ -279,6 +279,8 @@ export const sidebarMenuData: MenuSection[] = [
         path: ROUTES.SOCIAL_MEDIA.CREATE_POST,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
       },
+      /*
+      // --- Temporarily hidden under-development Ads Managers (Uncomment when ready) ---
       {
         id: 'meta-ads-manager',
         label: 'Meta Ads Manager',
@@ -311,6 +313,7 @@ export const sidebarMenuData: MenuSection[] = [
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
         badge: 'Beta',
       },
+      */
       {
         id: 'social-configuration',
         label: 'Social Settings',
