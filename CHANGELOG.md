@@ -104,6 +104,40 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ---
 
+## 🚀 [2026-09-10 20:20:00 UTC] — MongoDB 8.0 aaPanel Engine, Database Setup, BSON Restore & Live Deployment of ttai.in
+
+### 🍃 1. MongoDB 8.0.17 Installation & aaPanel Plugin Setup
+- **Ubuntu 26 Compatibility Patch**:
+  - Patched `/www/server/panel/install/mongodb.sh` to map Ubuntu 26.04 (`resolute`) to the official aaPanel MongoDB 8.0.17 x86_64 bundle.
+  - Successfully installed MongoDB `v8.0.17` with `mongosh 2.0.2` and MongoDB Database Tools `100.10.0`.
+  - Configured and activated the aaPanel MongoDB GUI plugin (`/www/server/panel/plugin/mongodb`).
+  - Added system auto-start via `/etc/init.d/mongodb` and `update-rc.d`.
+
+### 🗄️ 2. Database Creation & BSON Backup Data Restore
+- **Initialized Database `ttai`**:
+  - Created `ttai` database in MongoDB engine and registered it in aaPanel database inventory.
+  - Created user `ttai` with `readWrite` and `dbAdmin` privileges.
+  - Extracted BSON archive `siegfriedoutreach_bson_2026-09-10_21-59-01_mongodb_data.zip`.
+  - Executed `mongorestore` importing `businesses` and associated collections into the `ttai` database.
+  - Configured `MONGODB_URI=mongodb://127.0.0.1:27017/ttai` in environment.
+
+### ⚡ 3. Node.js 22 LTS, PM2 Process Daemon & Production Build
+- **Runtime Environment**:
+  - Installed Node.js `v22.14.0` LTS and npm `10.9.2`.
+  - Installed PM2 `v7.0.4` globally and generated systemd auto-boot unit (`pm2-root.service`).
+  - Fixed Next.js CLI binary symlink in `node_modules/.bin/next`.
+  - Compiled full Next.js production build (`npm run build`) with 0 errors across all routes.
+  - Launched `ttai-frontend` on PM2 running on port 3000 in background daemon mode.
+
+### 🌐 4. Nginx Reverse Proxy & Live Production SSL
+- **Domain Routing (`ttai.in` & `www.ttai.in`)**:
+  - Configured Nginx reverse proxy to route traffic seamlessly to PM2 Next.js service at `http://127.0.0.1:3000`.
+  - Configured optimal static asset caching for `/_next/static/` (365d cache headers).
+  - Maintained HTTP/2, HTTP/3 (QUIC), and SSL TLS certificates.
+  - Verified live external domain response: `HTTP/2 200 OK` on `https://ttai.in`.
+
+---
+
 ## 🧠 [2026-09-09 16:15:00 CEST] — Ethical Mental Health Marketing & Clinical Psychology Social Templates Suite
 
 ### 🏥 1. Ethical Mental Health Marketing Philosophy & Templates Catalog (`/ai-social/templates`)
