@@ -2,6 +2,21 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🏷️ [2026-09-10 21:58:00 CEST] — Sidebar UI: Added Beta Badges to Ads Manager Modules
+
+### 🚀 Visual Distinction for In-Development Modules
+- **Sidebar Menu Items (`src/data/sidebarData.ts`)**:
+  - Added `badge: 'Beta'` to all 4 ads manager items:
+    - `Meta Ads Manager`
+    - `TikTok Ads Manager`
+    - `Reddit Ads Manager`
+    - `Google Ads Manager`
+- **Sidebar Rendering Component (`src/layout/sidebar/SidebarItem.tsx`)**:
+  - Added dynamic badge indicator next to the menu title (`bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30`).
+  - Added badge indicator within the collapsed tooltip popover to maintain visual consistency when the sidebar is minimized.
+
+---
+
 ## 👥 [2026-09-10 21:54:00 CEST] — Navigation Update: Hidden AI Team & Templates from AI Social Manager
 
 ### 📱 AI Social Manager Sidebar (`src/data/sidebarData.ts`)

@@ -168,6 +168,11 @@ const SidebarItem: FC<ExtendedSidebarItemProps> = ({ item, depth = 0, isCollapse
       >
         {label}
       </span>
+      {item.badge && !isCollapsed && (
+        <span className="ms-1.5 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 shrink-0">
+          {item.badge}
+        </span>
+      )}
       {hasChildren && !isCollapsed && (
         <div className={cn('transition-transform duration-300 rounded-full p-1', isOpen ? 'rotate-180' : '')}>
           <ChevronDown className={cn('w-3.5 h-3.5 dark:text-white', isActive ? 'text-primary' : '')} />
@@ -221,8 +226,13 @@ const SidebarItem: FC<ExtendedSidebarItemProps> = ({ item, depth = 0, isCollapse
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>{ItemWrapper}</TooltipTrigger>
-              <TooltipContent side={dir === 'rtl' ? 'left' : 'right'} sideOffset={10} className="font-medium sidebar-tooltip text-sm rounded-[8px]! text-white bg-primary ">
-                {label}
+              <TooltipContent side={dir === 'rtl' ? 'left' : 'right'} sideOffset={10} className="font-medium sidebar-tooltip text-sm rounded-[8px]! text-white bg-primary flex items-center gap-1.5">
+                <span>{label}</span>
+                {item.badge && (
+                  <span className="px-1.5 py-0.2 text-[9px] font-bold uppercase rounded bg-white/20 text-white">
+                    {item.badge}
+                  </span>
+                )}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

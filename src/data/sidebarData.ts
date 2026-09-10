@@ -285,6 +285,7 @@ export const sidebarMenuData: MenuSection[] = [
         icon: 'Megaphone',
         path: ROUTES.SOCIAL_MEDIA.ADS_MANAGER,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
+        badge: 'Beta',
       },
       {
         id: 'tiktok-ads-manager',
@@ -292,6 +293,7 @@ export const sidebarMenuData: MenuSection[] = [
         icon: 'Video',
         path: ROUTES.SOCIAL_MEDIA.TIKTOK_ADS,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
+        badge: 'Beta',
       },
       {
         id: 'reddit-ads-manager',
@@ -299,6 +301,7 @@ export const sidebarMenuData: MenuSection[] = [
         icon: 'Globe',
         path: ROUTES.SOCIAL_MEDIA.REDDIT_ADS,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
+        badge: 'Beta',
       },
       {
         id: 'google-ads-manager',
@@ -306,6 +309,7 @@ export const sidebarMenuData: MenuSection[] = [
         icon: 'Search',
         path: ROUTES.SOCIAL_MEDIA.GOOGLE_ADS,
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
+        badge: 'Beta',
       },
       {
         id: 'social-configuration',
