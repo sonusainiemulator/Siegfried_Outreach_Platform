@@ -2,6 +2,20 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🔐 [2026-09-11 19:05:00 UTC] — Reset Admin Credentials & Configure DBX MCP Server Integration
+
+### 🛡️ Security & Authentication
+- **Admin Password Reset**:
+  - Successfully updated password to `Sitaram@2026` for primary administrator account `admin@ttai.in` (Role: `super_admin`) and legacy account `admin@siegfriedoutreach.com`.
+  - Re-hashed using bcrypt and verified via live authentication against `/api/auth/login` (Status: 200 OK).
+
+### 🗄️ Database & MCP Agent Tooling
+- **DBX MCP Server Integration**:
+  - Registered `@dbx-app/mcp-server` into `.agents/mcp_config.json` enabling natural language database querying and agent tasks across MongoDB collections.
+  - Documented secure SSH tunnel connectivity for local DBX desktop client to query live database `ttai`.
+
+---
+
 ## 🌓 [2026-09-11 18:57:00 UTC] — Implement Pill-Shaped Theme Toggle & Modern Stackposts-Style Login Experience
 
 ### 🎨 Frontend & Auth UI Modernization
