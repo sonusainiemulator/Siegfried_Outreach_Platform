@@ -2,7 +2,21 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
-## 🔑 [2026-09-11 19:15:00 UTC] — Fix WebAuthn / Passkey Registration Relying Party (RP ID) Domain Mismatch
+## 🖼️ [2026-09-11 19:25:00 UTC] — Fix Profile Picture Upload & SSL Certificate Verification for Media Delivery
+
+### 🐛 Bug Fixes & Storage Infrastructure
+- **Dedicated Let's Encrypt SSL Certificate for `api.ttai.in`**:
+  - Resolved root cause of profile pictures not rendering after upload: `api.ttai.in` previously shared `ttai.in`'s SSL certificate which lacked Subject Alternative Name (SAN) coverage for `api.ttai.in`, causing modern browsers to block all avatar requests via `ERR_CERT_COMMON_NAME_INVALID`.
+  - Issued and installed a standalone Let's Encrypt certificate for `api.ttai.in` (`/www/server/panel/vhost/cert/api.ttai.in/fullchain.pem`).
+  - Configured Nginx reverse proxy with HTTP/2 SSL termination, verified live HTTP/2 200 OK responses on `https://api.ttai.in/uploads/...`.
+- **Direct Same-Origin Static Upload Delivery**:
+  - Added dedicated `location /uploads/` static alias in `/www/server/panel/vhost/nginx/ttai.in.conf` pointing directly to `/www/wwwroot/api.ttai.in/uploads/` with 30-day client caching.
+- **Frontend Profile Upload Flow Optimization**:
+  - Removed restrictive `value={''}` prop on file `<Input>` in `src/app/(main)/profile/page.tsx`, ensuring proper event propagation across all browsers.
+  - Added automatic `await refetch()` and input value reset in `handleSubmit` to immediately pull updated user details from the database.
+  - Rebuilt production bundle with Turbopack (0 errors) and reloaded PM2 `ttai-frontend`.
+
+---
 
 ### 🐛 Bug Fixes & WebAuthn Security
 - **Dynamic RP ID Domain Resolution**:

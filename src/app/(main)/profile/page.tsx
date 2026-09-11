@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 const ProfilePage = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { data, isLoading: isFetching } = useGetProfileQuery()
+  const { data, isLoading: isFetching, refetch } = useGetProfileQuery()
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation()
   const [changePassword, { isLoading: isChangingPassword }] = useChangePasswordMutation()
   const { user: authUser, token } = useAppSelector((state) => state.auth)
@@ -50,6 +50,8 @@ const ProfilePage = () => {
       }
       reader.readAsDataURL(file)
     }
+    // Allow re-selecting the same file if needed
+    e.target.value = ''
   }
 
   const handleChangePassword = async (values: any, { resetForm }: any) => {
@@ -91,6 +93,7 @@ const ProfilePage = () => {
       setAvatarPreview(null)
       setRemoveAvatar(false)
       resetForm({ values })
+      await refetch()
 
       toast.success(response.message || t('profile_updated'))
     } catch (error) {
@@ -169,7 +172,6 @@ const ProfilePage = () => {
                 ref={fileInputRef}
                 className="hidden"
                 accept="image/*"
-                value={''}
                 onChange={handleFileChange}
               />
               <Button
