@@ -2,7 +2,16 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
-## 🔄 [2026-09-11 19:40:00 UTC] — Implement Automatic Chunk Load Error Recovery Handler in Providers
+## 🛠️ [2026-09-11 20:00:00 UTC] — Implement Cache-Busting Hard Reload in Error Boundary
+
+### ⚡ Client Resilience & Auto-Healing
+- **Error Boundary Auto-Recovery**:
+  - Enhanced `src/app/error.tsx` with automatic detection of chunk load failures after production builds.
+  - When a chunk failure occurs, the error boundary automatically triggers a cache-busting navigation (`window.location.href = window.location.pathname + '?_r=' + timestamp`) bypassing stale browser memory and disk caches.
+  - Updated "Try Again" and "Reload Page" action buttons to perform the same cache-busting navigation.
+  - Rebuilt with Turbopack (`npm run build` — 0 errors) and reloaded PM2 `ttai-frontend`.
+
+---
 
 ### ⚡ Client Stability & Deployment Resilience
 - **Auto-Recovery on Stale Deployment Chunks (`ChunkLoadError`)**:

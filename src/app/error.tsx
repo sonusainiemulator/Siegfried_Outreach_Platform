@@ -12,7 +12,22 @@ export default function Error({
   useEffect(() => {
     // Log the error to browser console for debugging
     console.error('Frontend Application Error:', error)
+
+    // Automatically recover from stale chunks after production deployments
+    if (error?.message && /Loading chunk .* failed|Failed to load chunk/i.test(error.message)) {
+      const storageKey = 'last_chunk_reload'
+      const lastReload = sessionStorage.getItem(storageKey)
+      const now = Date.now()
+      if (!lastReload || now - parseInt(lastReload, 10) > 8000) {
+        sessionStorage.setItem(storageKey, String(now))
+        window.location.href = window.location.pathname + '?_r=' + now
+      }
+    }
   }, [error])
+
+  const handleHardReload = () => {
+    window.location.href = window.location.pathname + '?_r=' + Date.now()
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0C10] text-white flex flex-col items-center justify-center p-6 text-center">
@@ -53,13 +68,13 @@ export default function Error({
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
           <button
-            onClick={() => reset()}
+            onClick={() => handleHardReload()}
             className="px-6 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-all shadow-lg cursor-pointer"
           >
             Try Again
           </button>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => handleHardReload()}
             className="px-6 py-2.5 rounded-xl bg-white/10 text-white font-semibold text-sm hover:bg-white/20 transition-all cursor-pointer"
           >
             Reload Page
