@@ -19,6 +19,9 @@ export async function apiHandler(
     const method = overridenMethod || request.method;
     const token = request.headers.get("authorization");
     const contentType = request.headers.get("content-type");
+    const origin = request.headers.get("origin");
+    const referer = request.headers.get("referer");
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
     
     let url = `${BACKEND_API_URL}${endpoint}`;
     
@@ -30,6 +33,10 @@ export async function apiHandler(
 
     const headers: Record<string, string> = {
       ...(token && { "Authorization": token }),
+      ...(origin && { "Origin": origin }),
+      ...(referer && { "Referer": referer }),
+      ...(host && { "X-Forwarded-Host": host }),
+      "X-Forwarded-Proto": request.headers.get("x-forwarded-proto") || "https",
     };
 
     let body: any = undefined;

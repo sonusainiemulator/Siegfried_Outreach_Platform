@@ -2,7 +2,21 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
-## 🖼️ [2026-09-11 19:25:00 UTC] — Fix Profile Picture Upload & SSL Certificate Verification for Media Delivery
+## 🔑 [2026-09-11 19:33:00 UTC] — Implement Next.js `/api/passkey` Catch-All Proxy Route & Forward Client Headers
+
+### 🐛 WebAuthn & API Gateway Architecture
+- **Missing `/api/passkey` Route in Next.js App Router**:
+  - Identified critical missing route: RTK Query frontend calls `/api/passkey/register-options` and `/api/passkey/register-verify`, but Next.js App Router had no route handler under `src/app/api/passkey/`, returning HTTP 404 Not Found to the browser.
+  - Created `src/app/api/passkey/[...path]/route.ts` with `GET`, `POST`, and `DELETE` handlers proxying all passkey requests to Express backend via `apiHandler`.
+- **Client Header Forwarding (`Origin`, `Referer`, `Host`)**:
+  - Updated `src/utils/apiHandler.ts` to forward `Origin`, `Referer`, `X-Forwarded-Host`, and `X-Forwarded-Proto` to the backend.
+  - This allows `getRPConfig(req)` on the backend to accurately detect `https://ttai.in` and issue valid WebAuthn options for `rp.id = "ttai.in"`.
+- **Production Verification**:
+  - Verified live endpoint `POST http://127.0.0.1:3000/api/passkey/register-options` returns `HTTP 200 OK` with `rp: { name: "TTOS AI", id: "ttai.in" }`.
+  - Verified live endpoint `GET http://127.0.0.1:3000/api/passkey/list` returns `HTTP 200 OK`.
+  - Rebuilt with Turbopack (`npm run build` — 0 errors), reloaded PM2 `ttai-frontend`.
+
+---
 
 ### 🐛 Bug Fixes & Storage Infrastructure
 - **Dedicated Let's Encrypt SSL Certificate for `api.ttai.in`**:
