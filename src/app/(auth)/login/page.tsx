@@ -11,52 +11,43 @@ const LoginPage = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-1000">
+    <div className="space-y-6 animate-in fade-in duration-700">
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-        className="relative group p-px rounded-border-radius bg-linear-to-b from-primary via-primary/50 to-primary/10 shadow-2xl transition-all duration-500 hover:from-primary hover:via-primary/60"
+        transition={{ delay: 0.1, duration: 0.5 }}
+        className="relative rounded-[28px] bg-white dark:bg-[#15171C] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.55)] border border-gray-100 dark:border-zinc-800/90 p-6 sm:p-10 transition-all duration-300"
       >
-        {/* Top Highlight/Glow Effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-linear-to-r from-transparent via-white/50 to-transparent z-10" />
-
-        <div className="relative bg-white/95 dark:bg-linear-to-b dark:from-[#15171C]/95 dark:to-black/95  backdrop-blur-3xl rounded-[inherit] p-4 sm:p-8 transition-all duration-500 overflow-hidden border-none text-left">
-          {/* Subtle Glow inside card */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-center px-2"
-          >
-            <h1 className="text-3xl font-medium text-title-color dark:text-white mb-4 ">{t('welcome_back')}</h1>
-            <p className="text-subtitle-color sm:mb-12 mb-5 font-medium text-base max-w-85 md:max-w-none mx-auto md:mx-0">
-              {t('sign_in_continue')}
-            </p>
-          </motion.div>
-          <LoginForm />
+        <div className="text-center mb-7">
+          <h1 className="text-2xl sm:text-[28px] font-bold text-gray-900 dark:text-white tracking-tight">
+            {t('log_in_to_account', { defaultValue: 'Log in to your account' })}
+          </h1>
+          <p className="text-gray-500 dark:text-zinc-400 text-sm sm:text-[14.5px] mt-2 font-normal leading-relaxed">
+            {t('enter_credentials_login', { defaultValue: 'Enter your username or email and password below to log in' })}
+          </p>
         </div>
+
+        <LoginForm />
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.8 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
         className="flex flex-col items-center gap-3 px-4"
       >
-        <div className="text-center text-[15px] font-medium text-subtitle-color">
+        <div className="text-center text-[14px] font-normal text-gray-500 dark:text-zinc-400">
           {t('dont_have_account')}{' '}
           <Link
             href={ROUTES.AUTH.REGISTER}
-            className="text-primary hover:text-primary/80 font-medium transition-all hover:tracking-wide ml-1 decoration-2 underline-offset-4 hover:underline"
+            className="text-primary hover:text-primary/80 font-semibold transition-colors ml-1"
           >
             {t('sign_up_free')}
           </Link>
         </div>
-        <div className="h-px w-8 bg-gray-200 dark:bg-zinc-800 my-1" />
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 dark:text-zinc-500 hover:text-primary dark:hover:text-primary transition-colors cursor-pointer pt-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Home</span>

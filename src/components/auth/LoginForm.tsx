@@ -80,12 +80,11 @@ const LoginForm = () => {
             transition={{ delay: 0.5, duration: 0.5 }}
           >
             <AuthInput
-              label={t('email')}
+              label={t('username_or_email', { defaultValue: 'Username or email' })}
               name="email"
-              type="email"
+              type="text"
               icon={Mail}
-              placeholder={t('email_placeholder')}
-              className="border-white/10 h-12 dark:bg-black/40 rounded-[8px] glass-card"
+              placeholder={t('enter_username_or_email', { defaultValue: 'Enter username or email' })}
             />
           </motion.div>
 
@@ -95,19 +94,18 @@ const LoginForm = () => {
             transition={{ delay: 0.6, duration: 0.5 }}
           >
             <AuthInput
-              label={t('password')}
+              label={t('password', { defaultValue: 'Password' })}
               name="password"
               type="password"
               icon={Lock}
-              placeholder={'********'}
-              className="border-white/10 h-12 dark:bg-black/40 rounded-[8px] glass-card"
+              placeholder={t('enter_password', { defaultValue: 'Enter password' })}
             />
           </motion.div>
 
-          <div className="flex justify-end items-center px-6">
+          <div className="flex justify-end items-center px-1">
             <Link
               href={ROUTES.AUTH.FORGOT_PASSWORD}
-              className="text-[13px] font-semibold text-subtitle-color dark:text-white/60 hover:text-primary dark:hover:text-white transition-colors tracking-tight underline decoration-subtitle-color/20 dark:decoration-white/20 underline-offset-4"
+              className="text-[13px] font-semibold text-subtitle-color dark:text-zinc-400 hover:text-primary dark:hover:text-white transition-colors underline-offset-4 hover:underline"
             >
               {t('forgot_password_question')}
             </Link>
@@ -120,7 +118,7 @@ const LoginForm = () => {
           >
             <Button
               type="submit"
-              className="w-full h-12 rounded-full text-white bg-primary! dark:bg-white hover:opacity-90 dark:hover:bg-white text-base font-medium active:scale-95 transition-all duration-300 transform-gpu border-none cursor-pointer"
+              className="w-full h-12 rounded-2xl text-white bg-primary hover:bg-primary/90 text-[15px] font-semibold active:scale-[0.99] transition-all duration-200 shadow-md shadow-primary/20 border-none cursor-pointer"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

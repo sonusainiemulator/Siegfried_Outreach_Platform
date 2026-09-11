@@ -2,6 +2,24 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🌓 [2026-09-11 18:57:00 UTC] — Implement Pill-Shaped Theme Toggle & Modern Stackposts-Style Login Experience
+
+### 🎨 Frontend & Auth UI Modernization
+- **Pill-Shaped Light / Dark Mode Toggle (`AuthThemeToggle`)**:
+  - Engineered an ultra-sleek, pill-shaped capsule theme switch matching user design specifications.
+  - Features dedicated Sun (`Sun`) and Sparkle Moon icons with dynamic light/dark active state indicators and spring-animated transitions.
+- **Top Header Bar in Auth Layout**:
+  - Redesigned `src/app/(auth)/layout.tsx` to include an expansive, responsive top navigation bar.
+  - Placed the official TTOS brand logo on the top-left and the capsule theme toggle on the top-right.
+- **Login Card & Input Aesthetics**:
+  - Updated `src/app/(auth)/login/page.tsx` with clean typography: "Log in to your account" and subtitle "Enter your username or email and password below to log in".
+  - Refactored `AuthInput.tsx` with modern rounded pill styling (`rounded-2xl`), subtle hover/focus state rings, and clean border hierarchy.
+  - Refined `LoginForm.tsx` input labels and placeholders ("Username or email", "Password") and optimized button dimensions.
+- **Production Build & Verification**:
+  - Successfully built with Turbopack (0 TypeScript errors) and restarted PM2 `ttai-frontend`.
+
+---
+
 ## 🔗 [2026-09-11 18:45:00 UTC] — Link n8n to n8n.ttinfotechs.com & Update Allowed Origin Servers
 
 ### ⚙️ Backend & Pipeline Updates

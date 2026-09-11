@@ -18,12 +18,14 @@ const AuthInput = ({ name, label, icon: Icon, className, type, ...props }: AuthI
 
   return (
     <div className="w-full space-y-2 flex flex-col">
-      <Label className='dark:text-white' htmlFor={name}>{label}</Label>
+      <Label className="text-[13.5px] font-semibold text-gray-700 dark:text-zinc-300 select-none" htmlFor={name}>
+        {label}
+      </Label>
       <div className="relative group">
         <div className="relative flex items-center">
           {Icon && (
-            <div className="absolute left-1 w-10 h-12 flex items-center justify-center text-primary/60 dark:text-gray-500 group-focus-within:scale-105 transition-all duration-500 z-10">
-              <Icon size={16} strokeWidth={2} />
+            <div className="absolute left-1 w-10 h-12 flex items-center justify-center text-gray-400 dark:text-zinc-500 group-focus-within:text-primary transition-colors duration-200 z-10 pointer-events-none">
+              <Icon size={17} strokeWidth={1.8} />
             </div>
           )}
           <Input
@@ -31,12 +33,13 @@ const AuthInput = ({ name, label, icon: Icon, className, type, ...props }: AuthI
             {...props}
             type={inputType}
             className={cn(
-              'w-full h-12 rounded-[8px] border-none outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-white/5 transition-all duration-500',
-              'bg-gray-50/50 dark:bg-title-color backdrop-blur-2xl border border-gray-100 dark:border-white/5 shadow-sm',
-              'placeholder:text-gray-400 dark:placeholder:text-gray-600 text-gray-900 dark:text-white text-[15px] font-medium tracking-wide',
+              'w-full h-12 rounded-2xl border border-gray-200 dark:border-zinc-800/90 outline-none transition-all duration-200',
+              'bg-gray-50/50 dark:bg-zinc-900/50 shadow-2xs',
+              'hover:border-gray-300 dark:hover:border-zinc-700 focus:border-primary dark:focus:border-primary/70 focus:ring-4 focus:ring-primary/10 dark:focus:ring-primary/10',
+              'placeholder:text-gray-400 dark:placeholder:text-zinc-500 text-gray-900 dark:text-white text-[14.5px] font-normal',
               Icon ? 'pl-11' : 'pl-4',
               isPassword ? 'pr-12' : 'pr-4',
-              hasError && 'border-red-500/40 ring-2 ring-red-500/5',
+              hasError && 'border-red-500/60 ring-4 ring-red-500/10',
               className,
             )}
           />
@@ -44,14 +47,14 @@ const AuthInput = ({ name, label, icon: Icon, className, type, ...props }: AuthI
             <Button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-5 w-8 h-8 flex items-center justify-center rounded-full bg-unset! text-gray-400 dark:text-white/40 hover:text-gray-600 dark:hover:text-white transition-all duration-300"
+              className="absolute right-3 w-8 h-8 flex items-center justify-center rounded-full bg-transparent! text-gray-400 dark:text-zinc-500 hover:text-gray-700 dark:hover:text-white transition-colors cursor-pointer"
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
             </Button>
           )}
         </div>
       </div>
-      {hasError && <p className="text-[12px] text-red-400 font-medium ">{meta.error}</p>}
+      {hasError && <p className="text-[12px] text-red-500 font-medium pl-1">{meta.error}</p>}
     </div>
   )
 }
