@@ -2,7 +2,15 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
-## 🔑 [2026-09-11 19:33:00 UTC] — Implement Next.js `/api/passkey` Catch-All Proxy Route & Forward Client Headers
+## 🔄 [2026-09-11 19:40:00 UTC] — Implement Automatic Chunk Load Error Recovery Handler in Providers
+
+### ⚡ Client Stability & Deployment Resilience
+- **Auto-Recovery on Stale Deployment Chunks (`ChunkLoadError`)**:
+  - When production code is recompiled and deployed, browser sessions with an older build open can encounter `Failed to load chunk /_next/static/chunks/[hash].js` when fetching dynamically imported modules whose previous hashes were replaced on disk.
+  - Implemented an automatic error listener in `src/app/Providers.tsx` that catches `Failed to load chunk` and `Loading chunk ... failed` events and automatically performs a clean, single-session reload (`window.location.reload()`) with a 10-second debounce guard.
+  - Rebuilt with Turbopack (`npm run build` — 0 errors) and reloaded PM2 `ttai-frontend`.
+
+---
 
 ### 🐛 WebAuthn & API Gateway Architecture
 - **Missing `/api/passkey` Route in Next.js App Router**:

@@ -23,6 +23,30 @@ const Providers = ({ children }: ProviderProps) => {
   useEffect(() => {
     store.dispatch(initializeAuth())
     store.dispatch(initializeLayout())
+
+    // Auto-reload on chunk load error caused by new production deployments
+    const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
+      const message =
+        'message' in event
+          ? event.message
+          : (event as PromiseRejectionEvent).reason?.message || String((event as PromiseRejectionEvent).reason || '')
+      if (/Loading chunk .* failed|Failed to load chunk/i.test(message)) {
+        const storageKey = 'last_chunk_reload'
+        const lastReload = sessionStorage.getItem(storageKey)
+        const now = Date.now()
+        if (!lastReload || now - parseInt(lastReload, 10) > 10000) {
+          sessionStorage.setItem(storageKey, String(now))
+          window.location.reload()
+        }
+      }
+    }
+
+    window.addEventListener('error', handleChunkError)
+    window.addEventListener('unhandledrejection', handleChunkError)
+    return () => {
+      window.removeEventListener('error', handleChunkError)
+      window.removeEventListener('unhandledrejection', handleChunkError)
+    }
   }, [])
 
   return (
