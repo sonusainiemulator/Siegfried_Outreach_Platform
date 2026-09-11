@@ -73,6 +73,8 @@ export const PasskeyManager: React.FC = () => {
       console.error('Passkey registration error:', error)
       if (error?.name === 'NotAllowedError') {
         toast.error('Passkey registration was cancelled.')
+      } else if (error?.name === 'InvalidStateError') {
+        toast.error('This passkey or authenticator is already registered on your account.')
       } else {
         toast.error(error?.data?.message || error?.message || 'Failed to register passkey. Please try again.')
       }

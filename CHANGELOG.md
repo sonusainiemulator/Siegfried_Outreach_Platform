@@ -2,7 +2,18 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
-## 🔐 [2026-09-11 19:05:00 UTC] — Reset Admin Credentials & Configure DBX MCP Server Integration
+## 🔑 [2026-09-11 19:15:00 UTC] — Fix WebAuthn / Passkey Registration Relying Party (RP ID) Domain Mismatch
+
+### 🐛 Bug Fixes & WebAuthn Security
+- **Dynamic RP ID Domain Resolution**:
+  - Resolved root cause of `"Failed to register passkey. Please try again."`: WebAuthn specification (§5.4.3) requires `rp.id` to match the effective domain of the calling document (`ttai.in`) or a valid registrable suffix. Previously, `getRPConfig` defaulted `rpID` to the API subdomain (`api.ttai.in`), causing browsers to reject `navigator.credentials.create` with a `SecurityError`.
+  - Updated `services/passkey.service.js` to dynamically resolve `rpID` from the client's `Origin` or `Referer` header (`ttai.in`, `ttos.in`, `localhost`, etc.) rather than the API host.
+  - Configured `verifyRegistrationResponse` and `verifyAuthenticationResponse` in `controllers/passkey.controller.js` to validate against acceptable RP IDs (`expectedRPIDs: [rpID, 'ttai.in', 'ttos.in', 'localhost']`).
+- **Enhanced Frontend Passkey UX & Error Feedback**:
+  - Updated `src/components/feature/profile/PasskeyManager.tsx` with granular error handling for `NotAllowedError` (user cancellation) and `InvalidStateError` (passkey already registered).
+  - Rebuilt production frontend bundle with Turbopack (0 errors) and reloaded PM2 services (`ttai-backend` and `ttai-frontend`).
+
+---
 
 ### 🛡️ Security & Authentication
 - **Admin Password Reset**:
