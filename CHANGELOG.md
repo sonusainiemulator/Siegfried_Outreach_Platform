@@ -2,6 +2,23 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🚀 [2026-09-11 16:01:00 UTC] — Deploy api.ttai.in Backend & Bridge Frontend to Live MongoDB
+
+### 🔗 Backend Deployment & Database Wiring
+- **Extracted and Initialized Backend**:
+  - Deployed `api.siegfriedoutreach.com_20260911_080908.zip` into `/www/wwwroot/api.ttai.in/`.
+  - Configured backend `.env` connecting to live MongoDB (`mongodb://127.0.0.1:27017/ttai`) and local Redis.
+  - Executed seeders initializing 66 collections, system roles, permissions, AI templates, FAQs, chatbots, and default admin.
+  - Launched `ttai-backend` process under PM2 daemon on port 5000.
+- **Nginx Reverse Proxy & SSL Setup**:
+  - Configured `/www/server/panel/vhost/nginx/api.ttai.in.conf` with reverse proxy pass to `http://127.0.0.1:5000` with WebSocket upgrade headers and uploads static routing.
+  - Verified SSL certificate and local host resolution.
+- **Frontend Hybrid Bridge**:
+  - Updated `src/utils/apiHandler.ts` to support `INTERNAL_API_URL` for ultra-low latency direct SSR proxying while maintaining public `NEXT_PUBLIC_API_BASE_URL=https://api.ttai.in/api` for clients.
+  - Rebuilt production Next.js bundle and verified live API endpoint responses (`/api/setting/public`).
+
+---
+
 ## 🔄 [2026-09-10 21:08:00 UTC] — Fix Live Brand Logo Pipelines & Eliminate Remote Legacy Siegfried Asset Routing
 
 ### 🎯 Root Cause Resolution

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const BACKEND_API_URL = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL;
 
 /**
  * Common handler to proxy requests from Next.js API routes to the backend API.
