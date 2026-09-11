@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { startRegistration, browserSupportsWebAuthn } from '@simplewebauthn/browser'
 import {
   useGetPasskeysQuery,
@@ -27,20 +27,28 @@ import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 
 export const PasskeyManager: React.FC = () => {
+  const [mounted, setMounted] = useState(false)
+  const [supportsWebAuthn, setSupportsWebAuthn] = useState(false)
   const [isRegistering, setIsRegistering] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
-  const { data: passkeysData, isLoading, refetch } = useGetPasskeysQuery()
+  useEffect(() => {
+    setMounted(true)
+    setSupportsWebAuthn(browserSupportsWebAuthn())
+  }, [])
+
+  const { data: passkeysData, isLoading, refetch } = useGetPasskeysQuery(undefined, {
+    skip: !mounted,
+  })
   const [getRegisterOptions] = useGetPasskeyRegisterOptionsMutation()
   const [verifyRegister] = useVerifyPasskeyRegisterMutation()
   const [deletePasskey] = useDeletePasskeyMutation()
 
   const passkeys = passkeysData?.data || []
-  const supportsWebAuthn = typeof window !== 'undefined' && browserSupportsWebAuthn()
 
   const handleRegisterPasskey = async () => {
     if (!supportsWebAuthn) {
-      toast.error('Your browser or device does not support WebAuthn / Passkeys.')
+      toast.error('Your browser or device does not support WebAuthn / Passkeys, or you are in an insecure HTTP context.')
       return
     }
 
@@ -50,7 +58,7 @@ export const PasskeyManager: React.FC = () => {
       // 1. Get Registration Challenge Options from Backend
       const optionsRes = await getRegisterOptions().unwrap()
       if (!optionsRes?.success || !optionsRes?.options) {
-        throw new Error('Failed to get registration options')
+        throw new Error('Failed to get registration options from server')
       }
 
       // 2. Prompt User Device Biometrics (Touch ID / Face ID / Windows Hello / YubiKey)
@@ -58,9 +66,22 @@ export const PasskeyManager: React.FC = () => {
         optionsJSON: optionsRes.options,
       })
 
-      // 3. Verify Attestation on Backend & Store Passkey
+      // 3. Detect friendly device name from client UA
+      let friendlyDevice = 'Passkey Device'
+      if (typeof navigator !== 'undefined') {
+        const ua = navigator.userAgent.toLowerCase()
+        if (ua.includes('macintosh') || ua.includes('mac os')) friendlyDevice = 'Mac (Touch ID / Passkey)'
+        else if (ua.includes('iphone')) friendlyDevice = 'iPhone (Face ID / Passkey)'
+        else if (ua.includes('ipad')) friendlyDevice = 'iPad (Face ID / Touch ID)'
+        else if (ua.includes('android')) friendlyDevice = 'Android (Biometrics / Passkey)'
+        else if (ua.includes('windows')) friendlyDevice = 'Windows (Windows Hello / Passkey)'
+        else if (ua.includes('linux')) friendlyDevice = 'Linux (Security Key / Passkey)'
+      }
+
+      // 4. Verify Attestation on Backend & Store Passkey
       const verifyRes = await verifyRegister({
         response: attResp,
+        deviceName: friendlyDevice,
       }).unwrap()
 
       if (verifyRes?.success) {
@@ -132,8 +153,8 @@ export const PasskeyManager: React.FC = () => {
         <Button
           type="button"
           onClick={handleRegisterPasskey}
-          disabled={isRegistering || !supportsWebAuthn}
-          className="h-10 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-500/20 gap-2 shrink-0 cursor-pointer"
+          disabled={!mounted || isRegistering || !supportsWebAuthn}
+          className="h-10 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-500/20 gap-2 shrink-0 cursor-pointer disabled:opacity-50"
         >
           {isRegistering ? (
             <>
@@ -150,7 +171,7 @@ export const PasskeyManager: React.FC = () => {
       </CardHeader>
 
       <CardContent className="p-6">
-        {isLoading ? (
+        {!mounted || isLoading ? (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="w-6 h-6 animate-spin text-primary" />
           </div>
@@ -173,8 +194,8 @@ export const PasskeyManager: React.FC = () => {
                       </Badge>
                     </div>
                     <div className="text-[11px] text-muted-foreground mt-0.5 truncate">
-                      Added on {new Date(pk.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                      {pk.lastUsedAt && ` • Used ${new Date(pk.lastUsedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
+                      Added on {mounted ? new Date(pk.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '...'}
+                      {pk.lastUsedAt && mounted && ` • Used ${new Date(pk.lastUsedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
                     </div>
                   </div>
                 </div>
@@ -210,6 +231,12 @@ export const PasskeyManager: React.FC = () => {
                 Add your current device (Touch ID, Face ID, or Windows Hello) to experience lightning fast, 1-click passwordless logins.
               </p>
             </div>
+            {!supportsWebAuthn && mounted && (
+              <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-amber-500 bg-amber-500/10 px-3 py-1.5 rounded-lg border border-amber-500/20">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>Passkeys require HTTPS or modern browser support.</span>
+              </div>
+            )}
           </div>
         )}
       </CardContent>

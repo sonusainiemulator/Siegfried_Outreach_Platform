@@ -10,5 +10,5 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  return apiHandler(request, "/auth/profile");
+  return apiHandler(request, "/auth/profile", "PUT");
 }

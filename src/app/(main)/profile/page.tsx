@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import PasskeyManager from '@/components/feature/profile/PasskeyManager'
 
 import Spinner from '@/components/reusable/Spinner'
@@ -27,12 +29,15 @@ import { toast } from 'sonner'
 const ProfilePage = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { data, isLoading: isFetching, refetch } = useGetProfileQuery()
+  const { user: authUser, token, isLoading: authLoading } = useAppSelector((state) => state.auth)
+  const { data, isLoading, isFetching, refetch } = useGetProfileQuery(undefined, {
+    skip: typeof window !== 'undefined' ? (!authUtils.getToken() && !token) : true,
+  })
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation()
   const [changePassword, { isLoading: isChangingPassword }] = useChangePasswordMutation()
-  const { user: authUser, token } = useAppSelector((state) => state.auth)
 
-  const user = data?.user || authUser
+  const storedUser = typeof window !== 'undefined' ? authUtils.getUser() : null
+  const user = data?.user || authUser || storedUser
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -102,20 +107,25 @@ const ProfilePage = () => {
     }
   }
 
-  if (isFetching) {
+  if ((isLoading || authLoading) && !user) {
     return <Spinner className="min-h-[60vh]" />
   }
 
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <p className="text-muted-foreground">{t('something_went_wrong')}</p>
-        <Link href={ROUTES.DASHBOARD}>
-          <Button variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {t('back_to_dashboard')}
+        <p className="text-muted-foreground">{t('something_went_wrong', { defaultValue: 'Unable to load profile data.' })}</p>
+        <div className="flex items-center gap-3">
+          <Button variant="outline" onClick={() => refetch()}>
+            {t('retry', { defaultValue: 'Try Again' })}
           </Button>
-        </Link>
+          <Link href={ROUTES.DASHBOARD}>
+            <Button variant="ghost">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t('back_to_dashboard', { defaultValue: 'Back to Dashboard' })}
+            </Button>
+          </Link>
+        </div>
       </div>
     )
   }

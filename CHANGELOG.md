@@ -2,7 +2,27 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
-## 🛠️ [2026-09-11 20:00:00 UTC] — Implement Cache-Busting Hard Reload in Error Boundary
+## 🛠️ [2026-09-11 20:20:00 UTC] — Fix Passkey WebAuthn Flow, Profile Page Instant Loading & Backend Session Healing
+
+### ⚡ Profile Page Loading & Hydration
+- **Dynamic Server-Rendering (`force-dynamic`)**:
+  - Configured `export const dynamic = 'force-dynamic'` in `src/app/(main)/profile/page.tsx` to stop Next.js from statically baking stale/unauthenticated HTML into cached production bundles.
+  - Added query skipping during SSR and pre-auth initialization (`skip: typeof window !== 'undefined' ? (!authUtils.getToken() && !token) : true`).
+  - Implemented multi-tier user resolution (`data?.user || authUser || storedUser`) for instant, flicker-free rendering of user information.
+  - Replaced full-page blocking spinner with non-blocking background hydration and an interactive "Try Again" retry action in case of transient network dropouts.
+
+### 🔐 Passkey & WebAuthn Hydration Safety & API Compatibility
+- **Hydration-Safe Biometric Detection**:
+  - Gated `browserSupportsWebAuthn()` and localized dates in `src/components/feature/profile/PasskeyManager.tsx` behind a client `mounted` effect, eliminating React SSR/client mismatch errors.
+  - Added `skip: !mounted` to `useGetPasskeysQuery` to prevent unauthorized requests during initial mount.
+  - Added automatic device labeling (detecting Mac Touch ID, iPhone Face ID, Android Biometrics, Windows Hello) during passkey registration.
+- **Header Forwarding & Route Synchronization**:
+  - Enhanced `src/utils/apiHandler.ts` to forward `User-Agent`, `Cookie`, and synthesized `Origin` (from referer/host) so WebAuthn relying-party origin checks on the backend always match the browser origin.
+  - Synchronized `src/app/api/auth/profile/route.ts` and Express backend `routes/auth.routes.js` to accept both `POST` and `PUT` methods for profile and avatar updates.
+  - In backend `middlewares/auth.js`, implemented auto-healing for active session records for valid, unexpired JWT tokens, eliminating premature "Session expired or logged out" errors.
+  - In backend `controllers/passkey.controller.js`, implemented dynamic challenge verification for registration and authentication to prevent challenge expiration and race conditions.
+
+---
 
 ### ⚡ Client Resilience & Auto-Healing
 - **Error Boundary Auto-Recovery**:

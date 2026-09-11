@@ -31,11 +31,27 @@ export async function apiHandler(
       url += (url.includes("?") ? "&" : "?") + queryString;
     }
 
+    const userAgent = request.headers.get("user-agent");
+    const cookie = request.headers.get("cookie");
+
+    let effectiveOrigin = origin;
+    if (!effectiveOrigin && referer) {
+      try {
+        effectiveOrigin = new URL(referer).origin;
+      } catch (_) {}
+    }
+    if (!effectiveOrigin && host) {
+      const proto = request.headers.get("x-forwarded-proto") || "https";
+      effectiveOrigin = `${proto}://${host}`;
+    }
+
     const headers: Record<string, string> = {
       ...(token && { "Authorization": token }),
-      ...(origin && { "Origin": origin }),
+      ...(effectiveOrigin && { "Origin": effectiveOrigin }),
       ...(referer && { "Referer": referer }),
       ...(host && { "X-Forwarded-Host": host }),
+      ...(userAgent && { "User-Agent": userAgent }),
+      ...(cookie && { "Cookie": cookie }),
       "X-Forwarded-Proto": request.headers.get("x-forwarded-proto") || "https",
     };
 
