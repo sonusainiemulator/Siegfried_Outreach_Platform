@@ -2,6 +2,21 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🔗 [2026-09-11 18:45:00 UTC] — Link n8n to n8n.ttinfotechs.com & Update Allowed Origin Servers
+
+### ⚙️ Backend & Pipeline Updates
+- **Linked n8n Publishing Engine**:
+  - Updated `N8N_WEBHOOK_URL` in `/www/wwwroot/api.ttai.in/.env` to `https://n8n.ttinfotechs.com/webhook/ai-social-publisher`.
+- **CORS & Allowed Origins Overhaul**:
+  - Sanitized and updated `ALLOWED_ORIGINS` in `.env` to include `https://ttai.in`, `https://www.ttai.in`, `https://api.ttai.in`, `https://ttos.in`, `https://www.ttos.in`, `https://api.ttos.in`, `https://n8n.ttinfotechs.com`, and localhost environments.
+  - Enhanced native CORS validation in `app.js` and `server.js` to automatically authorize TTOS, Vercel (`*.vercel.app`), and `ttinfotechs.com` origins.
+- **DNS Verification**:
+  - Verified Cloudflare DNS `A` record propagation for `api.ttai.in` ➔ `94.100.26.52` across global DNS resolvers.
+- **Service Reload**:
+  - Successfully refreshed PM2 daemon `ttai-backend` with updated environment variables.
+
+---
+
 ## 🚀 [2026-09-11 16:01:00 UTC] — Deploy api.ttai.in Backend & Bridge Frontend to Live MongoDB
 
 ### 🔗 Backend Deployment & Database Wiring
