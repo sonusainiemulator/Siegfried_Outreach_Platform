@@ -2,6 +2,40 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🚀 [2026-09-12 06:05:00 UTC] — Complete Google OAuth & SSO Authentication Setup
+
+### 🔐 Next.js API Route Proxy & Gateway
+- **Added `/api/auth/google` Route Handler (`src/app/api/auth/google/route.ts`)**:
+  - Implemented Next.js App Router POST handler proxying incoming Google authentication requests directly to the backend (`/auth/google`) via `apiHandler`.
+  - Fixes HTTP 404 error previously thrown when frontend Google Sign-In button sent authentication credentials or access tokens to `/api/auth/google`.
+
+### 🛡️ Admin Dashboard & Google OAuth Configuration Card
+- **Created `GoogleAuthCard` (`src/components/feature/app-settings/general/GoogleAuthCard.tsx`)**:
+  - Added dedicated Google OAuth & SSO configuration card to the Admin General Settings dashboard.
+  - Supports live editing of `google_client_id` and `google_client_secret`.
+  - Includes interactive helper panels with one-click copy buttons for:
+    - Authorized JavaScript Origins: `https://ttai.in`, `https://www.ttai.in`
+    - Authorized Redirect URIs: `https://ttai.in`, `https://ttai.in/login`
+    - Direct link to Google Cloud Console Credentials management page.
+- **Updated `GeneralSettings.tsx` & Validation Schemas**:
+  - Registered `google_client_id` and `google_client_secret` into Formik `initialValues` and `adminSettingSchemas.general`.
+  - Synchronized production MongoDB settings document with configured Google OAuth client ID and client secret.
+
+### 🎨 Google Login Button UX & SDK Resilience
+- **Enhanced `GoogleLoginButton.tsx`**:
+  - Implemented on-demand lazy initialization fallback for `window.google.accounts.oauth2.initTokenClient` so users clicking before the background hook runs are never blocked.
+  - Added interactive loading spinner and disabled state during authentication to eliminate double-clicks.
+  - Seamless support for both OAuth2 popup token flow (`access_token`) and Google Identity Services One Tap credentials (`credential`).
+  - Automatically stores JWT token in cookies (`authToken`) and user profile in `localStorage`, dispatching Redux auth state and navigating to `/dashboard` or query `redirect_to`.
+
+### ⚡ Verification & Production Deployment
+- **Zero-Error Turbopack Build**:
+  - Executed `npm run build` — 0 TypeScript and 0 Lint errors across 251 static and dynamic routes.
+  - Verified live endpoint proxy `POST /api/auth/google` responds correctly from backend.
+  - Restarted PM2 `ttai-frontend` (process id 0) online with zero downtime.
+
+---
+
 ## 🛠️ [2026-09-11 20:20:00 UTC] — Fix Passkey WebAuthn Flow, Profile Page Instant Loading & Backend Session Healing
 
 ### ⚡ Profile Page Loading & Hydration

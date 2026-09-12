@@ -16,6 +16,7 @@ import LandingPageCard from './general/LandingPageCard'
 import MaintenanceModeCard from './general/MaintenanceModeCard'
 import ResourceLimitsCard from './general/ResourceLimitsCard'
 import SystemEmailConfigCard from './general/SystemEmailConfigCard'
+import GoogleAuthCard from './general/GoogleAuthCard'
 import { PusherConfig } from './PusherConfig'
 import SystemPagesCard from './general/SystemPagesCard'
 
@@ -61,6 +62,8 @@ const GeneralSettings = () => {
     session_limit: 10,
     demo_user_email: '',
     demo_user_password: '',
+    google_client_id: '',
+    google_client_secret: '',
   }
 
   const onSubmit = async (values: typeof initialValues) => {
@@ -130,6 +133,7 @@ const GeneralSettings = () => {
               <MaintenanceModeCard files={files} setFiles={setFiles} currentImageUrl={settings.maintenance_image_url} />
               <ResourceLimitsCard />
               <DemoUserCard />
+              <GoogleAuthCard />
             </div>
             <div className="lg:col-span-2 space-y-6">
               <SystemEmailConfigCard />

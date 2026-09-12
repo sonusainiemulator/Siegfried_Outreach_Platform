@@ -246,6 +246,8 @@ export const adminSettingSchemas = {
       session_limit: yup.number().min(1).max(10).required(),
       demo_user_email: yup.string().email(t('invalid_email')).nullable().optional(),
       demo_user_password: yup.string().nullable().optional(),
+      google_client_id: yup.string().nullable().optional(),
+      google_client_secret: yup.string().nullable().optional(),
     }),
   credits: (t: TFunction) =>
     yup.object({
