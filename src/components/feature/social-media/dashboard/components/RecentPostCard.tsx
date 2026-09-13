@@ -21,6 +21,7 @@ import {
   XCircle,
 } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardProps) => {
@@ -33,6 +34,14 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
 
   const getPlatformUrl = (p: any) => {
     if (!p) return null
+    // Never treat sandbox simulation or generic business root as a verified live post URL
+    if (
+      p.postId?.startsWith('gmb_sandbox_') ||
+      p.postUrl === 'https://business.google.com/' ||
+      p.url === 'https://business.google.com/'
+    ) {
+      return null
+    }
     if (p.postUrl) return p.postUrl
     if (p.url) return p.url
     const plat = p.platform?.toLowerCase()
@@ -225,6 +234,38 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
               </a>
             )}
           </div>
+
+          {/* GMB API Action Required Warning */}
+          {post.platforms?.some((p: any) => p.platform === 'google' && p.status === 'failed') && (
+            <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 space-y-1.5 animate-fade-in">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[11px] font-bold text-destructive flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  Google APIs Disabled (Project 203941120936)
+                </span>
+                <Link
+                  href="/social-media/logs"
+                  className="text-[10px] font-black uppercase tracking-wider text-primary hover:underline shrink-0"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Inspect Logs →
+                </Link>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Post could not reach Google. Enable <strong>My Business Account Management API</strong> in Google Cloud Console.
+              </p>
+              <a
+                href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline pt-0.5"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span>Enable in Google Cloud Console</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          )}
 
           {/* Post Title & Excerpt */}
           <div className="space-y-1.5 min-w-0">

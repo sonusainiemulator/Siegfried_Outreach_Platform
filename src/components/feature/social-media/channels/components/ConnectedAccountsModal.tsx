@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 import { ConnectedAccountsModalProps } from '@/types/components/socialMedia'
-import { CheckCircle2, X } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, ExternalLink, X } from 'lucide-react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
@@ -83,6 +83,27 @@ const ConnectedAccountsModal = ({
                       {(account.followersCount || 0).toLocaleString()} {t('social_reach')}
                     </p>
                   </div>
+
+                  {platform.id === 'google' && (account as any).metadata?.isMock && (
+                    <div className="mt-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-left space-y-1">
+                      <div className="flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-400">
+                        <AlertTriangle className="w-3 h-3 shrink-0" />
+                        <span>Google Cloud APIs Not Enabled (Project 203941120936)</span>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground leading-tight">
+                        Enable My Business Account Management API to publish live storefront posts.
+                      </p>
+                      <a
+                        href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline pt-0.5"
+                      >
+                        <span>Enable API in Cloud Console</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -90,7 +111,7 @@ const ConnectedAccountsModal = ({
                 variant="ghost"
                 size="icon"
                 onClick={() => onDisconnect(account.id, account.accountName)}
-                className="h-10 w-10 rounded-xl text-muted-foreground hover:bg-destructive hover:text-white transition-all duration-300 shadow-sm group/btn"
+                className="h-10 w-10 rounded-xl text-muted-foreground hover:bg-destructive hover:text-white transition-all duration-300 shadow-sm group/btn shrink-0"
               >
                 <X className="w-5 h-5 group-hover/btn:rotate-90 transition-transform" />
               </Button>

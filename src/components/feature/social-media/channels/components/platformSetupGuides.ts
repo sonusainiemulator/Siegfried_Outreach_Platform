@@ -5,7 +5,7 @@ const getApiBaseUrl = () => {
       return envUrl.replace(/\/api\/?$/, '')
     }
   }
-  return 'https://api.ttos.com'
+  return 'https://api.siegfriedoutreach.com'
 }
 
 const apiBase = getApiBaseUrl()
@@ -40,7 +40,7 @@ export const platformSetupGuides: Record<string, SetupGuideItem> = {
     steps: [
       'Open your App in Meta for Developers (developers.facebook.com).',
       'Under "Facebook Login" ➔ "Settings", paste the OAuth Redirect URL into "Valid OAuth Redirect URIs".',
-      'Under "App Settings" ➔ "Basic", ensure App Domains include "ttos.com" & "api.ttos.com".',
+      'Under "App Settings" ➔ "Basic", ensure App Domains include "siegfriedoutreach.com" & "api.siegfriedoutreach.com".',
       'Connect your Instagram Professional/Business account to your Facebook Page.',
       'Save your Meta App ID & Secret in Social Settings, then click "Connect Account".',
     ],
@@ -102,6 +102,7 @@ export const platformSetupGuides: Record<string, SetupGuideItem> = {
     links: [
       { label: 'Enable Account Management API', url: 'https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936' },
       { label: 'Enable Business Information API', url: 'https://console.developers.google.com/apis/api/mybusinessbusinessinformation.googleapis.com/overview?project=203941120936' },
+      { label: 'Enable Google My Business API (Local Posts)', url: 'https://console.developers.google.com/apis/api/mybusiness.googleapis.com/overview?project=203941120936' },
       { label: 'Google Business Profile Manager', url: 'https://business.google.com/' },
       { label: 'Google Cloud Console', url: 'https://console.cloud.google.com/' },
     ],

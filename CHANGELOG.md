@@ -2,6 +2,38 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-13 22:00:00 CEST] — Google Business Profile (GMB) Live Publishing Diagnosis & Cloud API Fix
+
+### 🛠️ GMB Publishing Architecture & False-Success Fix
+- **Diagnosed Root Cause for "Post Not Showing Live on Google"**:
+  - Investigated user post `"Demo GMB Test"` (`6aa6fd3566ba0ac13dcee8c6`) which showed green "Published" badge with direct link to `business.google.com`.
+  - Discovered that Google Cloud Project `203941120936` had **My Business Account Management API** disabled, causing Google OAuth to return HTTP 403 `PERMISSION_DENIED` during storefront location fetching.
+  - Previous fallback had intercepted sandbox locations (`locations/default_*`) and generated mock `gmb_sandbox_*` IDs with `status: published`, creating a false impression that the post was live on Google Search/Maps when Google never received the payload.
+- **Backend Publishing Transparency (`socialMediaApis.js` & `queue.js`)**:
+  - Removed silent simulation of sandbox posts. If an account has `isMock: true` or default placeholder locations, `publishToGoogle` now throws an explicit error detailing the missing Google Cloud APIs.
+  - Formatted the Google Business Profile localPosts API resource path correctly to `accounts/{accountId}/locations/{locationId}/localPosts`.
+  - Forwarded `account.metadata` in `services/queue.js` to ensure real Google account and location identifiers are passed to the API.
+- **Smart Telemetry & Error Classification (`utils/telemetryClassifier.js`)**:
+  - Added dedicated classification for Google Business Profile API errors (`PERMISSION_DENIED`, HTTP 403).
+  - Configured step-by-step checklist with direct 1-click links to enable:
+    1. `mybusinessaccountmanagement.googleapis.com` (My Business Account Management API)
+    2. `mybusinessbusinessinformation.googleapis.com` (My Business Business Information API)
+    3. `mybusiness.googleapis.com` (Google My Business API for Local Posts)
+- **Database Post Synchronization & Telemetry Fix**:
+  - Updated post `6aa6fd3566ba0ac13dcee8c6` to `status: 'failed'` with HTTP 403 and exact diagnostic reason and resolution steps.
+  - Generated official `SocialPublishLog` telemetry record enabling 1-click inspection from the dashboard and logs.
+
+### 🎨 Frontend UI / UX Clarity & Transparency
+- **Recent Post Cards (`RecentPostCard.tsx`, `RecentPostsSection.tsx`)**:
+  - Sanitized live URL detection (`getPlatformUrl` and `getLiveUrl`) to prevent generic `https://business.google.com/` and sandbox IDs from rendering as verified live post links.
+  - Added an **Action Required Warning Banner** when a post fails on Google due to Cloud APIs being disabled, complete with a direct 1-click link to Google Cloud Console (Project `203941120936`) and a link to inspect telemetry logs.
+- **Channels & Connected Accounts (`ConnectedAccountsModal.tsx`, `SelectPages.tsx`, `platformSetupGuides.ts`)**:
+  - Added an alert banner for sandbox Google accounts in `ConnectedAccountsModal` prompting the user to enable the APIs in Google Cloud Console.
+  - Added direct link to enable the Google My Business API in `SelectPages.tsx` alongside Account Management and Business Information APIs.
+  - Updated `platformSetupGuides.ts` with correct production domains and direct 1-click links for all 3 required Google APIs.
+
+---
+
 ## 📍 [2026-09-13 21:52:00 CEST] — Google Business Profile (GMB) Live Preview & Channel Synchronization
 
 ### 🌟 High-Fidelity GMB Live Preview (`SocialPostPreview.tsx`)

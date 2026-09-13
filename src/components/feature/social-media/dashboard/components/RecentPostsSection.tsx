@@ -33,6 +33,13 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
 
   const getLiveUrl = (p: any) => {
     if (!p) return null
+    if (
+      p.postId?.startsWith('gmb_sandbox_') ||
+      p.postUrl === 'https://business.google.com/' ||
+      p.url === 'https://business.google.com/'
+    ) {
+      return null
+    }
     if (p.postUrl) return p.postUrl
     if (p.url) return p.url
     const plat = p.platform?.toLowerCase()

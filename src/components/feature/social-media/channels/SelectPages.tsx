@@ -261,6 +261,15 @@ export default function SelectPages() {
               <ExternalLink className="w-3 h-3 text-muted-foreground" />
             </a>
             <a
+              href="https://console.developers.google.com/apis/api/mybusiness.googleapis.com/overview?project=203941120936"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-background hover:bg-muted border border-border text-foreground font-medium transition-colors shadow-sm"
+            >
+              <span>3. Enable Google My Business API</span>
+              <ExternalLink className="w-3 h-3 text-muted-foreground" />
+            </a>
+            <a
               href="https://business.google.com/"
               target="_blank"
               rel="noopener noreferrer"
