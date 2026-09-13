@@ -2,6 +2,28 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-13 22:04:00 CEST] — Instagram Live Preview Caption Formatting & Whitespace Engine Fix
+
+### 📸 Instagram Live Preview Caption Engine (`SocialPostPreview.tsx`)
+- **Preserved Exact Paragraphs & Whitespace Breaks (`whitespace-pre-wrap break-words`)**:
+  - Resolved the issue where multi-paragraph Instagram post captions, bullet points (e.g., `- TRUST:`, `- EVIDENCE-BASED CLARITY:`, `- THE RIGHT FIT:`), and line breaks collapsed into an unformatted wall of text.
+  - Applied `whitespace-pre-wrap break-words` to the Instagram caption container so every single newline (`\n`), blank line between paragraphs (`\n\n`), and indented bullet point is rendered exactly as typed in the post composer.
+- **Enhanced Caption Tokenizer & Rich Styling (`renderFormattedContent`)**:
+  - Upgraded `renderFormattedContent` to detect and style Instagram hashtags (`#tag`), mentions (`@handle`), and web links (`https://...`) with authentic Instagram branding (`#00376b` / `dark:text-sky-400`).
+  - Added URL link detection with `break-all` protection to prevent long links from overflowing mobile viewport bounds.
+  - Filtered email addresses (such as `sales@domain.com`) from being erroneously matched as user mentions.
+- **Smart Line Truncation & Interactive More/Less Toggle**:
+  - Implemented authentic Instagram line-clamping: captions exceeding 100 characters or containing newlines now truncate neatly without breaking words, followed by `... more`.
+  - Added bidirectional toggling: users can click `more` to expand the full formatted text and `less` to collapse it back, allowing immediate verification of both states.
+  - Added `max-h-[380px] overflow-y-auto no-scrollbar` scroll boundary to accommodate long copy while maintaining realistic phone frame proportions.
+- **Authentic Instagram Post Chrome & Interaction Details**:
+  - Added `View all 18 comments` link, `Add a comment...` field with quick emoji reactions (`❤️ 🙌 🔥`), and `JUST NOW` relative timestamp.
+  - Added bold, interactive Instagram account handle prefix matching official mobile layout standards.
+- **Omni-Platform Whitespace Consistency**:
+  - Synchronized `whitespace-pre-wrap break-words` across **Facebook**, **LinkedIn**, and **YouTube** descriptions to guarantee uniform line break retention across all platform mockups.
+
+---
+
 ## 📍 [2026-09-13 22:00:00 CEST] — Google Business Profile (GMB) Live Publishing Diagnosis & Cloud API Fix
 
 ### 🛠️ GMB Publishing Architecture & False-Success Fix

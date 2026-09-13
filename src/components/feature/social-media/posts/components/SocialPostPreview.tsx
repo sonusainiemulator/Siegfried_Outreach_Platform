@@ -374,7 +374,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
     setActiveSlideIndex((prev) => (prev < slideCount - 1 ? prev + 1 : prev))
   }
 
-  // Format content to highlight hashtags and keywords
+  // Format content to highlight hashtags, mentions, links, and keywords
   const renderFormattedContent = (text: string) => {
     if (!text)
       return (
@@ -385,9 +385,16 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
 
     const parts = text.split(/(\s+)/)
     return parts.map((part, i) => {
-      if (part.startsWith('#') || part.startsWith('@')) {
+      if (part.startsWith('#') || (part.startsWith('@') && !part.includes('@', 1))) {
         return (
-          <span key={i} className="text-blue-500 font-semibold hover:underline cursor-pointer">
+          <span key={i} className="text-[#00376b] dark:text-sky-400 font-semibold hover:underline cursor-pointer">
+            {part}
+          </span>
+        )
+      }
+      if (part.startsWith('http://') || part.startsWith('https://')) {
+        return (
+          <span key={i} className="text-sky-600 dark:text-sky-400 hover:underline cursor-pointer break-all">
             {part}
           </span>
         )
@@ -627,23 +634,62 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               </button>
             </div>
 
-            <div className="px-3.5 text-xs font-bold">{isLiked ? '1 like' : 'Be the first to like'}</div>
+            <div className="px-3.5 text-xs font-bold text-neutral-900 dark:text-neutral-100">
+              {isLiked ? '1 like' : 'Be the first to like'}
+            </div>
 
-            <div className="px-3.5 pt-1.5 pb-4 space-y-1 text-xs">
-              <p className="leading-relaxed">
-                <span className="font-bold mr-1.5">{accountName}</span>
-                {isCaptionExpanded || (content && content.length <= 90) ? (
-                  renderFormattedContent(content)
+            {/* Instagram Caption */}
+            <div className="px-3.5 pt-1.5 pb-4 space-y-2 text-xs">
+              <div className="leading-relaxed whitespace-pre-wrap break-words text-neutral-900 dark:text-neutral-100 max-h-[380px] overflow-y-auto no-scrollbar">
+                <span className="font-bold mr-1.5 text-neutral-900 dark:text-white inline hover:underline cursor-pointer select-none">
+                  {accountName}
+                </span>
+                {isCaptionExpanded || !content || (content.length <= 100 && !content.includes('\n')) ? (
+                  <>
+                    <span className="inline">{renderFormattedContent(content)}</span>
+                    {content && (content.length > 100 || content.includes('\n')) && (
+                      <button
+                        type="button"
+                        onClick={() => setIsCaptionExpanded(false)}
+                        className="text-neutral-500 dark:text-neutral-400 font-normal hover:underline ml-1.5 cursor-pointer inline text-[11px]"
+                      >
+                        less
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <>
-                    {renderFormattedContent(content.slice(0, 90))}...
-                    <button type="button" onClick={() => setIsCaptionExpanded(true)} className="text-neutral-500 dark:text-neutral-400 font-semibold ml-1 cursor-pointer">
-                      more
+                    <span className="inline">
+                      {renderFormattedContent(
+                        content.includes('\n') && content.indexOf('\n') <= 100
+                          ? content.slice(0, content.indexOf('\n'))
+                          : content.slice(0, 100).trimEnd()
+                      )}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsCaptionExpanded(true)}
+                      className="text-neutral-500 dark:text-neutral-400 font-normal hover:underline ml-1 cursor-pointer inline text-[11px]"
+                    >
+                      ... more
                     </button>
                   </>
                 )}
-              </p>
-              <p className="text-[11px] text-neutral-400 pt-1">Add a comment...</p>
+              </div>
+
+              {/* Instagram Comments & Timestamp */}
+              <div className="space-y-1 pt-0.5">
+                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 hover:underline cursor-pointer">
+                  View all 18 comments
+                </p>
+                <div className="flex items-center justify-between text-[11px] text-neutral-400 pt-0.5">
+                  <span className="text-neutral-400">Add a comment...</span>
+                  <span className="text-[11px] select-none opacity-80">❤️ 🙌 🔥</span>
+                </div>
+                <p className="text-[9px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500 pt-0.5 font-medium">
+                  Just now
+                </p>
+              </div>
             </div>
           </div>
         )}
@@ -668,7 +714,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               <MoreHorizontal className="w-4 h-4 text-neutral-500" />
             </div>
 
-            <div className="px-4 pb-2.5 text-xs leading-relaxed">{renderFormattedContent(content)}</div>
+            <div className="px-4 pb-2.5 text-xs leading-relaxed whitespace-pre-wrap break-words">{renderFormattedContent(content)}</div>
 
             {/* Media Area */}
             <div className="relative aspect-square w-full bg-neutral-100 dark:bg-neutral-900 overflow-hidden flex items-center justify-center group">
@@ -743,7 +789,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
             {/* LinkedIn Post Copy */}
             <div className="px-4 py-3 text-xs leading-relaxed space-y-2">
               {title && <h5 className="font-bold text-sm text-neutral-900 dark:text-white">{title}</h5>}
-              <p>{renderFormattedContent(content)}</p>
+              <p className="whitespace-pre-wrap break-words">{renderFormattedContent(content)}</p>
             </div>
 
             {/* Media Area / Document Carousel */}
