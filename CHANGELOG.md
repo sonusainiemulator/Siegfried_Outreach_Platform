@@ -2,6 +2,18 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🔐 [2026-09-13 19:57:00 CEST] — Reset Administrator Credentials to Siegfried@2020
+
+### 🛡️ Security & Authentication
+- **Admin Password Reset**:
+  - Successfully updated administrator password to `Siegfried@2020` for primary administrator accounts:
+    - `admin@siegfriedoutreach.com` (Role: `super_admin`)
+    - `admin@ttai.in` (Role: `super_admin`)
+  - Re-hashed using bcrypt (`saltRounds = 10`) and verified via live authentication against backend `/api/auth/login` (Status: `200 OK`, valid JWT session token issued).
+  - Synchronized backend environment configuration (`ADMIN_PASSWORD=Siegfried@2020`).
+
+---
+
 ## 🚀 [2026-09-13 15:47:00 CEST] — OpenRouter: Live Model Fetching, 100% Free Models Provider List & Searchable Dropdown
 
 ### ⚡ Live Model Fetching & Dynamic Sync (`src/app/api/ai/openrouter-models/route.ts`)
