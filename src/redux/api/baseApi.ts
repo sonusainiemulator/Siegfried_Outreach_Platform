@@ -126,6 +126,9 @@ export const baseApi = createApi({
     'GoogleBusiness',
     'AiEmployeeCredits',
     'Draft',
+    'AiTeam',
+    'AiTeamChat',
+    'ReferenceStudy',
   ],
   endpoints: () => ({}),
 })

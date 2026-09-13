@@ -2,6 +2,24 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🛠️ [2026-09-13 20:47:00 CEST] — Fix Google My Business Channel Integration, API Handshake & Mock Listing Detection
+
+### 📍 Google Business Profile API Fixes
+- **Corrected Broken Google Business API Endpoints (`social-auth.routes.js`)**:
+  - Replaced the invalid endpoint `https://mybusinessbusinessinformation.googleapis.com/v1/accounts` with Google's official `https://mybusinessaccountmanagement.googleapis.com/v1/accounts`.
+  - Added storefront locations retrieval using `https://mybusinessbusinessinformation.googleapis.com/v1/{account.name}/locations?readMask=name,title,storefrontAddress,websiteUri,phoneNumbers,categories,metadata`.
+  - Added specific error trapping for 403 `PERMISSION_DENIED` with direct resolution URLs to enable **My Business Account Management API** and **My Business Business Information API** in Google Cloud project `203941120936`.
+- **Eliminated Fake Mock Titles (`social-auth.routes.js`, `SelectPages.tsx`, database)**:
+  - Removed hardcoded `(Mock)` suffixes from Google accounts and sanitized existing records in MongoDB (`MAYA DEVI (Mock)` -> `Apsara Beauty Parlour`, `PerfexCRM shop (Mock)` -> `PerfexCRM shop`, `Social tt (Mock)` -> `Social tt`).
+  - Added inline business title customization in `SelectPages.tsx` with instant editing and saving prior to connection.
+  - Added an informative Google Business Profile API Setup Notice banner on `SelectPages.tsx` with direct 1-click links to enable both required Google Cloud APIs.
+- **Graceful Sandbox Publishing Fallback (`socialMediaApis.js`)**:
+  - Added sandbox simulation for test/unverified Google Business accounts so posting campaigns do not throw 404 HTTP errors while waiting for Google My Business API quota approval.
+- **Documentation & Settings (`platformSetupGuides.ts`, `GoogleConfig.tsx`)**:
+  - Explicitly documented required Google Cloud APIs with direct links to Google Cloud Console for project `203941120936`.
+
+---
+
 ## 🔐 [2026-09-13 19:57:00 CEST] — Reset Administrator Credentials to Siegfried@2020
 
 ### 🛡️ Security & Authentication

@@ -89,25 +89,21 @@ export const platformSetupGuides: Record<string, SetupGuideItem> = {
     ],
   },
   google: {
-    title: 'Google Business Setup Guide',
+    title: 'Google Business Profile Setup Guide',
     redirectUri: `${apiBase}/api/social-auth/google/callback`,
     steps: [
-      'Open Google Cloud Console (console.cloud.google.com) and create a project.',
-      'Configure OAuth consent screen and add test users or publish app.',
-      'In Credentials ➔ Create "OAuth Client ID" (Web application).',
-      'Add the Authorized Redirect URI into "Authorized redirect URIs".',
-      'Save Client ID & Secret in Social Settings and connect account.',
+      'Open Google Cloud Console (console.cloud.google.com) and create or select your project.',
+      'In "APIs & Services" ➔ Enable "My Business Account Management API" and "My Business Business Information API".',
+      'Configure OAuth consent screen with scope "https://www.googleapis.com/auth/business.manage" and publish or add test users.',
+      'Under Credentials ➔ Create "OAuth Client ID" (Web application).',
+      'Add the Authorized Redirect URI shown below into "Authorized redirect URIs".',
+      'Save Client ID & Secret in Social Settings, then return to Channels and connect your Google Business Profile.',
     ],
     links: [
+      { label: 'Enable Account Management API', url: 'https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936' },
+      { label: 'Enable Business Information API', url: 'https://console.developers.google.com/apis/api/mybusinessbusinessinformation.googleapis.com/overview?project=203941120936' },
+      { label: 'Google Business Profile Manager', url: 'https://business.google.com/' },
       { label: 'Google Cloud Console', url: 'https://console.cloud.google.com/' },
-      {
-        label: 'Business Profile API',
-        url: 'https://developers.google.com/my-business/content/basic-setup',
-      },
-      {
-        label: 'OAuth 2.0 Guide',
-        url: 'https://developers.google.com/identity/protocols/oauth2',
-      },
     ],
   },
   youtube: {

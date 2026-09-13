@@ -11,10 +11,18 @@ import { authUtils } from '@/utils'
 import {
   AlertCircle,
   ArrowRight,
+  Building2,
   Check,
+  Edit2,
+  ExternalLink,
   Facebook,
   Loader2,
-  Users
+  MapPin,
+  Phone,
+  Save,
+  Store,
+  Users,
+  X,
 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -33,6 +41,8 @@ export default function SelectPages() {
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [editingPageId, setEditingPageId] = useState<string | null>(null)
+  const [customNameInput, setCustomNameInput] = useState<string>('')
 
   const [connectAccount, { isLoading: isConnecting }] = useConnectSocialAccountMutation()
 
@@ -61,9 +71,14 @@ export default function SelectPages() {
       const data = await response.json()
 
       if (data.pages && data.pages.length > 0) {
-        setPages(data.pages)
-        if (data.pages.length === 1) {
-          setSelectedPages(new Set([data.pages[0].id]))
+        // Sanitize any mock markers from incoming names
+        const sanitized = data.pages.map((p: SelectPagesType) => ({
+          ...p,
+          name: (p.name || '').replace(/\s*\(Mock\)/gi, '').trim(),
+        }))
+        setPages(sanitized)
+        if (sanitized.length === 1) {
+          setSelectedPages(new Set([sanitized[0].id]))
         }
       } else {
         setError(t('social_no_nodes'))
@@ -74,6 +89,31 @@ export default function SelectPages() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleStartEditName = (page: SelectPagesType, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setEditingPageId(page.id)
+    setCustomNameInput(page.name)
+  }
+
+  const handleSaveEditName = (pageId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (!customNameInput.trim()) {
+      setEditingPageId(null)
+      return
+    }
+    const clean = customNameInput.replace(/\s*\(Mock\)/gi, '').trim()
+    setPages((prev) =>
+      prev.map((p) => (p.id === pageId ? { ...p, name: clean } : p))
+    )
+    setEditingPageId(null)
+    toast.success(t('social_business_name_updated', { defaultValue: 'Business name updated!' }))
+  }
+
+  const handleCancelEditName = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setEditingPageId(null)
   }
 
   const togglePageSelection = (pageId: string) => {
@@ -185,9 +225,64 @@ export default function SelectPages() {
         </div>
       </div>
 
+      {platform === 'google' && (
+        <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-3 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5">
+              <Store className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <h3 className="text-sm font-bold text-foreground">
+                Google Business Profile Connection
+              </h3>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 w-fit">
+              Storefront Setup
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            If your live Google Maps locations are not automatically listing below, your Google Cloud project needs the Business Profile APIs enabled:
+          </p>
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <a
+              href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-background hover:bg-muted border border-border text-foreground font-medium transition-colors shadow-sm"
+            >
+              <span>1. Enable Account Management API</span>
+              <ExternalLink className="w-3 h-3 text-muted-foreground" />
+            </a>
+            <a
+              href="https://console.developers.google.com/apis/api/mybusinessbusinessinformation.googleapis.com/overview?project=203941120936"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-background hover:bg-muted border border-border text-foreground font-medium transition-colors shadow-sm"
+            >
+              <span>2. Enable Business Information API</span>
+              <ExternalLink className="w-3 h-3 text-muted-foreground" />
+            </a>
+            <a
+              href="https://business.google.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-background hover:bg-muted border border-border text-muted-foreground font-medium transition-colors shadow-sm"
+            >
+              <span>Google Business Profile Manager</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+          <p className="text-[11px] text-muted-foreground/80 italic pt-1">
+            💡 Tip: You can customize your Business Listing name below using the pencil icon before confirming!
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {pages.map((page) => {
           const isSelected = selectedPages.has(page.id)
+          const isEditingThis = editingPageId === page.id
+          const meta = (page.metadata || {}) as Record<string, any>
+          const isVerifiedLocation = meta.verified === true && !meta.isMock
+
           return (
             <Card
               key={page.id}
@@ -213,7 +308,7 @@ export default function SelectPages() {
               </div>
 
               <CardContent className="p-8 relative z-10">
-                <div className="flex flex-col items-center text-center space-y-6">
+                <div className="flex flex-col items-center text-center space-y-5">
                   <div className="relative">
                     {page.picture ? (
                       <Image
@@ -229,7 +324,11 @@ export default function SelectPages() {
                       />
                     ) : (
                       <div className="w-24 h-24 rounded-[2rem] bg-muted/30 flex items-center justify-center shadow-inner ring-4 ring-background">
-                        <Users className="w-10 h-10 text-muted-foreground/20" />
+                        {platform === 'google' ? (
+                          <Store className="w-10 h-10 text-emerald-600/40" />
+                        ) : (
+                          <Users className="w-10 h-10 text-muted-foreground/20" />
+                        )}
                       </div>
                     )}
                     <div className="absolute -bottom-2 -right-2 p-2 rounded-xl bg-background border border-border/40 shadow-xl">
@@ -237,10 +336,83 @@ export default function SelectPages() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-black uppercase tracking-tight truncate max-w-[240px] group-hover:text-primary transition-colors">
-                      {page.name}
-                    </h3>
+                  <div className="space-y-1.5 w-full">
+                    {isEditingThis ? (
+                      <div
+                        className="flex items-center gap-1.5 justify-center"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <input
+                          type="text"
+                          value={customNameInput}
+                          onChange={(e) => setCustomNameInput(e.target.value)}
+                          className="text-xs px-2.5 py-1.5 rounded-lg border border-primary bg-background text-foreground font-semibold text-center w-full max-w-[200px] outline-none focus:ring-1 focus:ring-primary"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleSaveEditName(page.id, e as any)
+                            if (e.key === 'Escape') handleCancelEditName(e as any)
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSaveEditName(page.id, e)}
+                          className="p-1.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shrink-0"
+                          title="Save Name"
+                        >
+                          <Save className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleCancelEditName}
+                          className="p-1.5 rounded-md bg-muted text-muted-foreground hover:bg-muted/80 transition-colors shrink-0"
+                          title="Cancel"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center gap-1.5">
+                        <h3 className="text-sm font-black uppercase tracking-tight truncate max-w-[200px] group-hover:text-primary transition-colors">
+                          {page.name}
+                        </h3>
+                        {platform === 'google' && (
+                          <button
+                            type="button"
+                            onClick={(e) => handleStartEditName(page, e)}
+                            className="p-1 rounded-md text-muted-foreground/60 hover:text-primary hover:bg-primary/10 transition-colors"
+                            title="Edit Business Listing Name"
+                          >
+                            <Edit2 className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
+                    )}
+
+                    {platform === 'google' ? (
+                      <div className="flex flex-col items-center gap-1 pt-0.5">
+                        <span
+                          className={cn(
+                            'text-[10px] font-bold px-2 py-0.5 rounded-full',
+                            isVerifiedLocation
+                              ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
+                              : 'bg-primary/10 text-primary border border-primary/20',
+                          )}
+                        >
+                          {isVerifiedLocation ? 'Verified Storefront' : 'Google Business Profile'}
+                        </span>
+                        {page.category && (
+                          <p className="text-[11px] text-muted-foreground truncate max-w-[220px]">
+                            {page.category}
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      page.category && (
+                        <p className="text-[11px] text-muted-foreground truncate max-w-[220px]">
+                          {page.category}
+                        </p>
+                      )
+                    )}
                   </div>
 
                   <div className="flex items-center gap-6 pt-4 w-full max-w-[240px] mx-auto border-t border-border/10">
