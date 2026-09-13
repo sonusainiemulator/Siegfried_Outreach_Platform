@@ -2,6 +2,28 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-13 21:52:00 CEST] — Google Business Profile (GMB) Live Preview & Channel Synchronization
+
+### 🌟 High-Fidelity GMB Live Preview (`SocialPostPreview.tsx`)
+- **Prominent First-Position Tab & "GMB" Badge**:
+  - Reordered platform tabs in `SocialPostPreview.tsx` to position **Google Business (GMB)** at the front of the preview bar.
+  - Added a prominent `GMB` badge and an active emerald pulse indicator on tabs with connected/selected accounts.
+  - Added support for `'gmb'` and `'google'` aliases in `PlatformType` and platform tab selectors.
+- **Smart Auto-Sync & Channel Detection**:
+  - Added automatic platform switching: when a user selects a GMB account in `PlatformSelection`, the preview dynamically transitions to the Google Business mockup.
+  - Enhanced account matching with `isPlatformMatch` to support `google`, `gmb`, and `google_business` across all connected profiles.
+- **Hyper-Realistic Google Search & Maps Knowledge Panel Simulation**:
+  - Rendered official Google 4-color "G" logo and simulated `google.com/search?q={business_name}` browser URL bar.
+  - Added interactive perspective toggles: **Google Search Listing**, **Google Maps Card**, and **Promotional Offer Mode**.
+  - Added verified Google badge, review star ratings (`4.9 ★★★★★ (148 reviews)`), business hours indicator (`🟢 Open 24/7`), and quick actions (`Website`, `Directions`, `Save`, `Share`).
+  - Implemented interactive Google Call-to-Action (CTA) simulator with real GMB actions (**Learn More**, **Call Now**, **Book**, **Order**).
+  - Integrated promotional offer mode supporting discount vouchers (`🏷️ SPECIAL OFFER`, coupon code banner, and expiry dates).
+- **AI Post Generator & Platform Selection Sync (`PlatformSelection.tsx`, `AIPostGeneratorModal.tsx`)**:
+  - Added `Google Business (GMB)` to `PLATFORM_BADGES` in `AIPostGeneratorModal.tsx`.
+  - Normalized platform configuration keys and aliases in `PlatformSelection.tsx` so GMB channels never fallback to default styling.
+
+---
+
 ## 🌐 [2026-09-13 21:15:00 CEST] — Universal SEO Update: Siegfried Outreach - Social Media Marketing Agency
 
 ### 🔍 Comprehensive SEO & Metadata Overhaul

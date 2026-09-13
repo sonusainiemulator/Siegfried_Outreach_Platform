@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import {
   Heart,
@@ -29,7 +29,9 @@ import {
   MessageSquare,
   CheckCircle2,
   Compass,
-  Play
+  Play,
+  Search,
+  Tag
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -40,12 +42,13 @@ import { CarouselSlideItem } from './CarouselSlideManager'
 import { SocialAccount } from '@/types/components/socialMedia'
 
 export type PlatformType =
+  | 'google'
+  | 'gmb'
   | 'instagram'
   | 'facebook'
   | 'linkedin'
   | 'twitter'
   | 'youtube'
-  | 'google'
   | 'tiktok'
   | 'reddit'
   | 'pinterest'
@@ -130,6 +133,15 @@ const GoogleIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
+const GoogleGLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" className={className}>
+    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+  </svg>
+)
+
 const PinterestIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" className={className} fill="currentColor">
     <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 12-5.373 12-12 0-6.628-5.393-12-12-12z"/>
@@ -142,30 +154,23 @@ const RedditIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
-
 const PLATFORM_TABS: {
   id: PlatformType
   label: string
+  shortBadge?: string
   icon: React.ComponentType<{ className?: string }>
   iconColor: string
   activeGradient: string
   activeShadow: string
 }[] = [
   {
-    id: 'telegram',
-    label: 'Telegram',
-    icon: TelegramIcon,
-    iconColor: 'text-[#0088cc]',
-    activeGradient: 'bg-gradient-to-r from-[#0088cc] to-[#0077b5] text-white',
-    activeShadow: 'shadow-lg shadow-sky-500/30 ring-2 ring-sky-500/50',
-  },
-  {
-    id: 'whatsapp',
-    label: 'WhatsApp',
-    icon: WhatsAppIcon,
-    iconColor: 'text-[#25D366]',
-    activeGradient: 'bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white',
-    activeShadow: 'shadow-lg shadow-[#25D366]/30 ring-2 ring-[#25D366]/50',
+    id: 'google',
+    label: 'Google Business (GMB)',
+    shortBadge: 'GMB',
+    icon: GoogleIcon,
+    iconColor: 'text-[#4285F4]',
+    activeGradient: 'bg-gradient-to-r from-[#4285F4] to-[#1967D2] text-white',
+    activeShadow: 'shadow-lg shadow-blue-600/30 ring-2 ring-blue-400/50',
   },
   {
     id: 'instagram',
@@ -216,20 +221,20 @@ const PLATFORM_TABS: {
     activeShadow: 'shadow-lg shadow-cyan-500/25 ring-2 ring-[#00f2fe]/50',
   },
   {
-    id: 'google',
-    label: 'Google Business',
-    icon: GoogleIcon,
-    iconColor: 'text-[#4285F4]',
-    activeGradient: 'bg-gradient-to-r from-[#4285F4] to-[#1967D2] text-white',
-    activeShadow: 'shadow-lg shadow-blue-600/30 ring-2 ring-blue-400/50',
+    id: 'whatsapp',
+    label: 'WhatsApp',
+    icon: WhatsAppIcon,
+    iconColor: 'text-[#25D366]',
+    activeGradient: 'bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white',
+    activeShadow: 'shadow-lg shadow-[#25D366]/30 ring-2 ring-[#25D366]/50',
   },
   {
-    id: 'reddit',
-    label: 'Reddit',
-    icon: RedditIcon,
-    iconColor: 'text-[#FF4500]',
-    activeGradient: 'bg-gradient-to-r from-[#FF4500] to-[#CC3700] text-white',
-    activeShadow: 'shadow-lg shadow-orange-600/30 ring-2 ring-orange-500/50',
+    id: 'telegram',
+    label: 'Telegram',
+    icon: TelegramIcon,
+    iconColor: 'text-[#0088cc]',
+    activeGradient: 'bg-gradient-to-r from-[#0088cc] to-[#0077b5] text-white',
+    activeShadow: 'shadow-lg shadow-sky-500/30 ring-2 ring-sky-500/50',
   },
   {
     id: 'pinterest',
@@ -238,6 +243,14 @@ const PLATFORM_TABS: {
     iconColor: 'text-[#E60023]',
     activeGradient: 'bg-gradient-to-r from-[#E60023] to-[#AD081B] text-white',
     activeShadow: 'shadow-lg shadow-red-700/30 ring-2 ring-red-500/50',
+  },
+  {
+    id: 'reddit',
+    label: 'Reddit',
+    icon: RedditIcon,
+    iconColor: 'text-[#FF4500]',
+    activeGradient: 'bg-gradient-to-r from-[#FF4500] to-[#CC3700] text-white',
+    activeShadow: 'shadow-lg shadow-orange-600/30 ring-2 ring-orange-500/50',
   },
   {
     id: 'threads',
@@ -268,14 +281,46 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
   postTypes = {},
 }) => {
   const { t } = useTranslation()
-  const [activeTab, setActiveTab] = useState<PlatformType>('instagram')
+  const [activeTab, setActiveTab] = useState<PlatformType>('google')
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
   const [isCaptionExpanded, setIsCaptionExpanded] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const [redditVote, setRedditVote] = useState<number>(0)
   const [whatsAppMode, setWhatsAppMode] = useState<'channel' | 'status'>('channel')
+  const [gmbViewMode, setGmbViewMode] = useState<'search' | 'maps' | 'offer'>('search')
+  const [gmbCtaAction, setGmbCtaAction] = useState<string>('Learn More')
   const platformScrollRef = React.useRef<HTMLDivElement>(null)
+
+  // Normalize platform matching helper for tabs and accounts
+  const isPlatformMatch = (accountPlatform?: string, tabId?: string) => {
+    const p = (accountPlatform || '').toLowerCase()
+    const t = (tabId || '').toLowerCase()
+    if (p === t) return true
+    if ((p === 'google' || p === 'gmb' || p === 'google_business' || p === 'google-business') && (t === 'google' || t === 'gmb')) return true
+    if ((p === 'twitter' || p === 'x') && (t === 'twitter' || t === 'x')) return true
+    return false
+  }
+
+  // Auto-switch active preview tab when user selects an account
+  useEffect(() => {
+    if (selectedAccounts && selectedAccounts.length > 0) {
+      const isCurrentActiveSelected = selectedAccounts.some((a) =>
+        isPlatformMatch(a.platform, activeTab)
+      )
+      if (!isCurrentActiveSelected) {
+        const first = selectedAccounts[0]
+        const p = (first.platform || '').toLowerCase()
+        if (p === 'gmb' || p === 'google' || p === 'google_business' || p === 'google-business') {
+          setActiveTab('google')
+        } else if (p === 'x') {
+          setActiveTab('twitter')
+        } else if (PLATFORM_TABS.some((t) => t.id === p)) {
+          setActiveTab(p as PlatformType)
+        }
+      }
+    }
+  }, [selectedAccounts])
 
   const handleScrollLeft = () => {
     if (platformScrollRef.current) {
@@ -295,12 +340,8 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
 
   // Find account info if available in selected accounts, then in all connected accounts
   const matchingAccount =
-    selectedAccounts.find(
-      (a) => a.platform.toLowerCase() === activeTab.toLowerCase() || (activeTab === 'twitter' && a.platform.toLowerCase() === 'x')
-    ) ||
-    allConnectedAccounts.find(
-      (a) => a.platform.toLowerCase() === activeTab.toLowerCase() || (activeTab === 'twitter' && a.platform.toLowerCase() === 'x')
-    ) ||
+    selectedAccounts.find((a) => isPlatformMatch(a.platform, activeTab)) ||
+    allConnectedAccounts.find((a) => isPlatformMatch(a.platform, activeTab)) ||
     selectedAccounts[0] ||
     allConnectedAccounts[0]
 
@@ -408,8 +449,10 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {PLATFORM_TABS.map((tab) => {
-              const isActive = activeTab === tab.id
+              const isActive = activeTab === tab.id || (tab.id === 'google' && (activeTab as string) === 'gmb')
               const Icon = tab.icon
+              const isTabAccountSelected = selectedAccounts.some((acc) => isPlatformMatch(acc.platform, tab.id))
+
               return (
                 <button
                   key={tab.id}
@@ -426,6 +469,24 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
                     <Icon className="w-4 h-4 fill-current" />
                   </div>
                   <span className="tracking-tight">{tab.label}</span>
+                  {tab.shortBadge && (
+                    <span
+                      className={cn(
+                        'text-[9px] px-1.5 py-0.2 rounded font-extrabold tracking-wider uppercase transition-colors',
+                        isActive
+                          ? 'bg-white/25 text-white'
+                          : 'bg-[#4285F4]/15 text-[#4285F4] dark:text-blue-400 border border-[#4285F4]/30'
+                      )}
+                    >
+                      {tab.shortBadge}
+                    </span>
+                  )}
+                  {isTabAccountSelected && (
+                    <span
+                      className="w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-emerald-400/40 animate-pulse shrink-0 ml-0.5"
+                      title="Connected account selected for publishing"
+                    />
+                  )}
                 </button>
               )
             })}
@@ -896,58 +957,264 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
         )}
 
         {/* ================= 6. GOOGLE BUSINESS / GMB MOCKUP ================= */}
-        {activeTab === 'google' && (
-          <div className="flex flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white font-sans p-4 space-y-3.5">
-            {/* Google Search Listing Header */}
-            <div className="flex items-start justify-between border-b border-neutral-100 dark:border-neutral-800 pb-3">
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5 text-xs text-[#4285F4] font-bold">
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>Google Business Profile • Updates</span>
-                </div>
-                <h4 className="text-sm font-extrabold text-neutral-900 dark:text-white">{accountName}</h4>
-                <div className="flex items-center gap-1 text-[11px] text-amber-500 font-bold">
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  
+        {(activeTab === 'google' || (activeTab as string) === 'gmb') && (
+          <div className="flex flex-col bg-[#F8F9FA] dark:bg-neutral-950 text-neutral-900 dark:text-white font-sans rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-xl">
+            {/* Google Search Browser Bar Simulation */}
+            <div className="bg-white dark:bg-neutral-900 px-4 py-2.5 border-b border-neutral-200/80 dark:border-neutral-800 flex items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2 min-w-0">
+                <GoogleGLogo className="w-4 h-4 shrink-0" />
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-neutral-600 dark:text-neutral-300 font-mono text-[11px] truncate">
+                  <Search className="w-3 h-3 text-neutral-400 shrink-0" />
+                  <span className="truncate">google.com/search?q={encodeURIComponent(accountName)}</span>
                 </div>
               </div>
-              <Badge className="bg-[#4285F4]/10 text-[#4285F4] border-[#4285F4]/20 text-[10px] font-bold">
-                Verified Listing
-              </Badge>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Badge className="bg-blue-50 dark:bg-blue-950/60 text-[#1a73e8] dark:text-blue-400 border-blue-200 dark:border-blue-900 text-[10px] font-bold gap-1 px-2 py-0.5">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Google Verified
+                </Badge>
+              </div>
             </div>
 
-            {/* Media Area */}
-            <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center shadow-inner">
-              {currentMediaUrl ? (
-                <Image key={currentMediaUrl} src={currentMediaUrl} alt="Google Business Photo" fill className="object-cover" unoptimized />
-              ) : (
-                <div className="flex flex-col items-center gap-2 text-neutral-400">
-                  <MapPin className="w-8 h-8 text-[#4285F4]" />
-                  <span className="text-xs font-medium">Business Update & Offer Photo</span>
+            {/* View Mode Pill Switcher (Search Listing vs Maps vs Offer) */}
+            <div className="bg-neutral-100/80 dark:bg-neutral-900/80 px-4 py-1.5 border-b border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Preview Perspective:</span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setGmbViewMode('search')}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1",
+                    gmbViewMode === 'search'
+                      ? "bg-white dark:bg-neutral-800 text-[#1a73e8] dark:text-blue-400 shadow-xs"
+                      : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+                  )}
+                >
+                  <Search className="w-3 h-3" />
+                  <span>Google Search</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setGmbViewMode('maps')}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1",
+                    gmbViewMode === 'maps'
+                      ? "bg-white dark:bg-neutral-800 text-[#1a73e8] dark:text-blue-400 shadow-xs"
+                      : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+                  )}
+                >
+                  <MapPin className="w-3 h-3" />
+                  <span>Google Maps</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setGmbViewMode('offer')}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1",
+                    gmbViewMode === 'offer'
+                      ? "bg-white dark:bg-neutral-800 text-[#1a73e8] dark:text-blue-400 shadow-xs"
+                      : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+                  )}
+                >
+                  <Tag className="w-3 h-3" />
+                  <span>Promotional Offer</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Google Business Profile Header Card */}
+            <div className="p-4 bg-white dark:bg-neutral-900 space-y-3 border-b border-neutral-100 dark:border-neutral-800/80">
+              <div className="flex items-start justify-between gap-3">
+                <div className="space-y-1 min-w-0">
+                  <div className="flex items-center gap-1.5 text-xs text-[#1a73e8] font-semibold">
+                    <span>Google Business Profile (GMB)</span>
+                    <span>•</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">Search & Maps</span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white truncate">
+                    {accountName}
+                  </h3>
+                  <div className="flex items-center flex-wrap gap-2 text-xs">
+                    <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-bold">
+                      <span>4.9</span>
+                      <div className="flex items-center">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} className="w-3.5 h-3.5 fill-[#fbbc04] text-[#fbbc04]" />
+                        ))}
+                      </div>
+                      <span className="text-neutral-500 dark:text-neutral-400 font-normal">(148 reviews)</span>
+                    </div>
+                    <span className="text-neutral-300 dark:text-neutral-700">•</span>
+                    <span className="text-neutral-600 dark:text-neutral-400 font-medium">Local Business</span>
+                  </div>
+                </div>
+
+                <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/80 border border-blue-100 dark:border-blue-900 flex items-center justify-center shrink-0 shadow-sm">
+                  {profilePicture ? (
+                    <Image src={profilePicture} alt={accountName} width={48} height={48} className="w-full h-full rounded-xl object-cover" unoptimized />
+                  ) : (
+                    <GoogleGLogo className="w-6 h-6" />
+                  )}
+                </div>
+              </div>
+
+              {/* GMB Quick Actions Row */}
+              <div className="grid grid-cols-4 gap-2 pt-1">
+                <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60 text-center hover:bg-blue-50/50 transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center mb-1">
+                    <Globe className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-[10px] font-bold text-neutral-700 dark:text-neutral-300">Website</span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60 text-center hover:bg-blue-50/50 transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center mb-1">
+                    <Compass className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-[10px] font-bold text-neutral-700 dark:text-neutral-300">Directions</span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60 text-center hover:bg-blue-50/50 transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center mb-1">
+                    <Bookmark className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-[10px] font-bold text-neutral-700 dark:text-neutral-300">Save</span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60 text-center hover:bg-blue-50/50 transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center mb-1">
+                    <Share2 className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-[10px] font-bold text-neutral-700 dark:text-neutral-300">Share</span>
+                </div>
+              </div>
+            </div>
+
+            {/* GMB Post / Update Container */}
+            <div className="p-4 space-y-3.5">
+              {/* Post Type Banner */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-neutral-900 dark:text-white">
+                    {postTypes?.google === 'offer' || gmbViewMode === 'offer' ? "🏷️ Special Offer" : "📢 Updates from " + accountName}
+                  </span>
+                  <Badge variant="outline" className="text-[10px] font-semibold border-blue-200 dark:border-blue-900 text-[#1a73e8] dark:text-blue-400">
+                    {postTypes?.google === 'offer' || gmbViewMode === 'offer' ? "Promo Deal" : "What's New"}
+                  </Badge>
+                </div>
+                <span className="text-[11px] text-neutral-500 dark:text-neutral-400">Just now</span>
+              </div>
+
+              {/* Special Offer Voucher Banner if offer mode */}
+              {(postTypes?.google === 'offer' || gmbViewMode === 'offer') && (
+                <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/5 border border-amber-500/30 flex items-center justify-between gap-2">
+                  <div className="space-y-0.5 min-w-0">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Special Promotion</span>
+                    <p className="text-xs font-extrabold text-neutral-900 dark:text-white truncate">Special Discount Offer</p>
+                    <p className="text-[10px] text-neutral-500">Valid through this month • Terms apply</p>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-amber-500 text-white font-mono font-bold text-[11px] shrink-0 shadow-sm">
+                    GMB2026
+                  </div>
                 </div>
               )}
-            </div>
 
-            {/* Update Description */}
-            <div className="space-y-1.5 text-xs leading-relaxed">
-              {title && <h5 className="font-bold text-sm text-neutral-900 dark:text-white">{title}</h5>}
-              <p>{renderFormattedContent(content)}</p>
-            </div>
+              {/* Media Photo / Video Showcase */}
+              <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center border border-neutral-200/60 dark:border-neutral-800 shadow-sm group">
+                {currentMediaUrl ? (
+                  currentSlide?.type === 'video' || isVideoUrl(currentMediaUrl) ? (
+                    <video key={currentMediaUrl} src={currentMediaUrl} className="w-full h-full object-cover" controls muted autoPlay loop />
+                  ) : (
+                    <Image key={currentMediaUrl} src={currentMediaUrl} alt="Google Business Photo" fill className="object-cover" unoptimized />
+                  )
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-neutral-400 p-6 text-center">
+                    <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-[#1a73e8]">
+                      <MapPin className="w-6 h-6" />
+                    </div>
+                    <span className="text-xs font-bold text-neutral-600 dark:text-neutral-300">Google Business Update Media</span>
+                    <span className="text-[11px] text-neutral-400">Attach an image or video to highlight your business listing</span>
+                  </div>
+                )}
 
-            {/* Action CTA Buttons */}
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <Button className="h-9 bg-[#4285F4] hover:bg-[#3367d6] text-white font-bold text-xs rounded-xl shadow-md gap-1.5">
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>Learn More</span>
-              </Button>
-              <Button variant="outline" className="h-9 border-neutral-300 dark:border-white/15 font-bold text-xs rounded-xl gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[#4285F4]" />
-                <span>Get Directions</span>
-              </Button>
+                {/* Carousel Navigation Indicator if multiple slides */}
+                {slideCount > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handlePrevSlide}
+                      disabled={activeSlideIndex === 0}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-30 hover:bg-black/80 transition-all cursor-pointer"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNextSlide}
+                      disabled={activeSlideIndex === slideCount - 1}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-30 hover:bg-black/80 transition-all cursor-pointer"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-black/70 text-white text-[10px] font-bold">
+                      {activeSlideIndex + 1} / {slideCount}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Title & Body Content */}
+              <div className="space-y-1.5 text-xs leading-relaxed bg-white dark:bg-neutral-900 p-3.5 rounded-xl border border-neutral-200/50 dark:border-neutral-800">
+                {title && (
+                  <h4 className="font-bold text-sm text-neutral-900 dark:text-white">
+                    {title}
+                  </h4>
+                )}
+                <div className="text-neutral-700 dark:text-neutral-300 whitespace-pre-line">
+                  {renderFormattedContent(content)}
+                </div>
+              </div>
+
+              {/* GMB Call-To-Action (CTA) Button Selector & Simulator */}
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center justify-between text-[11px] text-neutral-500">
+                  <span className="font-semibold">Call-To-Action (CTA) Button:</span>
+                  <div className="flex items-center gap-1">
+                    {['Learn More', 'Call Now', 'Book', 'Order'].map((btn) => (
+                      <button
+                        key={btn}
+                        type="button"
+                        onClick={() => setGmbCtaAction(btn)}
+                        className={cn(
+                          "px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer",
+                          gmbCtaAction === btn
+                            ? "bg-[#1a73e8] text-white"
+                            : "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                        )}
+                      >
+                        {btn}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <Button className="h-10 bg-[#1a73e8] hover:bg-[#1557b0] text-white font-bold text-xs rounded-xl shadow-md gap-2 transition-all">
+                    <ExternalLink className="w-4 h-4" />
+                    <span>{gmbCtaAction}</span>
+                  </Button>
+                  <Button variant="outline" className="h-10 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold text-xs rounded-xl gap-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all">
+                    <Compass className="w-4 h-4 text-[#1a73e8]" />
+                    <span>Get Directions</span>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Google Business Location & Hours Info Footer */}
+              <div className="pt-2 border-t border-neutral-200/60 dark:border-neutral-800/80 flex items-center justify-between text-[11px] text-neutral-500 dark:text-neutral-400">
+                <div className="flex items-center gap-1.5 truncate">
+                  <MapPin className="w-3.5 h-3.5 text-[#1a73e8] shrink-0" />
+                  <span className="truncate">Storefront Location & Service Area</span>
+                </div>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400 shrink-0">🟢 Open 24/7</span>
+              </div>
             </div>
           </div>
         )}

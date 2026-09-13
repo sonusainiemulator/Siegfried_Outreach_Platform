@@ -174,7 +174,18 @@ const PLATFORM_CONFIG: Record<string, {
     ]
   },
   google: {
-    name: 'Google Business',
+    name: 'Google Business (GMB)',
+    icon: GoogleIcon,
+    iconBg: 'bg-[#4285F4] text-white',
+    activeBorder: 'border-[#4285F4]',
+    activeRing: 'ring-[#4285F4]/30',
+    formats: [
+      { id: 'post', name: '📢 What\'s New Update', desc: 'Business announcement & photo' },
+      { id: 'offer', name: '🏷️ Promotional Offer', desc: 'Special deal with coupon code', badge: 'Offers' },
+    ]
+  },
+  gmb: {
+    name: 'Google Business (GMB)',
     icon: GoogleIcon,
     iconBg: 'bg-[#4285F4] text-white',
     activeBorder: 'border-[#4285F4]',
@@ -423,7 +434,8 @@ const PlatformSelection = ({
           <div className="space-y-3.5">
             {accounts.map((acc) => {
               const isSelected = selectedPlatforms.includes(acc.id)
-              const platformKey = acc.platform.toLowerCase()
+              const rawPlatformKey = acc.platform.toLowerCase()
+              const platformKey = (rawPlatformKey === 'google_business' || rawPlatformKey === 'google-business' || rawPlatformKey === 'gmb') ? 'google' : rawPlatformKey
               const config = PLATFORM_CONFIG[platformKey] || PLATFORM_CONFIG.instagram
               const Icon = config.icon
 

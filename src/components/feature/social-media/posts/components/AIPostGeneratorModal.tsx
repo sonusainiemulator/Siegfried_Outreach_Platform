@@ -29,6 +29,7 @@ import {
   CheckCheck
 } from 'lucide-react'
 import { TwitterXIcon } from '@/data/socialMedia'
+import { GoogleIcon } from './PlatformSelection'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import Label from '@/components/ui/label'
@@ -106,6 +107,7 @@ const GOAL_OPTIONS = [
 const PLATFORM_BADGES = [
   { id: 'instagram', label: 'Instagram', icon: Instagram, color: 'text-pink-500 hover:border-pink-500/50' },
   { id: 'facebook', label: 'Facebook', icon: Facebook, color: 'text-blue-500 hover:border-blue-500/50' },
+  { id: 'google', label: 'Google (GMB)', icon: GoogleIcon, color: 'text-blue-500 hover:border-blue-500/50' },
   { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, color: 'text-sky-500 hover:border-sky-500/50' },
   { id: 'twitter', label: 'X (Twitter)', icon: TwitterXIcon, color: 'text-neutral-900 dark:text-white hover:border-neutral-400/50' },
   { id: 'youtube', label: 'YouTube', icon: Youtube, color: 'text-red-500 hover:border-red-500/50' },
