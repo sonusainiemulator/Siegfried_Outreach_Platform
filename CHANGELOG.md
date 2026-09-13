@@ -2,6 +2,29 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-13 22:17:00 CEST] — Google Business Profile API Diagnostics & Reconnection Workflow Fix
+
+### 🏢 Google My Business Publishing Diagnostics & Multi-Step Resolution
+- **Diagnosed Root Cause for Persistent "Google APIs Disabled" Post Error**:
+  - Investigated why post dispatches still failed after the user enabled "My Business Account Management API" in Google Cloud Console (`Project 203941120936`).
+  - Identified that the user's connected Google account in the database was initially imported *before* the Cloud APIs were enabled, storing the connection as a sandbox mock profile (`locations/default_...`) with an unrefreshed token.
+  - Enabling an API in Google Cloud Console does not automatically update database records or grant new permissions to existing tokens. The account **must be reconnected in Channels** to import live verified storefront locations.
+  - Furthermore, identified that Google requires **two additional APIs** in Google Cloud Console for full functionality:
+    1. **My Business Business Information API** (`mybusinessbusinessinformation.googleapis.com`): required to query and list actual storefront locations and physical business addresses.
+    2. **Google My Business API v4** (`mybusiness.googleapis.com`): required to create and publish `localPosts` to Google Search and Maps.
+- **Added Google Platform to Reconnection Controller (`social-account.controller.js`)**:
+  - Implemented `case 'google'` in `reconnectSocialAccount` with proper OAuth2 scopes (`https://www.googleapis.com/auth/business.manage`), offline access, and prompt consent so users can seamlessly reconnect Google accounts with a single click.
+- **Enhanced UI Guidance in Dashboard & Channels**:
+  - **Recent Posts Failure Card (`RecentPostCard.tsx`)**: Replaced single ambiguous link with an actionable multi-step resolution banner containing direct links to:
+    - Step 1: Enable **My Business Account Management API** in GCP Console.
+    - Step 2: Enable **My Business Business Information API** in GCP Console.
+    - Step 3: Direct **"🔄 Reconnect in Channels"** button leading directly to `/social-media/channels`.
+  - **Connected Accounts Modal (`ConnectedAccountsModal.tsx`)**: Updated warning card for mock accounts with explicit notice that reconnection is required after enabling Cloud Console APIs, alongside direct console activation links.
+- **Improved API Dispatch Telemetry & Error Messaging (`socialMediaApis.js`)**:
+  - Updated mock prevention check to explicitly inform users that both Account Management and Business Information APIs must be enabled in Project `203941120936` and the account reconnected in Channels.
+
+---
+
 ## 📍 [2026-09-13 22:10:00 CEST] — Purged TTOS Previews & Deployed Official Siegfried Outreach OpenGraph Banner Suite
 
 ### 🎨 Brand Identity & OpenGraph Image Resolution Fix

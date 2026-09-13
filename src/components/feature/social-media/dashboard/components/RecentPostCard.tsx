@@ -237,11 +237,11 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
 
           {/* GMB API Action Required Warning */}
           {post.platforms?.some((p: any) => p.platform === 'google' && p.status === 'failed') && (
-            <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 space-y-1.5 animate-fade-in">
+            <div className="p-3.5 rounded-xl bg-destructive/10 border border-destructive/20 space-y-2 animate-fade-in text-left">
               <div className="flex items-center justify-between gap-1">
                 <span className="text-[11px] font-bold text-destructive flex items-center gap-1.5">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                  Google APIs Disabled (Project 203941120936)
+                  Google Business Profile Action Required (Project 203941120936)
                 </span>
                 <Link
                   href="/social-media/logs"
@@ -252,18 +252,37 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
                 </Link>
               </div>
               <p className="text-[11px] text-muted-foreground leading-relaxed">
-                Post could not reach Google. Enable <strong>My Business Account Management API</strong> in Google Cloud Console.
+                If you already enabled the API in Google Cloud Console, you <strong>must reconnect</strong> your Google Account so your live storefront locations are fetched. Also verify both required Google APIs are enabled:
               </p>
-              <a
-                href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline pt-0.5"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <span>Enable in Google Cloud Console</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+              <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                <a
+                  href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline bg-background/80 px-2 py-1 rounded-md border border-border/40"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span>1. Account Management API</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+                <a
+                  href="https://console.developers.google.com/apis/api/mybusinessbusinessinformation.googleapis.com/overview?project=203941120936"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline bg-background/80 px-2 py-1 rounded-md border border-border/40"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span>2. Business Information API</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+                <Link
+                  href="/social-media/channels"
+                  className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 hover:underline bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-xs"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span>🔄 Reconnect in Channels</span>
+                </Link>
+              </div>
             </div>
           )}
 

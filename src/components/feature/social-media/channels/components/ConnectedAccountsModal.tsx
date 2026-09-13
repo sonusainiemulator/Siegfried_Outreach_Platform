@@ -85,23 +85,34 @@ const ConnectedAccountsModal = ({
                   </div>
 
                   {platform.id === 'google' && (account as any).metadata?.isMock && (
-                    <div className="mt-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-left space-y-1">
+                    <div className="mt-2 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-left space-y-1.5">
                       <div className="flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-400">
                         <AlertTriangle className="w-3 h-3 shrink-0" />
-                        <span>Google Cloud APIs Not Enabled (Project 203941120936)</span>
+                        <span>Google Business Profile: Reconnection Required</span>
                       </div>
-                      <p className="text-[10px] text-muted-foreground leading-tight">
-                        Enable My Business Account Management API to publish live storefront posts.
+                      <p className="text-[10px] text-muted-foreground leading-relaxed">
+                        After enabling the APIs in Google Cloud Console, <strong>disconnect and reconnect</strong> this Google account to fetch your live verified storefront locations.
                       </p>
-                      <a
-                        href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline pt-0.5"
-                      >
-                        <span>Enable API in Cloud Console</span>
-                        <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
+                      <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                        <a
+                          href="https://console.developers.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/overview?project=203941120936"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline"
+                        >
+                          <span>1. Account Management API</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                        <a
+                          href="https://console.developers.google.com/apis/api/mybusinessbusinessinformation.googleapis.com/overview?project=203941120936"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[10px] font-bold text-primary hover:underline"
+                        >
+                          <span>2. Business Information API</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                      </div>
                     </div>
                   )}
                 </div>
