@@ -2,24 +2,24 @@ import CampaignHubLanding from '@/components/landing/campaign-hub/CampaignHubLan
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'TTOS | AI-Powered Marketing & Outreach Platform',
+  title: 'Siegfried Outreach - Social Media Marketing Agency',
   description:
-    'Marketing on Autopilot. Reach your customers where they are across Email, WhatsApp, Telegram, and Social Media with TTOS.',
+    'Scale your brand on autopilot with Siegfried Outreach — the premier Social Media Marketing Agency & AI-powered outreach platform. Automated publishing and campaigns across Instagram, Facebook, LinkedIn, Twitter/X, YouTube, TikTok, Reddit, Google Business, Email & WhatsApp.',
   alternates: {
-    canonical: 'https://ttai.in',
+    canonical: 'https://siegfriedoutreach.com',
   },
   openGraph: {
-    title: 'TTOS | AI-Powered Marketing & Outreach Platform',
+    title: 'Siegfried Outreach - Social Media Marketing Agency',
     description:
-      'Autonomous AI marketing and omnichannel growth engine for global brands, agencies, and businesses.',
-    url: 'https://ttai.in',
-    siteName: 'TTOS',
+      'Premier Social Media Marketing Agency and AI-powered omnichannel growth platform for global brands, agencies, and businesses.',
+    url: 'https://siegfriedoutreach.com',
+    siteName: 'Siegfried Outreach - Social Media Marketing Agency',
     images: [
       {
         url: '/images/dark-logo2.png',
         width: 1200,
         height: 630,
-        alt: 'TTOS Platform',
+        alt: 'Siegfried Outreach Platform',
       },
     ],
   },

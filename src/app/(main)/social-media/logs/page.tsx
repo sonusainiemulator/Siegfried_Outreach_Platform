@@ -2,8 +2,8 @@ import PublishingLogsDashboard from '@/components/feature/social-media/logs/Publ
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Publishing Logs & Telemetry | TTOS',
-  description: 'Real-time social media publishing telemetry, error diagnostics, and resolution tracking for TTOS Platform.',
+  title: 'Publishing Logs & Telemetry | Siegfried Outreach - Social Media Marketing Agency',
+  description: 'Real-time social media publishing telemetry, error diagnostics, and resolution tracking for Siegfried Outreach Platform.',
 }
 
 const Page = () => {

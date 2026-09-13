@@ -2,24 +2,24 @@ import SocialMediaLanding from '@/components/landing/social-media/SocialMediaLan
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Social Media Studio | AI Publishing & Strategy Engine',
+  title: 'Social Media Studio | Siegfried Outreach - Social Media Marketing Agency',
   description:
-    'Boost your social media growth with AI. Create, schedule and publish stunning content for Instagram, Facebook, LinkedIn, Twitter/X, YouTube, TikTok, and Reddit with TTOS.',
+    'Boost your social media growth with AI from Siegfried Outreach — premier Social Media Marketing Agency. Create, schedule and publish stunning content for Instagram, Facebook, LinkedIn, Twitter/X, YouTube, TikTok, Reddit, and Google Business.',
   alternates: {
-    canonical: 'https://ttai.in/landing/social-media',
+    canonical: 'https://siegfriedoutreach.com/landing/social-media',
   },
   openGraph: {
-    title: 'Social Media Studio | AI Publishing & Strategy Engine | TTOS',
+    title: 'Social Media Studio | Siegfried Outreach - Social Media Marketing Agency',
     description:
-      'Multi-channel autonomous social media management, 30-day autopilot content planner, and high-converting ad copy generation.',
-    url: 'https://ttai.in/landing/social-media',
-    siteName: 'TTOS',
+      'Multi-channel autonomous social media management, 30-day autopilot content planner, and high-converting ad copy generation by Siegfried Outreach.',
+    url: 'https://siegfriedoutreach.com/landing/social-media',
+    siteName: 'Siegfried Outreach - Social Media Marketing Agency',
     images: [
       {
         url: '/images/dark-logo2.png',
         width: 1200,
         height: 630,
-        alt: 'TTOS Social Media Studio',
+        alt: 'Siegfried Outreach Social Media Studio',
       },
     ],
   },

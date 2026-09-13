@@ -21,8 +21,8 @@ const DynamicMetadata = () => {
 
     if (settings) {
 
-      // Update Title
-      if (settings.app_name) {
+      // Update Title if default or not set
+      if (settings.app_name && (!document.title || document.title === 'TTOS' || document.title === 'Create Next App')) {
         document.title = settings.app_name
       }
 

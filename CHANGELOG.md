@@ -2,6 +2,33 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🌐 [2026-09-13 21:15:00 CEST] — Universal SEO Update: Siegfried Outreach - Social Media Marketing Agency
+
+### 🔍 Comprehensive SEO & Metadata Overhaul
+- **Root Layout & Metadata (`src/app/layout.tsx`)**:
+  - Updated `metadataBase` to `https://siegfriedoutreach.com`.
+  - Updated `title.default` and `title.template` to `"Siegfried Outreach - Social Media Marketing Agency"`.
+  - Replaced descriptions, author, publisher, and keywords across all meta tags to emphasize Social Media Marketing Agency, AI marketing automation, multi-channel publishing, and omnichannel growth.
+  - Updated OpenGraph (`og:title`, `og:site_name`, `og:description`, `og:url`, `og:image:alt`) and Twitter Cards (`twitter:creator: '@SiegfriedMarket'`) to official Siegfried Outreach branding.
+  - Replaced Schema.org JSON-LD graph with `['Organization', 'MarketingAgency']` and `SoftwareApplication` referencing `https://siegfriedoutreach.com` and `@id: https://siegfriedoutreach.com/#organization`.
+- **Route-Level SEO & Canonical URLs**:
+  - **Homepage (`src/app/page.tsx`)**: Updated page title, description, canonical link (`https://siegfriedoutreach.com`), and OpenGraph metadata.
+  - **Social Media Studio Landing (`src/app/landing/social-media/page.tsx`)**: Updated metadata to `"Social Media Studio | Siegfried Outreach - Social Media Marketing Agency"`.
+  - **Campaign Hub Landing (`src/app/landing/campaign-hub/page.tsx`)**: Updated metadata to `"Campaign Hub | Siegfried Outreach - Social Media Marketing Agency"`.
+  - **Model Context Protocol / MCP Hub (`src/app/mcp/page.tsx`, `src/app/landing/mcp/page.tsx`)**: Updated metadata to `"Social Media MCP Server | Siegfried Outreach - Social Media Marketing Agency"`.
+  - **AI Chat Assistant (`src/app/frontend/ai-chat/page.tsx`)**: Updated metadata to `"AI Chat Assistant | Siegfried Outreach - Social Media Marketing Agency"`.
+  - **Social Media Hub & Telemetry Pages (`dashboard`, `logs`, `analytics`)**: Updated titles and descriptions with Siegfried Outreach agency branding.
+  - **Dynamic Pages (`src/app/[slug]/page.tsx`)**: Formatted title generator updated to `{Slug} | Siegfried Outreach - Social Media Marketing Agency`.
+  - **Data Deletion (`src/app/data-deletion/page.tsx`)**: Updated title, description, and copy to reference Siegfried Outreach.
+- **Sitemap & Search Engine Indexing (`src/app/sitemap.ts`, `src/app/robots.ts`)**:
+  - Updated XML sitemap base URL to `https://siegfriedoutreach.com`.
+  - Updated `robots.txt` sitemap pointer to `https://siegfriedoutreach.com/sitemap.xml`.
+- **Dynamic App Name & Settings Synchronization (`src/layout/DynamicMetadata.tsx`, `src/app/api/setting/*`)**:
+  - Refined `DynamicMetadata` client-side title synchronization to safeguard rich Next.js route metadata.
+  - Updated API route handlers to preserve and ensure `"Siegfried Outreach - Social Media Marketing Agency"` in app settings responses.
+
+---
+
 ## 🛠️ [2026-09-13 20:47:00 CEST] — Fix Google My Business Channel Integration, API Handshake & Mock Listing Detection
 
 ### 📍 Google Business Profile API Fixes

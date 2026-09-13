@@ -12,22 +12,22 @@ export async function generateMetadata({
     .replace(/\b\w/g, (char) => char.toUpperCase())
 
   return {
-    title: `${formattedTitle} | TTOS`,
-    description: `Explore ${formattedTitle} on TTOS — the autonomous AI marketing and outreach operating system.`,
+    title: `${formattedTitle} | Siegfried Outreach - Social Media Marketing Agency`,
+    description: `Explore ${formattedTitle} on Siegfried Outreach — premier Social Media Marketing Agency and AI-powered outreach operating system.`,
     alternates: {
-      canonical: `https://ttai.in/${slug}`,
+      canonical: `https://siegfriedoutreach.com/${slug}`,
     },
     openGraph: {
-      title: `${formattedTitle} | TTOS`,
-      description: `Explore ${formattedTitle} on TTOS — the autonomous AI marketing and outreach platform.`,
-      url: `https://ttai.in/${slug}`,
-      siteName: 'TTOS',
+      title: `${formattedTitle} | Siegfried Outreach - Social Media Marketing Agency`,
+      description: `Explore ${formattedTitle} on Siegfried Outreach — premier Social Media Marketing Agency and AI-powered outreach platform.`,
+      url: `https://siegfriedoutreach.com/${slug}`,
+      siteName: 'Siegfried Outreach - Social Media Marketing Agency',
       images: [
         {
           url: '/images/dark-logo2.png',
           width: 1200,
           height: 630,
-          alt: 'TTOS Platform',
+          alt: `Siegfried Outreach - ${formattedTitle}`,
         },
       ],
     },

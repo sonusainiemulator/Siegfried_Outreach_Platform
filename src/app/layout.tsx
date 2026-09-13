@@ -10,31 +10,36 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ttai.in'),
+  metadataBase: new URL('https://siegfriedoutreach.com'),
   title: {
-    default: 'TTOS | AI-Powered Marketing & Outreach Platform',
-    template: '%s | TTOS',
+    default: 'Siegfried Outreach - Social Media Marketing Agency',
+    template: '%s | Siegfried Outreach - Social Media Marketing Agency',
   },
   description:
-    'TTOS is an enterprise-grade AI-powered marketing and outreach operating system. Automate multi-channel broadcasts across WhatsApp, Telegram, Email, and social publishing with autonomous AI agents.',
+    'Siegfried Outreach is a premier Social Media Marketing Agency and AI-powered marketing platform. Scale your brand with automated multi-channel publishing, campaign orchestration, autonomous AI social management, and omnichannel outreach.',
   keywords: [
-    'TTOS',
-    'AI Marketing Platform',
-    'Omnichannel Marketing',
+    'Siegfried Outreach',
+    'Social Media Marketing Agency',
+    'Social Media Agency',
+    'AI Social Media Marketing',
+    'Social Media Management',
+    'Omnichannel Marketing Agency',
     'Autonomous Outreach Engine',
-    'WhatsApp Marketing Automation',
-    'Telegram Broadcast Automation',
-    'Social Media Publisher',
-    'AI Content Generator',
-    'MCP Server Social Media',
-    'Marketing Automation OS',
-    'Autonomous AI Agents',
+    'Instagram Marketing Agency',
+    'Facebook Marketing Agency',
+    'LinkedIn Growth Agency',
+    'Twitter X Growth Agency',
+    'YouTube Marketing Automation',
+    'TikTok Marketing Agency',
+    'Google My Business Growth',
+    'Social Media Automation OS',
+    'AI Marketing Platform',
   ],
-  authors: [{ name: 'TTOS Platform', url: 'https://ttai.in' }],
-  creator: 'TT INFOTECHS PVT LTD',
-  publisher: 'TTOS',
-  applicationName: 'TTOS',
-  category: 'Marketing Technology',
+  authors: [{ name: 'Siegfried Outreach', url: 'https://siegfriedoutreach.com' }],
+  creator: 'Siegfried Outreach',
+  publisher: 'Siegfried Outreach - Social Media Marketing Agency',
+  applicationName: 'Siegfried Outreach',
+  category: 'Social Media Marketing & Agency Services',
   robots: {
     index: true,
     follow: true,
@@ -49,27 +54,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://ttai.in',
-    siteName: 'TTOS',
-    title: 'TTOS | AI-Powered Marketing & Outreach Platform',
+    url: 'https://siegfriedoutreach.com',
+    siteName: 'Siegfried Outreach - Social Media Marketing Agency',
+    title: 'Siegfried Outreach - Social Media Marketing Agency',
     description:
-      'Enterprise-grade autonomous AI marketing & omnichannel growth platform for WhatsApp, Telegram, Email, and Social Media.',
+      'Premier Social Media Marketing Agency and AI-powered growth platform for multi-channel publishing, automated outreach, and brand growth.',
     images: [
       {
         url: '/images/dark-logo2.png',
         width: 1200,
         height: 630,
-        alt: 'TTOS Autonomous Marketing OS',
+        alt: 'Siegfried Outreach - Social Media Marketing Agency',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TTOS | AI-Powered Marketing & Outreach Platform',
+    title: 'Siegfried Outreach - Social Media Marketing Agency',
     description:
-      'Autonomous AI marketing & omnichannel growth engine for global brands, agencies, and businesses.',
+      'Premier Social Media Marketing Agency and AI-powered growth platform for multi-channel publishing, automated outreach, and brand growth.',
     images: ['/images/dark-logo2.png'],
-    creator: '@ttos_ai',
+    creator: '@SiegfriedMarket',
   },
   icons: {
     icon: '/favicon.ico',
@@ -77,7 +82,7 @@ export const metadata: Metadata = {
     apple: '/images/logo.png',
   },
   alternates: {
-    canonical: 'https://ttai.in',
+    canonical: 'https://siegfriedoutreach.com',
   },
 }
 
@@ -85,33 +90,36 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
-      '@id': 'https://ttai.in/#organization',
-      name: 'TTOS Platform',
-      url: 'https://ttai.in',
+      '@type': ['Organization', 'MarketingAgency'],
+      '@id': 'https://siegfriedoutreach.com/#organization',
+      name: 'Siegfried Outreach - Social Media Marketing Agency',
+      alternateName: 'Siegfried Outreach',
+      url: 'https://siegfriedoutreach.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://ttai.in/images/dark-logo2.png',
+        url: 'https://siegfriedoutreach.com/images/dark-logo2.png',
       },
       sameAs: [
-        'https://twitter.com/ttos_ai',
-        'https://linkedin.com/company/ttos-platform',
+        'https://twitter.com/SiegfriedMarket',
+        'https://linkedin.com/company/siegfriedoutreach',
       ],
+      description:
+        'Premier Social Media Marketing Agency and AI-powered growth platform for multi-channel publishing, automated outreach, and brand growth.',
     },
     {
       '@type': 'SoftwareApplication',
-      '@id': 'https://ttai.in/#software',
-      name: 'TTOS',
+      '@id': 'https://siegfriedoutreach.com/#software',
+      name: 'Siegfried Outreach Platform',
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'All',
-      url: 'https://ttai.in',
+      url: 'https://siegfriedoutreach.com',
       offers: {
         '@type': 'Offer',
         price: '0',
         priceCurrency: 'USD',
       },
       description:
-        'AI-Powered Autonomous Marketing & Omnichannel Outreach Platform for WhatsApp, Telegram, Email, and Social Media.',
+        'AI-Powered Autonomous Marketing & Social Media Operating System for multi-channel publishing, campaign orchestration, and automated outreach.',
     },
   ],
 }
