@@ -20,8 +20,8 @@ export default function CampaignHubFooter() {
   const isDark = !mounted || resolvedTheme === 'dark'
 
   const logoUrl = isDark
-    ? (getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/ttos-logo-dark.png')
-    : (getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/ttos-logo-light.png')
+    ? (getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/siegfried-outreach-og.png')
+    : (getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/siegfried-outreach-og.png')
   const rawAppName = settings?.app_name || 'TTOS'
   const appName = rawAppName.toLowerCase().includes('siegfried') ? 'TTOS' : rawAppName
   const { t } = useTranslation()

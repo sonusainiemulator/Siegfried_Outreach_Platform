@@ -13,14 +13,14 @@ export async function GET(request: NextRequest) {
         data.settings.app_description = 'Social Media Marketing Agency & AI-Powered Outreach Platform';
       }
       // Enforce official TTOS branding and logos
-      data.settings.logo_light_url = '/images/ttos-logo-light.png';
-      data.settings.logo_dark_url = '/images/ttos-logo-dark.png';
-      data.settings.landing_logo_url = '/images/ttos-logo-dark.png';
-      data.settings.sidebar_logo_url = '/images/ttos-logo-square.png';
-      data.settings.mobile_logo_url = '/images/ttos-logo-square.png';
-      data.settings.favicon_url = '/images/ttos-logo-square.png';
-      data.settings.favicon_notification_logo_url = '/images/ttos-logo-square.png';
-      data.settings.onboarding_logo_url = '/images/ttos-logo-dark.png';
+      data.settings.logo_light_url = '/images/siegfried-outreach-og.png';
+      data.settings.logo_dark_url = '/images/siegfried-outreach-og.png';
+      data.settings.landing_logo_url = '/images/siegfried-outreach-og.png';
+      data.settings.sidebar_logo_url = '/images/siegfried-outreach-square.png';
+      data.settings.mobile_logo_url = '/images/siegfried-outreach-square.png';
+      data.settings.favicon_url = '/images/siegfried-outreach-square.png';
+      data.settings.favicon_notification_logo_url = '/images/siegfried-outreach-square.png';
+      data.settings.onboarding_logo_url = '/images/siegfried-outreach-og.png';
     }
     return NextResponse.json(data, { status: res.status });
   } catch {

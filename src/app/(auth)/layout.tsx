@@ -41,7 +41,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
   const displayLogo = logoUrl
     ? getMediaUrl(logoUrl)
-    : (mounted && currentTheme === 'dark' ? '/images/ttos-logo-dark.png' : '/images/ttos-logo-light.png')
+    : (mounted && currentTheme === 'dark' ? '/images/siegfried-outreach-og.png' : '/images/siegfried-outreach-og.png')
 
   if (shouldShowLoader || isAuthenticated) {
     return (
@@ -57,7 +57,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
       <header className="w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-5 sm:py-7 flex items-center justify-between z-20">
         <Link href="/" className="inline-flex items-center gap-3 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
           <Image
-            src={displayLogo || '/images/ttos-logo-light.png'}
+            src={displayLogo || '/images/siegfried-outreach-og.png'}
             alt={settings?.app_name || 'TTOS'}
             width={240}
             height={60}

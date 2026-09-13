@@ -2,6 +2,29 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-13 22:10:00 CEST] — Purged TTOS Previews & Deployed Official Siegfried Outreach OpenGraph Banner Suite
+
+### 🎨 Brand Identity & OpenGraph Image Resolution Fix
+- **Diagnosed Root Cause for "TTOS Image in Live Preview"**:
+  - Identified that social platform crawlers (WhatsApp, Facebook, LinkedIn, iMessage, Twitter/X, Telegram) scrape `og:image` and `twitter:image` tags when link unfurling `https://siegfriedoutreach.com`.
+  - The metadata was pointing to legacy asset aliases (`/images/dark-logo2.png`, `whatsapp_preview_image.png`, `ttos-logo-...`) which contained old TTOS graphics.
+  - Furthermore, `src/utils/index.ts` had a legacy override intercepting brand logos and mapping them to `/images/ttos-logo-...`.
+- **Created Official High-Resolution Siegfried Outreach OG Suite (`sharp`)**:
+  - **OpenGraph Social Preview Banner (`public/images/siegfried-outreach-og.png` - 1200x630)**:
+    - High-contrast agency dark aesthetic (`#080A0F` to `#0D111A`) with soft ambient cyan & violet radial glows.
+    - Official Siegfried Outreach "CS" icon (from uploaded brand assets in `/uploads/logos/`).
+    - Crisp high-impact typography: **Siegfried Outreach - Social Media Marketing Agency**.
+    - Feature tags: `AI Social Manager`, `Multi-Channel Studio`, `Campaign Hub`, and `siegfriedoutreach.com`.
+  - **Square Brand App Icon (`public/images/siegfried-outreach-square.png` - 600x600)**:
+    - Dedicated square icon for Apple Touch icons, WhatsApp square thumbnails, and collapsed sidebar previews.
+- **Universal Metadata & Alias Replacement**:
+  - Updated `src/app/layout.tsx` and all page-level metadata routes (`page.tsx`, `analytics`, `ai-chat`, `mcp`, `[slug]`, `campaign-hub`, `social-media`) to declare `siegfried-outreach-og.png` (1200x630) and `siegfried-outreach-square.png` (600x600).
+  - Overwrote all legacy alias files in `public/images/` (`dark-logo2.png`, `light-logo2.png`, `logo.png`, `whatsapp_preview_image.png`, `telegram_preview_image.png`, and all `ttos-logo-*` files) with the new Siegfried Outreach graphics to ensure immediate cache invalidation across all messaging crawlers.
+  - Purged all `ttos-logo` fallbacks from `SidebarLogo.tsx`, `CampaignHubHeader.tsx`, `CampaignHubFooter.tsx`, `SocialMediaHeader.tsx`, `SocialMediaFooter.tsx`, `LeftSidebar.tsx`, `DynamicMetadata.tsx`, and `api/setting` routes.
+  - Removed legacy TTOS logo remapping logic from `src/utils/index.ts`.
+
+---
+
 ## 📍 [2026-09-13 22:04:00 CEST] — Instagram Live Preview Caption Formatting & Whitespace Engine Fix
 
 ### 📸 Instagram Live Preview Caption Engine (`SocialPostPreview.tsx`)

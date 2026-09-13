@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: 'Siegfried Outreach - Social Media Marketing Agency',
     images: [
       {
-        url: '/images/dark-logo2.png',
+        url: '/images/siegfried-outreach-og.png',
         width: 1200,
         height: 630,
         alt: 'Siegfried Outreach Social Media Studio',

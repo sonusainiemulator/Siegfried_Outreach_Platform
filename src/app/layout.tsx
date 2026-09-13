@@ -61,7 +61,7 @@ export const metadata: Metadata = {
       'Premier Social Media Marketing Agency and AI-powered growth platform for multi-channel publishing, automated outreach, and brand growth.',
     images: [
       {
-        url: '/images/dark-logo2.png',
+        url: '/images/siegfried-outreach-og.png',
         width: 1200,
         height: 630,
         alt: 'Siegfried Outreach - Social Media Marketing Agency',
@@ -73,13 +73,13 @@ export const metadata: Metadata = {
     title: 'Siegfried Outreach - Social Media Marketing Agency',
     description:
       'Premier Social Media Marketing Agency and AI-powered growth platform for multi-channel publishing, automated outreach, and brand growth.',
-    images: ['/images/dark-logo2.png'],
+    images: ['/images/siegfried-outreach-og.png'],
     creator: '@SiegfriedMarket',
   },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
-    apple: '/images/logo.png',
+    apple: '/images/siegfried-outreach-square.png',
   },
   alternates: {
     canonical: 'https://siegfriedoutreach.com',
@@ -97,7 +97,7 @@ const jsonLd = {
       url: 'https://siegfriedoutreach.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://siegfriedoutreach.com/images/dark-logo2.png',
+        url: 'https://siegfriedoutreach.com/images/siegfried-outreach-og.png',
       },
       sameAs: [
         'https://twitter.com/SiegfriedMarket',

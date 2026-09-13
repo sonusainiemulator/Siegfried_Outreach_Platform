@@ -19,7 +19,7 @@ const SOCIALS = [
 
 export default function SocialMediaFooter() {
   const { settings } = useSettings()
-  const logoUrl = getMediaUrl(settings?.landing_logo_url || settings?.logo_dark_url || settings?.logo_light_url) || '/images/ttos-logo-dark.png'
+  const logoUrl = getMediaUrl(settings?.landing_logo_url || settings?.logo_dark_url || settings?.logo_light_url) || '/images/siegfried-outreach-og.png'
   const appName = settings?.app_name || 'Logo'
   const { t } = useTranslation()
   return (

@@ -27,7 +27,7 @@ const DynamicMetadata = () => {
       }
 
       // Update Favicon
-      const faviconUrl = settings?.favicon_url ? getMediaUrl(settings.favicon_url) : '/images/ttos-logo-square.png'
+      const faviconUrl = settings?.favicon_url ? getMediaUrl(settings.favicon_url) : '/images/siegfried-outreach-square.png'
       
       let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']")
 

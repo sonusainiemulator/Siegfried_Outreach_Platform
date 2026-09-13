@@ -41,8 +41,8 @@ export const LeftSidebar = ({
   const currentTheme = mounted ? (theme === 'system' ? systemTheme : theme) : 'light'
 
   // Brand Logo 1: Expanded (Main Brand Logo)
-  const expandedLogoLight = settings?.logo_light_url ? getMediaUrl(settings.logo_light_url) : '/images/ttos-logo-light.png'
-  const expandedLogoDark = settings?.logo_dark_url ? getMediaUrl(settings.logo_dark_url) : '/images/ttos-logo-dark.png'
+  const expandedLogoLight = settings?.logo_light_url ? getMediaUrl(settings.logo_light_url) : '/images/siegfried-outreach-og.png'
+  const expandedLogoDark = settings?.logo_dark_url ? getMediaUrl(settings.logo_dark_url) : '/images/siegfried-outreach-og.png'
   const expandedLogoUrl = currentTheme === 'dark' ? expandedLogoDark : expandedLogoLight
 
   const appName = settings?.app_name || 'TTOS'
