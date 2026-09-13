@@ -150,24 +150,38 @@ export const ChatHeader = ({
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="absolute top-full right-0 mt-3 w-64 bg-white dark:bg-modal-bg-color border border-border/50 rounded-3xl shadow-2xl overflow-hidden p-2 z-50"
+                className="absolute top-full right-0 mt-3 w-72 sm:w-80 bg-white dark:bg-modal-bg-color border border-border/50 rounded-3xl shadow-2xl overflow-hidden p-2 z-50"
               >
-                <div className="p-3 border-b border-border/20">
-                  <p className="text-base font-medium tracking text-muted-foreground dark:text-white ">{t('available_modal')}</p>
+                <div className="p-3 border-b border-border/20 flex items-center justify-between">
+                  <p className="text-sm font-semibold tracking text-foreground">{t('available_modal')}</p>
+                  <span className="text-[10px] text-muted-foreground font-mono">
+                    {currentProviderModels.length} models
+                  </span>
                 </div>
-                <div className="max-h-60 overflow-y-auto no-scrollbar">
-                  {currentProviderModels.map((m: any) => (
-                    <Button
-                      key={m.value}
-                      className={cn(
-                        'flex items-center justify-between bg-unset! w-full p-2! rounded-2xl transition-colors text-left',
-                        m.value === selectedBot?.config?.model ? 'bg-primary/5' : 'hover:bg-muted/20',
-                      )}
-                    >
-                      <span className="text-xs font-medium dark:text-muted-foreground">{m.label}</span>
-                      {m.value === selectedBot?.config?.model && <Check className="w-3.5 h-3.5 text-primary" />}
-                    </Button>
-                  ))}
+                <div className="max-h-72 overflow-y-auto no-scrollbar space-y-0.5 p-1">
+                  {currentProviderModels.map((m: any) => {
+                    const isFree = m.isFree || m.value?.endsWith(':free') || m.label?.includes('[FREE]')
+                    const isSelected = m.value === selectedBot?.config?.model
+                    return (
+                      <Button
+                        key={m.value}
+                        className={cn(
+                          'flex items-center justify-between bg-unset! w-full p-2! rounded-2xl transition-colors text-left',
+                          isSelected ? 'bg-primary/10 border border-primary/20' : 'hover:bg-muted/20',
+                        )}
+                      >
+                        <div className="flex items-center gap-1.5 min-w-0 pr-2">
+                          <span className="text-xs font-medium dark:text-muted-foreground truncate">{m.label}</span>
+                          {isFree && (
+                            <span className="shrink-0 px-1.5 py-0.2 text-[9px] font-bold rounded bg-emerald-500/20 text-emerald-500 border border-emerald-500/30">
+                              FREE
+                            </span>
+                          )}
+                        </div>
+                        {isSelected && <Check className="w-3.5 h-3.5 text-primary shrink-0" />}
+                      </Button>
+                    )
+                  })}
                 </div>
               </motion.div>
             )}

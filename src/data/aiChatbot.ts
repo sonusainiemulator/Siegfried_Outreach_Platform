@@ -19,33 +19,87 @@ export const getModels = () => ({
     { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
   ],
   openrouter: [
+    // --- 100% Free Models (OpenRouter $0.00 Verified) ---
+    { value: 'google/gemma-4-31b-it:free', label: 'Google: Gemma 4 31B [FREE]', isFree: true },
+    { value: 'google/gemma-4-26b-a4b-it:free', label: 'Google: Gemma 4 26B A4B [FREE]', isFree: true },
+    { value: 'inclusionai/ling-3.0-flash-vl:free', label: 'inclusionAI: Ling 3.0 Flash VL [FREE]', isFree: true },
+    { value: 'inclusionai/ling-3.0-flash-fin:free', label: 'inclusionAI: Ling 3.0 Flash Fin [FREE]', isFree: true },
+    { value: 'inclusionai/ling-3.0-flash-sante:free', label: 'inclusionAI: Ling 3.0 Flash Sante [FREE]', isFree: true },
+    { value: 'nex-agi/nex-n2.5-mini:free', label: 'Nex AGI: Nex-N2.5-Mini [FREE]', isFree: true },
+    { value: 'nex-agi/nex-n2.5-pro:free', label: 'Nex AGI: Nex-N2.5-Pro [FREE]', isFree: true },
+    { value: 'dots-studio/dots-3-note-preview:free', label: 'Dots Studio: Dots3-Note Preview [FREE]', isFree: true },
+    { value: 'liquid/lfm-2.5-2.6b:free', label: 'LiquidAI: LFM2.5-2.6B [FREE]', isFree: true },
+    { value: 'nvidia/nemotron-3.5-lightning:free', label: 'NVIDIA: Nemotron 3.5 Lightning [FREE]', isFree: true },
+    { value: 'nvidia/nemotron-3.5-content-safety:free', label: 'NVIDIA: Nemotron 3.5 Content Safety [FREE]', isFree: true },
+    { value: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', label: 'NVIDIA: Nemotron 3 Nano Omni [FREE]', isFree: true },
+    { value: 'nvidia/nemotron-3-super-120b-a12b:free', label: 'NVIDIA: Nemotron 3 Super [FREE]', isFree: true },
+    { value: 'nvidia/nemotron-3-ultra-550b-a55b:free', label: 'NVIDIA: Nemotron 3 Ultra [FREE]', isFree: true },
+    { value: 'poolside/laguna-s-2.1:free', label: 'Poolside: Laguna S 2.1 [FREE]', isFree: true },
+    { value: 'poolside/laguna-xs-2.1:free', label: 'Poolside: Laguna XS 2.1 [FREE]', isFree: true },
+    { value: 'thinkingmachines/inkling-small:free', label: 'Thinking Machines: Inkling Small [FREE]', isFree: true },
+    { value: 'thinkingmachines/inkling:free', label: 'Thinking Machines: Inkling [FREE]', isFree: true },
+    { value: 'cohere/north-mini-code:free', label: 'Cohere: North Mini Code [FREE]', isFree: true },
 
-    { value: 'deepseek/deepseek-chat', label: 'DeepSeek Chat (V3)' },
+    // --- DeepSeek (Latest Live Verified) ---
+    { value: 'deepseek/deepseek-v4.1-flash', label: 'DeepSeek V4.1 Flash' },
+    { value: 'deepseek/deepseek-v4-pro-0813', label: 'DeepSeek V4 Pro 0813' },
+    { value: 'deepseek/deepseek-v4-pro', label: 'DeepSeek V4 Pro 0423' },
+    { value: 'deepseek/deepseek-v4-flash', label: 'DeepSeek V4 Flash 0423' },
+    { value: 'deepseek/deepseek-v4-flash-0731', label: 'DeepSeek V4 Flash 0731' },
+    { value: 'deepseek/deepseek-v4-flash-vision-exp', label: 'DeepSeek V4 Flash Vision Exp' },
+    { value: 'deepseek/deepseek-v3.2', label: 'DeepSeek V3.2' },
+    { value: 'deepseek/deepseek-chat-v3.1', label: 'DeepSeek V3.1' },
+    { value: 'deepseek/deepseek-r1-0528', label: 'DeepSeek R1 0528' },
     { value: 'deepseek/deepseek-r1', label: 'DeepSeek R1' },
     { value: 'deepseek/deepseek-r1-distill-llama-70b', label: 'DeepSeek R1 Distill Llama 70B' },
+    { value: 'deepseek/deepseek-chat', label: 'DeepSeek V3' },
 
+    // --- Anthropic Claude ---
+    { value: 'anthropic/claude-3.7-sonnet', label: 'Claude 3.7 Sonnet' },
     { value: 'anthropic/claude-3.5-sonnet', label: 'Claude 3.5 Sonnet' },
     { value: 'anthropic/claude-3.5-haiku', label: 'Claude 3.5 Haiku' },
-    { value: 'anthropic/claude-3-opus', label: 'Claude 3 Opus' },
+    { value: 'anthropic/claude-opus-5', label: 'Claude Opus 5' },
+    { value: 'anthropic/claude-opus-4.8', label: 'Claude Opus 4.8' },
+    { value: 'anthropic/claude-sonnet-4.6', label: 'Claude Sonnet 4.6' },
+    { value: 'anthropic/claude-haiku-4.5', label: 'Claude Haiku 4.5' },
+    { value: 'anthropic/claude-fable-5.1', label: 'Claude Fable 5.1' },
 
-    { value: 'openai/gpt-4o', label: 'GPT-4o (via OpenRouter)' },
-    { value: 'openai/gpt-4o-mini', label: 'GPT-4o Mini (via OpenRouter)' },
+    // --- OpenAI ---
+    { value: 'openai/gpt-4o', label: 'GPT-4o' },
+    { value: 'openai/gpt-4o-mini', label: 'GPT-4o Mini' },
+    { value: 'openai/gpt-4.5-preview', label: 'GPT-4.5 Preview' },
+    { value: 'openai/o3-mini', label: 'o3 Mini' },
+    { value: 'openai/o1', label: 'o1' },
     { value: 'openai/o1-mini', label: 'o1 Mini' },
+    { value: 'openai/gpt-4.1', label: 'GPT-4.1' },
 
+    // --- Google Gemini ---
+    { value: 'google/gemini-2.5-pro', label: 'Gemini 2.5 Pro' },
+    { value: 'google/gemini-2.5-flash', label: 'Gemini 2.5 Flash' },
     { value: 'google/gemini-2.0-flash-001', label: 'Gemini 2.0 Flash' },
-    { value: 'google/gemini-flash-1.5', label: 'Gemini 1.5 Flash' },
-    { value: 'google/gemini-pro-1.5', label: 'Gemini 1.5 Pro' },
+    { value: 'google/gemini-3.1-flash-lite', label: 'Gemini 3.1 Flash Lite' },
+    { value: 'google/gemini-3-flash-preview', label: 'Gemini 3 Flash Preview' },
 
+    // --- xAI Grok ---
+    { value: 'x-ai/grok-4.6', label: 'Grok 4.6' },
+    { value: 'x-ai/grok-4.5', label: 'Grok 4.5' },
+    { value: 'x-ai/grok-4.3', label: 'Grok 4.3' },
+    { value: 'x-ai/grok-2-1212', label: 'Grok 2' },
+
+    // --- Meta Llama ---
+    { value: 'meta-llama/llama-4-maverick', label: 'Llama 4 Maverick' },
     { value: 'meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B Instruct' },
-    { value: 'meta-llama/llama-3.1-8b-instruct', label: 'Llama 3.1 8B Instruct' },
+    { value: 'meta-llama/llama-3.1-405b-instruct', label: 'Llama 3.1 405B Instruct' },
     { value: 'meta-llama/llama-3.1-70b-instruct', label: 'Llama 3.1 70B Instruct' },
+    { value: 'meta-llama/llama-3.1-8b-instruct', label: 'Llama 3.1 8B Instruct' },
 
-    { value: 'mistralai/mistral-small-3.1-24b-instruct', label: 'Mistral Small 3.1 24B' },
-    { value: 'mistralai/mistral-7b-instruct', label: 'Mistral 7B Instruct' },
-    { value: 'mistralai/mixtral-8x7b-instruct', label: 'Mixtral 8x7B Instruct' },
-
+    // --- Mistral & Qwen ---
+    { value: 'mistralai/mistral-large-2512', label: 'Mistral Large 3 2512' },
+    { value: 'mistralai/mistral-medium-3-5', label: 'Mistral Medium 3.5' },
+    { value: 'mistralai/ministral-8b-2512', label: 'Ministral 3 8B 2512' },
+    { value: 'qwen/qwen3-235b-a22b-2507', label: 'Qwen3 235B A22B Instruct' },
+    { value: 'qwen/qwen3-32b', label: 'Qwen3 32B' },
     { value: 'qwen/qwen-2.5-72b-instruct', label: 'Qwen 2.5 72B Instruct' },
-    { value: 'qwen/qwen-2.5-7b-instruct', label: 'Qwen 2.5 7B Instruct' },
   ],
   gemini: [
     { value: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' },
@@ -186,3 +240,51 @@ export const getSteps = (t: TFunction) => [
   { id: 'customize', label: t('customize', { defaultValue: 'Customize' }), color: 'bg-primary', icon: Palette },
   { id: 'deploy', label: t('deploy', { defaultValue: 'Deploy' }), color: 'bg-purple-500', icon: Share2 },
 ]
+
+export interface OpenRouterModelOption {
+  value: string
+  label: string
+  isFree?: boolean
+  provider?: string
+  contextLength?: number
+  description?: string
+}
+
+export async function fetchLiveOpenRouterModels(apiKey?: string): Promise<{
+  freeModels: OpenRouterModelOption[]
+  latestModels: OpenRouterModelOption[]
+  allModels: OpenRouterModelOption[]
+  totalCount: number
+  freeCount: number
+}> {
+  try {
+    const headers: Record<string, string> = {}
+    if (apiKey) {
+      headers['Authorization'] = `Bearer ${apiKey}`
+    }
+    const res = await fetch('/api/ai/openrouter-models', { headers })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const data = await res.json()
+    if (data.success && data.allModels?.length) {
+      return {
+        freeModels: data.freeModels || [],
+        latestModels: data.latestModels || [],
+        allModels: data.allModels || [],
+        totalCount: data.totalCount || 0,
+        freeCount: data.freeCount || 0,
+      }
+    }
+    throw new Error(data.message || 'Failed')
+  } catch (err) {
+    const staticModels = (getModels().openrouter || []) as OpenRouterModelOption[]
+    const free = staticModels.filter((m) => m.isFree)
+    const nonFree = staticModels.filter((m) => !m.isFree)
+    return {
+      freeModels: free,
+      latestModels: nonFree,
+      allModels: staticModels,
+      totalCount: staticModels.length,
+      freeCount: free.length,
+    }
+  }
+}

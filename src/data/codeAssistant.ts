@@ -25,8 +25,8 @@ export const getCodeModels = (): CodeModel[] => [
     color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
   },
   {
-    value: 'llama-3.3-70b-versatile',
-    label: 'Llama 3.3 70B',
+    value: 'openai/gpt-oss-120b',
+    label: 'GPT-OSS 120B',
     desc: 'Power for complex logic',
     badge: 'Pro',
     color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',

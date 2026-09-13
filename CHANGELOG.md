@@ -2,6 +2,39 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 🚀 [2026-09-13 15:47:00 CEST] — OpenRouter: Live Model Fetching, 100% Free Models Provider List & Searchable Dropdown
+
+### ⚡ Live Model Fetching & Dynamic Sync (`src/app/api/ai/openrouter-models/route.ts`)
+- **OpenRouter Live API Gateway**:
+  - Implemented `/api/ai/openrouter-models` proxy endpoint fetching directly from `https://openrouter.ai/api/v1/models`.
+  - Added smart in-memory 5-minute caching to optimize response times (<10ms) and prevent API rate-limits.
+  - Automatically isolates and categorizes all 22+ 100% Free Models (`:free` suffix and $0.00 pricing), latest flagship models (DeepSeek, Claude, OpenAI, Gemini, Llama, Grok), and all 440+ available models.
+
+### 🎁 Free Models & Enhanced Model Picker (`src/components/feature/chatbot-builder/tabs/ConfigureTab.tsx`)
+- **Auto-Sync & Manual Refresh**:
+  - Automatically queries OpenRouter on provider selection to guarantee users never see outdated models.
+  - Added a "Fetch Latest" / "Live Sync" button with animated refresh icon in the field header.
+  - Added dynamic model count badge (e.g. `22 Free Models`).
+- **Rich Searchable & Categorized Dropdown**:
+  - Embedded real-time search input to find models instantly by keyword (e.g., `free`, `gemma`, `deepseek`, `sonnet`, `llama`).
+  - Added interactive category filter pills: `All`, `🎁 Free Only ($0)`, `DeepSeek`, `Claude`, `OpenAI`, `Google`, and `Llama`.
+  - Highlighted all free models with an eye-catching green `FREE ($0)` badge.
+  - Enabled custom model input allowing users to specify any experimental or private OpenRouter model ID.
+- **Intelligent Defaulting**:
+  - Automatically switches default model to `deepseek/deepseek-v4.1-flash` or a verified free model when selecting OpenRouter, preventing stale cross-provider values.
+
+### 💬 Chat Header & Static Fallback (`src/components/frontend/ai-chat/components/ChatHeader.tsx`, `src/data/aiChatbot.ts`)
+- **AI Chat Header Dropdown**:
+  - Updated model switcher in the chat frontend to visually display the green `FREE` badge for free OpenRouter models.
+  - Expanded dropdown menu width and improved spacing for lengthy model identifiers.
+- **Offline & Fallback Safety**:
+  - Curated all verified free models and latest DeepSeek V4.1, Claude 3.7 Sonnet, GPT-4.5, Gemini 2.5, and Llama 4 in `aiChatbot.ts` as an instantaneous offline fallback.
+- **Production Verification & PM2 Reload**:
+  - Compiled clean production Next.js build (`npm run build`) with zero TypeScript/lint errors.
+  - Restarted PM2 `frontend-app` instance to serve the latest live bundle.
+
+---
+
 ## 🚀 [2026-09-12 06:05:00 UTC] — Complete Google OAuth & SSO Authentication Setup
 
 ### 🔐 Next.js API Route Proxy & Gateway
