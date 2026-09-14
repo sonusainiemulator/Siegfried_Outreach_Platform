@@ -1,6 +1,14 @@
-# 📋 Changelog — TTOS Platform
+# 📋 Changelog — Siegfried_Outreach_Platform
 
 All notable changes, fixes, and feature additions are documented in this file.
+
+## 📍 [2026-09-14 21:00:00 CEST] — Documentation & Changelog Branding Alignment
+
+### 🏷️ Repository Header Update
+- **Updated Primary Header**:
+  - Renamed the main title from `# 📋 Changelog — TTOS Platform` to `# 📋 Changelog — Siegfried_Outreach_Platform` in accordance with repository branding standards.
+
+---
 
 ## 📍 [2026-09-14 20:50:00 CEST] — AI Chatbot Studio Calendly & Appointment Booking Integration + System Prompt Control
 
