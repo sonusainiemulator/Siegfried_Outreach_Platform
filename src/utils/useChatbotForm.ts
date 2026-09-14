@@ -34,6 +34,7 @@ export const useChatbotForm = ({ chatbotId, isEditing, onBack }: UseChatbotFormO
     maxTokens: defaultChatbotConfig.maxTokens,
     interactionType: 'ai_only',
     persona: 'default',
+    systemInstruction: '',
     welcomeMessage: t('default_welcome_message'),
     errorMessage: t('default_error_message'),
     category: 'All',
@@ -86,6 +87,7 @@ export const useChatbotForm = ({ chatbotId, isEditing, onBack }: UseChatbotFormO
         maxTokens: bot.config?.maxTokens || defaultChatbotConfig.maxTokens,
         interactionType: bot.interactionType,
         persona: bot.persona || 'default',
+        systemInstruction: bot.systemInstruction || '',
         welcomeMessage: bot.welcomeMessage,
         errorMessage: bot.errorMessage,
         primaryColor: bot.appearance?.primaryColor || defaultChatbotAppearance.primaryColor,
@@ -127,6 +129,7 @@ export const useChatbotForm = ({ chatbotId, isEditing, onBack }: UseChatbotFormO
     if (formData.apiKey) fd.append('apiKey', formData.apiKey)
     fd.append('provider', formData.provider)
     fd.append('persona', formData.persona)
+    if (formData.systemInstruction) fd.append('systemInstruction', formData.systemInstruction)
     fd.append('welcomeMessage', formData.welcomeMessage)
     fd.append('errorMessage', formData.errorMessage)
     fd.append('interactionType', formData.interactionType)
@@ -178,6 +181,7 @@ export const useChatbotForm = ({ chatbotId, isEditing, onBack }: UseChatbotFormO
     },
     interactionType: formData.interactionType,
     persona: formData.persona,
+    systemInstruction: formData.systemInstruction || '',
     welcomeMessage: formData.welcomeMessage,
     errorMessage: formData.errorMessage,
     category: formData.category,

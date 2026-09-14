@@ -124,6 +124,7 @@ export interface Chatbot {
   description: string
   provider: 'openai' | 'openrouter' | 'anthropic' | 'gemini' | 'custom'
   persona?: string
+  systemInstruction?: string
   config: ChatbotConfig
   appearance: ChatbotAppearance
   trainingData: TrainingData
@@ -222,6 +223,7 @@ export interface ChatbotFormData {
   apiKey: string
   provider: 'openai' | 'openrouter' | 'anthropic' | 'gemini' | 'custom'
   persona: string
+  systemInstruction?: string
   model: string
   temperature: number
   maxTokens: number

@@ -447,6 +447,74 @@ const ConfigureTab = ({ formData, updateFormField }: ConfigureTabProps) => {
           )}
         </div>
       </div>
+
+      {/* AI Persona & System Instructions (e.g. Calendly, Rules, Tone) */}
+      <div className="border-t border-border/20 pt-6 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <Label htmlFor="systemInstruction" className="text-base font-semibold text-foreground flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-primary" />
+              {t('system_instructions', { defaultValue: 'System Instructions & AI Persona' })}
+            </Label>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {t('system_instructions_desc', {
+                defaultValue: 'Define your bot’s identity, personality, rules, and actions (e.g. Calendly appointment booking link).',
+              })}
+            </p>
+          </div>
+
+          {/* Quick Prompt Starters */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <button
+              type="button"
+              onClick={() => {
+                const calendlyTemplate = `You are Christopher Siegfried's official virtual assistant on christophersiegfried.com.
+Your primary role is to answer questions professionally, introduce services, and help visitors book appointments.
+
+APPOINTMENT BOOKING RULES:
+1. Whenever a user asks to book an appointment, schedule a consultation, set up a call, or meet, always provide the Calendly link enthusiastically:
+   "You can book an appointment directly on Christopher Siegfried's calendar here: [Schedule on Calendly](https://calendly.com/YOUR_LINK) — pick any date and time that fits your schedule!"
+2. Never tell the user that you cannot book appointments. Instead, guide them directly to the Calendly link above.
+3. Keep responses warm, concise, professional, and helpful.`
+                updateFormField('systemInstruction', calendlyTemplate)
+                toast.success('Calendly & Appointment template applied!')
+              }}
+              className="text-xs px-2.5 py-1 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-all"
+            >
+              📅 Calendly Booking Prompt
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                const leadGenTemplate = `You are a friendly and helpful business assistant.
+Your goal is to assist visitors, capture their interest, and direct them to book a discovery call.
+When they express interest or ask to speak to someone, guide them to our booking link: [Schedule Meeting](https://calendly.com/YOUR_LINK).`
+                updateFormField('systemInstruction', leadGenTemplate)
+                toast.success('Lead Generation template applied!')
+              }}
+              className="text-xs px-2.5 py-1 rounded-lg bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
+            >
+              💼 Lead Generation
+            </button>
+          </div>
+        </div>
+
+        <div className="relative">
+          <textarea
+            id="systemInstruction"
+            rows={5}
+            value={formData.systemInstruction || ''}
+            onChange={(e) => updateFormField('systemInstruction', e.target.value)}
+            placeholder={`e.g. You are Christopher Siegfried's assistant. When visitors ask to book an appointment or schedule a meeting, always guide them to our Calendly link: https://calendly.com/your-name`}
+            className="w-full p-4 rounded-xl text-sm inner-card glass-dark-card border border-border/40 bg-muted/10 focus:border-primary/50 focus:outline-none transition-all resize-y leading-relaxed text-foreground placeholder:text-muted-foreground/60"
+          />
+          <div className="flex items-center justify-between text-[11px] text-muted-foreground px-1 mt-1">
+            <span>Markdown links like <code>[Book Call](https://calendly.com/...)</code> render as clickable buttons.</span>
+            <span>{(formData.systemInstruction || '').length} characters</span>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

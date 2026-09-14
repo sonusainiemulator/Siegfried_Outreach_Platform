@@ -2,6 +2,23 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-14 20:50:00 CEST] — AI Chatbot Studio Calendly & Appointment Booking Integration + System Prompt Control
+
+### 📅 Rich Calendly Appointment Booking & System Prompt Configuration
+- **Interactive Calendly Button Rendering (`helpers/chat.js`)**:
+  - Implemented automatic URL and markdown link detection in the chatbot iframe.
+  - Formats any Calendly link (`calendly.com`, `cal.com`) into a prominent, high-converting interactive CTA button (**"📅 Book on Calendly"**) styled with primary blue accents, hover elevations, and external-window attributes.
+  - Added HTML sanitization before markdown bold (`**text**`), italic (`*text*`), and URL parsing to preserve security and visual cleanliness.
+- **Added System Instructions & AI Persona Editor (`ConfigureTab.tsx`)**:
+  - Added a dedicated "System Instructions & AI Persona" textarea in Step 1 (Configure) of the Chatbot Builder (`/ai-bot-studio/[chatbotId]?step=configure`).
+  - Integrated one-click Quick Prompt Starters:
+    - **📅 Calendly Booking Prompt**: Pre-configures the AI to act as Christopher Siegfried's appointment booking concierge, warmly directing visitors to schedule on Calendly.
+    - **💼 Lead Generation**: Pre-configures the AI to capture leads and guide visitors toward scheduling discovery calls.
+- **Full-Stack Payload & Type Synchronization (`useChatbotForm.ts`, `types/chatbot.ts`)**:
+  - Integrated `systemInstruction` across form state, load hooks, FormData payloads, and JSON payloads to ensure custom instructions persist seamlessly to MongoDB.
+
+---
+
 ## 📍 [2026-09-14 20:25:00 CEST] — AI Chatbot Studio Embed Widget Fix & WordPress Integration Resolution
 
 ### 🤖 Chatbot Studio Widget Deployment & CORS Interoperability Fix
