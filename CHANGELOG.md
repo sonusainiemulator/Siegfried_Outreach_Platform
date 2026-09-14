@@ -2,6 +2,18 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-14 21:35:00 CEST] — YouTube Multiple Channels & Brand Accounts OAuth Connection Fix
+
+### 🎥 Multi-Channel Support & YouTube Brand Account Chooser
+- **Fixed Google OAuth Account & Channel Selection Bypass (`social-auth.routes.js`, `social-account.controller.js`)**:
+  - Resolved an issue where connecting YouTube on accounts with multiple channels under the same Gmail (e.g. personal profile channel `MAYA DEVI` and Brand Account channel `Apsara Beauty Parlour Bhadra`) automatically defaulted to the primary personal profile without letting the user choose.
+  - Changed Google OAuth authorization URL parameter from `prompt: 'consent'` to `prompt: 'select_account consent'` across both YouTube authorization routes and reconnection endpoints.
+  - With `prompt: 'select_account consent'`, Google now actively displays the Google Account Chooser followed by the YouTube Brand Account / Channel Picker, enabling users to choose any specific channel or brand account associated with their Gmail.
+  - Updated YouTube Data API channel retrieval to include `maxResults=50`.
+  - Reloaded backend services (`api-backend`) via PM2.
+
+---
+
 ## 📍 [2026-09-14 21:00:00 CEST] — Documentation & Changelog Branding Alignment
 
 ### 🏷️ Repository Header Update
