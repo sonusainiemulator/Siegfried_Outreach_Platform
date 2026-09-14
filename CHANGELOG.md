@@ -2,6 +2,29 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-14 20:25:00 CEST] — AI Chatbot Studio Embed Widget Fix & WordPress Integration Resolution
+
+### 🤖 Chatbot Studio Widget Deployment & CORS Interoperability Fix
+- **Diagnosed Embed Script 404 Failure**:
+  - Investigated why the embed script `https://siegfriedoutreach.com/js/chatbot-widget.js` referenced in WordPress (`christophersiegfried.com`) returned `404 Not Found`.
+  - Identified that Next.js frontend lacked the public script asset and App Router route handler for `/js/chatbot-widget.js`, and Nginx was attempting to proxy static `.js` paths without static fallback mapping.
+- **Created Universal Chatbot Loader (`public/js/chatbot-widget.js`)**:
+  - Engineered a high-performance, standalone embed loader that automatically extracts attributes (`data-chatbot-uuid`, `data-iframe-width`, `data-iframe-height`, `data-position`, `data-language`).
+  - Implemented sleek modern UI featuring:
+    - Floating trigger bubble with customizable primary brand colors and interactive chat/close SVG toggle states.
+    - Welcome teaser message bubble with dismiss button and smooth bounce animation.
+    - Full-screen responsive mode on mobile devices (`max-width: 480px`).
+    - Ultra-high z-index (`2147483647`) to prevent obstruction by third-party WordPress themes, Elementor modals, or headers.
+    - Clean `postMessage` protocol bridging between host window and iframe without inline HTML `onload` attributes (CSP compliant).
+- **Added Dynamic Next.js Route Handler (`src/app/js/chatbot-widget.js/route.ts`) & Nginx Direct Alias**:
+  - Configured high-speed route handler with permissive CORS (`Access-Control-Allow-Origin: *`) and caching headers (`Cache-Control: public, max-age=3600`).
+  - Added direct Nginx alias mapping in `siegfriedoutreach.com.conf` and `api.siegfriedoutreach.com.conf` for microsecond asset delivery.
+- **Fixed API-Wide Third-Party CORS Header Restriction (`app.js`)**:
+  - Resolved origin rejections where third-party domains (e.g., `christophersiegfried.com`) attempting to fetch `/api/widget/config/:id` were blocked by the backend CORS whitelist.
+  - Enabled dynamic credentials and permissive origin reflection across embed and chat API endpoints so widgets operate smoothly across all client websites.
+
+---
+
 ## 📍 [2026-09-13 22:17:00 CEST] — Google Business Profile API Diagnostics & Reconnection Workflow Fix
 
 ### 🏢 Google My Business Publishing Diagnostics & Multi-Step Resolution
