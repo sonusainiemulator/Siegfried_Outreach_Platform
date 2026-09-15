@@ -8,6 +8,17 @@ export const trainingApi = baseApi.injectEndpoints({
       providesTags: ['Training'],
     }),
 
+    scrapeWebsite: builder.mutation<
+      { title: string; description?: string; content: string },
+      { url: string }
+    >({
+      query: ({ url }) => ({
+        url: `/training/scrape-url`,
+        method: 'POST',
+        body: { url },
+      }),
+    }),
+
     addTrainingData: builder.mutation<
       { message: string; trainingData: TrainingData },
       { chatbotId: string; data: TrainingDataRequest }
@@ -55,6 +66,7 @@ export const trainingApi = baseApi.injectEndpoints({
 
 export const {
   useGetTrainingDataQuery,
+  useScrapeWebsiteMutation,
   useAddTrainingDataMutation,
   useUpdateTrainingDataMutation,
   useRemoveTrainingDataItemMutation,

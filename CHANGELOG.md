@@ -2,6 +2,27 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-15 19:40:00 CEST] — AI Bot Studio Custom Instructions, Knowledge Base Grounding & Token Floor Fix
+
+### 🤖 AI Bot Persona, Knowledge Retention & Full-Response Generation
+- **Fixed System Instructions & Persona Persistence in Controller (`chatbot.controller.js`)**:
+  - Identified root cause where `systemInstruction` and `persona` fields set in the AI Bot Studio Step 1 (Configure) were discarded because `createChatbot` and `updateChatbot` did not extract or assign them to MongoDB update payloads.
+  - Added full support for `systemInstruction` and `persona` in `createChatbot` and `updateChatbot`, and included them in both single bot (`getChatbotById`) and list (`getAllChatbots`) API projections so custom directives reload seamlessly in the builder.
+- **Direct Training Data Payload Bundling (`useChatbotForm.ts`, `chatbot.controller.js`)**:
+  - Updated `useChatbotForm.ts` to bundle `trainingData` (Q&A pairs and text/website crawled content) directly within `buildJsonPayload` and `buildFormDataPayload`.
+  - Added JSON parsing support for `trainingData` in `updateChatbot` to guarantee knowledge bases are atomically persisted on save.
+- **Enhanced AI Prompt Grounding & Output Token Floor (`aiChatService.js`)**:
+  - Re-architected `getSystemPrompt()` to firmly identify the bot by its configured name and inject `[CUSTOM INSTRUCTIONS & DIRECTIVES]` and `[VERIFIED KNOWLEDGE BASE & FACTS]` with strict prioritization.
+  - Embedded warm appointment booking directives: whenever visitors inquire about consultations, calls, pricing, or bookings, the bot proactively shares Christopher Siegfried's direct Calendly schedule link (`https://calendly.com/christophersiegfried`).
+  - Increased token minimum floor from a restrictive 200 tokens (which abruptly truncated answers mid-sentence) to a healthy minimum of 2000 tokens (`Math.max(Number(config.maxTokens) || 2000, 1000)`).
+  - Updated default `maxTokens` in `types/chatbot.ts` from 200 to 2000.
+- **Populated Christopher Siegfried Bot Knowledge (`seed-christopher-bot.js`)**:
+  - Live-crawled `https://christophersiegfried.com` and populated `trainingData.textContent` with detailed practice scaling and healthcare marketing content.
+  - Added verified Q&A pairs for direct Calendly booking, HIPAA compliance, and clinician services.
+  - Verified end-to-end via chat API with 100% accurate, rich responses and interactive Calendly booking button conversion.
+
+---
+
 ## 📍 [2026-09-14 21:35:00 CEST] — YouTube Multiple Channels & Brand Accounts OAuth Connection Fix
 
 ### 🎥 Multi-Channel Support & YouTube Brand Account Chooser

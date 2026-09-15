@@ -152,6 +152,10 @@ export const useChatbotForm = ({ chatbotId, isEditing, onBack }: UseChatbotFormO
     if (formData.telegram) fd.append('telegram', JSON.stringify(formData.telegram))
     if (formData.whatsapp) fd.append('whatsapp', JSON.stringify(formData.whatsapp))
     if (formData.instagram) fd.append('instagram', JSON.stringify(formData.instagram))
+    fd.append('trainingData', JSON.stringify({
+      qaPairs: qaPairs.map(({ question, answer }) => ({ question, answer })),
+      textContent: textContent.map(({ title, content }) => ({ title, content })),
+    }))
     if (id) fd.append('id', id)
     return fd
   }
@@ -178,6 +182,10 @@ export const useChatbotForm = ({ chatbotId, isEditing, onBack }: UseChatbotFormO
       borderRadius: formData.borderRadius,
       shadow: defaultChatbotAppearance.shadow,
       fontFamily: defaultChatbotAppearance.fontFamily,
+    },
+    trainingData: {
+      qaPairs: qaPairs.map(({ question, answer }) => ({ question, answer })),
+      textContent: textContent.map(({ title, content }) => ({ title, content })),
     },
     interactionType: formData.interactionType,
     persona: formData.persona,

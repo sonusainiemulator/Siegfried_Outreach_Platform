@@ -250,7 +250,7 @@ export interface ChatbotFormData {
 export const defaultChatbotConfig: ChatbotConfig = {
   model: 'gpt-3.5-turbo',
   temperature: 0.0,
-  maxTokens: 200,
+  maxTokens: 2000,
   topP: 1,
 }
 
@@ -330,6 +330,11 @@ export interface TrainTabProps {
   setTextContent: (content: TextContent[]) => void
   activeSource: string | null
   setActiveSource: (source: string | null) => void
+}
+
+export interface WebsiteTrainingProps {
+  textContent: TextContent[]
+  setTextContent: (content: TextContent[]) => void
 }
 
 export interface ChannelTabProps {

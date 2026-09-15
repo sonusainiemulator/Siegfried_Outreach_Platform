@@ -82,7 +82,7 @@ const TrainTab = ({ qaPairs, setQaPairs, textContent, setTextContent, activeSour
       <div className="flex-1 bg-card/20 p-6 rounded-2xl border border-border/10">
         {activeSource === 'text' && <TextTraining textContent={textContent} setTextContent={setTextContent} />}
         {activeSource === 'qa' && <QATraining qaPairs={qaPairs} setQaPairs={setQaPairs} />}
-        {activeSource === 'website' && <WebsiteTraining />}
+        {activeSource === 'website' && <WebsiteTraining textContent={textContent} setTextContent={setTextContent} />}
         {activeSource === 'pdf' && <PDFTraining />}
       </div>
     </div>
