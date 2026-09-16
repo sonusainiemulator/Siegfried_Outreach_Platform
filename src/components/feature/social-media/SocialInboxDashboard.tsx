@@ -283,20 +283,20 @@ export default function SocialInboxDashboard() {
 
   // Filter conversations based on CategoryTab and QuickFilter
   const conversations = (listData?.conversations || []).filter((conv: any) => {
-    const source = (conv.source || conv.platform || '').toLowerCase()
+    const source = (conv.channel || conv.source || conv.platform || conv.metadata?.source || '').toLowerCase()
 
     // Tab filter
     if (activeTab === 'messenger') {
-      if (!source.includes('messenger') && !source.includes('facebook') && source !== 'facebook_comment') return false
+      if (!source.includes('messenger') && !source.includes('facebook')) return false
       if (source === 'facebook_comment') return false
     } else if (activeTab === 'instagram') {
       if (!source.includes('instagram') || source === 'instagram_comment') return false
     } else if (activeTab === 'whatsapp') {
       if (!source.includes('whatsapp')) return false
     } else if (activeTab === 'facebook_comments') {
-      if (source !== 'facebook_comment') return false
+      if (!source.includes('facebook_comment') && !source.includes('facebook comment')) return false
     } else if (activeTab === 'instagram_comments') {
-      if (source !== 'instagram_comment') return false
+      if (!source.includes('instagram_comment') && !source.includes('instagram comment')) return false
     } else if (activeTab === 'tiktok') {
       if (!source.includes('tiktok')) return false
     } else if (activeTab === 'telegram') {
@@ -304,8 +304,12 @@ export default function SocialInboxDashboard() {
     }
 
     // Quick filter
-    if (quickFilter === 'unread' && conv.status === 'resolved') return false
-    if (quickFilter === 'priority' && !conv.isPinned) return false
+    if (quickFilter === 'unread') {
+      if (conv.status === 'resolved') return false
+      if (conv.unreadCount === 0 && conv.status !== 'active' && conv.status !== 'open') return false
+    }
+    if (quickFilter === 'priority' && !conv.isPinned && !conv.tags?.includes('VIP')) return false
+    if (quickFilter === 'follow_up' && conv.status !== 'pending') return false
 
     return true
   })
@@ -499,6 +503,17 @@ export default function SocialInboxDashboard() {
             className="h-8 rounded-lg text-xs text-muted-foreground hover:text-primary"
           >
             Test Chime 🎵
+          </Button>
+
+          {/* Switch to 3-Column Shared Inbox */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.push('/shared-inbox')}
+            className="h-8 rounded-lg text-xs font-semibold gap-1.5 border-primary/30 text-primary hover:bg-primary/10"
+          >
+            <span>Shared Inbox (3-Col)</span>
+            <ExternalLink className="w-3 h-3" />
           </Button>
 
           {/* Refresh */}

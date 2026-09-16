@@ -2,6 +2,39 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 20:15:00 CEST] — Omnichannel WhatsOmni 3-Column Shared Inbox, Live Internal Team Notes, CRM Synchronization & Multi-Tab Fixes
+
+### 📥 3-Column Shared Inbox (WhatsOmni Omnichannel Desk)
+- **Pixel-Perfect 3-Column Shared Inbox Dashboard (`/shared-inbox`, `SharedInboxDashboard.tsx`)**:
+  - Implemented the full 3-column Omnichannel Shared Inbox layout directly matching the user's provided screenshot:
+    - **Column 1 (Conversations List)**:
+      - Real-time search with `+` compose action.
+      - `ASSIGNEE:` dropdown filter (`All Assignees`, `Alex Morgan`, `Sarah Jenkins`, `David Miller`, `Unassigned`).
+      - Underlined Status Tabs: **Open**, **Pending**, and **Resolved** with active bold indicator.
+      - Contact cards with initial avatar circle, floating platform badges (WhatsApp 🟢, Telegram ✈️, Instagram 📸, Two-Way Email ✉️, Facebook Messenger 💬, TikTok 🎵), timestamp, snippet preview, custom tag pills (`VIP`, `Enterprise`, `Telegram Bot`, `Shopify Merchant`, `Lead`), and unread dot indicators.
+    - **Column 2 (Chat Thread & Unified Composer)**:
+      - Contact header with initial avatar, full name, phone number, and channel connection subtitle (`WHATSAPP CLOUD API (+1555-0199)`).
+      - Quick assignee dropdown selector and conversation options menu.
+      - **Internal Notes System**: Built dedicated amber `🔒 Internal Note by [Agent]` block with private note body and timestamp, kept strictly internal to staff.
+      - Outgoing chat bubbles in sleek dark black with double blue/white tick delivery indicators.
+      - Incoming customer bubbles in soft gray.
+      - Dual-mode composer switcher: **`[ Reply ]`** (black active pill) and **`[ Note ]`** (amber active pill).
+      - Status manager: `STATUS: 🟢 Open` with 1-click `Mark: [ Pending ] [ Resolved ]` buttons.
+      - Composer toolbar with document attachments, emoji picker, ✨ AI Copilot smart suggestion wand, and dynamic `Send Reply` / `Add Note` action.
+    - **Column 3 (Contact Profile Details & CRM Synchronization)**:
+      - Large profile avatar with channel badge overlay, contact name, phone, and `CONTACTS.VIP` tag.
+      - Quick actions: `🔕 Mute Contact` toggle and 1-click clipboard copy.
+      - **AI Assistant Control**: Interactive `AI Copilot Chat` toggle switch with instant auto-reply activation for the contact.
+      - **Assigned Team Router**: Select dropdown (`Enterprise Sales & Growth`, `Tier 1 Support`, `Billing & Invoicing`, `VIP Customer Success`, `Technical Operations`).
+      - **CRM Information**: Editable First Name, Last Name, and Email Address with persistent database save.
+- **Multi-Tab Filtering & Channel Ingestion Fixes**:
+  - Fixed category tab filtering across `SocialInboxDashboard.tsx` and backend `listBroadcastConversations` to reliably match conversations across `metadata.source`, `channel`, and `platform`.
+  - Normalized status checks (`active` automatically maps to `open`).
+  - Added new routes: `/shared-inbox`, `/campaign-hub/shared-inbox`, and `/social-media/shared-inbox`.
+  - Added "Shared Inbox" directly to the sidebar under **Campaign Hub** and **Social Studio**.
+  - Added backend endpoints: `PATCH /api/broadcast-inbox/:conversationId/status` and `PATCH /api/broadcast-inbox/:conversationId/details`.
+  - Added RTK Query mutations: `useUpdateConversationStatusMutation` and `useUpdateConversationDetailsMutation`.
+
 ## 📍 [2026-09-16 19:24:00 CEST] — Meta Business Suite Omnichannel Inbox: Facebook & Instagram Comments, TikTok DMs & Rich Media Audio/Video
 
 ### 💬 Meta Business Suite Layout & Comments Integration

@@ -26,6 +26,7 @@ import {
   Layers,
   LayoutDashboard,
   ListFilter,
+  Inbox,
   Mail,
   MapPin,
   Megaphone,
@@ -85,6 +86,13 @@ export const sidebarMenuData: MenuSection[] = [
         icon: 'Bot',
         path: ROUTES.CAMPAIGN_HUB.CAMPAIGN_HUB,
         requiredPermission: PERMISSIONS.VIEW_BROADCASTS,
+      },
+      {
+        id: 'shared-inbox',
+        label: 'Shared Inbox',
+        icon: 'Inbox',
+        path: ROUTES.SHARED_INBOX,
+        requiredPermission: PERMISSIONS.REPLY_CONVERSATION,
       },
       {
         id: 'inbox',

@@ -65,6 +65,7 @@ export const ROUTES = {
     GOOGLE_ADS: '/social-media/google-ads',
     DASHBOARD: '/social-media/dashboard',
     INBOX: '/social-media/inbox',
+    SHARED_INBOX: '/shared-inbox',
     CHANNELS: '/social-media/channels',
     CALENDAR: '/social-media/calendar',
     POST_QUEUE: '/social-media/post-queue',
@@ -76,8 +77,10 @@ export const ROUTES = {
     PLATFORMS: '/social-media/channels',
   },
   PROFILE: '/profile',
+  SHARED_INBOX: '/shared-inbox',
   CAMPAIGN_HUB: {
     CAMPAIGN_HUB: '/campaign-hub/dashboard',
+    SHARED_INBOX: '/shared-inbox',
     MESSAGES: '/campaign-hub/messages',
     BROADCASTS: {
       HOME: '/campaign-hub/broadcasts',

@@ -85,8 +85,10 @@ export const playDmAlertSound = (force = false): void => {
     osc2.connect(gain2);
     gain2.connect(ctx.destination);
     osc2.start(now + 0.1);
-    osc2.stop(now + 0.62);
+    osc2.stop(now + 0.55);
   } catch (err) {
-    console.warn('[AudioAlert] Web Audio playback failed:', err);
+    console.error('Failed to play DM alert chime:', err);
   }
 };
+
+export const playNotificationChime = playDmAlertSound;
