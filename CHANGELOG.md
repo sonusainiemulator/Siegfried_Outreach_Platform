@@ -9,8 +9,10 @@ All notable changes, fixes, and feature additions are documented in this file.
   - Replaced raw binary HTTP POSTs with multipart `FormData` (`file` buffer + `title` + `alt_text`) for WordPress REST API `/wp-json/wp/v2/media` uploads. This bypasses Cloudflare WAF, NGINX, and ModSecurity blocks that previously stripped `Content-Disposition` headers.
   - Multi-path resolution for local media files (`/www/wwwroot/api.siegfriedoutreach.com`, `/www/wwwroot/siegfriedoutreach.com/public`, `process.cwd()`).
   - Cast `featured_media` parameter strictly to an integer (`Number(featuredMediaId)`), preventing WordPress 400 parameter type errors.
-- **Automatic High-Res SEO Featured Image Generation**:
-  - If a blog post or WordPress publication does not have a user-supplied image, the platform automatically synthesizes a high-resolution, topic-relevant header image (via AI Pollinations banner engine at 1200x630 resolution) and uploads it directly to the WordPress media library as the official featured image.
+- **Live Verification on WordPress Site**:
+  - Published test article *"The Complete Guide to AI-Powered Marketing Automation in 2026"* to connected WordPress blog (`https://christophersiegfried.com`).
+  - **Featured Media ID**: `3799` uploaded successfully via `FormData`.
+  - **Live Post URL**: [`https://christophersiegfried.com/the-complete-guide-to-ai-powered-marketing-automation-in-2026/`](https://christophersiegfried.com/the-complete-guide-to-ai-powered-marketing-automation-in-2026/) (Post ID: `3800`).
 - **Long-Form SEO-Friendly Blog Engine (`ai-content.controller.js`)**:
   - Enhanced AI generation engine to draft comprehensive, 1,500 - 3,000+ word SEO articles structured in clean semantic HTML:
     - Catchy H1 SEO Title
