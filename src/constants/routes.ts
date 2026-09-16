@@ -64,6 +64,7 @@ export const ROUTES = {
     REDDIT_ADS: '/social-media/reddit-ads',
     GOOGLE_ADS: '/social-media/google-ads',
     DASHBOARD: '/social-media/dashboard',
+    INBOX: '/social-media/inbox',
     CHANNELS: '/social-media/channels',
     CALENDAR: '/social-media/calendar',
     POST_QUEUE: '/social-media/post-queue',

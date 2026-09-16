@@ -2,11 +2,20 @@ import { baseApi } from './baseApi'
 
 export const campaignInboxApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCampaignConversations: builder.query<any, { page?: number; limit?: number; search?: string }>({
-      query: ({ page = 1, limit = 20, search = '' } = {}) => ({
-        url: `/broadcast-inbox/list?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`,
-        method: 'GET',
-      }),
+    getCampaignConversations: builder.query<any, { page?: number; limit?: number; search?: string; platform?: string; source?: string }>({
+      query: ({ page = 1, limit = 50, search = '', platform, source } = {}) => {
+        let queryString = `page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`
+        if (platform && platform !== 'All' && platform !== 'All Platforms') {
+          queryString += `&platform=${encodeURIComponent(platform)}`
+        }
+        if (source && source !== 'All' && source !== 'All Platforms') {
+          queryString += `&source=${encodeURIComponent(source)}`
+        }
+        return {
+          url: `/broadcast-inbox/list?${queryString}`,
+          method: 'GET',
+        }
+      },
       providesTags: ['CampaignInbox'],
     }),
 

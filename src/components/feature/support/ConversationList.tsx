@@ -20,6 +20,7 @@ import {
   Facebook,
   Globe,
   History,
+  Instagram,
   Mail,
   MessageCircle,
   MoreVertical,
@@ -34,16 +35,12 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 const getChannelIcon = (source: string) => {
-  switch (source?.toLowerCase()) {
-    case 'messenger':
-      return <Facebook className="w-4 h-4 text-messenger" />
-    case 'whatsapp':
-      return <MessageCircle className="w-4 h-4 text-whatsapp" />
-    case 'telegram':
-      return <Send className="w-4 h-4 text-telegram-alt" />
-    default:
-      return <MessageCircle className="w-4 h-4 text-muted-foreground" />
-  }
+  const s = source?.toLowerCase() || ''
+  if (s.includes('instagram')) return <Instagram className="w-4 h-4 text-pink-500" />
+  if (s.includes('messenger') || s.includes('facebook')) return <Facebook className="w-4 h-4 text-messenger" />
+  if (s.includes('whatsapp')) return <MessageCircle className="w-4 h-4 text-whatsapp" />
+  if (s.includes('telegram')) return <Send className="w-4 h-4 text-telegram-alt" />
+  return <MessageCircle className="w-4 h-4 text-muted-foreground" />
 }
 
 const getStatusBadge = (status: string) => {
@@ -167,8 +164,8 @@ const ConversationList = ({
           <div className="flex flex-col gap-3 pt-2">
             <div className="grid grid-cols-2 gap-2">
               {(campaignHub
-                ? ['All Platforms', 'Email', 'WhatsApp', 'Telegram']
-                : ['All Platforms', 'Messenger', 'WhatsApp', 'Telegram']
+                ? ['All Platforms', 'Instagram', 'Messenger', 'WhatsApp', 'Telegram']
+                : ['All Platforms', 'Instagram', 'Messenger', 'WhatsApp', 'Telegram']
               ).map((ch) => {
                 const isActive = channelFilter === ch
                 return (
@@ -190,6 +187,7 @@ const ConversationList = ({
                       )}
                     >
                       {ch === 'All Platforms' && <Globe className="w-3.5 h-3.5" />}
+                      {ch === 'Instagram' && <Instagram className="w-3.5 h-3.5" />}
                       {ch === 'Email' && <Mail className="w-3.5 h-3.5" />}
                       {ch === 'WhatsApp' && <MessageCircle className="w-3.5 h-3.5" />}
                       {ch === 'Telegram' && <Send className="w-3.5 h-3.5" />}

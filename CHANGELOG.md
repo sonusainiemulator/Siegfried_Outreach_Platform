@@ -2,6 +2,34 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 18:40:00 CEST] — Omnichannel Unified Social DM Inbox, Real-Time Chime & Desktop Alerts & Cross-Platform Replies
+
+### 📬 Unified Social Media Direct Message (DM) Inbox
+- **Unified Social DM Inbox Dashboard (`/social-media/inbox`)**:
+  - Implemented a dedicated Omnichannel Social DM Command Center allowing users to read, filter, and respond to incoming direct messages across all connected social channels: Instagram Direct, Facebook Messenger, WhatsApp Business, and Telegram.
+  - Channel filtering tabs (All Platforms, Instagram 📸, Facebook Messenger 👥, WhatsApp 💬, Telegram ✈️) with dynamic counts and live channel badges.
+  - Real-time conversation search across sender names, handles, usernames, and message content.
+  - Contact identity cards showing social platform origin, avatar photo, account handle, and connected business profile.
+  - Built-in quick reply canned response buttons for instant 1-click customer engagement.
+  - Rich reply composer supporting text, multiline expansion, file/image attachments, Enter to send, and direct dispatch indicators.
+- **Real-Time Sound Alert Chime System (`src/utils/audioAlert.ts`, Web Audio API)**:
+  - Built a zero-dependency, ultra-crisp two-tone melodic chime (587.33 Hz [D5] -> 880 Hz [A5]) synthesized via the browser's native Web Audio API.
+  - Added user-controlled Sound Alert toggle (Chime On / Chime Muted) with persistent `localStorage` preference and a "Test Chime 🎵" preview button.
+- **Browser Desktop Push Notifications (`src/hooks/useSocketHandlers.ts`)**:
+  - Added native Web Notification API alerts that trigger whenever an incoming social DM arrives while the tab is inactive or minimized.
+  - Clicking the notification instantly focuses the window and navigates directly to the specific conversation thread (`/social-media/inbox?conversationId=...`).
+- **Inbound Webhook DM Ingestion for Instagram & Facebook (`helpers/instagramEvent.js`, `helpers/facebookEvent.js`)**:
+  - Fixed issue where incoming Instagram and Facebook direct messages were previously skipped.
+  - Inbound DMs are now automatically parsed, sender details and avatar fetched via Meta Graph API, and persisted into MongoDB `Conversation` records with `type: 'social'` and `metadata.source`.
+  - Emits real-time Socket.io events (`receive-message` and `social-dm-received`) directly to the authenticated account owner's room (`user_${userId}`).
+  - Creates persistent in-app notifications in `db.Notification`.
+- **Cross-Platform Reply Dispatching (`services/messaging.service.js`, `controllers/conversation.controller.js`)**:
+  - Added direct Instagram DM sending via Meta Graph API (`/me/messages` with Instagram Scoped IDs) using decrypted access tokens from connected `SocialAccount` models.
+  - Added Facebook Messenger reply support directly using connected Facebook Page access tokens when no chatbot is attached.
+  - Updated `manualReply` and `listBroadcastConversations` to support `type: 'social'` alongside campaign inboxes.
+- **Navigation & Sidebar Integration (`sidebarData.ts`, `routes.ts`)**:
+  - Added "Social DM Inbox" to the Social Media navigation menu in `src/data/sidebarData.ts` with active live status.
+
 ## 📍 [2026-09-16 08:47:00 CEST] — Human-Like Chatbot Conversational Tone & Real-Time Message Deduplication Fix
 
 ### 🤖 Real Human Concierge Feel & Clean Single-Message Rendering

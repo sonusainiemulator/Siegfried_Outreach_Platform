@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { socket } from '@/services/socketSetup'
 import { getMediaUrl } from '@/utils'
 import { isBrowser, isDocument } from '@/utils/environment'
+import { playDmAlertSound } from '@/utils/audioAlert'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -194,23 +195,27 @@ export const useSocketHandlers = () => {
         )
 
         // Show notification if tab is not focused
-        const senderName = data.senderId || message.senderId || 'User'
-        const isCampaign = data.isCampaign || data.type === 'campaign';
-        const targetPath = isCampaign ? '/campaign-hub/messages' : ROUTES.CHAT_ASSISTANT.LIVE_AGENT;
+        const senderName = data.senderName || data.senderId || message.senderName || message.senderId || 'User'
+        const isSocial = data.isSocial || data.platform || (data.source && ['instagram', 'facebook', 'messenger', 'whatsapp', 'telegram', 'twitter'].includes(data.source))
+        const isCampaign = data.isCampaign || data.type === 'campaign'
+        const targetPath = isSocial ? '/social-media/inbox' : (isCampaign ? '/campaign-hub/messages' : ROUTES.CHAT_ASSISTANT.LIVE_AGENT)
 
         if (message.role !== 'assistant') {
+          // Play audio alert chime
+          playDmAlertSound()
+
           // Always show toast if it's from a user
-          toast.info(t('new_message_from', { name: senderName }), {
-            description: message.content.substring(0, 50) + (message.content.length > 50 ? '...' : ''),
-            duration: 5000,
+          toast.info(t('new_message_from', { name: senderName, defaultValue: `New message from ${senderName}` }), {
+            description: message.content ? (message.content.substring(0, 60) + (message.content.length > 60 ? '...' : '')) : 'New direct message',
+            duration: 6000,
             action: {
-              label: t('view'),
+              label: t('view', { defaultValue: 'View DM' }),
               onClick: () =>
                 router.push(`${targetPath}?conversationId=${conversationId}&messageId=${message.id || message._id}`),
             },
             actionButtonStyle: {
               backgroundColor: 'var(--blue-highlight)',
-              color: 'var(--white'
+              color: 'var(--white)'
             },
             classNames: {
               actionButton: 'group-[.toast]:!bg-var(--blue-highlight) group-[.toast]:!text-white',
@@ -473,12 +478,46 @@ export const useSocketHandlers = () => {
       }
     }
 
+    const handleSocialDmReceived = (data: any) => {
+      playDmAlertSound()
+      dispatch(campaignInboxApi.util.invalidateTags(['CampaignInbox']))
+
+      const platformName = data.platformName || data.platform || 'Social'
+      const sender = data.senderName || data.senderId || 'Customer'
+      const content = data.message?.content || 'New direct message'
+
+      toast.info(`New ${platformName} DM from ${sender}`, {
+        description: content.length > 60 ? content.substring(0, 60) + '...' : content,
+        duration: 6000,
+        action: {
+          label: t('view', { defaultValue: 'View DM' }),
+          onClick: () => router.push(`/social-media/inbox?conversationId=${data.conversationId || data.conversation?.id}`)
+        },
+        actionButtonStyle: {
+          backgroundColor: 'var(--blue-highlight)',
+          color: 'var(--white)'
+        }
+      })
+
+      if (typeof document !== 'undefined' && !document.hasFocus()) {
+        sendNotification(`New ${platformName} DM from ${sender}`, {
+          body: content,
+          icon: notificationIcon,
+          onClick: () => {
+            window.focus()
+            router.push(`/social-media/inbox?conversationId=${data.conversationId || data.conversation?.id}`)
+          }
+        })
+      }
+    }
+
     const handleAdminSettingsUpdated = () => {
       dispatch(adminSettingApi.util.invalidateTags(['AdminSettings']))
       toast.info(t('settings_updated_notification', { defaultValue: 'System settings have been updated.' }))
     }
 
     // Register listeners
+    socket.on('social-dm-received', handleSocialDmReceived)
     socket.on(SOCKET.Listeners.Admin_Settings_Updated, handleAdminSettingsUpdated)
     socket.on(SOCKET.Listeners.Receive_Message, handleReceiveMessage)
     socket.on(SOCKET.Listeners.User_Status_Update, handleUserStatusUpdate)
@@ -489,6 +528,7 @@ export const useSocketHandlers = () => {
     socket.on(SOCKET.Listeners.New_Notification, handleNewNotification)
     return () => {
       // Unregister listeners
+      socket.off('social-dm-received', handleSocialDmReceived)
       socket.off(SOCKET.Listeners.Admin_Settings_Updated, handleAdminSettingsUpdated)
       socket.off(SOCKET.Listeners.Receive_Message, handleReceiveMessage)
       socket.off(SOCKET.Listeners.User_Status_Update, handleUserStatusUpdate)

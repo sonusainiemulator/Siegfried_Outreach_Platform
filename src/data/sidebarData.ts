@@ -247,6 +247,13 @@ export const sidebarMenuData: MenuSection[] = [
         requiredPermission: PERMISSIONS.MANAGE_POSTS,
       },
       {
+        id: 'social-inbox',
+        label: 'Social DM Inbox',
+        icon: 'MessageSquare',
+        path: ROUTES.SOCIAL_MEDIA.INBOX,
+        requiredPermission: PERMISSIONS.MANAGE_POSTS,
+      },
+      {
         id: 'social-platform',
         label: 'Channels',
         icon: 'Share2',
