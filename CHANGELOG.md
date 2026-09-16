@@ -2,6 +2,27 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 19:24:00 CEST] — Meta Business Suite Omnichannel Inbox: Facebook & Instagram Comments, TikTok DMs & Rich Media Audio/Video
+
+### 💬 Meta Business Suite Layout & Comments Integration
+- **Full Meta Business Suite Parity (`SocialInboxDashboard.tsx`)**:
+  - Aligned the layout directly with Meta Business Suite Inbox (`business.facebook.com/latest/inbox/all/`):
+    - Top Category Tabs: **All messages**, **Messenger**, **Instagram**, **WhatsApp** (*with green `New` pill badge*), **Facebook comments**, **Instagram comments**, **TikTok DMs**, and **Telegram**.
+    - Quick Filter Pills: **All**, **Unread**, **Priority**, **Ad replies**, and **Follow up**.
+    - Contact Header: Circular avatar with letter/brand badge, contact name, and **"Assign this conversation ▼"** agent assignment dropdown.
+    - Post Reference Bar: When viewing a Facebook or Instagram comment, displays the parent post title with a direct link to the live post.
+- **Inbound Comment Ingestion & Replying (`instagramEvent.js`, `facebookEvent.js`, `messaging.service.js`)**:
+  - Facebook comments and Instagram comments are now automatically captured from incoming Meta webhooks, mapped to `type: 'social'` with `metadata.source: 'facebook_comment'` and `'instagram_comment'`.
+  - Emits real-time audio and desktop notifications when new comments are posted.
+  - Agents can reply directly from the unified composer; replies are dispatched via Meta Graph API directly back onto the post thread.
+- **Rich Media & Voice Notes Support (`VoiceNotePlayer`)**:
+  - Built an interactive **Voice Note Audio Player** component supporting WhatsApp, Messenger, and Telegram audio/voice notes with play/pause controls, interactive audio waveform visualization, elapsed/total time tracking, and playback rate.
+  - Inline HTML5 video player for shared video attachments.
+  - Full document download cards for PDFs, spreadsheets, and documents.
+  - Lightbox zoom modal for photos and images.
+- **TikTok DM Support (`messaging.service.js`, `SocialInboxDashboard.tsx`)**:
+  - Integrated TikTok DM category tab and messaging pipeline for incoming and outgoing TikTok conversations.
+
 ## 📍 [2026-09-16 18:40:00 CEST] — Omnichannel Unified Social DM Inbox, Real-Time Chime & Desktop Alerts & Cross-Platform Replies
 
 ### 📬 Unified Social Media Direct Message (DM) Inbox

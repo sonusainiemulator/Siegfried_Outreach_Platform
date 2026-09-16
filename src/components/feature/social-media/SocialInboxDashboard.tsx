@@ -9,7 +9,6 @@ import {
   Search,
   Send,
   Bell,
-  BellOff,
   Volume2,
   VolumeX,
   RefreshCw,
@@ -29,7 +28,18 @@ import {
   ExternalLink,
   ShieldCheck,
   Radio,
-  Clock
+  Clock,
+  SlidersHorizontal,
+  Play,
+  Pause,
+  FileText,
+  Video,
+  ChevronDown,
+  UserCheck,
+  Star,
+  Bookmark,
+  Share2,
+  Film
 } from 'lucide-react'
 
 import {
@@ -51,58 +61,35 @@ import { DeleteConfirmationModal } from '@/components/reusable/DeleteConfirmatio
 import { ImageLightbox } from '@/components/feature/support/components'
 import { getMediaUrl } from '@/utils'
 
-type PlatformFilter = 'All' | 'instagram' | 'facebook' | 'whatsapp' | 'telegram' | 'twitter'
+// Meta Business Suite category tabs
+type CategoryTab =
+  | 'all'
+  | 'messenger'
+  | 'instagram'
+  | 'whatsapp'
+  | 'facebook_comments'
+  | 'instagram_comments'
+  | 'tiktok'
+  | 'telegram'
 
-interface PlatformInfo {
-  id: PlatformFilter
+type QuickFilter = 'all' | 'unread' | 'priority' | 'ad_replies' | 'follow_up'
+
+interface TabConfig {
+  id: CategoryTab
   label: string
+  badge?: string
   icon: React.ReactNode
-  color: string
-  bgLight: string
-  borderColor: string
 }
 
-const PLATFORMS: PlatformInfo[] = [
-  {
-    id: 'All',
-    label: 'All Platforms',
-    icon: <MessageSquare className="w-4 h-4" />,
-    color: 'text-primary',
-    bgLight: 'bg-primary/10',
-    borderColor: 'border-primary/20',
-  },
-  {
-    id: 'instagram',
-    label: 'Instagram Direct',
-    icon: <Instagram className="w-4 h-4 text-pink-500" />,
-    color: 'text-pink-500',
-    bgLight: 'bg-gradient-to-r from-pink-500/10 to-purple-500/10',
-    borderColor: 'border-pink-500/30',
-  },
-  {
-    id: 'facebook',
-    label: 'Facebook Messenger',
-    icon: <Facebook className="w-4 h-4 text-blue-500" />,
-    color: 'text-blue-500',
-    bgLight: 'bg-blue-500/10',
-    borderColor: 'border-blue-500/30',
-  },
-  {
-    id: 'whatsapp',
-    label: 'WhatsApp Business',
-    icon: <MessageCircle className="w-4 h-4 text-emerald-500" />,
-    color: 'text-emerald-500',
-    bgLight: 'bg-emerald-500/10',
-    borderColor: 'border-emerald-500/30',
-  },
-  {
-    id: 'telegram',
-    label: 'Telegram',
-    icon: <Send className="w-4 h-4 text-sky-500" />,
-    color: 'text-sky-500',
-    bgLight: 'bg-sky-500/10',
-    borderColor: 'border-sky-500/30',
-  },
+const CATEGORY_TABS: TabConfig[] = [
+  { id: 'all', label: 'All messages', icon: <MessageSquare className="w-4 h-4" /> },
+  { id: 'messenger', label: 'Messenger', icon: <Facebook className="w-4 h-4 text-blue-500" /> },
+  { id: 'instagram', label: 'Instagram', icon: <Instagram className="w-4 h-4 text-pink-500" /> },
+  { id: 'whatsapp', label: 'WhatsApp', badge: 'New', icon: <MessageCircle className="w-4 h-4 text-emerald-500" /> },
+  { id: 'facebook_comments', label: 'Facebook comments', icon: <Facebook className="w-4 h-4 text-blue-600" /> },
+  { id: 'instagram_comments', label: 'Instagram comments', icon: <Instagram className="w-4 h-4 text-purple-500" /> },
+  { id: 'tiktok', label: 'TikTok DMs', icon: <Film className="w-4 h-4 text-black dark:text-white" /> },
+  { id: 'telegram', label: 'Telegram', icon: <Send className="w-4 h-4 text-sky-500" /> },
 ]
 
 const QUICK_REPLIES = [
@@ -110,8 +97,87 @@ const QUICK_REPLIES = [
   'Thank you for reaching out! We will review your request right away.',
   'Could you please share your email or phone number so we can assist you better?',
   'Our team is reviewing your inquiry and will follow up shortly!',
-  'You can check our latest plans and pricing directly on our website.',
+  'You can check our latest plans and services directly on our website.',
 ]
+
+// Audio Player Component for Voice Notes
+function VoiceNotePlayer({ url }: { url: string }) {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  const togglePlay = () => {
+    if (!audioRef.current) return
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    } else {
+      audioRef.current.play()
+      setIsPlaying(true)
+    }
+  }
+
+  const onTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime)
+    }
+  }
+
+  const onLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration)
+    }
+  }
+
+  const formatSecs = (sec: number) => {
+    const mins = Math.floor(sec / 60)
+    const s = Math.floor(sec % 60)
+    return `${mins}:${s < 10 ? '0' : ''}${s}`
+  }
+
+  return (
+    <div className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/40 border border-glass-border min-w-[220px]">
+      <audio
+        ref={audioRef}
+        src={url}
+        onTimeUpdate={onTimeUpdate}
+        onLoadedMetadata={onLoadedMetadata}
+        onEnded={() => setIsPlaying(false)}
+      />
+      <button
+        onClick={togglePlay}
+        className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0 hover:bg-primary/90 transition-transform active:scale-95 shadow-sm"
+      >
+        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+      </button>
+
+      <div className="flex-1 space-y-1">
+        {/* Waveform bars simulation */}
+        <div className="flex items-center gap-0.5 h-4">
+          {[40, 70, 30, 85, 100, 60, 45, 90, 75, 50, 65, 80, 40, 95, 70, 30].map((height, i) => {
+            const progress = duration > 0 ? (currentTime / duration) * 16 : 0
+            const isPlayed = i <= progress
+            return (
+              <span
+                key={i}
+                style={{ height: `${height}%` }}
+                className={cn(
+                  'w-1 rounded-full transition-colors',
+                  isPlayed ? 'bg-primary' : 'bg-muted-foreground/30'
+                )}
+              />
+            )
+          })}
+        </div>
+        <div className="flex justify-between text-[10px] text-muted-foreground">
+          <span>{formatSecs(currentTime)}</span>
+          <span>{duration > 0 ? formatSecs(duration) : 'Voice note'}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function SocialInboxDashboard() {
   const { t } = useTranslation()
@@ -120,12 +186,14 @@ export default function SocialInboxDashboard() {
 
   const initialConvId = searchParams.get('conversationId')
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(initialConvId)
-  const [activePlatform, setActivePlatform] = useState<PlatformFilter>('All')
+  const [activeTab, setActiveTab] = useState<CategoryTab>('all')
+  const [quickFilter, setQuickFilter] = useState<QuickFilter>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [replyText, setReplyText] = useState('')
   const [attachedFiles, setAttachedFiles] = useState<File[]>([])
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true)
   const [desktopAlertsGranted, setDesktopAlertsGranted] = useState<boolean>(false)
+  const [assignedAgent, setAssignedAgent] = useState<string>('Christopher Siegfried')
 
   // Modals & Lightbox
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -137,7 +205,6 @@ export default function SocialInboxDashboard() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Sound preference init
   useEffect(() => {
     setSoundEnabled(isSoundAlertEnabled())
     if (typeof window !== 'undefined' && 'Notification' in window) {
@@ -151,9 +218,9 @@ export default function SocialInboxDashboard() {
     setSoundAlertEnabled(next)
     if (next) {
       playDmAlertSound(true)
-      toast.success('Sound alerts enabled! You will hear a chime on new DMs.')
+      toast.success('Sound alerts enabled!')
     } else {
-      toast.info('Sound alerts disabled.')
+      toast.info('Sound alerts muted.')
     }
   }
 
@@ -164,38 +231,34 @@ export default function SocialInboxDashboard() {
 
   const requestDesktopPermission = async () => {
     if (typeof window === 'undefined' || !('Notification' in window)) {
-      toast.error('Browser desktop notifications are not supported in this browser.')
+      toast.error('Browser notifications are not supported.')
       return
     }
     try {
       const perm = await Notification.requestPermission()
       if (perm === 'granted') {
         setDesktopAlertsGranted(true)
-        toast.success('Desktop alerts enabled! You will be alerted when new DMs arrive.')
-        new Notification('Siegfried Social DM Alerts Active', {
-          body: 'You are now ready to receive real-time social direct messages!',
+        toast.success('Desktop alerts enabled!')
+        new Notification('Siegfried Social Inbox Alerts Active', {
+          body: 'You are now ready to receive real-time direct messages and comments!',
           icon: '/favicon.ico',
         })
-      } else {
-        setDesktopAlertsGranted(false)
-        toast.error('Notification permission was not granted.')
       }
-    } catch (e) {
+    } catch {
       toast.error('Could not request notification permissions.')
     }
   }
 
-  // Fetch conversations with platform and search query
+  // Fetch list
   const {
     data: listData,
     isLoading: isListLoading,
     refetch: refetchList,
   } = useGetCampaignConversationsQuery({
     search: searchQuery,
-    platform: activePlatform,
   })
 
-  // Fetch single conversation messages history
+  // Fetch history
   const {
     data: historyData,
     isLoading: isHistoryLoading,
@@ -207,12 +270,10 @@ export default function SocialInboxDashboard() {
   const [sendReply, { isLoading: isReplying }] = useCampaignInboxReplyMutation()
   const [deleteConversation, { isLoading: isDeleting }] = useDeleteCampaignConversationMutation()
 
-  // Auto-scroll chat to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [historyData?.conversation?.messages])
 
-  // Sync route param with state
   useEffect(() => {
     const paramId = searchParams.get('conversationId')
     if (paramId && paramId !== selectedConversationId) {
@@ -220,21 +281,38 @@ export default function SocialInboxDashboard() {
     }
   }, [searchParams])
 
+  // Filter conversations based on CategoryTab and QuickFilter
   const conversations = (listData?.conversations || []).filter((conv: any) => {
-    if (activePlatform !== 'All') {
-      const convSource = (conv.source || conv.platform || '').toLowerCase()
-      if (activePlatform === 'whatsapp' && !convSource.includes('whatsapp')) return false
-      if (activePlatform === 'facebook' && !convSource.includes('facebook') && !convSource.includes('messenger')) return false
-      if (activePlatform === 'instagram' && !convSource.includes('instagram')) return false
-      if (activePlatform === 'telegram' && !convSource.includes('telegram')) return false
-      if (activePlatform === 'twitter' && !convSource.includes('twitter')) return false
+    const source = (conv.source || conv.platform || '').toLowerCase()
+
+    // Tab filter
+    if (activeTab === 'messenger') {
+      if (!source.includes('messenger') && !source.includes('facebook') && source !== 'facebook_comment') return false
+      if (source === 'facebook_comment') return false
+    } else if (activeTab === 'instagram') {
+      if (!source.includes('instagram') || source === 'instagram_comment') return false
+    } else if (activeTab === 'whatsapp') {
+      if (!source.includes('whatsapp')) return false
+    } else if (activeTab === 'facebook_comments') {
+      if (source !== 'facebook_comment') return false
+    } else if (activeTab === 'instagram_comments') {
+      if (source !== 'instagram_comment') return false
+    } else if (activeTab === 'tiktok') {
+      if (!source.includes('tiktok')) return false
+    } else if (activeTab === 'telegram') {
+      if (!source.includes('telegram')) return false
     }
+
+    // Quick filter
+    if (quickFilter === 'unread' && conv.status === 'resolved') return false
+    if (quickFilter === 'priority' && !conv.isPinned) return false
+
     return true
   })
 
-  const selectedConversation = conversations.find(
-    (c: any) => c.id === selectedConversationId
-  ) || (historyData?.conversation?.id === selectedConversationId ? historyData.conversation : null)
+  const selectedConversation =
+    conversations.find((c: any) => c.id === selectedConversationId) ||
+    (historyData?.conversation?.id === selectedConversationId ? historyData.conversation : null)
 
   const messages = historyData?.conversation?.messages || []
 
@@ -256,11 +334,11 @@ export default function SocialInboxDashboard() {
 
       setReplyText('')
       setAttachedFiles([])
-      toast.success('Reply dispatched directly to customer!')
+      toast.success('Reply dispatched directly!')
       refetchHistory()
       refetchList()
     } catch (err: any) {
-      toast.error(err?.data?.message || 'Failed to dispatch reply')
+      toast.error(err?.data?.message || 'Failed to send reply')
     }
   }
 
@@ -298,40 +376,61 @@ export default function SocialInboxDashboard() {
     }
   }
 
-  const getChannelBadge = (source: string) => {
+  const getPlatformIcon = (source: string) => {
     const s = (source || '').toLowerCase()
+    if (s === 'instagram_comment') {
+      return (
+        <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-xs" title="Instagram Comment">
+          <MessageSquare className="w-2.5 h-2.5" />
+        </div>
+      )
+    }
+    if (s === 'facebook_comment') {
+      return (
+        <div className="w-4 h-4 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-xs" title="Facebook Comment">
+          <MessageSquare className="w-2.5 h-2.5" />
+        </div>
+      )
+    }
     if (s.includes('instagram')) {
       return (
-        <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-500 border border-pink-500/20">
-          <Instagram className="w-3 h-3" /> Instagram
-        </span>
+        <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-xs" title="Instagram Direct">
+          <Instagram className="w-2.5 h-2.5" />
+        </div>
       )
     }
     if (s.includes('facebook') || s.includes('messenger')) {
       return (
-        <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-500 border border-blue-500/20">
-          <Facebook className="w-3 h-3" /> Messenger
-        </span>
+        <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-white shadow-xs" title="Facebook Messenger">
+          <Facebook className="w-2.5 h-2.5" />
+        </div>
       )
     }
     if (s.includes('whatsapp')) {
       return (
-        <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-          <MessageCircle className="w-3 h-3" /> WhatsApp
-        </span>
+        <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-xs" title="WhatsApp Business">
+          <MessageCircle className="w-2.5 h-2.5" />
+        </div>
+      )
+    }
+    if (s.includes('tiktok')) {
+      return (
+        <div className="w-4 h-4 rounded-full bg-black dark:bg-zinc-800 flex items-center justify-center text-white shadow-xs" title="TikTok DM">
+          <Film className="w-2.5 h-2.5" />
+        </div>
       )
     }
     if (s.includes('telegram')) {
       return (
-        <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-500 border border-sky-500/20">
-          <Send className="w-3 h-3" /> Telegram
-        </span>
+        <div className="w-4 h-4 rounded-full bg-sky-500 flex items-center justify-center text-white shadow-xs" title="Telegram">
+          <Send className="w-2.5 h-2.5" />
+        </div>
       )
     }
     return (
-      <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-        <MessageSquare className="w-3 h-3" /> Direct
-      </span>
+      <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center text-white shadow-xs">
+        <MessageSquare className="w-2.5 h-2.5" />
+      </div>
     )
   }
 
@@ -340,101 +439,64 @@ export default function SocialInboxDashboard() {
     const d = new Date(dateStr)
     const now = new Date()
     const diffMs = now.getTime() - d.getTime()
-    const diffMins = Math.floor(diffMs / 60000)
-    const diffHours = Math.floor(diffMins / 60)
-    const diffDays = Math.floor(diffHours / 24)
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
-    if (diffMins < 1) return 'Just now'
-    if (diffMins < 60) return `${diffMins}m ago`
-    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffDays === 0) {
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }
     if (diffDays === 1) return 'Yesterday'
-    if (diffDays < 7) return `${diffDays}d ago`
-    return d.toLocaleDateString()
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    return `${d.getDate()} ${months[d.getMonth()]}`
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] max-h-[calc(100vh-80px)] overflow-hidden animate-in fade-in duration-500">
-      {/* Top Bar / Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 mb-3 rounded-2xl glass-card glass-dark-card border border-glass-border shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-tr from-primary/30 to-purple-500/20 text-primary border border-primary/20 shadow-inner">
-            <Radio className="w-6 h-6 animate-pulse text-primary" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold tracking-tight text-foreground">
-                Unified Social DM Inbox
-              </h1>
-              <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                Live Sync
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Read & respond to Instagram, Messenger, WhatsApp, and Telegram direct messages all in one place.
-            </p>
-          </div>
+    <div className="flex flex-col h-[calc(100vh-80px)] max-h-[calc(100vh-80px)] overflow-hidden bg-background">
+      {/* Meta Business Suite Header */}
+      <div className="border-b border-glass-border bg-background/95 backdrop-blur-md px-6 py-3.5 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">Inbox</h1>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Respond to messages, comments, set up automations and more.
+          </p>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Desktop Alerts Toggle */}
+        <div className="flex items-center gap-2">
+          {/* Desktop Alerts */}
           <Button
             variant={desktopAlertsGranted ? 'outline' : 'default'}
             size="sm"
             onClick={requestDesktopPermission}
             className={cn(
-              'h-9 rounded-xl text-xs font-semibold gap-1.5 transition-all shadow-sm',
+              'h-8 rounded-lg text-xs font-medium gap-1.5 shadow-xs',
               desktopAlertsGranted
                 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30 hover:bg-emerald-500/20'
-                : 'bg-primary text-white hover:bg-primary/90'
+                : 'bg-primary text-white'
             )}
           >
-            {desktopAlertsGranted ? (
-              <>
-                <Bell className="w-3.5 h-3.5 text-emerald-500" />
-                Desktop Alerts Active
-              </>
-            ) : (
-              <>
-                <Bell className="w-3.5 h-3.5" />
-                Enable Desktop Alerts
-              </>
-            )}
+            <Bell className="w-3.5 h-3.5" />
+            {desktopAlertsGranted ? 'Alerts Active' : 'Enable Desktop Alerts'}
           </Button>
 
-          {/* Sound Alert Toggle */}
+          {/* Sound Toggle */}
           <Button
             variant="outline"
             size="sm"
             onClick={toggleSound}
             className={cn(
-              'h-9 rounded-xl text-xs font-semibold gap-1.5 border border-glass-border shadow-sm',
-              soundEnabled
-                ? 'bg-primary/10 text-primary hover:bg-primary/20 border-primary/30'
-                : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+              'h-8 rounded-lg text-xs font-medium gap-1.5 border-glass-border shadow-xs',
+              soundEnabled ? 'text-primary bg-primary/5 border-primary/20' : 'text-muted-foreground'
             )}
-            title={soundEnabled ? 'Click to mute chime alerts' : 'Click to enable chime alerts'}
           >
-            {soundEnabled ? (
-              <>
-                <Volume2 className="w-3.5 h-3.5 text-primary" />
-                Chime On
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5 text-muted-foreground" />
-                Chime Muted
-              </>
-            )}
+            {soundEnabled ? <Volume2 className="w-3.5 h-3.5 text-primary" /> : <VolumeX className="w-3.5 h-3.5" />}
+            {soundEnabled ? 'Chime On' : 'Muted'}
           </Button>
 
-          {/* Test Sound */}
+          {/* Test Chime */}
           <Button
             variant="ghost"
             size="sm"
             onClick={handleTestSound}
-            className="h-9 rounded-xl text-xs text-muted-foreground hover:text-primary hover:bg-primary/10"
-            title="Preview DM notification chime sound"
+            className="h-8 rounded-lg text-xs text-muted-foreground hover:text-primary"
           >
             Test Chime 🎵
           </Button>
@@ -446,62 +508,103 @@ export default function SocialInboxDashboard() {
             onClick={() => {
               refetchList()
               if (selectedConversationId) refetchHistory()
-              toast.info('Inbox refreshed')
             }}
-            className="h-9 w-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10"
-            title="Refresh inbox"
+            className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5" />
           </Button>
         </div>
       </div>
 
-      {/* Main Container */}
-      <div className="flex flex-1 overflow-hidden rounded-2xl glass-card glass-dark-card border border-glass-border shadow-md">
-        {/* Left Column: Platform Tabs & Conversation List */}
-        <div className="w-full md:w-80 lg:w-96 flex flex-col border-r border-glass-border bg-background/50 backdrop-blur-sm shrink-0">
-          {/* Platform Filters */}
-          <div className="p-3 border-b border-glass-border">
-            <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-              {PLATFORMS.map((pf) => {
-                const isActive = activePlatform === pf.id
+      {/* Category Tabs (All messages, Messenger, Instagram, WhatsApp New, Facebook comments, Instagram comments, TikTok DMs) */}
+      <div className="border-b border-glass-border px-6 flex items-center gap-2 overflow-x-auto no-scrollbar bg-background/80">
+        {CATEGORY_TABS.map((tab) => {
+          const isActive = activeTab === tab.id
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold whitespace-nowrap transition-all border-b-2 relative',
+                isActive
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30'
+              )}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+              {tab.badge && (
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-500 text-white uppercase leading-tight shadow-xs">
+                  {tab.badge}
+                </span>
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Main Body: Left Conversations Sidebar + Right Chat Pane */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left Column: Search, Filters, and Conversation List */}
+        <div className="w-full md:w-80 lg:w-[380px] flex flex-col border-r border-glass-border bg-background shrink-0">
+          {/* Search + Manage button */}
+          <div className="p-3.5 pb-2 border-b border-glass-border space-y-3">
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 h-9 text-xs rounded-lg bg-muted/20 border-glass-border focus-visible:ring-primary/20"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 px-3 text-xs font-medium rounded-lg border-glass-border gap-1.5 shadow-xs shrink-0"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
+                Manage
+              </Button>
+            </div>
+
+            {/* Quick Filter Pills (All, Unread, Priority, Ad replies, Follow up) */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs">
+              {(
+                [
+                  { id: 'all', label: 'All' },
+                  { id: 'unread', label: 'Unread' },
+                  { id: 'priority', label: 'Priority' },
+                  { id: 'ad_replies', label: 'Ad replies' },
+                  { id: 'follow_up', label: 'Follow up' },
+                ] as const
+              ).map((f) => {
+                const isSelected = quickFilter === f.id
                 return (
                   <button
-                    key={pf.id}
-                    onClick={() => setActivePlatform(pf.id)}
+                    key={f.id}
+                    onClick={() => setQuickFilter(f.id)}
                     className={cn(
-                      'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border',
-                      isActive
-                        ? 'bg-primary text-white shadow-sm border-primary shadow-primary/20'
-                        : 'bg-background/80 text-muted-foreground hover:bg-primary/5 hover:text-primary border-glass-border'
+                      'px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-all border',
+                      isSelected
+                        ? 'bg-primary text-white border-primary shadow-xs'
+                        : 'bg-muted/30 text-muted-foreground border-glass-border hover:text-foreground hover:bg-muted/50'
                     )}
                   >
-                    <span className={isActive ? 'text-white' : ''}>{pf.icon}</span>
-                    <span>{pf.id === 'All' ? 'All Channels' : pf.label.split(' ')[0]}</span>
+                    {f.label}
                   </button>
                 )
               })}
-            </div>
-          </div>
-
-          {/* Search Box */}
-          <div className="p-3 border-b border-glass-border">
-            <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search contact, username, or message..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-9 text-xs rounded-xl bg-background/70 border-glass-border focus-visible:ring-primary/20"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
             </div>
           </div>
 
@@ -509,20 +612,18 @@ export default function SocialInboxDashboard() {
           <div className="flex-1 overflow-y-auto divide-y divide-glass-border">
             {isListLoading ? (
               <div className="flex flex-col items-center justify-center p-8 space-y-2 text-muted-foreground">
-                <RefreshCw className="w-6 h-6 animate-spin text-primary" />
+                <RefreshCw className="w-5 h-5 animate-spin text-primary" />
                 <p className="text-xs">Loading conversations...</p>
               </div>
             ) : conversations.length === 0 ? (
-              <div className="flex flex-col items-center justify-center p-8 text-center space-y-3 text-muted-foreground">
-                <div className="p-3 rounded-2xl bg-muted/30 border border-glass-border">
-                  <MessageSquare className="w-8 h-8 opacity-40" />
+              <div className="flex flex-col items-center justify-center p-10 text-center space-y-3 text-muted-foreground">
+                <div className="w-12 h-12 rounded-full bg-muted/40 border border-glass-border flex items-center justify-center">
+                  <MessageSquare className="w-6 h-6 opacity-40" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">No messages found</p>
-                  <p className="text-xs mt-1">
-                    {searchQuery
-                      ? 'No conversations matched your search.'
-                      : 'Incoming DMs from your connected social accounts will stream in live.'}
+                  <p className="text-sm font-semibold text-foreground">No conversations found</p>
+                  <p className="text-xs mt-1 text-muted-foreground max-w-[220px]">
+                    Direct messages and comments from your connected social channels will appear here in real-time.
                   </p>
                 </div>
               </div>
@@ -531,7 +632,7 @@ export default function SocialInboxDashboard() {
                 const isSelected = conv.id === selectedConversationId
                 const source = conv.source || conv.platform || 'social'
                 const displayName = conv.userName || conv.username || conv.title || conv.sessionId
-                const lastMsgText = conv.lastMessage?.content || 'Sent an attachment'
+                const lastMsg = conv.lastMessage?.content || (conv.messages?.[conv.messages.length - 1]?.content) || 'You sent an attachment.'
                 const timeAgo = formatTimestamp(conv.lastActivity || conv.lastMessage?.timestamp)
 
                 return (
@@ -539,50 +640,36 @@ export default function SocialInboxDashboard() {
                     key={conv.id}
                     onClick={() => handleSelectConv(conv.id)}
                     className={cn(
-                      'p-3.5 cursor-pointer transition-all flex items-start gap-3 relative group hover:bg-primary/5',
+                      'p-3.5 cursor-pointer transition-all flex items-start gap-3 relative group hover:bg-muted/20',
                       isSelected ? 'bg-primary/10 border-l-4 border-l-primary' : ''
                     )}
                   >
+                    {/* Rounded Circular Avatar with Platform Badge */}
                     <div className="relative shrink-0">
-                      <Avatar className="w-11 h-11 border border-glass-border shadow-sm">
-                        {conv.profilePic ? (
-                          <AvatarImage src={conv.profilePic} alt={displayName} />
-                        ) : null}
-                        <AvatarFallback className="bg-gradient-to-tr from-primary/20 to-purple-500/20 text-primary font-bold text-xs">
-                          {displayName.slice(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      {/* Platform Icon Overlay */}
-                      <div className="absolute -bottom-1 -right-1 p-0.5 rounded-full bg-background border border-glass-border shadow-xs">
-                        {source.includes('instagram') ? (
-                          <Instagram className="w-3 h-3 text-pink-500" />
-                        ) : source.includes('facebook') || source.includes('messenger') ? (
-                          <Facebook className="w-3 h-3 text-blue-500" />
-                        ) : source.includes('whatsapp') ? (
-                          <MessageCircle className="w-3 h-3 text-emerald-500" />
-                        ) : source.includes('telegram') ? (
-                          <Send className="w-3 h-3 text-sky-500" />
-                        ) : (
-                          <MessageSquare className="w-3 h-3 text-primary" />
-                        )}
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-600 to-primary text-white flex items-center justify-center text-lg font-bold shadow-sm">
+                        {displayName.slice(0, 1).toUpperCase()}
+                      </div>
+                      {/* Attached bottom-right badge icon */}
+                      <div className="absolute -bottom-0.5 -right-0.5 p-0.5 rounded-full bg-background border border-glass-border shadow-xs">
+                        {getPlatformIcon(source)}
                       </div>
                     </div>
 
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <h4 className="text-xs font-bold text-foreground truncate">{displayName}</h4>
-                        <span className="text-[10px] text-muted-foreground shrink-0">{timeAgo}</span>
+                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                        <h4 className="text-sm font-semibold text-foreground truncate">{displayName}</h4>
+                        <span className="text-[11px] text-muted-foreground shrink-0">{timeAgo}</span>
                       </div>
 
-                      <p className="text-xs text-muted-foreground truncate mb-1.5">
-                        {conv.lastMessage?.role === 'assistant' && (
-                          <span className="text-primary font-medium">You: </span>
-                        )}
-                        {lastMsgText}
+                      <p className="text-xs text-muted-foreground truncate mb-1">
+                        {conv.lastMessage?.role === 'assistant' ? 'You: ' : ''}
+                        {lastMsg}
                       </p>
 
-                      <div className="flex items-center justify-between">
-                        {getChannelBadge(source)}
+                      <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+                        <span className="capitalize text-primary font-medium">
+                          {source.replace('_', ' ')}
+                        </span>
 
                         <Button
                           variant="ghost"
@@ -592,7 +679,7 @@ export default function SocialInboxDashboard() {
                             setConvToDelete(conv.id)
                             setIsDeleteModalOpen(true)
                           }}
-                          className="h-6 w-6 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          className="h-6 w-6 rounded-md opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive"
                         >
                           <Trash2 className="w-3 h-3" />
                         </Button>
@@ -605,35 +692,40 @@ export default function SocialInboxDashboard() {
           </div>
         </div>
 
-        {/* Right Column: Chat History & Composer */}
-        <div className="flex-1 flex flex-col bg-background/30 overflow-hidden relative">
+        {/* Right Column: Chat History & Reply Area */}
+        <div className="flex-1 flex flex-col bg-background/50 overflow-hidden relative">
           {selectedConversationId && selectedConversation ? (
             <>
-              {/* Chat Header */}
-              <div className="p-4 border-b border-glass-border flex items-center justify-between bg-background/60 backdrop-blur-md">
-                <div className="flex items-center gap-3">
-                  <Avatar className="w-10 h-10 border border-glass-border shadow-sm">
-                    {selectedConversation.profilePic ? (
-                      <AvatarImage src={selectedConversation.profilePic} />
-                    ) : null}
-                    <AvatarFallback className="bg-primary/20 text-primary font-bold text-xs">
-                      {(selectedConversation.userName || selectedConversation.title || 'U').slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-bold text-foreground">
-                        {selectedConversation.userName || selectedConversation.title}
-                      </h3>
-                      {getChannelBadge(selectedConversation.source || selectedConversation.platform)}
+              {/* Chat Header matching Meta Business Suite */}
+              <div className="p-4 border-b border-glass-border flex items-center justify-between bg-background/80 backdrop-blur-md">
+                <div className="flex items-center gap-3.5">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-600 to-primary text-white flex items-center justify-center text-lg font-bold shadow-sm">
+                      {(selectedConversation.userName || selectedConversation.title || 'U').slice(0, 1).toUpperCase()}
                     </div>
-                    <p className="text-[11px] text-muted-foreground flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                      Session ID: {selectedConversation.sessionId}
+                    <div className="absolute -bottom-0.5 -right-0.5 p-0.5 rounded-full bg-background border border-glass-border shadow-xs">
+                      {getPlatformIcon(selectedConversation.source || selectedConversation.platform)}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-foreground">
+                      {selectedConversation.userName || selectedConversation.title}
+                    </h3>
+
+                    <div className="flex items-center gap-2 mt-0.5">
+                      {/* Assign dropdown */}
+                      <button className="text-xs text-primary font-medium flex items-center gap-1 hover:underline">
+                        <span>Assign to {assignedAgent}</span>
+                        <ChevronDown className="w-3 h-3" />
+                      </button>
+
                       {selectedConversation.accountName && (
-                        <span>• via {selectedConversation.accountName}</span>
+                        <span className="text-xs text-muted-foreground">
+                          • via {selectedConversation.accountName}
+                        </span>
                       )}
-                    </p>
+                    </div>
                   </div>
                 </div>
 
@@ -642,11 +734,12 @@ export default function SocialInboxDashboard() {
                     variant="ghost"
                     size="sm"
                     onClick={() => refetchHistory()}
-                    className="h-8 rounded-xl text-xs gap-1.5 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                    className="h-8 rounded-lg text-xs gap-1.5 text-muted-foreground hover:text-foreground"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     Refresh
                   </Button>
+
                   <Button
                     variant="ghost"
                     size="icon"
@@ -654,15 +747,35 @@ export default function SocialInboxDashboard() {
                       setConvToDelete(selectedConversation.id)
                       setIsDeleteModalOpen(true)
                     }}
-                    className="h-8 w-8 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    className="h-8 w-8 rounded-lg text-muted-foreground hover:text-destructive"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-4 h-4" />
                   </Button>
                 </div>
               </div>
 
-              {/* Messages Scroll Area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/10">
+              {/* Post reference bar if comment */}
+              {(selectedConversation.source === 'instagram_comment' || selectedConversation.source === 'facebook_comment') && (
+                <div className="px-4 py-2 bg-primary/5 border-b border-glass-border flex items-center justify-between text-xs text-primary">
+                  <span className="font-semibold flex items-center gap-1.5">
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    Comment on Post: {selectedConversation.postTitle || selectedConversation.metadata?.postTitle || 'Social Post'}
+                  </span>
+                  {selectedConversation.metadata?.postUrl && (
+                    <a
+                      href={selectedConversation.metadata.postUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline flex items-center gap-1 text-[11px]"
+                    >
+                      View Live Post <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {/* Messages History */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/5">
                 {isHistoryLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <RefreshCw className="w-6 h-6 animate-spin text-primary" />
@@ -679,16 +792,14 @@ export default function SocialInboxDashboard() {
                       <div
                         key={msg.id || index}
                         className={cn(
-                          'flex items-end gap-2 max-w-[80%] md:max-w-[70%]',
+                          'flex items-end gap-2 max-w-[85%] md:max-w-[75%]',
                           isAssistant ? 'ml-auto flex-row-reverse' : 'mr-auto'
                         )}
                       >
                         {!isAssistant && (
-                          <Avatar className="w-7 h-7 shrink-0 border border-glass-border">
-                            <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
-                              {(msg.senderName || 'U').slice(0, 1).toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
+                          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
+                            {(msg.senderName || 'U').slice(0, 1).toUpperCase()}
+                          </div>
                         )}
 
                         <div className="space-y-1">
@@ -702,17 +813,33 @@ export default function SocialInboxDashboard() {
                           >
                             {msg.content && <p className="whitespace-pre-wrap">{msg.content}</p>}
 
-                            {/* Attachments */}
+                            {/* Rich Media Attachments */}
                             {msg.attachments && msg.attachments.length > 0 && (
-                              <div className="mt-2 space-y-1.5">
+                              <div className="mt-2 space-y-2">
                                 {msg.attachments.map((att: any, attIdx: number) => {
                                   const fileUrl = getMediaUrl(att.url)
-                                  const isImg = att.fileType?.includes('image') || /\.(jpg|jpeg|png|webp|gif)/i.test(att.url || '')
+                                  const fileType = (att.fileType || '').toLowerCase()
+                                  const isAudio = fileType.includes('audio') || /\.(mp3|ogg|wav|m4a)/i.test(att.url || '')
+                                  const isVideo = fileType.includes('video') || /\.(mp4|mov|webm)/i.test(att.url || '')
+                                  const isImg = fileType.includes('image') || /\.(jpg|jpeg|png|webp|gif)/i.test(att.url || '')
+
+                                  if (isAudio && fileUrl) {
+                                    return <VoiceNotePlayer key={attIdx} url={fileUrl} />
+                                  }
+
+                                  if (isVideo && fileUrl) {
+                                    return (
+                                      <div key={attIdx} className="rounded-xl overflow-hidden max-w-sm">
+                                        <video controls src={fileUrl} className="w-full h-auto max-h-60 rounded-xl" />
+                                      </div>
+                                    )
+                                  }
+
                                   if (isImg && fileUrl) {
                                     return (
                                       <div
                                         key={attIdx}
-                                        className="relative rounded-xl overflow-hidden cursor-pointer group/img max-w-xs"
+                                        className="relative rounded-xl overflow-hidden cursor-pointer max-w-sm group"
                                         onClick={() => {
                                           setLightboxImages([fileUrl])
                                           setLightboxIndex(0)
@@ -722,11 +849,12 @@ export default function SocialInboxDashboard() {
                                         <img
                                           src={fileUrl}
                                           alt="Attachment"
-                                          className="w-full h-auto object-cover max-h-48 rounded-xl group-hover/img:scale-105 transition-transform"
+                                          className="w-full h-auto object-cover max-h-52 rounded-xl group-hover:scale-105 transition-transform"
                                         />
                                       </div>
                                     )
                                   }
+
                                   return (
                                     <a
                                       key={attIdx}
@@ -734,12 +862,12 @@ export default function SocialInboxDashboard() {
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       className={cn(
-                                        'flex items-center gap-2 p-2 rounded-lg text-[11px] underline',
-                                        isAssistant ? 'text-white/90 bg-white/10' : 'text-primary bg-primary/5'
+                                        'flex items-center gap-2 p-2.5 rounded-xl text-xs font-medium border shadow-xs',
+                                        isAssistant ? 'bg-white/10 text-white border-white/20' : 'bg-background border-glass-border text-primary'
                                       )}
                                     >
-                                      <Paperclip className="w-3 h-3" />
-                                      {att.name || 'Download Attachment'}
+                                      <FileText className="w-4 h-4" />
+                                      <span className="truncate">{att.name || 'Download Document'}</span>
                                     </a>
                                   )
                                 })}
@@ -766,7 +894,7 @@ export default function SocialInboxDashboard() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Quick Reply Suggestions */}
+              {/* Quick Replies Chips */}
               <div className="px-4 py-2 bg-background/50 border-t border-glass-border overflow-x-auto flex items-center gap-2 no-scrollbar">
                 <span className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1 shrink-0">
                   <Sparkles className="w-3 h-3 text-primary" />
@@ -776,7 +904,7 @@ export default function SocialInboxDashboard() {
                   <button
                     key={idx}
                     onClick={() => setReplyText(qr)}
-                    className="px-2.5 py-1 rounded-xl bg-background border border-glass-border hover:border-primary/40 text-[11px] text-muted-foreground hover:text-foreground whitespace-nowrap transition-all shadow-xs"
+                    className="px-3 py-1 rounded-lg bg-background border border-glass-border hover:border-primary/40 text-xs text-muted-foreground hover:text-foreground whitespace-nowrap transition-all shadow-xs"
                   >
                     {qr}
                   </button>
@@ -785,38 +913,39 @@ export default function SocialInboxDashboard() {
 
               {/* Attached Files Preview */}
               {attachedFiles.length > 0 && (
-                <div className="px-4 py-2 bg-background/80 border-t border-glass-border flex flex-wrap gap-2">
+                <div className="px-4 py-2 bg-background border-t border-glass-border flex flex-wrap gap-2">
                   {attachedFiles.map((file, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-primary/10 border border-primary/20 text-xs text-primary font-medium"
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 text-xs text-primary font-medium"
                     >
-                      <Paperclip className="w-3 h-3" />
-                      <span className="truncate max-w-[150px]">{file.name}</span>
+                      <Paperclip className="w-3.5 h-3.5" />
+                      <span className="truncate max-w-[160px]">{file.name}</span>
                       <button onClick={() => removeFile(idx)} className="hover:text-destructive">
-                        <X className="w-3 h-3" />
+                        <X className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   ))}
                 </div>
               )}
 
-              {/* Reply Input Area */}
-              <div className="p-4 bg-background/80 backdrop-blur-md border-t border-glass-border space-y-2">
+              {/* Reply Composer */}
+              <div className="p-4 bg-background border-t border-glass-border space-y-2">
                 <div className="flex items-end gap-2">
                   <input
                     type="file"
                     ref={fileInputRef}
                     onChange={handleFileAttach}
                     multiple
+                    accept="image/*,video/*,audio/*,.pdf,.doc,.docx"
                     className="hidden"
                   />
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-10 w-10 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 shrink-0 border border-glass-border"
-                    title="Attach image or file"
+                    className="h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground border border-glass-border shrink-0"
+                    title="Attach images, videos, voice notes, or documents"
                   >
                     <Paperclip className="w-4 h-4" />
                   </Button>
@@ -826,21 +955,21 @@ export default function SocialInboxDashboard() {
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder={`Reply to ${selectedConversation.userName || 'customer'}... (Enter to send, Shift+Enter for new line)`}
-                    className="flex-1 p-3 rounded-xl text-xs bg-background/90 border border-glass-border focus:border-primary/40 focus:outline-hidden resize-none"
+                    placeholder={`Write a response to ${selectedConversation.userName || 'contact'}... (Enter to send)`}
+                    className="flex-1 p-3 rounded-lg text-xs bg-muted/20 border border-glass-border focus:border-primary/40 focus:outline-hidden resize-none"
                   />
 
                   <Button
                     onClick={handleSendReply}
                     disabled={isReplying || (!replyText.trim() && attachedFiles.length === 0)}
-                    className="h-10 px-4 rounded-xl text-xs font-semibold gap-1.5 bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/20 shrink-0"
+                    className="h-10 px-4 rounded-lg text-xs font-semibold gap-1.5 bg-primary text-white hover:bg-primary/90 shadow-sm shrink-0"
                   >
                     {isReplying ? (
                       <RefreshCw className="w-4 h-4 animate-spin" />
                     ) : (
                       <>
                         <Send className="w-3.5 h-3.5" />
-                        Send Reply
+                        Send
                       </>
                     )}
                   </Button>
@@ -849,7 +978,7 @@ export default function SocialInboxDashboard() {
                 <div className="flex items-center justify-between text-[11px] text-muted-foreground px-1">
                   <span className="flex items-center gap-1 text-emerald-500 font-medium">
                     <ShieldCheck className="w-3 h-3" />
-                    Dispatches directly to {selectedConversation.source || selectedConversation.platform || 'customer'}
+                    Dispatches directly to {selectedConversation.source?.replace('_', ' ') || 'contact'}
                   </span>
                   <span>Press Enter to send</span>
                 </div>
@@ -857,13 +986,13 @@ export default function SocialInboxDashboard() {
             </>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center p-12 text-center text-muted-foreground space-y-4">
-              <div className="p-5 rounded-3xl bg-primary/10 border border-primary/20 shadow-inner">
-                <MessageSquare className="w-12 h-12 text-primary" />
+              <div className="w-16 h-16 rounded-full bg-muted/40 border border-glass-border flex items-center justify-center">
+                <MessageSquare className="w-8 h-8 opacity-40" />
               </div>
-              <div className="max-w-sm space-y-1.5">
-                <h3 className="text-base font-bold text-foreground">Select a Social Conversation</h3>
-                <p className="text-xs leading-relaxed">
-                  Choose any customer conversation from the list to read their incoming messages, view attachments, and dispatch instant replies.
+              <div className="max-w-sm space-y-1">
+                <h3 className="text-base font-bold text-foreground">Select a conversation</h3>
+                <p className="text-xs text-muted-foreground">
+                  Choose any conversation or comment thread from the sidebar to view message history and send replies.
                 </p>
               </div>
             </div>
