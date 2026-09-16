@@ -2,6 +2,17 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 22:37:00 CEST] — WordPress Archive Featured Image Sync & Post Attachment Fix
+
+### 🖼️ WordPress Archive & Grid Featured Image Resolution
+- **Updated Existing WordPress Blog Posts (`christophersiegfried.com`)**:
+  - Identified that historical posts (`3794` & `3793`) created prior to the `FormData` fix lacked `featured_media` attachments (`featured_media: 0`).
+  - Executed automated media upload and attached high-resolution featured header images (`Media ID 3804` & `3805`) to Post `3794` (*"AI Automation with Model Context Protocol in Siegfried"*) and Post `3793` (*"Siegfried Launches Autonomous Social Media MCP Server"*).
+  - Both cards on `https://christophersiegfried.com/blogs/` now render their featured images properly alongside single-article hero banners.
+- **Inline `<figure><img ... /></figure>` Prepending & End-to-End Live Verification**:
+  - Initialized `postContent` before featured media upload to ensure inline high-res header image `<figure class="wp-block-image size-full"><img src="..." class="wp-post-image" /></figure>` is prepended cleanly to the top of post content.
+  - Published test post *"Autonomous AI & MCP Workflows in 2026"* (Post `3807`) with `featured_media: 3806` (`https://christophersiegfried.com/autonomous-ai-mcp-workflows-in-2026/`). Verified via WP REST API that `featured_media` and inline image tags exist across all posts.
+
 ## 📍 [2026-09-16 22:28:00 CEST] — WordPress REST API Featured Image Upload Fix, Automatic SEO Featured Banner Generation & Long-Form SEO Blog Engine
 
 ### 📝 WordPress Publishing & Featured Image Integration
