@@ -2,6 +2,30 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 08:30:00 CEST] — Website Chatbot Avatar Photo, Animated Online Status & AI Token Safeguards
+
+### 💬 Website Chat Widget Branding & Live Online Indicator
+- **Added Avatar Photo Rendering (`helpers/chat.js`)**:
+  - Identified root cause where the website chatbot iframe template in `helpers/chat.js` was rendering only a plain text title (`<h3>${chatbot.name}</h3>`) without any photo or avatar elements.
+  - Upgraded the header with a dedicated `.chat-header-profile` displaying the chatbot's uploaded avatar (`chatbot.avatar` or `chatbot.appearance.avatar`), complete with automated image error-handling and fallback to capital initial badge.
+  - Added bot avatar thumbnails (`.bot-msg-avatar`) alongside each assistant message in the conversation stream and typing indicator for a unified, modern chat experience matching top live-chat platforms (Crisp, Intercom).
+- **Added Animated Online Status Indicator & Status Text (`helpers/chat.js`)**:
+  - Implemented a live pulsing green online badge (`.chat-status-dot` with `@keyframes pulse-ring`) directly attached to the avatar.
+  - Displayed the custom status text (`chatbot.statusText`, e.g. "Online — here to help") in the header subtitle with an accompanying green status dot.
+- **Enhanced Launcher Trigger & Welcome Teaser Bubble (`public/js/chatbot-widget.js`)**:
+  - Updated `chatbot-widget.js` to render the chatbot's avatar photo directly inside the floating launcher trigger button with an active green online badge.
+  - Added avatar thumbnail inside the welcome teaser bubble for high-converting visual engagement.
+- **Exposed Avatar & Status Text in API Responses (`widget.controller.js`, `chat.controller.js`)**:
+  - Updated `getWidgetConfig` and `getPublicChatbotInfo` to include `avatar` and `statusText` in their payloads.
+- **Empty Message Bubble & False Fallback Prevention (`helpers/chat.js`, `chat.controller.js`)**:
+  - Added strict non-empty content guards in `addMessage(content)` and Ably message subscribers to eliminate any empty light-blue message bubbles.
+  - Guarded `sendMessage` to fallback to default helpful messages rather than emitting empty strings or falsely indicating handoff to human agents.
+- **Reasoning Model Token Safeguards & Provider Fallback (`aiChatService.js`)**:
+  - Resolved issue where low `max_tokens` (200) caused OpenRouter reasoning models (such as `deepseek/deepseek-v4.1-flash`) to consume the entire token budget during internal reasoning, resulting in `content: null`.
+  - Enforced a minimum token floor of 2048 across chat completions and enabled extraction of reasoning content as fallback if `content` is truncated.
+- **Updated Christopher Siegfried Bot Knowledge & Prompt**:
+  - Verified and persisted Christopher Siegfried's appointment booking directives, Calendly link (`https://calendly.com/christophersiegfried`), avatar photo, and `Online — here to help` status text in MongoDB.
+
 ## 📍 [2026-09-15 19:40:00 CEST] — AI Bot Studio Custom Instructions, Knowledge Base Grounding & Token Floor Fix
 
 ### 🤖 AI Bot Persona, Knowledge Retention & Full-Response Generation

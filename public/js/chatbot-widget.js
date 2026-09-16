@@ -67,6 +67,15 @@
       const title = config.title || 'Chat with us';
       const avatar = config.avatar || '';
 
+      let avatarUrl = '';
+      if (avatar) {
+        if (avatar.startsWith('http://') || avatar.startsWith('https://') || avatar.startsWith('data:')) {
+          avatarUrl = avatar;
+        } else {
+          avatarUrl = hostOrigin + '/' + avatar.replace(/^\/+/, '');
+        }
+      }
+
       // Dimensions
       let width = iframeWidthAttr ? (iframeWidthAttr.endsWith('px') ? iframeWidthAttr : iframeWidthAttr + 'px') : '400px';
       let height = iframeHeightAttr ? (iframeHeightAttr.endsWith('px') ? iframeHeightAttr : iframeHeightAttr + 'px') : '580px';
@@ -250,18 +259,79 @@
           transition: transform 0.2s ease;
         }
 
-        #lqd-ext-chatbot-wrap[data-window-state='closed'] .lqd-icon-chat {
-          display: block;
-        }
-        #lqd-ext-chatbot-wrap[data-window-state='closed'] .lqd-icon-close {
-          display: none;
+        .lqd-trigger-avatar-wrap {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          overflow: hidden;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        #lqd-ext-chatbot-wrap[data-window-state='open'] .lqd-icon-chat {
-          display: none;
+        .lqd-trigger-avatar {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .lqd-trigger-online-dot {
+          position: absolute;
+          bottom: 2px;
+          right: 2px;
+          width: 13px;
+          height: 13px;
+          background: #10b981;
+          border: 2.5px solid #ffffff;
+          border-radius: 50%;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+          z-index: 2;
+        }
+
+        .lqd-trigger-online-dot::after {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 50%;
+          border: 1.5px solid #10b981;
+          animation: lqd-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes lqd-pulse {
+          0% { transform: scale(0.9); opacity: 1; }
+          70% { transform: scale(1.6); opacity: 0; }
+          100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        .lqd-bubble-avatar {
+          width: 32px;
+          height: 32px;
+          min-width: 32px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 1.5px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #lqd-ext-chatbot-wrap[data-window-state='closed'] .lqd-icon-chat,
+        #lqd-ext-chatbot-wrap[data-window-state='closed'] .lqd-trigger-avatar-wrap,
+        #lqd-ext-chatbot-wrap[data-window-state='closed'] .lqd-trigger-online-dot {
+          display: flex;
+        }
+        #lqd-ext-chatbot-wrap[data-window-state='closed'] .lqd-icon-close {
+          display: none !important;
+        }
+
+        #lqd-ext-chatbot-wrap[data-window-state='open'] .lqd-icon-chat,
+        #lqd-ext-chatbot-wrap[data-window-state='open'] .lqd-trigger-avatar-wrap,
+        #lqd-ext-chatbot-wrap[data-window-state='open'] .lqd-trigger-online-dot {
+          display: none !important;
         }
         #lqd-ext-chatbot-wrap[data-window-state='open'] .lqd-icon-close {
-          display: block;
+          display: block !important;
         }
 
         /* Mobile Screen Adaptations */
@@ -322,6 +392,15 @@
         const bubble = document.createElement('div');
         bubble.id = 'lqd-ext-chatbot-trigger-bubble';
         
+        if (avatarUrl) {
+          const bubbleAvatar = document.createElement('img');
+          bubbleAvatar.src = avatarUrl;
+          bubbleAvatar.alt = title;
+          bubbleAvatar.className = 'lqd-bubble-avatar';
+          bubbleAvatar.onerror = function () { this.style.display = 'none'; };
+          bubble.appendChild(bubbleAvatar);
+        }
+
         const bubbleText = document.createElement('p');
         bubbleText.textContent = welcomeMsg;
         bubble.appendChild(bubbleText);
@@ -349,9 +428,19 @@
       triggerBtn.setAttribute('aria-label', 'Open chat');
 
       triggerBtn.innerHTML = `
-        <svg class="lqd-icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
+        ${avatarUrl ? `
+          <div class="lqd-trigger-avatar-wrap">
+            <img class="lqd-trigger-avatar" src="${avatarUrl}" alt="${title}" onerror="this.parentNode.style.display='none'; this.closest('button').querySelector('.lqd-icon-chat').style.display='block';" />
+          </div>
+          <svg class="lqd-icon-chat" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        ` : `
+          <svg class="lqd-icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        `}
+        <span class="lqd-trigger-online-dot"></span>
         <svg class="lqd-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
