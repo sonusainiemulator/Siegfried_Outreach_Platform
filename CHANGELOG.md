@@ -2,6 +2,20 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 08:47:00 CEST] — Human-Like Chatbot Conversational Tone & Real-Time Message Deduplication Fix
+
+### 🤖 Real Human Concierge Feel & Clean Single-Message Rendering
+- **Eliminated Duplicate Message Rendering (`helpers/chat.js`)**:
+  - Identified root cause where both the HTTP `fetch` response and the Ably real-time channel subscriber were appending the assistant's reply. Because the previous deduplication check compared rendered DOM `textContent` (HTML parsed without markdown brackets) against raw markdown string (`[Schedule on Calendly](...)`), the strings never matched, causing every response to be rendered twice.
+  - Added a strict `data-raw-content` attribute to each message DOM container (`messageDiv.setAttribute('data-raw-content', trimmed)`).
+  - Implemented exact raw content verification across both Ably real-time reception and HTTP completion handlers so that whichever arrives first renders the message and the second is cleanly skipped.
+- **Transformed Bot Personality to Real Human Concierge (`aiChatService.js`, MongoDB Directives)**:
+  - Fixed greeting behavior: eliminated robotic walls of text, corporate monologues, and company overviews when visitors say "hello", "hi", or "hey".
+  - Enforced real-human concierge pacing: simple greetings now receive a short, warm, 1-2 sentence welcome ("*Hi there! 👋 Welcome to Siegfried Marketing. How can I help you today — are you looking for information on our clinic marketing services, or would you like to schedule a call with Christopher?*").
+  - Concierge appointment handling: asking for an appointment returns a concise 2-sentence invitation directly with the Calendly CTA button and a natural follow-up question.
+- **Multi-Turn Conversation Context (`chat.controller.js`)**:
+  - Automatically feeds the previous turns from `conversation.messages` into the AI's conversation history (`effectiveHistory`), allowing the assistant to maintain natural continuity across multiple questions without restarting greetings or forgetting context.
+
 ## 📍 [2026-09-16 08:30:00 CEST] — Website Chatbot Avatar Photo, Animated Online Status & AI Token Safeguards
 
 ### 💬 Website Chat Widget Branding & Live Online Indicator
