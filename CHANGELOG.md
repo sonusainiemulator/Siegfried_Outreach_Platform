@@ -2,6 +2,26 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-16 22:28:00 CEST] — WordPress REST API Featured Image Upload Fix, Automatic SEO Featured Banner Generation & Long-Form SEO Blog Engine
+
+### 📝 WordPress Publishing & Featured Image Integration
+- **Fixed Missing Featured Image Upload (`socialMediaApis.js`)**:
+  - Replaced raw binary HTTP POSTs with multipart `FormData` (`file` buffer + `title` + `alt_text`) for WordPress REST API `/wp-json/wp/v2/media` uploads. This bypasses Cloudflare WAF, NGINX, and ModSecurity blocks that previously stripped `Content-Disposition` headers.
+  - Multi-path resolution for local media files (`/www/wwwroot/api.siegfriedoutreach.com`, `/www/wwwroot/siegfriedoutreach.com/public`, `process.cwd()`).
+  - Cast `featured_media` parameter strictly to an integer (`Number(featuredMediaId)`), preventing WordPress 400 parameter type errors.
+- **Automatic High-Res SEO Featured Image Generation**:
+  - If a blog post or WordPress publication does not have a user-supplied image, the platform automatically synthesizes a high-resolution, topic-relevant header image (via AI Pollinations banner engine at 1200x630 resolution) and uploads it directly to the WordPress media library as the official featured image.
+- **Long-Form SEO-Friendly Blog Engine (`ai-content.controller.js`)**:
+  - Enhanced AI generation engine to draft comprehensive, 1,500 - 3,000+ word SEO articles structured in clean semantic HTML:
+    - Catchy H1 SEO Title
+    - Meta Description summary box
+    - Key Takeaways callout container
+    - Table of Contents navigation
+    - Deep H2 / H3 body subheadings with bullet points
+    - Schema-compatible FAQ section
+    - Conclusion with Call to Action (CTA)
+  - Automatic Markdown-to-HTML conversion for WordPress REST API post bodies.
+
 ## 📍 [2026-09-16 20:15:00 CEST] — Omnichannel WhatsOmni 3-Column Shared Inbox, Live Internal Team Notes, CRM Synchronization & Multi-Tab Fixes
 
 ### 📥 3-Column Shared Inbox (WhatsOmni Omnichannel Desk)
