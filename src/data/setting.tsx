@@ -134,8 +134,67 @@ export const emailInstructionSSL = [
 ]
 
 export const providers = [
-  { label: 'Gemini', value: 'gemini' },
-  { label: 'Groq', value: 'groq' },
-  { label: 'DeepSeek', value: 'deepseek' },
-  { label: 'OpenRouter', value: 'openrouter' },
+  { label: 'Gemini (Google DeepMind)', value: 'gemini' },
+  { label: 'Gemini Omni Flash (Multimodal & Voice)', value: 'gemini-omni' },
+  { label: 'Groq (Ultra-Fast Llama 3.3)', value: 'groq' },
+  { label: 'DeepSeek (V3 & R1 Reasoning)', value: 'deepseek' },
+  { label: 'OpenRouter (Multi-Model Hub)', value: 'openrouter' },
+]
+
+export const videoProviders = [
+  { label: 'Seedance 2.0 (Realistic Physics & Fight Choreography)', value: 'seedance' },
+  { label: 'Kling Video 3.0 Pro (Multi-Shot Sequencing & 6 Cuts)', value: 'kling' },
+  { label: 'Google Veo 3.1 (Photorealistic People & Native Audio)', value: 'veo' },
+  { label: 'MiniMax Hailuo 2.3 (Product Shots & Expressive Motion)', value: 'hailuo' },
+  { label: 'Higgsfield AI (Cinematic Camera & DoP Controls)', value: 'higgsfield' },
+  { label: 'HeyGen Video SDK (Talking Avatars & Lip-Sync)', value: 'heygen' },
+  { label: 'Remotion Engine (Kinetic Reels & Typography)', value: 'remotion' },
+]
+
+export const voiceProviders = [
+  { label: 'ElevenLabs (Ultra-Realistic Voices & Cloning)', value: 'elevenlabs' },
+  { label: 'HeyGen Neural Voice Engine', value: 'heygen' },
+]
+
+export const imageProviders = [
+  { label: 'DALL-E 3 & GPT-4o Image (OpenAI)', value: 'dall-e-3' },
+  { label: 'Google Imagen 3.0 Ultra', value: 'imagen' },
+  { label: 'Stable Diffusion 3.5 & SDXL', value: 'stable-diffusion' },
+]
+
+export const elevenlabsModelOptions = [
+  { label: 'Eleven Multilingual v2 (Best Quality & Accents)', value: 'eleven_multilingual_v2' },
+  { label: 'Eleven Turbo v2.5 (Ultra Low Latency)', value: 'eleven_turbo_v2_5' },
+  { label: 'Eleven Flash v2.5 (Fastest & Cost-Efficient)', value: 'eleven_flash_v2_5' },
+]
+
+export const seedanceModelOptions = [
+  { label: 'Seedance 2.0 Pro (Photorealistic Physics & Choreography)', value: 'seedance-2.0-pro' },
+  { label: 'Seedance 2.0 Ultra (4K Master & Ref Handling)', value: 'seedance-2.0-ultra' },
+]
+
+export const klingModelOptions = [
+  { label: 'Kling Video 3.0 Pro (Multi-Shot 6 Camera Cuts)', value: 'kling-v3.0-pro' },
+  { label: 'Kling Video 2.1 Master (Cinematic Physics)', value: 'kling-v2.1-master' },
+]
+
+export const veoModelOptions = [
+  { label: 'Google Veo 3.1 Cinema (Native Audio & Photorealism)', value: 'veo-3.1-cinema' },
+  { label: 'Google Veo 3.1 Fast (High Speed Iteration)', value: 'veo-3.1-fast' },
+]
+
+export const geminiOmniModelOptions = [
+  { label: 'Gemini 2.0 Flash Omni (Ultra Fast Multimodal & Audio)', value: 'gemini-2.0-flash' },
+  { label: 'Gemini 2.0 Flash Realtime (Live Low-Latency Stream)', value: 'gemini-2.0-flash-realtime' },
+  { label: 'Gemini 1.5 Flash 8B (Highest Economy & Throughput)', value: 'gemini-1.5-flash-8b' },
+]
+
+export const hailuoModelOptions = [
+  { label: 'MiniMax Hailuo 2.3 Turbo (Expressive Character Motion)', value: 'hailuo-2.3-turbo' },
+  { label: 'MiniMax Hailuo 01 Director (Product Shots & High Fidelity)', value: 'hailuo-01-director' },
+]
+
+export const higgsfieldModelOptions = [
+  { label: 'Higgsfield Cinematic-1 (Dynamic Camera Controls)', value: 'higgsfield-cinematic-1' },
+  { label: 'Higgsfield DoP Studio (Camera Motion & Orbit/Pan)', value: 'higgsfield-dop-studio' },
 ]

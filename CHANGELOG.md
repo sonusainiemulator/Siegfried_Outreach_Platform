@@ -2,6 +2,57 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-17 19:42:00 CEST] — Next-Gen AI Video, Voice & Multimodal Provider Integrations on /api-keys
+
+### 🚀 Cutting-Edge Video, Voice & Multimodal AI Provider Support (`/api-keys`)
+- **ElevenLabs AI Voice & Dubbing (`ElevenLabsCard.tsx`)**:
+  - Integrated ultra-realistic voice synthesis, emotion inflection, and custom voice cloning.
+  - Added fields: `elevenlabs_api_key`, `elevenlabs_voice_id` (default: Rachel), and `elevenlabs_model_id` (`eleven_multilingual_v2`, `eleven_turbo_v2_5`, `eleven_flash_v2_5`).
+  - Direct portal quick-link to ElevenLabs developer console.
+- **Higgsfield AI Cinematic Video (`HiggsfieldCard.tsx`)**:
+  - Integrated dynamic camera movement controls, 3D pan/zoom trajectory planning, and stylized visual storytelling.
+  - Added fields: `higgsfield_api_key`, `higgsfield_model` (`higgsfield-cinematic-1`, `higgsfield-dop-studio`).
+- **Seedance 2.0 Video AI (`SeedanceVideoCard.tsx`)**:
+  - Purpose-built for realistic physics, prompt adherence, fight choreography, and native audio/video reference handling.
+  - Added fields: `seedance_api_key`, `seedance_model` (`seedance-2.0-pro`, `seedance-2.0-ultra`), and `seedance_reference_mode` (Full audio/video reference, motion-only, audio-driven action).
+- **Kling Video 3.0 Pro (`KlingVideoCard.tsx`)**:
+  - High-fidelity multi-shot sequencing, storyboarding (up to six camera cuts), and cinematic physics.
+  - Added fields: `kling_api_key`, `kling_model` (`kling-v3.0-pro`, `kling-v2.1-master`), and `kling_mode` (Multi-cut 6-shot storyboard, trio cuts, single continuous take).
+- **Google Veo 3.1 (`GoogleVeoCard.tsx`)**:
+  - Exceptional for photorealistic people, fast iteration speeds, and native audio generation.
+  - Added fields: `veo_api_key` (with automatic fallback to Gemini key), `veo_model` (`veo-3.1-cinema`, `veo-3.1-fast`), and native audio sync toggle.
+- **Gemini Omni Flash (`GeminiOmniCard.tsx`)**:
+  - Top budget-friendly option scoring high in user preference and voice quality at ultra-low credit cost.
+  - Added fields: `gemini_omni_api_key` (with automatic fallback to default Gemini key) and `gemini_omni_model` (`gemini-2.0-flash`, `gemini-2.0-flash-realtime`, `gemini-1.5-flash-8b`).
+- **MiniMax Hailuo 2.3 (`MiniMaxHailuoCard.tsx`)**:
+  - Highly effective for product shots, animation, and expressive character movements with dynamic micro-physics.
+  - Added fields: `hailuo_api_key`, `hailuo_model` (`hailuo-2.3-turbo`, `hailuo-01-director`), and aspect ratio configuration (`16:9`, `9:16`, `1:1`).
+- **Default Media Routing Engines (`DefaultMediaEnginesCard.tsx`)**:
+  - Added multi-modal routing engine card allowing users to set platform defaults for Video (`default_video_provider`), Voice (`default_voice_provider`), and Image (`default_image_provider`).
+
+### 🎨 API Command Center UI & UX Overhaul (`ApiKeys.tsx`)
+- **Category Filter Tabs & Badges**:
+  - Implemented interactive filter pills: **All Providers (21)**, **Cinematic Video AI (7)**, **Voice & Dubbing (2)**, **LLMs & Multimodal (5)**, **Image Synthesis (4)**, and **Pricing Matrix (1)**.
+  - Added live search bar with instant fuzzy matching across all provider titles, descriptions, and model tags.
+- **Sticky Glassmorphic Save Bar**:
+  - Modern bottom floating action bar with dirty-state change detection, encryption confirmation notice, and animated saving indicators.
+
+### ⚙️ Backend Architecture & Database Synchronization (`api.siegfriedoutreach.com`)
+- **MongoDB Schema (`user-setting.model.js`)**:
+  - Extended `UserSettingsSchema` with 18 new fields for all new providers with secure defaults and indexing.
+- **API Controller (`user-setting.controller.js`)**:
+  - Updated allowed fields list in `updateUserSettings` to whitelist and persist all new credentials, models, and routing choices.
+- **Security & Masking (`utils/maskKey.js`)**:
+  - Added all new provider keys to `SENSITIVE_FIELDS` for automated demo mode masking.
+- **AI Model Pricing Matrix (`ai-model-pricing.model.js` & Seeder)**:
+  - Expanded provider enum to support `elevenlabs`, `bytedance`, `kuaishou`, `minimax`, `higgsfield`.
+  - Seeded default pricing matrix multipliers for all 7 new models so admins can fine-tune credit costs directly in the Command Center.
+
+### 🌐 Bilingual Standards & Internationalization (`src/lib/i18n.ts`)
+- Added comprehensive English and Hindi (`hi`) translations for all new provider cards, descriptions, and feature capabilities.
+
+---
+
 ## 📍 [2026-09-17 16:18:00 CEST] — Dashboard Data Loading Fix & API Backend Syntax Error Resolution
 
 ### 🛠️ Backend Stability & Syntax Error Fixes (`api-backend`)

@@ -20,6 +20,39 @@ export interface ApiIntegrationForm {
   remotion_render_url?: string
   default_image_provider?: string
   default_video_provider?: string
+  default_voice_provider?: string
+
+  // ElevenLabs Voice & Dubbing
+  elevenlabs_api_key?: string
+  elevenlabs_voice_id?: string
+  elevenlabs_model_id?: string
+
+  // Higgsfield Cinematic Video
+  higgsfield_api_key?: string
+  higgsfield_model?: string
+
+  // Seedance 2.0 Video AI (Realistic physics, fight choreography, reference handling)
+  seedance_api_key?: string
+  seedance_model?: string
+  seedance_reference_mode?: string
+
+  // Kling Video 3.0 Pro (Multi-shot sequencing up to 6 camera cuts, cinematic physics)
+  kling_api_key?: string
+  kling_model?: string
+  kling_multi_shot?: boolean
+
+  // Google Veo 3.1 (Photorealistic people, fast iteration speeds, native audio)
+  veo_api_key?: string
+  veo_model?: string
+  veo_native_audio?: boolean
+
+  // Gemini Omni Flash (Budget-friendly multimodal, voice quality, low credit cost)
+  gemini_omni_api_key?: string
+  gemini_omni_model?: string
+
+  // MiniMax Hailuo 2.3 (Product shots, animation, expressive character movements)
+  hailuo_api_key?: string
+  hailuo_model?: string
 }
 
 export interface ImageUploadItemProps {
