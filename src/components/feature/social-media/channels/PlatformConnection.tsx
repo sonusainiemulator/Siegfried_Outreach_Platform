@@ -8,7 +8,7 @@ import { useDisconnectSocialAccountMutation, useGetSocialAccountsQuery } from '@
 import { ApiError } from '@/types'
 import { PlatformConfig } from '@/types/components/socialMedia'
 import { authUtils } from '@/utils'
-import { AlertCircle, Settings } from 'lucide-react'
+import { AlertCircle, Settings, KeyRound } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -110,8 +110,43 @@ export default function PlatformConnection() {
   }
 
   return (
-    <div className="space-y-10 animate-fade-in">
+    <div className="space-y-6 animate-fade-in">
       <PlatformConnectionHeader onNavigateToDashboard={() => (window.location.href = '/social-media/dashboard')} />
+
+      {/* Guidance Callout Banner */}
+      <div className="rounded-2xl p-4 bg-gradient-to-r from-primary/10 via-purple-500/10 to-background/50 border border-primary/20 backdrop-blur-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0">
+            <KeyRound className="w-5 h-5 text-primary" />
+          </div>
+          <div className="min-w-0">
+            <h4 className="text-sm font-bold text-title-color dark:text-white flex items-center gap-2 flex-wrap">
+              <span>{t('looking_for_api_keys', { defaultValue: 'Looking for API Keys, App IDs or Credentials?' })}</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                Setup Guides Included
+              </span>
+            </h4>
+            <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+              To configure your Meta App ID, App Secret, Twitter API Keys, Google Client IDs, or Webhooks, open{' '}
+              <Link href={ROUTES.SOCIAL_MEDIA.SOCIAL_SETTINGS} className="font-semibold text-primary underline hover:opacity-90">
+                Social Settings
+              </Link>
+              . On this page (Channels), click &quot;Connect your account&quot; to authorize live accounts.
+            </p>
+          </div>
+        </div>
+
+        <Link href={ROUTES.SOCIAL_MEDIA.SOCIAL_SETTINGS} className="shrink-0 w-full sm:w-auto">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 w-full sm:w-auto px-4 rounded-xl text-xs font-semibold border-primary/30 text-primary hover:bg-primary/10 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Settings className="w-3.5 h-3.5" />
+            <span>{t('open_social_settings', { defaultValue: 'Open Social Settings' })}</span>
+          </Button>
+        </Link>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 [@media(min-width:1400px)]:grid-cols-4 gap-5 items-start">
         {platforms.map((platform) => {

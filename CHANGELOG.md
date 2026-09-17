@@ -2,6 +2,20 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-17 08:15:00 CEST] — Channels vs. Social Settings Navigation & API Configuration Guidance
+
+### 🧭 Navigation & User Experience Enhancement (`/social-media/channels`)
+- **Direct Tab Switcher & Navigation Header (`PlatformConnectionHeader.tsx`)**:
+  - Added dedicated tab switcher directly in the header between **Channels (Accounts)** and **API Configurations** (`/social-media/social-settings`).
+  - Added prominent **"Configure API Keys"** gradient button in the header so users can jump straight to API credentials setup without getting lost.
+  - Upgraded responsive header layout with subtitle explaining the distinct roles of live account authorization vs. API credentials.
+- **Guidance & Context Banner (`PlatformConnection.tsx`)**:
+  - Introduced an informative, high-visibility guidance callout banner above the 12 social channel cards.
+  - Explicitly clarifies where API keys (Meta App ID, App Secret, Twitter API keys, Google Client IDs, WordPress credentials) are stored vs. where live OAuth accounts/pages are authorized.
+  - Includes a direct link and one-click button to open **Social Settings**.
+- **User Confusion Resolution**:
+  - Clarified why users with fresh accounts see "Connect your account" on Channels until an active profile/page session is authorized via OAuth or until API credentials in Social Settings are linked.
+
 ## 📍 [2026-09-17 07:55:00 CEST] — Instagram AI Label Auto-Enablement & Interactive Content Toggle Button Feature
 
 ### 🤖 Instagram & Meta AI Content Labeling Architecture (`is_ai_generated`)
