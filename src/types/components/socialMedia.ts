@@ -34,6 +34,7 @@ export interface SocialPost {
   postUrl?: string
   publishedUrl?: string
   autoReplyConfig?: AutoReplyConfig
+  isAiGenerated?: boolean
 }
 
 export interface SocialAccount {
@@ -94,6 +95,7 @@ export interface CalendarDayPost {
   mediaUrls?: string[]
   postUrl?: string
   publishedUrl?: string
+  isAiGenerated?: boolean
 }
 
 export interface PostFormValues {
@@ -305,6 +307,7 @@ export interface PostComposerFormData {
   platforms: string[]
   mediaUrls: string
   autoReplyConfig?: AutoReplyConfig
+  isAiGenerated?: boolean
 }
 
 export interface PostComposerProps {

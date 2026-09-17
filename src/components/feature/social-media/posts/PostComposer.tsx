@@ -38,6 +38,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import * as Yup from 'yup'
 import AutoReplyOptions from './components/AutoReplyOptions'
+import AILabelOptions from './components/AILabelOptions'
 import YouTubeStudioOptions, { YouTubeConfig } from './components/YouTubeStudioOptions'
 import PlatformSelection from './components/PlatformSelection'
 import PostComposerHeader from './components/PostComposerHeader'
@@ -119,6 +120,7 @@ const PostComposer = () => {
         publicMessage: 'Please check your DM for the information you requested! 📩',
         privateMessage: '',
       },
+      isAiGenerated: false,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -168,6 +170,7 @@ const PostComposer = () => {
         formData.append('content', values.content)
         formData.append('isImmediate', String(!isScheduled))
         formData.append('postTypes', JSON.stringify(postTypes))
+        formData.append('isAiGenerated', String(Boolean(values.isAiGenerated)))
 
         if (scheduledDateTime) {
           formData.append('scheduledDateTime', scheduledDateTime)
@@ -244,6 +247,7 @@ const PostComposer = () => {
       formData.append('isDraft', 'true')
       formData.append('isImmediate', 'false')
       formData.append('postTypes', JSON.stringify(postTypes))
+      formData.append('isAiGenerated', String(Boolean(formik.values.isAiGenerated)))
 
       if (isScheduled && scheduledDate && scheduledTime) {
         const date = new Date(scheduledDate)
@@ -321,6 +325,7 @@ const PostComposer = () => {
           publicMessage: config?.publicMessage || 'Please check your DM for the information you requested! 📩',
           privateMessage: config?.privateMessage || '',
         },
+        isAiGenerated: post.isAiGenerated ?? false,
       })
 
       if (post.scheduledDateTime) {
@@ -499,6 +504,10 @@ const PostComposer = () => {
     if (data.title) formik.setFieldValue("title", data.title)
     if (data.content) formik.setFieldValue("content", data.content)
 
+    // Automatically enable AI Label for AI-generated Carousel
+    formik.setFieldValue("isAiGenerated", true)
+    toast.info(t('ai_label_auto_enabled_carousel', { defaultValue: '✨ AI Label automatically enabled for AI Carousel' }))
+
     if (data.autoReplyKeyword) {
       formik.setFieldValue("autoReplyConfig", {
         isEnabled: true,
@@ -530,6 +539,10 @@ const PostComposer = () => {
   }) => {
     if (data.title) formik.setFieldValue('title', data.title)
     if (data.content) formik.setFieldValue('content', data.content)
+
+    // Automatically enable AI Label for AI-generated Post
+    formik.setFieldValue('isAiGenerated', true)
+    toast.info(t('ai_label_auto_enabled_post', { defaultValue: '✨ AI Label automatically enabled for AI-generated content' }))
 
     if (data.autoReplyKeyword) {
       formik.setFieldValue('autoReplyConfig', {
@@ -564,6 +577,9 @@ const PostComposer = () => {
       }).unwrap()
 
       if (res?.data) {
+        // Automatically enable AI Label when AI polishes or modifies the content
+        formik.setFieldValue('isAiGenerated', true)
+
         if (action === 'add_hashtags' && res.data.hashtags?.length > 0) {
           const tagsString = res.data.hashtags.map((h: string) => h.startsWith('#') ? h : '#' + h).join(' ')
           formik.setFieldValue('content', currentContent ? `${currentContent}\n\n${tagsString}` : tagsString)
@@ -804,6 +820,31 @@ const PostComposer = () => {
                         )}
                         <span>Add CTA</span>
                       </button>
+
+                      <div className="h-4 w-px bg-border/40 hidden sm:block mx-0.5" />
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const nextVal = !formik.values.isAiGenerated
+                          formik.setFieldValue('isAiGenerated', nextVal)
+                          if (nextVal) {
+                            toast.success(t('ai_label_enabled_toast', { defaultValue: 'Instagram & Meta AI Label Enabled' }))
+                          } else {
+                            toast.info(t('ai_label_disabled_toast', { defaultValue: 'AI Label Disabled' }))
+                          }
+                        }}
+                        className={cn(
+                          'px-2.5 py-1 rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer border',
+                          formik.values.isAiGenerated
+                            ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-rose-500 text-white border-purple-400/50 shadow-purple-500/25 ring-1 ring-purple-400/30'
+                            : 'border-border/40 hover:border-purple-500/40 text-muted-foreground hover:text-foreground bg-background/60'
+                        )}
+                        title="Toggle Instagram & Meta AI content label"
+                      >
+                        <Sparkles className={cn('w-3.5 h-3.5', formik.values.isAiGenerated ? 'text-amber-200 animate-spin' : 'text-purple-400')} />
+                        <span>AI Label: {formik.values.isAiGenerated ? 'ON' : 'OFF'}</span>
+                      </button>
                     </div>
 
                     <div className="relative">
@@ -870,8 +911,16 @@ const PostComposer = () => {
             </CardContent>
           </Card>
 
-          {/* Auto-Reply & Scheduling Options */}
+          {/* AI Label, Auto-Reply & Scheduling Options */}
           <div className="rounded-border-radius glass-card glass-dark-card p-4 sm:p-6 space-y-6 md:space-y-8 shadow-xl">
+            <AILabelOptions
+              isAiGenerated={Boolean(formik.values.isAiGenerated)}
+              onChange={(enabled) => formik.setFieldValue('isAiGenerated', enabled)}
+              disabled={isLoading}
+              selectedAccounts={selectedAccountObjects}
+              postTypes={postTypes}
+            />
+
             <AutoReplyOptions
               config={formik.values.autoReplyConfig!}
               onConfigChange={handleAutoReplyToggle}
@@ -912,6 +961,7 @@ const PostComposer = () => {
               autoReplyKeyword={formik.values.autoReplyConfig?.triggerKeyword}
               isAutoReplyEnabled={formik.values.autoReplyConfig?.isEnabled}
               postTypes={postTypes}
+              isAiGenerated={Boolean(formik.values.isAiGenerated)}
             />
           </Card>
         </div>
@@ -1010,6 +1060,9 @@ const PostComposer = () => {
             type: 'image' as const
           }
           setSlides((prev) => [...prev, newSlide])
+          // Automatically enable AI Label for AI-generated visual media
+          formik.setFieldValue('isAiGenerated', true)
+          toast.info(t('ai_label_auto_enabled_image', { defaultValue: '✨ AI Label automatically enabled for AI-generated visual' }))
         }}
       />
 
@@ -1021,6 +1074,7 @@ const PostComposer = () => {
         onApply={(data) => {
           if (data.title) formik.setFieldValue('title', data.title)
           if (data.content) formik.setFieldValue('content', data.content)
+          formik.setFieldValue('isAiGenerated', true)
         }}
       />
 

@@ -68,6 +68,7 @@ interface SocialPostPreviewProps {
   autoReplyKeyword?: string[]
   isAutoReplyEnabled?: boolean
   postTypes?: Record<string, string>
+  isAiGenerated?: boolean
 }
 
 // Platform tabs definition
@@ -279,6 +280,7 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
   autoReplyKeyword = ['DM'],
   isAutoReplyEnabled = false,
   postTypes = {},
+  isAiGenerated = false,
 }) => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<PlatformType>('google')
@@ -552,8 +554,30 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
               <MoreHorizontal className="w-4 h-4 text-neutral-500" />
             </div>
 
+            {/* Instagram Official AI info Disclosure Banner */}
+            {isAiGenerated && (
+              <div className="flex items-center justify-between px-3.5 py-1.5 bg-neutral-100/90 dark:bg-neutral-900/90 border-b border-neutral-200/50 dark:border-neutral-800/50 text-[11px] text-neutral-700 dark:text-neutral-300">
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-500 animate-pulse" />
+                  <span className="font-bold text-neutral-900 dark:text-neutral-100">AI info</span>
+                  <span className="text-[10px] text-neutral-500 dark:text-neutral-400">• Made with AI</span>
+                </div>
+                <span className="text-[10px] font-medium text-neutral-400 font-mono">Meta</span>
+              </div>
+            )}
+
             {/* Media Area */}
             <div className="relative aspect-square w-full bg-neutral-100 dark:bg-neutral-900 overflow-hidden flex items-center justify-center group">
+              {/* Floating Instagram AI Pill over media */}
+              {isAiGenerated && (
+                <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-md text-white text-[10px] font-semibold border border-white/15 shadow-md">
+                    <Sparkles className="w-3 h-3 text-purple-400" />
+                    <span>AI info</span>
+                  </div>
+                </div>
+              )}
+
               {currentMediaUrl ? (
                 currentSlide?.type === 'video' ? (
                   <video key={currentMediaUrl} src={currentMediaUrl} className="w-full h-full object-cover" controls muted />
