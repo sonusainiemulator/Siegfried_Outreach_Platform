@@ -2,6 +2,23 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-18 20:20:00 CEST] — AI Bot Widget Real-Time Admin Chat Documentation & Live Handover Architecture
+
+### ⚡ Comprehensive Real-Time Admin Chat Documentation & Architecture Guide
+- **Documentation Guide Added (`docs/AI_BOT_WIDGET_REALTIME_CHAT_GUIDE.md`)**:
+  - Full architectural telemetry of the dual-channel real-time pipeline (Ably Realtime on `chat:[chatbotId]:[sessionId]` + Socket.io on `user_[adminId]`).
+  - Bilingual step-by-step configuration manual (English + हिंदी) for admins and support teams.
+  - Interaction modes documentation (`ai_only`, `hybrid`, `human_only`), escalation keywords, and audio chime alerts.
+  - Live takeover procedures in **AI Live Agent** (`/ai-live-agent`) and **Shared Inbox** (`/social-media/shared-inbox`).
+  - Real-world case studies across D2C E-Commerce, Healthcare, Real Estate, and B2B SaaS.
+- **Synced Documentation Portal (`siegfriedoutreach-docs`)**:
+  - Published dedicated guide `ai-bot-widget-realtime-chat.mdx` with Fumadocs tabs.
+  - Enhanced `ai-live-agent.mdx` and `ai-bot-studio.mdx`.
+  - Updated `ai-studio/meta.json` navigation hierarchy.
+  - Documented full changelog entry in `siegfriedoutreach-docs/CHANGELOG.md`.
+
+---
+
 ## 📍 [2026-09-17 19:42:00 CEST] — Next-Gen AI Video, Voice & Multimodal Provider Integrations on /api-keys
 
 ### 🚀 Cutting-Edge Video, Voice & Multimodal AI Provider Support (`/api-keys`)
