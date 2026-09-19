@@ -2,6 +2,49 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-19 19:51:00 CEST] — Christopher Siegfried, MA: Mental Health Care Client Profile, 24x7 Autonomous AI Agent & Skills Integration
+
+### 🧠 Mental Health Care Business Profile & Superadmin Setup (`admin@siegfriedoutreach.com`)
+- **Superadmin User Profile Configuration**:
+  - Updated client name to **Christopher Siegfried, MA** for superadmin account `admin@siegfriedoutreach.com`.
+  - Configured comprehensive business knowledge profile in MongoDB `Business` collection:
+    - **Niche / Category**: Mental Health Care & Educational Psychology.
+    - **Founder Journey & Mission**: Curiosity into why students struggled in mechanical engineering at the University of Saint Thomas (Saint Paul, MN) led to a true passion for understanding individual differences in psychology, transitioning to Augsburg University majoring in Educational Studies and Psychology.
+    - **Brand Tone**: Empathetic, Insightful, Educational, Compassionate, and Professional.
+    - **Core USP**: Bridging analytical problem-solving with educational psychology and deep empathy to address individual differences in stress, resilience, and mental well-being.
+    - **Target Audience**: University students, STEM & engineering professionals, educators, and individuals navigating anxiety, academic burnout, and emotional regulation.
+    - **Monthly & Sales Goals**: 30 daily educational posts/reels and bookings for 1-on-1 consultations, student resilience coaching, and educational psychology assessments.
+  - Initialized dedicated services in `BusinessService`:
+    1. *1-on-1 Mental Health & Psychological Guidance* ($150/session)
+    2. *STEM & University Student Resilience Coaching* ($120/session)
+    3. *Educational Psychology & Learning Assessment* ($250/assessment)
+    4. *Mindfulness & Cognitive Reframing Workshop* ($49/seat)
+
+### 🤖 24x7 Autonomous Hermes AI Skill & System Prompt Integration
+- **Dedicated Hermes Skill (`hermes-skill.model.js`)**:
+  - Created specialized skill: `"Mental Health Care & Psychology — Christopher Siegfried, MA"`.
+  - Configured full 24x7 autonomous marketing prompt structured around 5 core daily content pillars:
+    1. *Category A — Understanding Individual Differences* (processing styles, cognitive variance in stress).
+    2. *Category B — STEM, Engineering & Academic Burnout* (imposter syndrome, student resilience).
+    3. *Category C — Daily Mental Wellness & Emotional Regulation* (nervous system regulation, healthy boundaries).
+    4. *Category D — Cognitive Reframing & Psychoeducation* (shifting catastrophic thoughts, accessible science).
+    5. *Category E — Destigmatizing Mental Health & Proactive Care* (therapy awareness, strength in asking for help).
+  - Linked skill into `user_settings.activeHermesSkills` for Christopher Siegfried.
+
+### ⚡ Centralized AI Post Generation Awareness (`ai-content.controller.js` & `AIPostGeneratorModal.tsx`)
+- **Backend Caption Generator Enhancement (`controllers/ai-content.controller.js`)**:
+  - Enhanced `generateSocialCaption` to dynamically query the user's `Business` profile and active `HermesSkill`s.
+  - Automatically injects client business niche, background, USP, and specialized directives into the LLM system instruction for all social post and caption generations.
+- **Frontend AI Post Studio Presets (`AIPostGeneratorModal.tsx`)**:
+  - Integrated `useGetBusinessProfileQuery` to dynamically detect the client's business category.
+  - Added dedicated **"Mental Health & Psychology Ideas (Christopher Siegfried, MA)"** quick inspiration preset pills:
+    - 🧠 *Individual Differences in Stress*
+    - 🎓 *STEM & Student Burnout*
+    - 🌱 *5 Habits for Emotional Well-Being*
+    - 💡 *Cognitive Reframing for Anxiety*
+    - 🤝 *Destigmatizing Mental Health*
+  - Added visual niche indicator badge: `Niche: Mental Health Care`.
+
 ## 📍 [2026-09-19 19:27:00 CEST] — Fix Unstyled Login Page & Resolve Next.js Static CSS Chunk Hash Mismatch
 
 ### 🎨 UI/UX & Production Asset Serving Restoration (`/login`)

@@ -39,6 +39,7 @@ import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useGenerateSocialCaptionMutation } from '@/redux/api/aiContentApi'
+import { useGetBusinessProfileQuery } from '@/redux/api/aiSocialApi'
 
 interface AIPostGeneratorModalProps {
   isOpen: boolean
@@ -54,6 +55,39 @@ interface AIPostGeneratorModalProps {
   initialContent?: string
   selectedPlatforms?: string[]
 }
+
+const MENTAL_HEALTH_PRESET_IDEAS = [
+  {
+    title: '🧠 Individual Differences in Stress',
+    prompt: 'Why do we react differently to the same stress? Exploring individual differences in cognitive psychology, resilience, and emotional regulation.',
+    tone: 'educational',
+    goal: 'engagement'
+  },
+  {
+    title: '🎓 STEM & Student Burnout',
+    prompt: 'From Mechanical Engineering to Educational Psychology: What struggling university students taught me about academic burnout, imposter syndrome, and finding true resilience.',
+    tone: 'storytelling',
+    goal: 'brand'
+  },
+  {
+    title: '🌱 5 Habits for Emotional Well-Being',
+    prompt: '5 evidence-based micro-habits to regulate your nervous system and manage anxiety during a high-pressure workday.',
+    tone: 'educational',
+    goal: 'engagement'
+  },
+  {
+    title: '💡 Cognitive Reframing for Anxiety',
+    prompt: 'How to shift catastrophic anxious thinking into clarity: A step-by-step cognitive reframing exercise for high achievers and busy professionals.',
+    tone: 'professional',
+    goal: 'traffic'
+  },
+  {
+    title: '🤝 Destigmatizing Mental Health',
+    prompt: 'Seeking psychological guidance is not a sign of weakness—it is the highest form of self-awareness. Why proactive mental care transforms lives.',
+    tone: 'engaging',
+    goal: 'engagement'
+  }
+]
 
 const PRESET_IDEAS = [
   {
@@ -123,12 +157,23 @@ export const AIPostGeneratorModal: React.FC<AIPostGeneratorModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const [generateSocialCaption, { isLoading }] = useGenerateSocialCaptionMutation()
+  const { data: businessRes } = useGetBusinessProfileQuery(undefined)
+  const businessProfile = businessRes?.data
+
+  const isMentalHealth = Boolean(
+    businessProfile?.category?.toLowerCase()?.includes('mental') ||
+    businessProfile?.category?.toLowerCase()?.includes('psychology') ||
+    businessProfile?.category?.toLowerCase()?.includes('health') ||
+    businessProfile?.name?.toLowerCase()?.includes('siegfried')
+  )
+
+  const activePresets = isMentalHealth ? MENTAL_HEALTH_PRESET_IDEAS : PRESET_IDEAS
 
   const [topic, setTopic] = useState(initialTopic || initialContent || '')
   const [platforms, setPlatforms] = useState<string[]>(
     selectedPlatforms.length > 0 ? selectedPlatforms : ['instagram', 'facebook']
   )
-  const [tone, setTone] = useState('engaging')
+  const [tone, setTone] = useState(isMentalHealth ? 'educational' : 'engaging')
   const [goal, setGoal] = useState('engagement')
   const [includeEmojis, setIncludeEmojis] = useState(true)
   const [includeHashtags, setIncludeHashtags] = useState(true)
@@ -289,12 +334,23 @@ export const AIPostGeneratorModal: React.FC<AIPostGeneratorModalProps> = ({
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 custom-scrollbar">
           {/* Quick Inspiration Pills */}
           <div className="space-y-1.5">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-              <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
-              <span>Quick Inspiration Ideas</span>
+            <div className="flex items-center justify-between text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5">
+                <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
+                <span>
+                  {isMentalHealth
+                    ? 'Mental Health & Psychology Ideas (Christopher Siegfried, MA)'
+                    : 'Quick Inspiration Ideas'}
+                </span>
+              </div>
+              {businessProfile?.category && (
+                <span className="text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded-full border border-primary/20 normal-case font-semibold">
+                  Niche: {businessProfile.category}
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-              {PRESET_IDEAS.map((preset, idx) => (
+              {activePresets.map((preset, idx) => (
                 <button
                   key={idx}
                   type="button"
@@ -323,7 +379,11 @@ export const AIPostGeneratorModal: React.FC<AIPostGeneratorModalProps> = ({
                 <Textarea
                   value={topic}
                   onChange={e => setTopic(e.target.value)}
-                  placeholder="e.g. Announce our new AI features that save 10 hours a week for agency owners..."
+                  placeholder={
+                    isMentalHealth
+                      ? "e.g. Exploring individual differences in psychology, overcoming engineering student burnout, or 5 habits for emotional regulation..."
+                      : "e.g. Announce our new AI features that save 10 hours a week for agency owners..."
+                  }
                   className="min-h-24 text-xs leading-relaxed rounded-2xl border-neutral-200 dark:border-white/15 focus:ring-primary/20 p-3 bg-neutral-50 dark:bg-white/5 text-neutral-900 dark:text-white placeholder:text-neutral-400 resize-y shadow-xs"
                 />
               </div>
