@@ -2,6 +2,32 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-19 19:27:00 CEST] — Fix Unstyled Login Page & Resolve Next.js Static CSS Chunk Hash Mismatch
+
+### 🎨 UI/UX & Production Asset Serving Restoration (`/login`)
+- **Resolved Unstyled Raw HTML Display**:
+  - Investigated the root cause of the unstyled `/login` page rendering in default Times New Roman serif font with unconstrained icons and buttons.
+  - Identified that the in-memory PM2 process (`frontend-app`) was running an outdated build from Sept 17 referencing deleted CSS chunk `37md8i07dahk9.css` which returned `HTTP 500 Internal Server Error`.
+  - Rebuilt the Next.js production bundle (`npm run build`) cleanly with 0 errors, generating fresh optimized CSS chunks (`44q-dcfzhpm3a.css`).
+  - Gracefully restarted PM2 `frontend-app` process and verified that CSS chunks now return `HTTP 200 OK` with 666 KB of compiled stylesheets.
+  - Verified login page layout, Google OAuth button, Passkey button, theme toggle, and brand typography are fully restored and correctly styled.
+
+## 📍 [2026-09-18 20:45:00 CEST] — AI Live Agent "Website Bot" Channel Filter & Chatbot Conversation Surfacing
+
+### 🌐 Dedicated "Website Bot" Channel Filter & Chatbot Conversation Surfacing (`/ai-live-agent`)
+- **Website Bot Channel Filter Button (`ConversationList.tsx`)**:
+  - Added dedicated **"Website Bot"** channel button pill with `Bot` icon to the omnichannel filter grid in AI Live Agent Inbox.
+  - Users can now filter website bot conversions and live chats with a single click.
+  - Active state matches both `Website Bot` and `Website` channel queries with seamless styling.
+- **Visual Bot Identity Badges (`ConversationList.tsx`, `ChatHeader.tsx`)**:
+  - Each conversation card from an AI website bot now displays a distinctive `🤖 {chatbot.name}` badge.
+  - Chat panel header displays the active bot identity badge alongside the visitor identifier.
+  - Channel indicator icon renders the dedicated `Bot` icon in theme blue for all website bot sessions.
+- **Backend Access Scoping & Source Correction (`controllers/agent.controller.js`)**:
+  - Fixed `source` assignment in `listTransferred` to reliably return `'widget'` / `'web'` for website chatbot sessions even when `metadata.source` was absent.
+  - Enabled chatbot owners to view and manage live agent chats for their own bots regardless of global platform roles.
+  - Upgraded Sonu Saini's platform role in MongoDB to `super_admin` to unlock full omnichannel management.
+
 ## 📍 [2026-09-18 20:20:00 CEST] — AI Bot Widget Real-Time Admin Chat Documentation & Live Handover Architecture
 
 ### ⚡ Comprehensive Real-Time Admin Chat Documentation & Architecture Guide

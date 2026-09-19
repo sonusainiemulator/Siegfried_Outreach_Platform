@@ -100,7 +100,16 @@ const HumanAgentDashboard = () => {
       if (!conv.userName?.toLowerCase().includes(q) && !conv.lastMessage?.content?.toLowerCase()?.includes(q))
         return false
     }
-    if (channelFilter !== 'All Platforms' && conv.source !== channelFilter.toLowerCase()) return false
+    if (channelFilter !== 'All Platforms') {
+      const ch = channelFilter.toLowerCase()
+      const convSrc = (conv.source || '').toLowerCase()
+      if (ch === 'website' || ch === 'web widget' || ch === 'website bot') {
+        if (!convSrc.includes('widget') && !convSrc.includes('web') && !convSrc.includes('website') && !conv.chatbot)
+          return false
+      } else if (!convSrc.includes(ch)) {
+        return false
+      }
+    }
     return true
   })
 

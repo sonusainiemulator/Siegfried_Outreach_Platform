@@ -62,8 +62,13 @@ const ChatHeader = ({
             </AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="font-bold text-base flex items-center gap-2 text-foreground">
+            <h3 className="font-bold text-base flex items-center gap-2 text-foreground flex-wrap">
               {formatDisplayName(conversation.userName)}
+              {conversation.chatbot?.name && (
+                <span className="text-xs font-semibold bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  🤖 {conversation.chatbot.name}
+                </span>
+              )}
             </h3>
           </div>
         </div>

@@ -15,6 +15,7 @@ import { ConversationListProps } from '@/types/components/support'
 import { formatDate } from '@/utils'
 import { format } from 'date-fns'
 import {
+  Bot,
   CheckCircle2,
   ChevronDown,
   Facebook,
@@ -40,7 +41,8 @@ const getChannelIcon = (source: string) => {
   if (s.includes('messenger') || s.includes('facebook')) return <Facebook className="w-4 h-4 text-messenger" />
   if (s.includes('whatsapp')) return <MessageCircle className="w-4 h-4 text-whatsapp" />
   if (s.includes('telegram')) return <Send className="w-4 h-4 text-telegram-alt" />
-  return <MessageCircle className="w-4 h-4 text-muted-foreground" />
+  if (s.includes('widget') || s.includes('web') || s.includes('bot') || s.includes('website')) return <Bot className="w-4 h-4 text-blue-500" />
+  return <Bot className="w-4 h-4 text-blue-500" />
 }
 
 const getStatusBadge = (status: string) => {
@@ -165,9 +167,9 @@ const ConversationList = ({
             <div className="grid grid-cols-2 gap-2">
               {(campaignHub
                 ? ['All Platforms', 'Instagram', 'Messenger', 'WhatsApp', 'Telegram']
-                : ['All Platforms', 'Instagram', 'Messenger', 'WhatsApp', 'Telegram']
+                : ['All Platforms', 'Website Bot', 'Instagram', 'Messenger', 'WhatsApp', 'Telegram']
               ).map((ch) => {
-                const isActive = channelFilter === ch
+                const isActive = channelFilter === ch || (ch === 'Website Bot' && channelFilter === 'Website')
                 return (
                   <Button
                     key={ch}
@@ -187,6 +189,7 @@ const ConversationList = ({
                       )}
                     >
                       {ch === 'All Platforms' && <Globe className="w-3.5 h-3.5" />}
+                      {(ch === 'Website Bot' || ch === 'Website') && <Bot className="w-3.5 h-3.5 text-blue-400" />}
                       {ch === 'Instagram' && <Instagram className="w-3.5 h-3.5" />}
                       {ch === 'Email' && <Mail className="w-3.5 h-3.5" />}
                       {ch === 'WhatsApp' && <MessageCircle className="w-3.5 h-3.5" />}
@@ -271,7 +274,7 @@ const ConversationList = ({
 
               <div className="flex-1 min-w-0 flex flex-col justify-center">
                 <div className="flex items-center justify-between mb-0.5">
-                  <div className="flex items-center gap-1.5 min-w-0">
+                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
                     <h3
                       className={cn(
                         'font-bold text-base truncate transition-colors',
@@ -280,6 +283,11 @@ const ConversationList = ({
                     >
                       {formatDisplayName(conv.userName)}
                     </h3>
+                    {conv.chatbot?.name && (
+                      <span className="text-[10px] bg-primary/10 text-primary font-medium px-1.5 py-0.5 rounded border border-primary/20 shrink-0 max-w-[110px] truncate">
+                        🤖 {conv.chatbot.name}
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
