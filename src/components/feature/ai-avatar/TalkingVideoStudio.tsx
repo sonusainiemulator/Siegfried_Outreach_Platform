@@ -21,11 +21,53 @@ import {
   Check,
   Zap,
   Volume2,
-  Maximize2
+  Maximize2,
+  Brain,
+  GraduationCap,
+  Heart,
+  BookOpen
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { AvatarPreviewModal } from './AvatarPreviewModal'
+
+const CHRISTOPHER_VIDEO_PRESETS = [
+  {
+    title: '🎓 STEM & Academic Burnout',
+    duration: '35s Reel',
+    category: 'Student Burnout',
+    script:
+      "When I was studying mechanical engineering at the University of Saint Thomas, I noticed so many brilliant students burning out and walking away. It wasn't a lack of intelligence—it was emotional exhaustion and individual differences in stress. If you're overwhelmed right now, pause. Your worth is not defined by your output. Take one deep breath, reset your nervous system, and let's tackle today one step at a time."
+  },
+  {
+    title: '🧠 Individual Differences in Stress',
+    duration: '45s Short',
+    category: 'Educational Psychology',
+    script:
+      "Have you ever wondered why two people facing the exact same deadline react completely differently? In educational psychology, we study individual cognitive differences. Some brains thrive on high arousal, while others experience sensory overload. Understanding your unique psychological blueprint is the first step to mastering your anxiety without self-judgment. Honor how your mind is wired."
+  },
+  {
+    title: '💡 60s Cognitive Reframing for Anxiety',
+    duration: '60s Reel',
+    category: 'Clinical Technique',
+    script:
+      "Here is a quick 60-second psychological reframing exercise for anxious thoughts. When your brain tells you: 'Everything is going to fall apart,' don't fight it. Instead, ask three grounded questions: First, what is the hard evidence right now? Second, what is the most realistic outcome? And third, if the worst happens, what is one concrete step I can take? Shifting from panic to curiosity immediately lowers your amygdala response."
+  },
+  {
+    title: '🌱 5 Micro-Habits for Emotional Well-Being',
+    duration: '40s Short',
+    category: 'Daily Resilience',
+    script:
+      "Here are five 30-second habits that will transform your emotional well-being today: One, step into morning sunlight for 5 minutes. Two, do a physiological sigh—two inhales, one long exhale. Three, replace self-criticism with neutral curiosity. Four, set a firm boundary on non-urgent messages. And five, remind yourself that rest is productive. Which one are you trying today?"
+  },
+  {
+    title: '🤝 Destigmatizing Mental Health Guidance',
+    duration: '45s Reel',
+    category: 'Awareness & Growth',
+    script:
+      "Seeking psychological guidance is not a sign of weakness—it is the highest form of self-awareness. When an athlete wants to win an Olympic medal, they hire a specialized coach. When your mind is navigating complex stress, transitions, or emotional burnout, having a professional guide is simply smart engineering for your life. You don't have to carry it all alone."
+  }
+]
 
 interface TalkingVideoStudioProps {
   initialAvatar?: AvatarItem | null
@@ -253,6 +295,43 @@ export const TalkingVideoStudio: React.FC<TalkingVideoStudioProps> = ({
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Christopher Siegfried, MA Mental Health Presets */}
+          <div className="space-y-2 p-3.5 rounded-[12px] bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-indigo-500/10 border border-purple-500/20">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Brain className="w-4 h-4 text-purple-400" />
+                <span className="text-xs font-bold text-title-color">Christopher Siegfried, MA — 1-Click Video Scripts</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  Skills Powered
+                </span>
+              </div>
+              <span className="text-[11px] text-subtitle-color">Tap any script to load into 9:16 vertical reel</span>
+            </div>
+
+            <div className="flex gap-2 overflow-x-auto pb-1 custom-scrollbar">
+              {CHRISTOPHER_VIDEO_PRESETS.map((preset, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setScript(preset.script)
+                    setAspectRatio('9:16')
+                    toast.success(`Loaded: ${preset.title} (9:16 Vertical Video)`)
+                  }}
+                  className="shrink-0 text-left px-3 py-2 rounded-[8px] bg-black/20 hover:bg-black/40 dark:bg-white/5 dark:hover:bg-white/10 border border-glass-border hover:border-purple-400/50 transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-title-color group-hover:text-purple-400">
+                    <span>{preset.title}</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-1 text-[10px] text-subtitle-color">
+                    <span className="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">{preset.duration}</span>
+                    <span>{preset.category}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Script Textarea */}
