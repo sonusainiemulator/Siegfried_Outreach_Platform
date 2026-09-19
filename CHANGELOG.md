@@ -2,6 +2,24 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-19 20:07:00 CEST] — Hermes Agent Skills Library UI/UX Redesign & Dashboard Theme Alignment (`/ai-agent-skills`)
+
+### 🎨 Complete UI/UX Overhaul & Dashboard Theme Parity
+- **Eliminated Black Void Modal Bug**:
+  - Replaced legacy unstyled popup and Tailwind v3 `bg-opacity-50` backdrop (which rendered solid pitch black) with Radix UI `Dialog` utilizing a sleek `backdrop-blur-sm bg-black/60` overlay.
+  - Converted the raw form into a modern dialog with responsive padding, rounded corners (`rounded-3xl`), and dark/light theme support.
+- **Top Stats & Domain Intelligence**:
+  - Added 4 dashboard stat cards: **Total Skills**, **Assigned to 24/7 Agent**, **Content Generation Skills**, and **Specialized Niche** ("Mental Health Care — Christopher Siegfried, MA").
+  - Displays dynamic business domain pill linked directly to client settings.
+- **Real-Time Search & Category Filters**:
+  - Added instant search input with clear button to filter skills by name, description, or parameter tags.
+  - Added interactive category filter pills (*All Categories, Content Generation, Competitor Research, Customer Support, Sales, Other*) with live count badges.
+- **Rich Skill Cards Grid**:
+  - Modern cards with category color highlights (Purple for Content Gen, Emerald for Sales, Sky for Support, Amber for Research).
+  - 1-click **"Enable for 24/7 Agent"** toggle button allowing instant assignment/unassignment to the autonomous background loop.
+  - Expandable **System Prompt** drawer with syntax-styled monospace code block and 1-click **Copy Prompt** button.
+  - Edit and delete actions with confirmation dialogs and Sonner toasts.
+
 ## 📍 [2026-09-19 19:51:00 CEST] — Christopher Siegfried, MA: Mental Health Care Client Profile, 24x7 Autonomous AI Agent & Skills Integration
 
 ### 🧠 Mental Health Care Business Profile & Superadmin Setup (`admin@siegfriedoutreach.com`)
