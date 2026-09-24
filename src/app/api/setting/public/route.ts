@@ -6,13 +6,13 @@ export async function GET(request: NextRequest) {
   try {
     const data = await res.json();
     if (data && data.settings) {
-      if (!data.settings.app_name || typeof data.settings.app_name !== 'string' || data.settings.app_name.includes('TTOS')) {
+      if (!data.settings.app_name || typeof data.settings.app_name !== 'string' || data.settings.app_name.includes('Siegfried Outreach')) {
         data.settings.app_name = 'Siegfried Outreach - Social Media Marketing Agency';
       }
-      if (!data.settings.app_description || typeof data.settings.app_description !== 'string' || data.settings.app_description.includes('TTOS')) {
+      if (!data.settings.app_description || typeof data.settings.app_description !== 'string' || data.settings.app_description.includes('Siegfried Outreach')) {
         data.settings.app_description = 'Social Media Marketing Agency & AI-Powered Outreach Platform';
       }
-      // Enforce official TTOS branding and logos
+      // Enforce official Siegfried Outreach branding and logos
       data.settings.logo_light_url = '/images/siegfried-outreach-og.png';
       data.settings.logo_dark_url = '/images/siegfried-outreach-og.png';
       data.settings.landing_logo_url = '/images/siegfried-outreach-og.png';

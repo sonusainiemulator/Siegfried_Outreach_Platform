@@ -147,7 +147,7 @@ export const platformSetupGuides: Record<string, SetupGuideItem> = {
     redirectUri: `${apiBase}/api/social-auth/reddit/callback`,
     steps: [
       'Go to [reddit.com/prefs/apps](https://www.reddit.com/prefs/apps) and scroll to the bottom. Click **"create another app…"**.',
-      'Select **"web app"** as the app type. Give it any name (e.g. "TTOS").',
+      'Select **"web app"** as the app type. Give it any name (e.g. "Siegfried Outreach").',
       'In the **"redirect uri"** field, paste the OAuth Redirect URL shown below, then click **"create app"**.',
       'Copy the **Client ID** (the short string shown under your app name) and the **Client Secret** into Social Settings.',
       'Return here and click **"Connect Account"** to authorize your Reddit account.',
@@ -190,7 +190,7 @@ export const platformSetupGuides: Record<string, SetupGuideItem> = {
     redirectUri: '',
     steps: [
       'In your WordPress dashboard, go to **Users → Profile** (or **Users → All Users → Edit** for another user).',
-      'Scroll to the **Application Passwords** section. Type a name (e.g. "TTOS") and click **Add New Application Password**.',
+      'Scroll to the **Application Passwords** section. Type a name (e.g. "Siegfried Outreach") and click **Add New Application Password**.',
       'Copy the generated password (shown only once) — it looks like `xxxx xxxx xxxx xxxx xxxx xxxx`.',
       'Enter your **WordPress Site URL** (e.g. `https://myblog.com`), **Username**, and the **Application Password** in Social Settings and save.',
       'Return here and click **Connect Account** — credentials are verified instantly. No redirect needed.',

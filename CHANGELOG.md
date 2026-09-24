@@ -2,6 +2,21 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-24 06:15:00 CEST] — Global Platform Whitelabel & Complete Rebranding to Siegfried Outreach Platform
+
+### 🏷️ Global Brand Purge & Whitelabel Standardisation
+- **Complete Legacy Brand Purge**:
+  - Scanned and purged all remaining occurrences of legacy terms (`TTOS`, `TT Office`, `ttos.com`, `api.ttos.com`, `ttosmarketing.org`, `ttinfotechs`) across 78 codebase files.
+  - Replaced legacy text and domain strings with official **Siegfried Outreach Platform** branding (`https://siegfriedoutreach.com`, `https://api.siegfriedoutreach.com`, `chris@siegfriedoutreach.com`).
+- **Footer & Header Brand Fallback Logic**:
+  - Updated `CampaignHubFooter.tsx`, `CampaignHubHeader.tsx`, `McpFooter.tsx`, `McpHeader.tsx`, `LeftSidebar.tsx`, and `DynamicMetadata.tsx`.
+  - Removed legacy fallback logic that previously forced `"TTOS"` when `"siegfried"` was present in application settings.
+- **API & Mock Data Rebranding**:
+  - Rebranded MCP server definitions, tool names (`siegfried_get_user`, `siegfried_list_accounts`, `siegfried_create_post`, etc.), and connection guides in `src/data/landingMcp.ts`, `McpHero.tsx`, `McpStudio.tsx`, and `CommandPalette.tsx`.
+  - Rebranded social ad generators (Google Ads, TikTok Ads, Reddit Ads) and platform setup guides to **Siegfried Outreach Platform**.
+- **Documentation & README**:
+  - Rebranded repository documentation in `README.md` and `src/lib/i18n.ts` translations.
+
 ## 📍 [2026-09-24 05:53:00 CEST] — System Diagnostic, PM2 Process Stabilization & Production Build Verification
 
 ### 🛠️ Production Environment Audit & Verification
@@ -480,7 +495,7 @@ All notable changes, fixes, and feature additions are documented in this file.
 
 ### 🏷️ Repository Header Update
 - **Updated Primary Header**:
-  - Renamed the main title from `# 📋 Changelog — TTOS Platform` to `# 📋 Changelog — Siegfried_Outreach_Platform` in accordance with repository branding standards.
+  - Renamed the main title from `# 📋 Changelog — Siegfried Outreach Platform` to `# 📋 Changelog — Siegfried_Outreach_Platform` in accordance with repository branding standards.
 
 ---
 
@@ -817,7 +832,7 @@ All notable changes, fixes, and feature additions are documented in this file.
   - Updated `src/utils/apiHandler.ts` to forward `Origin`, `Referer`, `X-Forwarded-Host`, and `X-Forwarded-Proto` to the backend.
   - This allows `getRPConfig(req)` on the backend to accurately detect `https://ttai.in` and issue valid WebAuthn options for `rp.id = "ttai.in"`.
 - **Production Verification**:
-  - Verified live endpoint `POST http://127.0.0.1:3000/api/passkey/register-options` returns `HTTP 200 OK` with `rp: { name: "TTOS AI", id: "ttai.in" }`.
+  - Verified live endpoint `POST http://127.0.0.1:3000/api/passkey/register-options` returns `HTTP 200 OK` with `rp: { name: "Siegfried Outreach AI", id: "ttai.in" }`.
   - Verified live endpoint `GET http://127.0.0.1:3000/api/passkey/list` returns `HTTP 200 OK`.
   - Rebuilt with Turbopack (`npm run build` — 0 errors), reloaded PM2 `ttai-frontend`.
 
@@ -840,8 +855,8 @@ All notable changes, fixes, and feature additions are documented in this file.
 ### 🐛 Bug Fixes & WebAuthn Security
 - **Dynamic RP ID Domain Resolution**:
   - Resolved root cause of `"Failed to register passkey. Please try again."`: WebAuthn specification (§5.4.3) requires `rp.id` to match the effective domain of the calling document (`ttai.in`) or a valid registrable suffix. Previously, `getRPConfig` defaulted `rpID` to the API subdomain (`api.ttai.in`), causing browsers to reject `navigator.credentials.create` with a `SecurityError`.
-  - Updated `services/passkey.service.js` to dynamically resolve `rpID` from the client's `Origin` or `Referer` header (`ttai.in`, `ttos.in`, `localhost`, etc.) rather than the API host.
-  - Configured `verifyRegistrationResponse` and `verifyAuthenticationResponse` in `controllers/passkey.controller.js` to validate against acceptable RP IDs (`expectedRPIDs: [rpID, 'ttai.in', 'ttos.in', 'localhost']`).
+  - Updated `services/passkey.service.js` to dynamically resolve `rpID` from the client's `Origin` or `Referer` header (`ttai.in`, `siegfriedoutreach.com`, `localhost`, etc.) rather than the API host.
+  - Configured `verifyRegistrationResponse` and `verifyAuthenticationResponse` in `controllers/passkey.controller.js` to validate against acceptable RP IDs (`expectedRPIDs: [rpID, 'ttai.in', 'siegfriedoutreach.com', 'localhost']`).
 - **Enhanced Frontend Passkey UX & Error Feedback**:
   - Updated `src/components/feature/profile/PasskeyManager.tsx` with granular error handling for `NotAllowedError` (user cancellation) and `InvalidStateError` (passkey already registered).
   - Rebuilt production frontend bundle with Turbopack (0 errors) and reloaded PM2 services (`ttai-backend` and `ttai-frontend`).
@@ -884,7 +899,7 @@ All notable changes, fixes, and feature additions are documented in this file.
 - **Linked n8n Publishing Engine**:
   - Updated `N8N_WEBHOOK_URL` in `/www/wwwroot/api.ttai.in/.env` to `https://n8n.ttinfotechs.com/webhook/ai-social-publisher`.
 - **CORS & Allowed Origins Overhaul**:
-  - Sanitized and updated `ALLOWED_ORIGINS` in `.env` to include `https://ttai.in`, `https://www.ttai.in`, `https://api.ttai.in`, `https://ttos.in`, `https://www.ttos.in`, `https://api.ttos.in`, `https://n8n.ttinfotechs.com`, and localhost environments.
+  - Sanitized and updated `ALLOWED_ORIGINS` in `.env` to include `https://ttai.in`, `https://www.ttai.in`, `https://api.ttai.in`, `https://siegfriedoutreach.com`, `https://www.siegfriedoutreach.com`, `https://api.siegfriedoutreach.com`, `https://n8n.ttinfotechs.com`, and localhost environments.
   - Enhanced native CORS validation in `app.js` and `server.js` to automatically authorize TTOS, Vercel (`*.vercel.app`), and `ttinfotechs.com` origins.
 - **DNS Verification**:
   - Verified Cloudflare DNS `A` record propagation for `api.ttai.in` ➔ `94.100.26.52` across global DNS resolvers.

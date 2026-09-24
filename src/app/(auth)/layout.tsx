@@ -58,7 +58,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         <Link href="/" className="inline-flex items-center gap-3 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
           <Image
             src={displayLogo || '/images/siegfried-outreach-og.png'}
-            alt={settings?.app_name || 'TTOS'}
+            alt={settings?.app_name || 'Siegfried Outreach'}
             width={240}
             height={60}
             className={cn(
@@ -92,7 +92,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Subtle Bottom Footer */}
       <footer className="w-full py-4 text-center text-xs text-gray-400 dark:text-zinc-600 z-10">
-        © {new Date().getFullYear()} {settings?.app_name || 'TTOS Platform'}. All rights reserved.
+        © {new Date().getFullYear()} {settings?.app_name || 'Siegfried Outreach Platform'}. All rights reserved.
       </footer>
     </div>
   )

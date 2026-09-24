@@ -50,7 +50,7 @@ export default function DataDeletionPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Email:</strong> <a href="mailto:chris@ttosmarketing.org">chris@ttosmarketing.org</a>
+                <strong>Email:</strong> <a href="mailto:chris@siegfriedoutreach.com">chris@siegfriedoutreach.com</a>
               </li>
               <li>
                 <strong>Subject:</strong> Facebook Data Deletion Request

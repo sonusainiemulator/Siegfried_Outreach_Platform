@@ -45,7 +45,7 @@ export const LeftSidebar = ({
   const expandedLogoDark = settings?.logo_dark_url ? getMediaUrl(settings.logo_dark_url) : '/images/siegfried-outreach-og.png'
   const expandedLogoUrl = currentTheme === 'dark' ? expandedLogoDark : expandedLogoLight
 
-  const appName = settings?.app_name || 'TTOS'
+  const appName = settings?.app_name || 'Siegfried Outreach'
 
   return (
     <AnimatePresence>

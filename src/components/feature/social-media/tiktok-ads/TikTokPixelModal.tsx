@@ -43,7 +43,7 @@ export const TikTokPixelModal: React.FC<TikTokPixelModalProps> = ({ isOpen, onCl
     {
       id: 'tt_px_001',
       pixelId: 'C789X92L4K201M',
-      pixelName: 'TTOS Master TikTok Pixel',
+      pixelName: 'Siegfried Outreach Master TikTok Pixel',
       status: 'ACTIVE',
       lastActive: '2 minutes ago',
       eventsCount: 48920,

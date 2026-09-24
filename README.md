@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 TTOS Platform
+# 🚀 Siegfried Outreach Platform
 ### Autonomous AI Marketing & Omnichannel Growth Engine
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
@@ -18,7 +18,7 @@
 
 ## 📖 Overview
 
-**TTOS** is an all-in-one, enterprise-grade AI marketing and omnichannel broadcast platform. It empowers businesses, marketing agencies, and growth teams to automate entire 30-day content strategies, generate hyper-contextual social copy, manage cross-platform publishing, and broadcast high-converting campaigns across WhatsApp, Telegram, and Email.
+**Siegfried Outreach** is an all-in-one, enterprise-grade AI marketing and omnichannel broadcast platform. It empowers businesses, marketing agencies, and growth teams to automate entire 30-day content strategies, generate hyper-contextual social copy, manage cross-platform publishing, and broadcast high-converting campaigns across WhatsApp, Telegram, and Email.
 
 ---
 
@@ -77,8 +77,8 @@
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/ttos-platform.git
-cd ttos-platform
+git clone https://github.com/your-username/siegfried-outreach-platform.git
+cd siegfried-outreach-platform
 npm install
 ```
 
@@ -144,8 +144,8 @@ We are dedicated to providing enterprise support and continuous platform enhance
 | 🌐 **Official Website** | [https://ttai.in](https://ttai.in) |
 | 📧 **Official Email** | [support@ttai.in](mailto:support@ttai.in) / [contact@ttai.in](mailto:contact@ttai.in) |
 | 💬 **WhatsApp Support** | [+91 98765 43210](https://wa.me/919876543210) |
-| ✈️ **Telegram Channel** | [@TTOSOutreach](https://t.me/TTOSOutreach) |
-| 📍 **Headquarters** | TTOS Technologies Pvt. Ltd., Tech Park, Pune, Maharashtra, India |
+| ✈️ **Telegram Channel** | [@SiegfriedOutreach](https://t.me/SiegfriedOutreach) |
+| 📍 **Headquarters** | Siegfried Outreach Platform, Tech Park, Pune, Maharashtra, India |
 
 </div>
 
@@ -153,7 +153,7 @@ We are dedicated to providing enterprise support and continuous platform enhance
 
 <div align="center">
 
-Made with ❤️ by the **TTOS Engineering Team**  
-*Copyright © 2026 TTOS. All Rights Reserved.*
+Made with ❤️ by the **Siegfried Outreach Engineering Team**  
+*Copyright © 2026 Siegfried Outreach. All Rights Reserved.*
 
 </div>

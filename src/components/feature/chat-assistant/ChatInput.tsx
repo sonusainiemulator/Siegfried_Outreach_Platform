@@ -44,7 +44,7 @@ export const ChatInput = ({
           onKeyDown={handleKeyPress}
           placeholder={
             canManageChat
-              ? `Message TTOS Social Media Marketing Plateform...`
+              ? `Message Siegfried Outreach Social Media Marketing Plateform...`
               : t('view_only_chat', { defaultValue: 'View only mode' })
           }
           disabled={!canManageChat || isSending}

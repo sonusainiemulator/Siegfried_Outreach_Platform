@@ -373,11 +373,11 @@ function renderSlideCardToCanvas(
   // Brand Name & Handle
   ctx.fillStyle = isLight ? '#0f172a' : '#ffffff'
   ctx.font = 'bold 26px sans-serif'
-  ctx.fillText(brandName || 'TTOS', startX + avatarSize + 16, startY + 24)
+  ctx.fillText(brandName || 'Siegfried Outreach', startX + avatarSize + 16, startY + 24)
 
   ctx.fillStyle = isLight ? '#64748b' : brandColor
   ctx.font = '500 20px sans-serif'
-  const handleText = brandHandle.startsWith('@') ? brandHandle : '@' + (brandHandle || 'ttos')
+  const handleText = brandHandle.startsWith('@') ? brandHandle : '@' + (brandHandle || 'siegfriedoutreach')
   ctx.fillText(handleText, startX + avatarSize + 16, startY + 50)
 
   // Top-Right Slide Pill Counter
@@ -493,8 +493,8 @@ export const AICarouselModal: React.FC<AICarouselModalProps> = ({
   // Generator & Brand Parameters
   const [topic, setTopic] = useState('7 AI tools that automate 90% of business workflows in 2026')
   const [slideCount, setSlideCount] = useState<number>(7)
-  const [brandName, setBrandName] = useState('TTOS')
-  const [brandHandle, setBrandHandle] = useState('@ttos')
+  const [brandName, setBrandName] = useState('Siegfried Outreach')
+  const [brandHandle, setBrandHandle] = useState('@siegfriedoutreach')
   const [brandColor, setBrandColor] = useState('#06b6d4')
   const [visualTheme, setVisualTheme] = useState<CardVisualTheme>('dark_glass')
 
@@ -875,7 +875,7 @@ export const AICarouselModal: React.FC<AICarouselModalProps> = ({
                   <Input
                     value={brandName}
                     onChange={(e) => setBrandName(e.target.value)}
-                    placeholder="e.g. TTOS / Acme Inc"
+                    placeholder="e.g. Siegfried Outreach / Acme Inc"
                     className="h-10 text-xs rounded-xl border-white/15 bg-white/5 text-white placeholder:text-neutral-500"
                   />
                 </div>
@@ -889,7 +889,7 @@ export const AICarouselModal: React.FC<AICarouselModalProps> = ({
                   <Input
                     value={brandHandle}
                     onChange={(e) => setBrandHandle(e.target.value)}
-                    placeholder="e.g. @ttos"
+                    placeholder="e.g. @siegfriedoutreach"
                     className="h-10 text-xs rounded-xl border-white/15 bg-white/5 text-white placeholder:text-neutral-500"
                   />
                 </div>

@@ -36,15 +36,15 @@ export const GoogleAdPreviewModal: React.FC<GoogleAdPreviewModalProps> = ({
   if (!campaign) return null
 
   const creative = campaign.creative || {
-    headlines: ['TTOS Platform', 'Multi-Channel AI Automation'],
+    headlines: ['Siegfried Outreach Platform', 'Multi-Channel AI Automation'],
     descriptions: ['Automate outreach across WhatsApp, Telegram, Email & Socials with 99.4% delivery.'],
-    finalUrl: 'https://ttos.com',
+    finalUrl: 'https://siegfriedoutreach.com',
     displayPath1: 'platform',
     displayPath2: 'ai',
-    businessName: 'TTOS',
+    businessName: 'Siegfried Outreach',
     sitelinks: [
-      { text: 'Live Demo', description: 'See AI agents in action', url: 'https://ttos.com/demo' },
-      { text: 'Pricing Plans', description: 'Transparent monthly tiers', url: 'https://ttos.com/pricing' }
+      { text: 'Live Demo', description: 'See AI agents in action', url: 'https://siegfriedoutreach.com/demo' },
+      { text: 'Pricing Plans', description: 'Transparent monthly tiers', url: 'https://siegfriedoutreach.com/pricing' }
     ],
     callouts: ['24/7 Priority Support', '99.4% Delivery', 'Official APIs']
   }
@@ -94,7 +94,7 @@ export const GoogleAdPreviewModal: React.FC<GoogleAdPreviewModalProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-1 font-bold text-xs text-neutral-800 dark:text-neutral-200">
-                <span>{creative.businessName || 'TTOS'}</span>
+                <span>{creative.businessName || 'Siegfried Outreach'}</span>
               </div>
               <div className="text-[11px] text-neutral-500 dark:text-neutral-400 font-mono truncate">
                 <span className="font-bold text-neutral-700 dark:text-neutral-300">Sponsored</span> • {creative.finalUrl} › {creative.displayPath1 || 'scale'}
