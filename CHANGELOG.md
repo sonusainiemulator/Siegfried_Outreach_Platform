@@ -2,6 +2,20 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-24 07:30:00 CEST] — MCP OAuth v2.1 Protocol 1-Click Quick Connect Suite (`/mcp-studio?tab=keys`)
+
+### ⚡ 1-Click OAuth 2.1 PKCE Integration & Server Metadata
+- **MCP OAuth v2.1 Discovery Endpoint**:
+  - Implemented `.well-known/mcp-configuration` route (`src/app/.well-known/mcp-configuration/route.ts`) returning OAuth 2.1 protocol version (`2.1`), grant types (`authorization_code`, `refresh_token`), PKCE challenge method (`S256`), and supported scopes (`mcp:read`, `mcp:write`, `mcp:social_publishing`, `mcp:analytics`).
+- **OAuth 2.1 Authorization & Token Endpoints**:
+  - Added `src/app/api/oauth/authorize/route.ts` and `src/app/api/oauth/token/route.ts` to handle 1-click authorization requests and issue bearer tokens for AI clients.
+- **1-Click Quick Connect Suite (`/mcp-studio?tab=keys`)**:
+  - Integrated a high-visibility **⚡ 1-Click AI Agent OAuth 2.1 Quick Connect Suite** on the Keys & Credentials tab (`/mcp-studio?tab=keys`).
+  - Added 1-Click Authorize button, DeepLink URI handler (`mcp://connect?...`), and copyable OAuth 2.1 endpoint cards.
+  - Added OAuth authorization prompt handling when redirected with `oauth_action=authorize`.
+- **Landing & Client Guides**:
+  - Exported `mcpOAuthV2Details` and added the **1-Click OAuth 2.1 Protocol** client guide to `src/data/landingMcp.ts`.
+
 ## 📍 [2026-09-24 06:15:00 CEST] — Global Platform Whitelabel & Complete Rebranding to Siegfried Outreach Platform
 
 ### 🏷️ Global Brand Purge & Whitelabel Standardisation

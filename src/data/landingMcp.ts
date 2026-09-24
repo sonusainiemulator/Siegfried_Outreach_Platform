@@ -859,7 +859,33 @@ export const mcpToolsCatalog = [
   },
 ]
 
+export const mcpOAuthV2Details = {
+  protocolVersion: 'OAuth 2.1 (PKCE RFC 7636 / MCP 2026)',
+  authorizationEndpoint: 'https://siegfriedoutreach.com/api/oauth/authorize',
+  tokenEndpoint: 'https://siegfriedoutreach.com/api/oauth/token',
+  metadataEndpoint: 'https://siegfriedoutreach.com/.well-known/mcp-configuration',
+  serverUrl: 'https://api.siegfriedoutreach.com/mcp',
+  scopesSupported: ['mcp:read', 'mcp:write', 'mcp:social_publishing', 'mcp:analytics'],
+  grantTypesSupported: ['authorization_code', 'refresh_token'],
+  codeChallengeMethodsSupported: ['S256'],
+  oneClickDeepLink: 'mcp://connect?server=https%3A%2F%2Fapi.siegfriedoutreach.com%2Fmcp&protocol=oauth2.1',
+  quickConnectUrl: 'https://siegfriedoutreach.com/mcp-studio?tab=keys',
+}
+
 export const mcpClientGuides = [
+  {
+    id: 'oauth-v21',
+    name: '1-Click OAuth 2.1 Protocol (Recommended)',
+    badge: 'OAuth 2.1 PKCE Standard',
+    command: 'https://siegfriedoutreach.com/api/oauth/authorize',
+    description: 'Connect any supported AI Agent (Claude, Cursor, Antigravity, ChatGPT) in 1 click without manually copying API keys.',
+    instructions: [
+      'Open your AI Client MCP settings and enter Server URL: https://api.siegfriedoutreach.com/mcp',
+      'Select Authorization Protocol: OAuth 2.1 (or Browser Approval).',
+      'Your AI Client will automatically launch the 1-Click Siegfried Outreach authorization window.',
+      'Click "1-Click Authorize AI Agent". Your session token is automatically generated and bound securely.',
+    ],
+  },
   {
     id: 'claude-code',
     name: 'Claude Code',

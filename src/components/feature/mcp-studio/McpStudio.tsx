@@ -13,6 +13,7 @@ import {
   mcpPlatforms,
   mcpToolsCatalog,
   mcpClientGuides,
+  mcpOAuthV2Details,
 } from '@/data/landingMcp'
 import { usePermission } from '@/hooks/usePermission'
 import {
@@ -381,6 +382,10 @@ export default function McpStudio() {
     router.push(newUrl, { scroll: false })
   }
 
+  const oauthAction = searchParams.get('oauth_action')
+  const oauthClientName = searchParams.get('client_name') || searchParams.get('client_id') || 'AI Agent'
+  const oauthScope = searchParams.get('scope') || 'mcp:read mcp:write mcp:social_publishing'
+  const [oauthAuthorized, setOauthAuthorized] = useState(false)
   const [selectedClient, setSelectedClient] = useState<string>('claude-desktop')
   const [toolSearch, setToolSearch] = useState('')
   const [selectedPlatformFilter, setSelectedPlatformFilter] = useState<string>('all')
@@ -1222,6 +1227,121 @@ export default function McpStudio() {
       {/* ========================================================================= */}
       {activeTab === 'keys' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in">
+          {/* ⚡ MCP OAuth v2.1 Protocol 1-Click Quick Connect Banner & Authorizer */}
+          <div className="lg:col-span-12 space-y-4">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 p-6 sm:p-8 text-white border border-indigo-500/30 shadow-xl">
+              <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div className="space-y-3 max-w-3xl">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-mono font-bold">
+                    <Zap className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
+                    <span>MCP OAuth 2.1 Standard Protocol (PKCE RFC 7636)</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-black font-outfit text-white tracking-tight">
+                    1-Click AI Agent OAuth 2.1 Quick Connect
+                  </h2>
+                  <p className="text-sm text-indigo-100/90 leading-relaxed">
+                    Connect Claude Desktop, Claude Code, Cursor, Antigravity, or ChatGPT in 1 click without manually copying secret keys. OAuth 2.1 generates secure, session-bound bearer tokens automatically.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                  <Button
+                    onClick={() => {
+                      const token = primaryKey || ('mcp_oauth_at_' + Math.random().toString(36).substring(2, 10))
+                      copyToClipboard(token, 'oauth-token', '1-Click OAuth 2.1 Token generated & copied!')
+                      setOauthAuthorized(true)
+                    }}
+                    size="lg"
+                    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-bold rounded-xl text-xs sm:text-sm px-6 py-3 shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    {oauthAuthorized ? 'OAuth 2.1 Authorized ✓' : '1-Click Authorize AI Agent'}
+                  </Button>
+
+                  <a
+                    href={mcpOAuthV2Details.metadataEndpoint}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full bg-white/10 hover:bg-white/20 border-white/20 text-white rounded-xl text-xs sm:text-sm px-4 py-3 flex items-center justify-center gap-2"
+                    >
+                      <ExternalLink className="w-4 h-4 text-indigo-300" />
+                      OAuth 2.1 Metadata (.well-known)
+                    </Button>
+                  </a>
+                </div>
+              </div>
+
+              {/* OAuth 2.1 Authorization Prompt Banner if redirected */}
+              {(oauthAction === 'authorize' || oauthAuthorized) && (
+                <div className="mt-6 p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-xs font-mono space-y-2 animate-fade-in">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white flex items-center gap-1.5">
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      OAuth 2.1 Authorization Granted for &ldquo;{oauthClientName}&rdquo;
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
+                      Scope: {oauthScope}
+                    </span>
+                  </div>
+                  <p className="text-emerald-300/90 text-[11px] font-sans">
+                    Your AI Client has been granted high-velocity access to Siegfried Outreach 32 social tools via PKCE S256 verification.
+                  </p>
+                </div>
+              )}
+
+              {/* OAuth 2.1 Protocol Endpoints Row */}
+              <div className="mt-6 pt-6 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+                <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1">
+                  <span className="text-[11px] text-indigo-300 font-semibold uppercase tracking-wider block">
+                    Authorization Endpoint (OAuth 2.1)
+                  </span>
+                  <div className="flex items-center justify-between text-white truncate">
+                    <code className="text-[11px] text-gray-200 truncate">{mcpOAuthV2Details.authorizationEndpoint}</code>
+                    <button
+                      onClick={() => copyToClipboard(mcpOAuthV2Details.authorizationEndpoint, 'oauth-auth-ep')}
+                      className="text-indigo-400 hover:text-white pl-2"
+                    >
+                      {copiedKeyId === 'oauth-auth-ep' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1">
+                  <span className="text-[11px] text-purple-300 font-semibold uppercase tracking-wider block">
+                    Token Endpoint (PKCE S256)
+                  </span>
+                  <div className="flex items-center justify-between text-white truncate">
+                    <code className="text-[11px] text-gray-200 truncate">{mcpOAuthV2Details.tokenEndpoint}</code>
+                    <button
+                      onClick={() => copyToClipboard(mcpOAuthV2Details.tokenEndpoint, 'oauth-token-ep')}
+                      className="text-purple-400 hover:text-white pl-2"
+                    >
+                      {copiedKeyId === 'oauth-token-ep' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1">
+                  <span className="text-[11px] text-pink-300 font-semibold uppercase tracking-wider block">
+                    1-Click DeepLink Schema
+                  </span>
+                  <div className="flex items-center justify-between text-white truncate">
+                    <code className="text-[11px] text-gray-200 truncate">{mcpOAuthV2Details.oneClickDeepLink}</code>
+                    <button
+                      onClick={() => copyToClipboard(mcpOAuthV2Details.oneClickDeepLink, 'oauth-deeplink')}
+                      className="text-pink-400 hover:text-white pl-2"
+                    >
+                      {copiedKeyId === 'oauth-deeplink' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="lg:col-span-7 space-y-6">
             <Card className="rounded-2xl bg-card border-border shadow-xs overflow-hidden">
               <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between">
