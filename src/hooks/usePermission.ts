@@ -1,11 +1,18 @@
 'use client'
 
 import { useAppSelector } from '@/redux/hooks'
+import { authUtils } from '@/utils'
 
 export const usePermission = () => {
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth)
+  const { user, isAuthenticated: authStateAuthenticated } = useAppSelector((state) => state.auth)
+  const isAuthenticated = authStateAuthenticated || authUtils.isAuthenticated()
   const userPermissions = user?.permissions || []
-  const userRole = user?.role || 'user'
+  let userRole = user?.role || 'user'
+
+  // If role is an ObjectId or unexpected string, normalize to 'user'
+  if (userRole !== 'super_admin' && userRole !== 'admin' && userRole !== 'agent' && userRole !== 'assigner') {
+    userRole = 'user'
+  }
 
   const hasPermission = (permissionName: string, type: 'read' | 'write' = 'read') => {
     if (userRole === 'super_admin') return true

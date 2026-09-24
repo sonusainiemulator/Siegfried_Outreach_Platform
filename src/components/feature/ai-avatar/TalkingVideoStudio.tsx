@@ -84,16 +84,16 @@ export const TalkingVideoStudio: React.FC<TalkingVideoStudioProps> = ({
 
   const [studioMode, setStudioMode] = useState<'text-to-video' | 'image-to-video'>('text-to-video')
   const [avatarSourceTab, setAvatarSourceTab] = useState<'presets' | 'library' | 'upload'>('presets')
-  const [selectedPresetId, setSelectedPresetId] = useState<string>('avatar-sarah')
+  const [selectedPresetId, setSelectedPresetId] = useState<string>('avatar-christopher-siegfried')
   const [selectedLibraryAvatar, setSelectedLibraryAvatar] = useState<AvatarItem | null>(initialAvatar || null)
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('')
 
   const [script, setScript] = useState(
-    'Living a healthy lifestyle can improve your energy, boost your mood, and help you live longer. It includes eating good food, staying active, and getting enough sleep.'
+    "When I was studying mechanical engineering at the University of Saint Thomas, I noticed so many brilliant students burning out and walking away. It wasn't a lack of intelligence—it was emotional exhaustion and individual differences in stress. If you're overwhelmed right now, pause. Your worth is not defined by your output. Take one deep breath, reset your nervous system, and let's tackle today one step at a time."
   )
   const [selectedLanguage, setSelectedLanguage] = useState('English (US)')
   const [selectedEngine, setSelectedEngine] = useState<string>('heygen-v2')
-  const [selectedVoiceId, setSelectedVoiceId] = useState<string>('eleven-rachel')
+  const [selectedVoiceId, setSelectedVoiceId] = useState<string>('eleven-adam')
   const [durationLimit, setDurationLimit] = useState('Up to 1 Minute')
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9' | '1:1'>('9:16')
   const [speechRate, setSpeechRate] = useState<number>(1.0)
@@ -108,7 +108,18 @@ export const TalkingVideoStudio: React.FC<TalkingVideoStudioProps> = ({
     { id: 'liveportrait-hd', name: 'LivePortrait HD', badge: 'One-Shot', desc: 'Transforms single photo into fluid video' },
     { id: 'did-creative-reality', name: 'D-ID Creative Reality', badge: 'Enterprise', desc: 'Low-latency corporate presenters' }
   ]
-  const presetAvatars = optionsData?.presetAvatars || []
+  const presetAvatars = optionsData?.presetAvatars || [
+    {
+      id: 'avatar-christopher-siegfried',
+      name: 'Christopher Siegfried, MA (Mental Health Twin)',
+      gender: 'male',
+      role: 'Educational Psychology & Mental Health Authority',
+      style: 'photorealistic',
+      engine: 'heygen-v2',
+      imageUrl: '/images/christopher_siegfried_avatar.jpg',
+      defaultVoice: 'eleven-adam'
+    }
+  ]
   const presetVoices = optionsData?.voices || []
   const libraryAvatars = historyData?.data || []
 
@@ -122,12 +133,12 @@ export const TalkingVideoStudio: React.FC<TalkingVideoStudioProps> = ({
   const activeAvatarUrl = (() => {
     if (avatarSourceTab === 'presets') {
       const p = presetAvatars.find((a) => a.id === selectedPresetId)
-      return p?.imageUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600'
+      return p?.imageUrl || '/images/christopher_siegfried_avatar.jpg'
     }
     if (avatarSourceTab === 'library') {
-      return selectedLibraryAvatar?.content || selectedLibraryAvatar?.images?.[0] || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600'
+      return selectedLibraryAvatar?.content || selectedLibraryAvatar?.images?.[0] || '/images/christopher_siegfried_avatar.jpg'
     }
-    return uploadedImageUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600'
+    return uploadedImageUrl || '/images/christopher_siegfried_avatar.jpg'
   })()
 
   const handleTogglePreviewSpeech = () => {

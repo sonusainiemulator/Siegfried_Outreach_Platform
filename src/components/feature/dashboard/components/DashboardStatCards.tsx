@@ -21,16 +21,27 @@ export const DashboardStatCards = ({ stats }: { stats: any }) => {
     totalArticles: ROUTES.CONTENT_WRITER,
   }
 
+  const remainingCredits =
+    user?.remaining_credits !== undefined
+      ? user.remaining_credits
+      : Math.max(0, (user?.total_credits || 0) - (user?.used_credits || 0))
+
   return (
     <>
       {userDashboardCardsConfig.map((card, index) => {
         const cardValue =
           card.statKey === 'credits'
-            ? user?.total_credits
-            : stats.cardsCount[card.statKey as keyof typeof stats.cardsCount]
+            ? (user?.total_credits || 0)
+            : (stats?.cardsCount?.[card.statKey as keyof typeof stats.cardsCount] ?? 0)
 
         return (
-          <motion.div variants={dashboardItemVariants} key={index} className="col-span-1">
+          <motion.div 
+            key={index} 
+            className="col-span-1"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
+          >
             <div className="group h-full block">
               <Card
                 onClick={() => {
@@ -85,7 +96,7 @@ export const DashboardStatCards = ({ stats }: { stats: any }) => {
 
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl font-medium text-title-color dark:text-white tabular-nums tracking-tighter">
-                        {card.statKey === 'credits' ? user?.remaining_credits : cardValue || 0}
+                        {card.statKey === 'credits' ? remainingCredits : cardValue}
                       </span>
                     </div>
                   </div>

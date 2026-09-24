@@ -7,6 +7,8 @@ import { RecentActivity } from './RecentActivity'
 import { StatsCards } from './StatsCards'
 
 export const AdminDashboard = ({ stats }: AdminDashboardProps) => {
+  if (!stats) return null
+
   const parentVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
@@ -26,7 +28,7 @@ export const AdminDashboard = ({ stats }: AdminDashboardProps) => {
     <motion.div variants={parentVariants} initial="hidden" animate="show" className="space-y-12 relative px-0 ">
       <motion.section variants={itemVariants} className="flex flex-col xl:flex-row gap-8 items-stretch mb-6">
         <div className="w-full xl:flex-1">
-          <StatsCards stats={stats.cardsCount} />
+          <StatsCards stats={stats?.cardsCount} />
         </div>
       </motion.section>
 
@@ -34,22 +36,22 @@ export const AdminDashboard = ({ stats }: AdminDashboardProps) => {
         <div className=" p-px   relative overflow-hidden group/charts">
           <div className="absolute  bg-card/10  -z-10 group-hover/charts:bg-card/20 transition-colors duration-1000" />
           <DashboardCharts
-            contentData={stats.generatedContentChart.percentages}
-            subscriptionData={stats.subscriptionChart}
-            rolesData={stats.rolesChart}
-            socialData={stats.socialAccountsChart}
-            chatbots={stats.favoriteChatbots || []}
-            revenueData={stats.revenueGraph}
-            moduleCreditsData={stats.moduleCreditsChart}
+            contentData={stats?.generatedContentChart?.percentages || {}}
+            subscriptionData={stats?.subscriptionChart || {}}
+            rolesData={stats?.rolesChart || {}}
+            socialData={stats?.socialAccountsChart || {}}
+            chatbots={stats?.favoriteChatbots || []}
+            revenueData={stats?.revenueGraph || []}
+            moduleCreditsData={stats?.moduleCreditsChart || { labels: [], data: [] }}
           />
         </div>
       </motion.section>
 
       <motion.section variants={itemVariants}>
         <RecentActivity
-          recentUsers={stats.recentUsers}
-          recentArticles={stats.recentArticles}
-          recentPosts={stats.recentPosts}
+          recentUsers={stats?.recentUsers || []}
+          recentArticles={stats?.recentArticles || []}
+          recentPosts={stats?.recentPosts || []}
         />
       </motion.section>
     </motion.div>

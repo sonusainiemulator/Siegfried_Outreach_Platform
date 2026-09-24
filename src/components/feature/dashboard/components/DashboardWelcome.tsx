@@ -24,7 +24,12 @@ export const DashboardWelcome = () => {
   }
 
   return (
-    <motion.section className="col-span-1 xl:col-span-2" variants={dashboardItemVariants}>
+    <motion.section 
+      className="col-span-1 xl:col-span-2" 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
       <Card className="relative h-full overflow-hidden rounded-border-radius glass-dark-card p-5 flex flex-col justify-between gap-4 group/hero border border-white/10 hover:border-white/20 transition-all duration-700">
         <div className="relative z-10 space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -48,7 +53,7 @@ export const DashboardWelcome = () => {
           <div className="space-y-2">
             <h2 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
               <span className="inline-block" dir="auto">{getGreeting()},</span>
-              <span className="text-mix-primary block decoration-clone bg-clip-text" dir="auto">{user?.name}!</span>
+              <span className="text-mix-primary block decoration-clone bg-clip-text" dir="auto">{user?.name || t('user', { defaultValue: 'Member' })}!</span>
             </h2>
             <p className="text-sm text-subtitle-color dark:text-slate-300 font-medium opacity-90 line-clamp-2 leading-relaxed" dir="auto">
               {t('user_dashboard_promo_unique', {

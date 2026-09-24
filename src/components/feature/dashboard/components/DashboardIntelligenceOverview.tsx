@@ -10,9 +10,16 @@ import { useTranslation } from 'react-i18next'
 
 export const DashboardIntelligenceOverview = ({ generatedContentChart }: IntelligenceOverviewProps) => {
   const { t } = useTranslation()
+  const percentages = generatedContentChart?.percentages || {}
+  const entries = Object.entries(percentages)
 
   return (
-    <motion.div variants={dashboardItemVariants} className="col-span-12 relative group">
+    <motion.div 
+      className="col-span-12 relative group"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+    >
       <Card className="rounded-border-radius glass-dark-card border border-white/10 overflow-hidden h-full relative">
         <div className="sm:p-6 p-4 rounded-border-radius h-full flex flex-col justify-between">
           <div className="space-y-4 mb-6">
@@ -21,8 +28,8 @@ export const DashboardIntelligenceOverview = ({ generatedContentChart }: Intelli
           </div>
 
           <div className="space-y-6 flex-1">
-            {Object.entries(generatedContentChart.percentages || {}).length > 0 ? (
-              Object.entries(generatedContentChart.percentages || {}).map(([key, value], i) => (
+            {entries.length > 0 ? (
+              entries.map(([key, value], i) => (
                 <div key={key} className="space-y-2.5 group/bar">
                   <div className="flex justify-between items-center transition-all duration-500">
                     <div className="flex items-center gap-2">

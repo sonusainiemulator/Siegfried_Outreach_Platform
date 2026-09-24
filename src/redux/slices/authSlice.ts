@@ -23,7 +23,7 @@ const authSlice = createSlice({
       const originalAdmin = authUtils.getOriginalAdminUser()
       const originalAdminToken = authUtils.getOriginalAdminToken()
 
-      if (token && user) {
+      if (token) {
         state.token = token
         state.user = user
         state.isAuthenticated = true

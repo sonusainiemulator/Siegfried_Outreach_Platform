@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { usePermission } from '@/hooks/usePermission'
 import { useGetDashboardStatsQuery } from '@/redux/api/dashboardApi'
+import { authUtils } from '@/utils'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -17,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 const DashboardPage = () => {
   const { t } = useTranslation()
   const { role, isAuthenticated } = usePermission()
+  const isAuth = isAuthenticated || authUtils.isAuthenticated()
   const [timeFilter, setTimeFilter] = useState('this_year')
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(),
@@ -30,7 +32,7 @@ const DashboardPage = () => {
       endDate: timeFilter === 'custom' ? date?.to?.toISOString() : undefined,
     },
     {
-      skip: !isAuthenticated,
+      skip: !isAuth,
     },
   )
 
@@ -99,7 +101,7 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {isLoading ? (
+      {isLoading || (!stats && !isError) ? (
         <div className="space-y-8 animate-pulse">
           <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (

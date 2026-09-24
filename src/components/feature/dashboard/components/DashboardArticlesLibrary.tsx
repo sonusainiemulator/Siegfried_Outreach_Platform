@@ -13,9 +13,14 @@ import { useTranslation } from 'react-i18next'
 
 export const DashboardArticlesLibrary = ({ recentArticles }: ArticlesLibraryProps) => {
   const { t } = useTranslation()
+  const articles = recentArticles || []
 
   return (
-    <motion.section variants={dashboardItemVariants}>
+    <motion.section 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+    >
       <Card className="rounded-border-radius glass-dark-card border border-white/10 overflow-hidden relative group">
         <div className="sm:p-6 p-4 rounded-border-radius">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4 sm:gap-8">
@@ -29,7 +34,7 @@ export const DashboardArticlesLibrary = ({ recentArticles }: ArticlesLibraryProp
                 </p>
               </div>
             </div>
-            {recentArticles.length > 0 && (
+            {articles.length > 0 && (
               <Link
                 href={ROUTES.SMART_WRITER}
                 className=" p-button-padding! sm:h-12 border border-primary glass-card rounded-[8px] font-medium text-base text-center text-white btn-color"
@@ -40,8 +45,8 @@ export const DashboardArticlesLibrary = ({ recentArticles }: ArticlesLibraryProp
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3 custom-scrollbar h-[260px] overflow-auto">
-            {recentArticles.length > 0 ? (
-              recentArticles.slice(0, 4).map((article, index) => (
+            {articles.length > 0 ? (
+              articles.slice(0, 4).map((article, index) => (
                 <motion.div key={index}>
                   <Link
                     href={`${ROUTES.SMART_WRITER}/${article._id || article.id}`}

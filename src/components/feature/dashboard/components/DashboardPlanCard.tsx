@@ -25,6 +25,8 @@ export const DashboardPlanCard = ({ currentPurchasePlan, t }: PlanCardProps) => 
       expiry.setDate(expiry.getDate() + 30)
     } else if (cycle === 'yearly') {
       expiry.setDate(expiry.getDate() + 365)
+    } else if (cycle === 'lifetime' || cycle === 'one-time') {
+      return 9999
     } else {
       return 0
     }
@@ -39,7 +41,12 @@ export const DashboardPlanCard = ({ currentPurchasePlan, t }: PlanCardProps) => 
     : 0
 
   return (
-    <motion.section className="col-span-1" variants={dashboardItemVariants}>
+    <motion.section 
+      className="col-span-1" 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+    >
       <Card
         onClick={() => router.push(ROUTES.PLANS)}
         className="h-full glass-dark-card border border-white/10 rounded-border-radius transition-all duration-700 hover:border-white/20 relative overflow-hidden group/card cursor-pointer"
@@ -128,7 +135,7 @@ export const DashboardPlanCard = ({ currentPurchasePlan, t }: PlanCardProps) => 
                   </div>
                   <div className="text-end">
                     <span className="text-[11px] font-bold text-rose-500 capitalize block mb-0">
-                      {daysLeft} {t('days_left')}
+                      {daysLeft >= 9999 ? '∞' : daysLeft} {t('days_left')}
                     </span>
                     <span className="text-[11px] text-muted-foreground capitalize">{t('remaining')}</span>
                   </div>

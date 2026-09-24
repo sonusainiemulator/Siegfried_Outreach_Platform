@@ -2,6 +2,42 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-24 05:53:00 CEST] — System Diagnostic, PM2 Process Stabilization & Production Build Verification
+
+### 🛠️ Production Environment Audit & Verification
+- **PM2 Service Audit & Health Checks**:
+  - Validated runtime status of `frontend-app` (PM2 ID 1, Next.js 16.3.4) and `api-backend` (PM2 ID 0, Node.js API).
+  - Verified local HTTP endpoint responsiveness (`http://localhost:3000` and `http://127.0.0.1:3000`) returning `HTTP/1.1 200 OK` with active caching headers.
+  - Confirmed Nginx reverse proxy configuration (`/www/server/panel/vhost/nginx/siegfriedoutreach.com.conf`) properly routing frontend traffic to port 3000 and `/api/` traffic to port 3001.
+- **TypeScript & Linting Integrity**:
+  - Ran `npx tsc --noEmit` and confirmed 0 TypeScript compilation errors across all components, hooks, slices, and pages.
+- **Server Action & Static Chunk Sync**:
+  - Re-executed full production build (`npm run build`) to ensure client static chunks and Next.js Server Action references remain 100% synchronized across active client sessions.
+- **PM2 Service Restart**:
+  - Restarted PM2 services (`pm2 restart frontend-app`) following successful build verification.
+
+## 📍 [2026-09-21 11:37:00 CEST] — Fix Blank Dashboard for Members & Logged-In Users (`/dashboard`)
+
+### 🐛 Root Cause Analysis & Critical Fixes
+- **Resolved Framer Motion Variant Cascade Block**:
+  - `UserDashboard.tsx` had an outer `motion.div` configured with `variants={dashboardParentVariants}` (`initial="hidden" animate="show"`).
+  - Intermediate plain HTML `<div className="grid ...">` containers were severing Framer Motion's variant propagation to child cards (`DashboardWelcome`, `DashboardStatCards`, `DashboardPlanCard`, `DashboardIntelligenceOverview`, `DashboardArticlesLibrary`).
+  - As a result, all child components remained indefinitely frozen at `initial="hidden"` (`opacity: 0, y: 30`), rendering a completely blank black dashboard area.
+  - Fixed by utilizing a stable container `div` and granting each card component its own explicit `initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}` animation.
+- **Fixed Authentication State & Query Skip Race Condition**:
+  - `DashboardPage` (`/dashboard/page.tsx`) previously checked `skip: !isAuthenticated` using `isAuthenticated` exclusively from Redux (`state.auth.isAuthenticated`).
+  - During initial hydration, before `initializeAuth()` dispatched, or when `user` was temporarily null in `localStorage`, `isAuthenticated` evaluated to `false`, causing RTK Query to permanently skip `/api/dashboard`.
+  - Because the query was skipped, `isLoading` and `isError` remained `false` while `stats` remained `undefined`, causing the conditional render `{stats && ...}` to render nothing.
+  - Updated `isAuth` to check `isAuthenticated || authUtils.isAuthenticated()`, guaranteeing the query executes whenever a valid authentication token exists.
+  - Added skeleton loader fallback `{isLoading || (!stats && !isError) ? ... : ...}` so users never encounter a blank void while data is resolving.
+- **Enhanced Role Normalization & Defensive Null-Safety**:
+  - `usePermission.ts`: Normalized `userRole` so non-standard roles or raw MongoDB ObjectIds (e.g. from Google SSO logins) reliably default to `'user'`.
+  - `authSlice.ts`: Updated `initializeAuth` to mark `isAuthenticated: true` whenever a valid token is present.
+  - `DashboardStatCards.tsx`: Safely accessed `stats?.cardsCount?.[card.statKey]` with optional chaining and computed fallback for `remainingCredits`.
+  - `DashboardPlanCard.tsx`: Added support for `'lifetime'` and `'one-time'` billing cycles (displaying `∞ days left`).
+  - `DashboardIntelligenceOverview.tsx` & `DashboardArticlesLibrary.tsx`: Added optional chaining and safe array defaults `|| []` to prevent runtime `TypeError` crashes.
+  - `AdminDashboard.tsx`: Added null guards and fallbacks for all chart, activity, and card metrics.
+
 ## 📍 [2026-09-19 20:58:00 CEST] — Mental Health Care (Christopher Siegfried, MA) AI Video Studio Presets & Daily Video Generation Workflow (`/ai-avatar`)
 
 ### 🎬 AI Talking Video Studio Integration for Mental Health Skills
