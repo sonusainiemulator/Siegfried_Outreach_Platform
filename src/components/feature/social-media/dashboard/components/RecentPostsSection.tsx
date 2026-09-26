@@ -125,10 +125,12 @@ const RecentPostsSection = ({ recentPosts, platforms, onEdit, onDelete, canManag
                               )}
                             </div>
                             <div className="min-w-0">
-                              <p className="font-black text-xs uppercase truncate">{post.title}</p>
-                              <p className="text-[10px] text-muted-foreground line-clamp-1 font-semibold">
-                                {post.content}
-                              </p>
+                              <p className="font-black text-xs uppercase truncate">{post.title || post.content || 'Image Post'}</p>
+                              {post.content && post.title && (
+                                <p className="text-[10px] text-muted-foreground line-clamp-1 font-semibold">
+                                  {post.content}
+                                </p>
+                              )}
                             </div>
                           </div>
                         </TableCell>

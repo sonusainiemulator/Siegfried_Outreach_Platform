@@ -2,6 +2,28 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-26 19:05:00 CEST] — Image-Only Social Publishing with Optional Title & Caption (`/social-media/create-post`)
+
+### 📸 Image-Only Social Broadcasts & Flexible Composer Studio
+- **Optional Title & Caption in Composer (`PostComposer.tsx`)**:
+  - Relaxed Formik `validationSchema` from requiring both `title` and `content` to `Yup.string().optional()`.
+  - Replaced legacy blocking checks in submit button `onClick` that prevented submission when title or caption was blank.
+  - Implemented smart submission validation: posts can now be published with **image only** (`slides.length > 0` or `mediaUrls` provided), caption only (text post), or any combination of image, title, and caption.
+  - Added clean visual badges `(Optional)` to both "Internal Reference Title" and "Post Copy & Caption" labels.
+  - Added an interactive **Image-Only Mode** badge and real-time guidance alert (`📸 Image attached! Title and caption are optional — you can publish this photo directly.`).
+- **Clean Social Preview Rendering (`SocialPostPreview.tsx`)**:
+  - Updated `renderFormattedContent` to suppress placeholder text when media/slides are attached, delivering realistic mockups for Instagram, Facebook, Twitter (X), LinkedIn, and WhatsApp without raw placeholder copy.
+  - Cleaned Instagram preview to hide empty caption blocks on image-only posts.
+- **Graceful Card & Calendar Fallbacks**:
+  - Enhanced title display across `PostTimelineItem.tsx`, `RecentPostCard.tsx`, `CalendarGrid.tsx`, `RecentPostsSection.tsx`, `DayPostsSidebar.tsx`, `PostQueueSummary.tsx`, `MetricsPostsModal.tsx`, and `ContentCalendarPage.tsx` with graceful fallbacks (`post.title || post.content || 'Image Post'`).
+- **Backend Architecture & Publishing Services (`api.siegfriedoutreach.com`)**:
+  - Updated Mongoose model (`socialPost.model.js`) removing `required: true` on `title` and `content`.
+  - Updated `social-post.controller.js` across `createSocialPost`, `updateSocialPost`, and `batchScheduleSocialPosts` allowing creation with media-only.
+  - Enhanced `socialMediaApis.js` for Facebook, Instagram, Twitter (X), and WhatsApp to omit empty captions/messages rather than transmitting empty strings that trigger API validation rejections.
+  - Updated MCP Server tool `siegfried_create_post` (`mcpServer.js`) making `content` optional for external AI agent callers.
+- **Bilingual i18n Localization**:
+  - Added English and Hindi translations in `src/lib/i18n.ts` for `post_media_or_text_required`, `image_only_mode`, `image_only_mode_hint`, and `optional`.
+
 ## 📍 [2026-09-24 07:30:00 CEST] — MCP OAuth v2.1 Protocol 1-Click Quick Connect Suite (`/mcp-studio?tab=keys`)
 
 ### ⚡ 1-Click OAuth 2.1 PKCE Integration & Server Metadata

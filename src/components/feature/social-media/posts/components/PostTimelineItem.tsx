@@ -231,11 +231,13 @@ export const PostTimelineItem = ({
             {/* Title & Body */}
             <div className="space-y-1.5">
               <h3 className="font-bold text-lg text-title-color dark:text-white leading-snug group-hover:text-primary transition-colors line-clamp-1">
-                {post.title}
+                {post.title || post.content || 'Image Post'}
               </h3>
-              <p className="text-sm text-subtitle-color font-normal opacity-75 line-clamp-2 leading-relaxed">
-                {post.content}
-              </p>
+              {post.content && post.title && (
+                <p className="text-sm text-subtitle-color font-normal opacity-75 line-clamp-2 leading-relaxed">
+                  {post.content}
+                </p>
+              )}
             </div>
 
             {/* Failure Error Alert if present */}

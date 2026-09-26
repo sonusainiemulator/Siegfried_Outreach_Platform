@@ -124,12 +124,14 @@ const MetricsPostsModal = ({
                     </div>
 
                     <h4 className="font-semibold text-base md:text-lg text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                      {post.title}
+                      {post.title || post.content || 'Image Post'}
                     </h4>
 
-                    <p className="text-sm text-subtitle-color/80 leading-relaxed line-clamp-2 md:line-clamp-3 mb-4 font-medium">
-                      {post.content}
-                    </p>
+                    {post.content && post.title && (
+                      <p className="text-sm text-subtitle-color/80 leading-relaxed line-clamp-2 md:line-clamp-3 mb-4 font-medium">
+                        {post.content}
+                      </p>
+                    )}
 
                     <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-border/5">
                       {post.scheduledDateTime && (

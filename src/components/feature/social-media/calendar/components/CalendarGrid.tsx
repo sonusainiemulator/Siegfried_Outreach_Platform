@@ -238,7 +238,7 @@ const CalendarGrid = ({
                         DRAFT
                       </span>
                     )}
-                    <span className="truncate">{post.title}</span>
+                    <span className="truncate">{post.title || post.content || 'Image Post'}</span>
                   </div>
                 ))}
 

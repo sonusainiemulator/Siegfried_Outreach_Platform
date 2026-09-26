@@ -377,13 +377,15 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
   }
 
   // Format content to highlight hashtags, mentions, links, and keywords
-  const renderFormattedContent = (text: string) => {
-    if (!text)
+  const renderFormattedContent = (text: string, forceShowPlaceholder = false) => {
+    if (!text || !text.trim()) {
+      if (slides.length > 0 && !forceShowPlaceholder) return null
       return (
         <span className="text-muted-foreground italic">
           {t('preview_content_placeholder', { defaultValue: 'Your transmission copy will materialize here...' })}
         </span>
       )
+    }
 
     const parts = text.split(/(\s+)/)
     return parts.map((part, i) => {
@@ -664,42 +666,44 @@ export const SocialPostPreview: React.FC<SocialPostPreviewProps> = ({
 
             {/* Instagram Caption */}
             <div className="px-3.5 pt-1.5 pb-4 space-y-2 text-xs">
-              <div className="leading-relaxed whitespace-pre-wrap break-words text-neutral-900 dark:text-neutral-100 max-h-[380px] overflow-y-auto no-scrollbar">
-                <span className="font-bold mr-1.5 text-neutral-900 dark:text-white inline hover:underline cursor-pointer select-none">
-                  {accountName}
-                </span>
-                {isCaptionExpanded || !content || (content.length <= 100 && !content.includes('\n')) ? (
-                  <>
-                    <span className="inline">{renderFormattedContent(content)}</span>
-                    {content && (content.length > 100 || content.includes('\n')) && (
+              {(content?.trim() || slides.length === 0) && (
+                <div className="leading-relaxed whitespace-pre-wrap break-words text-neutral-900 dark:text-neutral-100 max-h-[380px] overflow-y-auto no-scrollbar">
+                  <span className="font-bold mr-1.5 text-neutral-900 dark:text-white inline hover:underline cursor-pointer select-none">
+                    {accountName}
+                  </span>
+                  {isCaptionExpanded || !content || (content.length <= 100 && !content.includes('\n')) ? (
+                    <>
+                      <span className="inline">{renderFormattedContent(content)}</span>
+                      {content && (content.length > 100 || content.includes('\n')) && (
+                        <button
+                          type="button"
+                          onClick={() => setIsCaptionExpanded(false)}
+                          className="text-neutral-500 dark:text-neutral-400 font-normal hover:underline ml-1.5 cursor-pointer inline text-[11px]"
+                        >
+                          less
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <span className="inline">
+                        {renderFormattedContent(
+                          content.includes('\n') && content.indexOf('\n') <= 100
+                            ? content.slice(0, content.indexOf('\n'))
+                            : content.slice(0, 100).trimEnd()
+                        )}
+                      </span>
                       <button
                         type="button"
-                        onClick={() => setIsCaptionExpanded(false)}
-                        className="text-neutral-500 dark:text-neutral-400 font-normal hover:underline ml-1.5 cursor-pointer inline text-[11px]"
+                        onClick={() => setIsCaptionExpanded(true)}
+                        className="text-neutral-500 dark:text-neutral-400 font-normal hover:underline ml-1 cursor-pointer inline text-[11px]"
                       >
-                        less
+                        ... more
                       </button>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <span className="inline">
-                      {renderFormattedContent(
-                        content.includes('\n') && content.indexOf('\n') <= 100
-                          ? content.slice(0, content.indexOf('\n'))
-                          : content.slice(0, 100).trimEnd()
-                      )}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setIsCaptionExpanded(true)}
-                      className="text-neutral-500 dark:text-neutral-400 font-normal hover:underline ml-1 cursor-pointer inline text-[11px]"
-                    >
-                      ... more
-                    </button>
-                  </>
-                )}
-              </div>
+                    </>
+                  )}
+                </div>
+              )}
 
               {/* Instagram Comments & Timestamp */}
               <div className="space-y-1 pt-0.5">

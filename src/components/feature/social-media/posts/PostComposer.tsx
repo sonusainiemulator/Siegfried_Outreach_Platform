@@ -30,7 +30,8 @@ import {
   Palette,
   Bookmark,
   FileText,
-  Clock
+  Clock,
+  Image as ImageIcon
 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
@@ -104,8 +105,8 @@ const PostComposer = () => {
 
 
   const validationSchema = Yup.object({
-    title: Yup.string().required(t('social_title_required', { defaultValue: 'Title is required' })),
-    content: Yup.string().required(t('social_content_required', { defaultValue: 'Content is required' })),
+    title: Yup.string().optional(),
+    content: Yup.string().optional(),
   })
 
   const formik = useFormik<PostComposerFormData>({
@@ -128,6 +129,19 @@ const PostComposer = () => {
         toast.error(
           t('hub_selection_required', {
             defaultValue: 'At least one social account must be selected',
+          }),
+        )
+        return
+      }
+
+      // Check that post has at least media (image/video) OR text (caption/title)
+      const hasMedia = slides.length > 0 || Boolean(values.mediaUrls?.trim())
+      const hasText = Boolean(values.title?.trim() || values.content?.trim())
+
+      if (!hasMedia && !hasText) {
+        toast.error(
+          t('post_media_or_text_required', {
+            defaultValue: 'Please add an image, caption, or title to publish your post.',
           }),
         )
         return
@@ -686,6 +700,12 @@ const PostComposer = () => {
                       <span>{t('carousel_mode_active', { defaultValue: 'Carousel Mode Active' })}</span>
                     </Badge>
                   )}
+                  {slides.length > 0 && !formik.values.title.trim() && !formik.values.content.trim() && (
+                    <Badge className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold animate-pulse">
+                      <ImageIcon className="w-3.5 h-3.5" />
+                      <span>{t('image_only_mode', { defaultValue: 'Image-Only Mode' })}</span>
+                    </Badge>
+                  )}
                   <Button
                     type="button"
                     variant="ghost"
@@ -706,8 +726,9 @@ const PostComposer = () => {
                   {/* Internal Reference Title */}
                   <div className="space-y-2 flex flex-col">
                     <div className="flex items-center justify-between">
-                      <Label className="text-sm font-semibold text-title-color dark:text-white">
-                        {t('social_internal_reference', { defaultValue: 'Internal Reference Title' })} *
+                      <Label className="text-sm font-semibold text-title-color dark:text-white flex items-center gap-1.5">
+                        <span>{t('social_internal_reference', { defaultValue: 'Internal Reference Title' })}</span>
+                        <span className="text-xs font-normal text-muted-foreground">({t('optional', { defaultValue: 'Optional' })})</span>
                       </Label>
                       <button
                         type="button"
@@ -737,8 +758,9 @@ const PostComposer = () => {
                   {/* Post Content / Caption */}
                   <div className="space-y-2.5 flex flex-col">
                     <div className="flex items-center justify-between flex-wrap gap-2">
-                      <Label className="text-sm font-semibold text-title-color dark:text-white">
-                        {t('social_dispatch_content', { defaultValue: 'Post Copy & Caption' })} *
+                      <Label className="text-sm font-semibold text-title-color dark:text-white flex items-center gap-1.5">
+                        <span>{t('social_dispatch_content', { defaultValue: 'Post Copy & Caption' })}</span>
+                        <span className="text-xs font-normal text-muted-foreground">({t('optional', { defaultValue: 'Optional' })})</span>
                       </Label>
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] text-muted-foreground font-mono">
@@ -851,7 +873,7 @@ const PostComposer = () => {
                       <Textarea
                         name="content"
                         placeholder={t('social_type_transmission', {
-                          defaultValue: 'Write your caption with emojis, value points, and hashtags... (#Outreach #Marketing)',
+                          defaultValue: 'Write your caption with emojis, value points, and hashtags (optional when posting with image)...',
                         })}
                         className={cn(
                           "min-h-36 rounded-[10px] border-border/40 focus:ring-primary/20 text-sm inner-card leading-relaxed p-4 resize-y w-full shadow-none bg-background/40",
@@ -865,6 +887,12 @@ const PostComposer = () => {
                         <p className="text-xs text-destructive mt-0.5 font-medium">{formik.errors.content}</p>
                       )}
                     </div>
+                    {slides.length > 0 && !formik.values.content.trim() && (
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                        <span>{t('image_only_mode_hint', { defaultValue: 'Image attached! Title and caption are optional — you can publish this photo directly.' })}</span>
+                      </p>
+                    )}
                   </div>
 
                   {/* Carousel Slide Studio / Multi-Media Manager */}
@@ -1003,19 +1031,21 @@ const PostComposer = () => {
               form="post-form"
               type="submit"
               onClick={() => {
-                if (!formik.values.title?.trim() || !formik.values.content?.trim()) {
-                  formik.setFieldTouched('title', true)
-                  formik.setFieldTouched('content', true)
-                  if (!formik.values.title?.trim() && !formik.values.content?.trim()) {
-                    toast.error(t('title_and_caption_required', { defaultValue: 'Please enter a Post Title and Caption before publishing.' }))
-                  } else if (!formik.values.title?.trim()) {
-                    toast.error(t('title_required', { defaultValue: 'Please enter a Post Title.' }))
-                  } else if (!formik.values.content?.trim()) {
-                    toast.error(t('caption_required', { defaultValue: 'Please enter a Post Caption / Copy.' }))
-                  }
+                const hasMedia = slides.length > 0 || Boolean(formik.values.mediaUrls?.trim())
+                const hasText = Boolean(formik.values.title?.trim() || formik.values.content?.trim())
+                if (!hasMedia && !hasText) {
+                  toast.error(
+                    t('post_media_or_text_required', {
+                      defaultValue: 'Please add an image, caption, or title to publish your post.',
+                    }),
+                  )
                 }
                 if (formik.values.platforms.length === 0) {
-                  toast.error(t('hub_selection_required', { defaultValue: 'Please select at least one social account to publish to.' }))
+                  toast.error(
+                    t('hub_selection_required', {
+                      defaultValue: 'Please select at least one social account to publish to.',
+                    }),
+                  )
                 }
               }}
               disabled={isLoading || isSavingDraft}

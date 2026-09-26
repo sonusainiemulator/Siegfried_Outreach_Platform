@@ -38,7 +38,7 @@ export const PostQueueSummary = ({ postsCount, nextPost, timeLeft }: PostQueueSu
                 {t('next_release')}
               </Badge>
               <h2 className="text-2xl font-medium tracking-tight text-white">
-                {nextPost ? nextPost.title : t('No post scheduled')}
+                {nextPost ? (nextPost.title || nextPost.content || 'Image Post') : t('No post scheduled')}
               </h2>
             </div>
 

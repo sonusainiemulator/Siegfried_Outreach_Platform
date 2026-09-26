@@ -289,11 +289,13 @@ const RecentPostCard = ({ post, onEdit, onDelete, canManage }: RecentPostCardPro
           {/* Post Title & Excerpt */}
           <div className="space-y-1.5 min-w-0">
             <h4 className="font-medium text-lg mb-0 group-hover/card:text-primary transition-colors tracking-tight line-clamp-1">
-              {post.title}
+              {post.title || post.content || 'Image Post'}
             </h4>
-            <p className="text-sm text-subtitle-color font-medium line-clamp-2 leading-relaxed opacity-70">
-              {post.content}
-            </p>
+            {post.content && post.title && (
+              <p className="text-sm text-subtitle-color font-medium line-clamp-2 leading-relaxed opacity-70">
+                {post.content}
+              </p>
+            )}
           </div>
         </div>
       </div>

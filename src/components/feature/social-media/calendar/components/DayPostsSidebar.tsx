@@ -473,11 +473,13 @@ const DayPostsSidebar = ({
                         </div>
                       </div>
                       <h4 className="font-semibold text-sm truncate group-hover:text-primary transition-colors">
-                        {post.title}
+                        {post.title || post.content || 'Image Post'}
                       </h4>
-                      <p className="text-xs text-muted-foreground line-clamp-2 mt-1 opacity-70">
-                        {post.content}
-                      </p>
+                      {post.content && post.title && (
+                        <p className="text-xs text-muted-foreground line-clamp-2 mt-1 opacity-70">
+                          {post.content}
+                        </p>
+                      )}
                       {post.scheduledDateTime && (
                         <p className="text-[9px] font-bold text-primary mt-2 flex items-center gap-1">
                           <Clock className="w-3 h-3" />

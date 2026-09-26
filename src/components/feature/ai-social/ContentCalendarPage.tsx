@@ -763,9 +763,11 @@ export default function ContentCalendarPage() {
                           )}
                         </div>
                         <h4 className="font-bold text-xs text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                          {post.title}
+                          {post.title || post.content || 'Image Post'}
                         </h4>
-                        <p className="text-[11px] text-muted-foreground line-clamp-2">{post.content}</p>
+                        {post.content && post.title && (
+                          <p className="text-[11px] text-muted-foreground line-clamp-2">{post.content}</p>
+                        )}
                       </div>
                     ))}
                   </>
@@ -853,8 +855,10 @@ export default function ContentCalendarPage() {
                             </span>
                           )}
                         </div>
-                        <h4 className="font-bold text-sm text-foreground line-clamp-2">{post.title}</h4>
-                        <p className="text-xs text-muted-foreground line-clamp-2">{post.content}</p>
+                        <h4 className="font-bold text-sm text-foreground line-clamp-2">{post.title || post.content || 'Image Post'}</h4>
+                        {post.content && post.title && (
+                          <p className="text-xs text-muted-foreground line-clamp-2">{post.content}</p>
+                        )}
                       </CardContent>
                     </Card>
                   ))}
