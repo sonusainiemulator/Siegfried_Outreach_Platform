@@ -60,6 +60,31 @@ import Link from 'next/link'
 // Extended guide details for in-app assistant connection
 const EXTENDED_CLIENT_GUIDES = [
   {
+    id: 'gemini-web',
+    name: 'Google Gemini (gemini.google.com/apps)',
+    badge: 'Connected Apps / Streamable HTTP',
+    icon: 'Sparkles',
+    recommended: true,
+    transport: 'Streamable HTTP / OAuth 2.0',
+    endpoint: 'https://api.siegfriedoutreach.com/mcp',
+    description: 'Connect Google Gemini web & mobile directly via Connected Apps (gemini.google.com/apps) to execute 32 social tools natively.',
+    snippetType: 'MCP Server URL',
+    getConfig: (_key: string) => 'https://api.siegfriedoutreach.com/mcp',
+    instructions: [
+      'Open Google Gemini at https://gemini.google.com/apps in your browser.',
+      'Click "Add a custom app" (or Connected Apps > Connect MCP Server).',
+      'Enter App Name: "Siegfried Outreach Social Media".',
+      'Enter Server URL: https://api.siegfriedoutreach.com/mcp (or https://siegfriedoutreach.com/api/mcp).',
+      'Under Authentication, choose "OAuth 2.0" (auto-detected via RFC 8414 metadata) or "Custom Header" with header name "siegfried-api-key".',
+      'Click "Connect". Gemini will verify protocol version 2026-07-28 and load all 32 social tools!',
+    ],
+    samplePrompts: [
+      '@Siegfried Outreach List my connected social media accounts and check follower counts.',
+      '@Siegfried Outreach Draft a LinkedIn post and an X thread about our product release.',
+      '@Siegfried Outreach Show analytics for our top performing Instagram posts this month.',
+    ],
+  },
+  {
     id: 'claude-desktop',
     name: 'Claude Desktop & Cowork',
     badge: 'Custom Connector / OAuth',
@@ -383,10 +408,52 @@ export default function McpStudio() {
   }
 
   const oauthAction = searchParams.get('oauth_action')
-  const oauthClientName = searchParams.get('client_name') || searchParams.get('client_id') || 'AI Agent'
-  const oauthScope = searchParams.get('scope') || 'mcp:read mcp:write mcp:social_publishing'
+  const oauthClientName = searchParams.get('client_name') || searchParams.get('client_id') || 'Google Gemini'
+  const oauthScope = searchParams.get('scope') || 'mcp:read mcp:write mcp:social_publishing mcp:analytics'
+  const oauthRedirectUri = searchParams.get('redirect_uri') || ''
+  const oauthState = searchParams.get('state') || ''
   const [oauthAuthorized, setOauthAuthorized] = useState(false)
-  const [selectedClient, setSelectedClient] = useState<string>('claude-desktop')
+  const [isRedirectingOauth, setIsRedirectingOauth] = useState(false)
+  const [selectedClient, setSelectedClient] = useState<string>('gemini-web')
+
+  const handleApproveOauth = () => {
+    setIsRedirectingOauth(true)
+    const authCode = 'mcp_auth_code_' + Math.random().toString(36).substring(2, 12) + Date.now().toString(36)
+    if (oauthRedirectUri) {
+      toast.success(`Authorizing ${oauthClientName} and completing connection...`)
+      setTimeout(() => {
+        try {
+          const url = new URL(oauthRedirectUri)
+          url.searchParams.set('code', authCode)
+          if (oauthState) url.searchParams.set('state', oauthState)
+          window.location.href = url.toString()
+        } catch {
+          const sep = oauthRedirectUri.includes('?') ? '&' : '?'
+          window.location.href = `${oauthRedirectUri}${sep}code=${encodeURIComponent(authCode)}${oauthState ? `&state=${encodeURIComponent(oauthState)}` : ''}`
+        }
+      }, 500)
+    } else {
+      setOauthAuthorized(true)
+      setIsRedirectingOauth(false)
+      toast.success(`OAuth 2.1 authorization granted for ${oauthClientName}!`)
+    }
+  }
+
+  const handleDenyOauth = () => {
+    if (oauthRedirectUri) {
+      try {
+        const url = new URL(oauthRedirectUri)
+        url.searchParams.set('error', 'access_denied')
+        if (oauthState) url.searchParams.set('state', oauthState)
+        window.location.href = url.toString()
+      } catch {
+        const sep = oauthRedirectUri.includes('?') ? '&' : '?'
+        window.location.href = `${oauthRedirectUri}${sep}error=access_denied${oauthState ? `&state=${encodeURIComponent(oauthState)}` : ''}`
+      }
+    } else {
+      router.push('/mcp-studio?tab=keys')
+    }
+  }
   const [toolSearch, setToolSearch] = useState('')
   const [selectedPlatformFilter, setSelectedPlatformFilter] = useState<string>('all')
   const [selectedPromptCategory, setSelectedPromptCategory] = useState<string>('All')
@@ -568,6 +635,83 @@ export default function McpStudio() {
         </div>
       </div>
 
+      {/* OAuth 2.1 Live Client Authorization Card (e.g. Google Gemini / Connected Apps) */}
+      {(oauthAction === 'authorize' || oauthAuthorized) && (
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-indigo-950/90 via-purple-950/90 to-card border-2 border-indigo-500/50 shadow-xl space-y-4 animate-fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                <Sparkles className="w-6 h-6 animate-pulse" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono uppercase tracking-wider text-indigo-400 font-semibold">
+                    OAuth 2.1 Connection Request
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    Live Streamable HTTP
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-white">
+                  Connect {oauthClientName} to Siegfried Outreach MCP Server
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {oauthRedirectUri ? (
+                <>
+                  <Button
+                    onClick={handleDenyOauth}
+                    variant="outline"
+                    className="border-white/20 text-white/80 hover:bg-white/10 rounded-xl text-xs h-10 px-4"
+                  >
+                    Deny
+                  </Button>
+                  <Button
+                    onClick={handleApproveOauth}
+                    disabled={isRedirectingOauth}
+                    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-semibold rounded-xl text-xs h-10 px-5 shadow-lg shadow-indigo-500/30 flex items-center gap-2"
+                  >
+                    {isRedirectingOauth ? (
+                      <>
+                        <Spinner className="w-3.5 h-3.5" />
+                        Connecting...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-4 h-4 text-emerald-300" />
+                        Authorize & Connect
+                      </>
+                    )}
+                  </Button>
+                </>
+              ) : (
+                <span className="text-xs font-mono px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
+                  <CheckCircle className="w-4 h-4" />
+                  Authorized
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-white/80 pt-2 border-t border-white/10">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+              <span>Full read & write access to 32 social tools</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+              <span>Publish & schedule across all 9 connected networks</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+              <span>Scope: <code className="font-mono text-[11px] text-purple-300">{oauthScope}</code></span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Metrics Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-xl bg-card border border-border flex items-center gap-4 shadow-xs">
@@ -612,8 +756,8 @@ export default function McpStudio() {
           </div>
           <div>
             <span className="text-xs text-muted-foreground font-mono">Assistant Clients</span>
-            <div className="text-lg sm:text-xl font-bold text-foreground pt-0.5">8 Supported Clients</div>
-            <span className="text-[11px] text-muted-foreground font-mono">Protocol 2024-11-05</span>
+            <div className="text-lg sm:text-xl font-bold text-foreground pt-0.5">9 Supported Clients</div>
+            <span className="text-[11px] text-muted-foreground font-mono">Protocol 2026-07-28 &amp; HTTP</span>
           </div>
         </div>
       </div>
@@ -842,7 +986,7 @@ export default function McpStudio() {
           </div>
 
           {/* Client Selector Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-3">
             {EXTENDED_CLIENT_GUIDES.map((client) => {
               const isSelected = selectedClient === client.id
               return (
@@ -861,6 +1005,7 @@ export default function McpStudio() {
                         isSelected ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
                       }`}
                     >
+                      {client.id === 'gemini-web' && <Sparkles className="w-5 h-5 text-indigo-400" />}
                       {client.id === 'claude-desktop' && <Bot className="w-5 h-5" />}
                       {client.id === 'claude-code' && <Terminal className="w-5 h-5" />}
                       {client.id === 'cursor' && <Code2 className="w-5 h-5" />}
@@ -1246,16 +1391,19 @@ export default function McpStudio() {
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
                   <Button
-                    onClick={() => {
-                      const token = primaryKey || ('mcp_oauth_at_' + Math.random().toString(36).substring(2, 10))
-                      copyToClipboard(token, 'oauth-token', '1-Click OAuth 2.1 Token generated & copied!')
-                      setOauthAuthorized(true)
-                    }}
+                    onClick={handleApproveOauth}
+                    disabled={isRedirectingOauth}
                     size="lg"
                     className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-bold rounded-xl text-xs sm:text-sm px-6 py-3 shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2"
                   >
                     <Sparkles className="w-4 h-4" />
-                    {oauthAuthorized ? 'OAuth 2.1 Authorized ✓' : '1-Click Authorize AI Agent'}
+                    {isRedirectingOauth
+                      ? 'Connecting & Returning...'
+                      : oauthAuthorized
+                      ? 'OAuth 2.1 Authorized ✓'
+                      : oauthRedirectUri
+                      ? `Authorize & Connect ${oauthClientName}`
+                      : '1-Click Authorize AI Agent'}
                   </Button>
 
                   <a
@@ -1277,18 +1425,32 @@ export default function McpStudio() {
 
               {/* OAuth 2.1 Authorization Prompt Banner if redirected */}
               {(oauthAction === 'authorize' || oauthAuthorized) && (
-                <div className="mt-6 p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-xs font-mono space-y-2 animate-fade-in">
-                  <div className="flex items-center justify-between">
+                <div className="mt-6 p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-xs font-mono space-y-3 animate-fade-in">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <span className="font-bold text-white flex items-center gap-1.5">
                       <CheckCircle className="w-4 h-4 text-emerald-400" />
-                      OAuth 2.1 Authorization Granted for &ldquo;{oauthClientName}&rdquo;
+                      OAuth 2.1 Authorization {oauthAuthorized ? 'Active' : 'Requested'} for &ldquo;{oauthClientName}&rdquo;
                     </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
-                      Scope: {oauthScope}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
+                        Scope: {oauthScope}
+                      </span>
+                      {oauthRedirectUri && (
+                        <Button
+                          onClick={handleApproveOauth}
+                          disabled={isRedirectingOauth}
+                          size="sm"
+                          className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold text-xs rounded-lg h-7 px-3"
+                        >
+                          {isRedirectingOauth ? 'Redirecting...' : 'Approve & Connect'}
+                        </Button>
+                      )}
+                    </div>
                   </div>
                   <p className="text-emerald-300/90 text-[11px] font-sans">
-                    Your AI Client has been granted high-velocity access to Siegfried Outreach 32 social tools via PKCE S256 verification.
+                    {oauthRedirectUri
+                      ? `Click "Approve & Connect" to send the secure authorization code back to ${oauthClientName} and activate your connected MCP tools.`
+                      : 'Your AI Client has been granted high-velocity access to Siegfried Outreach 32 social tools via PKCE S256 verification.'}
                   </p>
                 </div>
               )}

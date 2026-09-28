@@ -4,7 +4,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   allowedDevOrigins: ['siegfriedoutreach.com', 'www.siegfriedoutreach.com'],
   images: {
     remotePatterns: [

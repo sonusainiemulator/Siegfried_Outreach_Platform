@@ -874,6 +874,21 @@ export const mcpOAuthV2Details = {
 
 export const mcpClientGuides = [
   {
+    id: 'gemini-web',
+    name: 'Google Gemini (gemini.google.com/apps)',
+    badge: 'Connected Apps / Streamable HTTP',
+    command: 'https://api.siegfriedoutreach.com/mcp',
+    description: 'Connect Google Gemini web & mobile directly via Connected Apps (gemini.google.com/apps) to execute 32 social tools natively.',
+    instructions: [
+      'Open Google Gemini at https://gemini.google.com/apps in your browser.',
+      'Click "Add a custom app" (or Connected Apps > Connect MCP Server).',
+      'Set App Name to "Siegfried Outreach Social Media".',
+      'Set Server URL to https://api.siegfriedoutreach.com/mcp (or https://siegfriedoutreach.com/api/mcp).',
+      'Select Authentication: "OAuth 2.0" (auto-detected via RFC 8414 metadata) or "Custom Header" with header name "siegfried-api-key".',
+      'Click "Connect". Gemini will verify protocol version 2026-07-28 and load all 32 social tools!',
+    ],
+  },
+  {
     id: 'oauth-v21',
     name: '1-Click OAuth 2.1 Protocol (Recommended)',
     badge: 'OAuth 2.1 PKCE Standard',

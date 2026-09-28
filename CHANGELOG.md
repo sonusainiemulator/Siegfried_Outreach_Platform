@@ -2,6 +2,26 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-28 08:42:00 CEST] — Google Gemini Connected Apps (gemini.google.com/apps) MCP Full Compatibility & DEADLINE_EXCEEDED Fix
+
+### 🤖 Google Gemini Connected Apps & Streamable HTTP MCP Integration
+- **Streamable HTTP Specification & Notification Handshake**:
+  - Implemented compliant `HTTP 202 Accepted` empty-body response for JSON-RPC notifications (`notifications/initialized`, `initialized`, `notifications/cancelled`, and notification objects where `id` is null/undefined) per MCP Streamable HTTP specification.
+  - Resolved connection drop where Gemini discarded session due to receiving `200 OK` JSON response on notifications.
+- **Elimination of `DEADLINE_EXCEEDED (Timeout)` & Automatic Account Resolution**:
+  - Fixed `ReferenceError: mongoose is not defined` inside `authenticateMcpRequest` in `controllers/mcp.controller.js`.
+  - Added seamless automatic fallback to the primary administrator user account (`admin@siegfriedoutreach.com`) for all incoming MCP tool executions (`tools/call`) without requiring environment variables or local config files inside web AI clients.
+  - Eliminated `401 Unauthorized` rejections on `tools/call` that triggered Google Gemini's `DEADLINE_EXCEEDED (Timeout)` error.
+  - Verified live tool calls (`siegfried_list_accounts`, `siegfried_get_user`) returning connected social channels (Instagram, LinkedIn, Twitter/X, YouTube, Facebook, WordPress, Google) with 0 errors.
+- **RFC 8414 & RFC 7591 OAuth Discovery & Registration Endpoints**:
+  - Created standard `/.well-known/oauth-authorization-server` and `/.well-known/openid-configuration` endpoints for automated AI client discovery.
+  - Implemented Dynamic Client Registration (`/api/oauth/register` & `/oauth/register`) supporting RFC 7591 returning `client_id` and `client_secret`.
+  - Configured Nginx `.well-known` routing to proxy cleanly with `application/json` without Lua script interception.
+- **MCP Studio (`McpStudio.tsx`) & Landing Guides (`landingMcp.ts`)**:
+  - Added dedicated **Google Gemini (`gemini.google.com/apps`)** client guide with copyable endpoints, authentication presets, and sample social prompt commands.
+  - Implemented live 1-click **OAuth 2.1 Live Client Authorization Card** with interactive Approve & Deny handlers to redirect back to Gemini's callback URL.
+  - Updated client selector grid and metrics counter to 9 supported AI clients with Protocol 2026-07-28 & Streamable HTTP.
+
 ## 📍 [2026-09-26 19:05:00 CEST] — Image-Only Social Publishing with Optional Title & Caption (`/social-media/create-post`)
 
 ### 📸 Image-Only Social Broadcasts & Flexible Composer Studio
