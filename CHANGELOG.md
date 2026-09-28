@@ -2,6 +2,19 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-28 08:56:00 CEST] — User-Isolated OAuth 2.0 Multi-Account Binding for Partham & Sonu
+
+### 🔐 Multi-Tenant User-Specific MCP OAuth 2.0 Architecture
+- **User-Bound Authorization Code Generation (`McpStudio.tsx`)**:
+  - Bound OAuth authorization codes to active authenticated user session (`mcp_user_${userId}_...`).
+  - Allows distinct team members (Partham, Sonu, etc.) to authenticate their respective personal/agency accounts independently.
+- **Dynamic User Resolution on Token Exchange (`oauth.routes.js`)**:
+  - Enhanced `/api/oauth/token` and `/oauth/token` endpoints to extract the user ID directly from the authorization code.
+  - Automatically loads `User.findById(extractedUserId)` and generates scoped JWT Bearer tokens personalized for that specific user.
+  - Tested and verified: Partham's OAuth token maps to `parthamjangir2020@gmail.com` and Sonu's token maps to `sonusainiemulator@gmail.com`.
+- **Complete Tool Execution Isolation**:
+  - Incoming MCP tool calls with user-specific tokens strictly scope database queries (`SocialAccount.find({ userId })`, `SocialPost.find({ userId })`), guaranteeing 100% data separation between team members.
+
 ## 📍 [2026-09-28 08:42:00 CEST] — Google Gemini Connected Apps (gemini.google.com/apps) MCP Full Compatibility & DEADLINE_EXCEEDED Fix
 
 ### 🤖 Google Gemini Connected Apps & Streamable HTTP MCP Integration

@@ -418,9 +418,12 @@ export default function McpStudio() {
 
   const handleApproveOauth = () => {
     setIsRedirectingOauth(true)
-    const authCode = 'mcp_auth_code_' + Math.random().toString(36).substring(2, 12) + Date.now().toString(36)
+    const userId = (user as any)?._id || (user as any)?.id || ''
+    const authCode = userId
+      ? `mcp_user_${userId}_${Math.random().toString(36).substring(2, 10)}${Date.now().toString(36)}`
+      : `mcp_auth_code_${Math.random().toString(36).substring(2, 12)}${Date.now().toString(36)}`
     if (oauthRedirectUri) {
-      toast.success(`Authorizing ${oauthClientName} and completing connection...`)
+      toast.success(`Authorizing ${oauthClientName} as ${user?.name || 'User'} and completing connection...`)
       setTimeout(() => {
         try {
           const url = new URL(oauthRedirectUri)
