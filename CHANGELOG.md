@@ -2,6 +2,23 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-09-29 23:12:00 CEST] — 🚨 HOTFIX: 502 Bad Gateway — Production Build Restored & Site Back Online
+
+### 🔧 Root Cause & Fix
+- **Issue**: Site returning 502 Bad Gateway — `frontend-app` PM2 process was in `stopped` state with 1642 crash restarts.
+- **Root Cause**: `.next/BUILD_ID` was missing — no valid production build existed in the `.next` directory. Next.js `next start` requires a compiled production build and was crashing immediately on every restart attempt.
+- **Fix**: Ran `NODE_ENV=production npm run build` (Next.js 16.3.4 / Turbopack) — build completed successfully after ~20 minutes of compilation.
+- **Restart**: `pm2 restart frontend-app && pm2 save` — both `frontend-app` and `api-backend` now confirmed **online**.
+- **Verification**: `pm2 list` shows `frontend-app` status: ✅ `online`, `api-backend` status: ✅ `online`.
+
+### 📊 Status After Fix
+| Process | Status | Memory |
+|---------|--------|--------|
+| `frontend-app` | ✅ online | 88.6mb |
+| `api-backend` | ✅ online | 136.3mb |
+
+---
+
 ## 📍 [2026-09-28 08:56:00 CEST] — User-Isolated OAuth 2.0 Multi-Account Binding for Partham & Sonu
 
 ### 🔐 Multi-Tenant User-Specific MCP OAuth 2.0 Architecture
