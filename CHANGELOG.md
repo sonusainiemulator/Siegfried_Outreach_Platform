@@ -2,6 +2,35 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-08 19:46:00 CEST] — 🎙️ AI Speech-to-Text Transcription UI Redesign & Limit Extension (60 Min / 50 MB)
+
+### 🎨 UI & User Experience Enhancements
+- **Dynamic Pre-Flight Media Probing (`FileManagement.tsx`)**:
+  - Automatically loads and analyzes media metadata (`duration`, `size`, `type`) on file selection via probed media elements.
+  - Formats audio/video durations (`MM:SS` / `H:MM:SS`) in real-time, eliminating user guessing.
+  - Implemented dynamic duration capacity meter with color-coded threshold bar (`formatDuration(duration) / 60:00`) and capacity percentage.
+  - Added real-time badge feedback for file size, media format (Audio/Video), duration (`Within 60-min limit`), and readiness status.
+- **Proactive Validation & Anti-Failure Protection (`FileManagement.tsx`)**:
+  - Replaced post-submission 400 error toasts with proactive inline warning banners for duration (> 60 minutes) and size (> 50 MB).
+  - Transcribe CTA button intelligently adapts its state (`Exceeds 60-Minute Limit` / `Exceeds 50MB Limit` / `Transcribing Audio...`).
+  - Unified file card architecture into a single, cohesive glassmorphic container, eliminating clunky card splits and layout jitter.
+- **Redesigned Transcription Result Hub (`TranscriptionResult.tsx`)**:
+  - Elevated empty state with feature highlights (Whisper Large-v3, up to 60 minutes capacity, one-click export).
+  - Added reading time estimation, live word & character statistics badges in the footer.
+  - Interactive copy-to-clipboard and TXT file export actions with visual checkmark feedback.
+  - Aligned grid columns with `items-stretch` in `SpeechToText.tsx` for balanced dual-pane layout.
+
+### ⚡ Backend Whisper Transcription Engine & Limit Expansion
+- **Extended Duration Threshold (`ai-content.controller.js`)**:
+  - Expanded maximum allowed audio/video transcription duration from 1 minute (60s) to 60 minutes (3600s) via `MAX_AUDIO_TRANSCRIPTION_DURATION` dynamic configuration.
+- **High-Performance Whisper Large-v3 Pipeline (`services/ai.js`)**:
+  - Integrated Groq `whisper-large-v3` cloud transcription when user/admin API keys are configured, enabling sub-3-second transcriptions for multi-minute audio files.
+  - Automatic graceful fallback to OpenAI `whisper-1` and local `@xenova/transformers` ONNX Whisper base pipeline.
+- **Bilingual English & Hindi Standards (`i18n.ts`)**:
+  - Added localized strings in both English and Hindi for 60-minute duration limit, 50MB size limit, capacity indicators, and transcription status.
+
+---
+
 ## 📍 [2026-09-29 23:12:00 CEST] — 🚨 HOTFIX: 502 Bad Gateway — Production Build Restored & Site Back Online
 
 ### 🔧 Root Cause & Fix

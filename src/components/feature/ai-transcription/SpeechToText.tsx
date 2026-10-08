@@ -54,8 +54,8 @@ import TranscriptionResult from './components/TranscriptionResult'
       <div className="max-w-[1600px] mx-auto space-y-8 animate-fade-in">
       <SpeechToTextHeader onClear={handleClear} showClear={!!transcription} />
 
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-          <div className="xl:col-span-5 space-y-6">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch">
+          <div className="xl:col-span-5 flex flex-col">
             <FileManagement
               file={file}
               onFileSelect={handleFileSelect}
@@ -65,7 +65,7 @@ import TranscriptionResult from './components/TranscriptionResult'
             />
           </div>
 
-          <div className="xl:col-span-7 h-full">
+          <div className="xl:col-span-7 flex flex-col h-full">
             <TranscriptionResult transcription={transcription} isLoading={isLoading} canDownload={canDownload} />
           </div>
         </div>
