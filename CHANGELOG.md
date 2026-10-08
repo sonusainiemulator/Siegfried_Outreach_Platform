@@ -2,6 +2,30 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-08 20:25:00 CEST] — 🚀 Platform Resource Limits Expansion (2 GB Uploads, 1M Message Length, 1000 Devices, 10-Yr Sessions)
+
+### ⚙️ System & Administration Setting Expansion
+- **Frontend Validation Schemas (`validation-schemas/index.ts`)**:
+  - Expanded Document, Audio, Video, and Image upload limits from rigid 50 MB cap up to **2048 MB (2 GB)** each.
+  - Expanded `multiple_file_share_limit` maximum threshold from 10 to **500** concurrent files.
+  - Expanded `maximum_message_length` maximum limit from 40,000 characters to **1,000,000** characters.
+  - Expanded `session_expiration_days` upper limit from 30 days to **3,650 days** (~10 years).
+  - Expanded `session_limit` (Device Login Limit) upper bound from 10 devices to **1,000** concurrent devices.
+
+### 🛡️ Backend Persistence & Ingress Pipeline (`api.siegfriedoutreach.com`)
+- **Setting Controller Field Persistence (`controllers/setting.controller.js`)**:
+  - Registered `session_limit` in `chatFields` and `numericFields` whitelist so device login limits save persistently to MongoDB.
+  - Raised message length safety barrier from 50,000 up to **1,000,000** characters.
+  - Integrated immediate Multer upload cache busting (`clearSettingsCache`) on setting mutations for zero-latency policy propagation.
+- **Dynamic Multer Upload Engine (`utils/upload.js`)**:
+  - Upgraded generic upload buffer limit to dynamically scale up to the highest configured media limit (`Math.max(doc, audio, video, image, 50MB)`), allowing files up to 2 GB to process without Multer truncation.
+- **Nginx Ingress Capacity (`nginx.conf` & Vhosts)**:
+  - Configured `client_max_body_size 2048m;` in Nginx virtual hosts for `api.siegfriedoutreach.com` and `siegfriedoutreach.com`, eliminating HTTP 413 "Request Entity Too Large" errors for enterprise media assets.
+- **AI Whisper Pipeline Hotfix (`services/ai.js`)**:
+  - Resolved `path is not defined` reference error in `prepareAudioForWhisper` ffmpeg compression routine.
+
+---
+
 ## 📍 [2026-10-08 19:46:00 CEST] — 🎙️ AI Speech-to-Text Transcription UI Redesign & Limit Extension (60 Min / 50 MB)
 
 ### 🎨 UI & User Experience Enhancements

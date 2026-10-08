@@ -211,22 +211,22 @@ export const adminSettingSchemas = {
       document_file_limit: yup
         .number()
         .min(1)
-        .max(50, t('cannot_exceed_50_mb', { defaultValue: "can't exceed more than 50 mb" }))
+        .max(2048, t('cannot_exceed_max_mb', { defaultValue: "can't exceed more than 2048 mb" }))
         .required(),
       audio_file_limit: yup
         .number()
         .min(1)
-        .max(50, t('cannot_exceed_50_mb', { defaultValue: "can't exceed more than 50 mb" }))
+        .max(2048, t('cannot_exceed_max_mb', { defaultValue: "can't exceed more than 2048 mb" }))
         .required(),
       video_file_limit: yup
         .number()
         .min(1)
-        .max(50, t('cannot_exceed_50_mb', { defaultValue: "can't exceed more than 50 mb" }))
+        .max(2048, t('cannot_exceed_max_mb', { defaultValue: "can't exceed more than 2048 mb" }))
         .required(),
       image_file_limit: yup
         .number()
         .min(1)
-        .max(50, t('cannot_exceed_50_mb', { defaultValue: "can't exceed more than 50 mb" }))
+        .max(2048, t('cannot_exceed_max_mb', { defaultValue: "can't exceed more than 2048 mb" }))
         .required(),
       smtp_host: yup.string().nullable().optional(),
       smtp_port: yup.number().typeError(t('must_be_number')).min(1).max(65535).nullable().optional(),
@@ -240,10 +240,10 @@ export const adminSettingSchemas = {
         .optional(),
       mail_encryption: yup.string().oneOf(['ssl', 'tls']).nullable().optional(),
       otp_message: yup.string().nullable().optional(),
-      multiple_file_share_limit: yup.number().min(1).max(10).required(),
-      maximum_message_length: yup.number().min(1).max(40000).required(),
-      session_expiration_days: yup.number().min(1).max(30).required(),
-      session_limit: yup.number().min(1).max(10).required(),
+      multiple_file_share_limit: yup.number().min(1).max(500).required(),
+      maximum_message_length: yup.number().min(1).max(1000000).required(),
+      session_expiration_days: yup.number().min(1).max(3650).required(),
+      session_limit: yup.number().min(1).max(1000).required(),
       demo_user_email: yup.string().email(t('invalid_email')).nullable().optional(),
       demo_user_password: yup.string().nullable().optional(),
       google_client_id: yup.string().nullable().optional(),
