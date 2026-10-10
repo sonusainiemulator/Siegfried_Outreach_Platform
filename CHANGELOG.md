@@ -2,6 +2,17 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-10 15:47:00 CEST] — 🧹 Purge Dummy Conversations & Refine Social DM Inbox Scoping
+
+### 📬 Social DM Inbox Data Hygiene & Channel Scoping (`conversation.controller.js` & MongoDB)
+- **Dummy Seed Data Backup & Purge**:
+  - Safely archived 125 dummy test and seed conversations (mock curl strings `RESTORE TEST OK`, `OK1`, `OK2`, repeated mock threads mentioning `WhatsOmni`, `Ultra-Glide`, and test product hunt loops) to encrypted local JSON backup.
+  - Purged 125 mock artifacts from the active MongoDB `conversations` collection, leaving exclusively 7 authentic customer conversations across Facebook, Instagram, TikTok, and WhatsApp.
+- **Dedicated Social Channel Scoping**:
+  - Refined `listBroadcastConversations` query in `conversation.controller.js` to strictly match social channels (`facebook`, `messenger`, `instagram`, `whatsapp`, `tiktok`, `telegram`, `email`, `facebook_comment`, `instagram_comment`).
+  - Isolated website widget live chat sessions from entering the Social DM Inbox so web assistant chats no longer appear labeled as social channels.
+  - Eliminated hardcoded fallback tags (`['VIP', 'Enterprise']`) and phantom assignee fallback (`'Alex Morgan'`), ensuring all metadata displayed in the inbox is 100% accurate.
+
 ## 📍 [2026-10-10 15:18:00 CEST] — 📬 Social DM Inbox & 📊 Advanced Social Analytics Full Fix & Stabilization
 
 ### 📬 Social DM Inbox Enhancements (`SocialInboxDashboard.tsx` & Backend)
