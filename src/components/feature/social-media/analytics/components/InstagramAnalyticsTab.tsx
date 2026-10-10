@@ -46,7 +46,7 @@ export const InstagramAnalyticsTab: React.FC<InstagramTabProps> = ({ data, isLoa
       labels: {
         style: { colors: '#94A3B8', fontSize: '10px' },
         rotate: 0,
-        formatter: (val, opt) => (Number(opt) % 3 === 0 ? String(val) : ''),
+        formatter: (val) => String(val || ''),
       },
     },
     yaxis: { labels: { style: { colors: '#94A3B8', fontSize: '10px' } } },

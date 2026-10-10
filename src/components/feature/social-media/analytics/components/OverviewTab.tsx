@@ -46,13 +46,19 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   const accounts = data?.accountPerformance || []
   const platformEngagement = data?.platformEngagement || {}
 
-  const trendDates = trend.map((t: any) => t.date)
+  const fallbackDates = Array.from({ length: 14 }, (_, i) => {
+    const d = new Date()
+    d.setDate(d.getDate() - (13 - i))
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  })
+
+  const trendDates = trend.length > 0 ? trend.map((t: any) => t.date) : fallbackDates
   const trendSeries = [
-    { name: 'Facebook', data: trend.map((t: any) => t.facebook || 0), color: '#1877F2' },
-    { name: 'Instagram', data: trend.map((t: any) => t.instagram || 0), color: '#E4405F' },
-    { name: 'TikTok', data: trend.map((t: any) => t.tiktok || 0), color: '#00F2FE' },
-    { name: 'X (Twitter)', data: trend.map((t: any) => t.twitter || 0), color: '#38BDF8' },
-    { name: 'YouTube', data: trend.map((t: any) => t.youtube || 0), color: '#EF4444' },
+    { name: 'Facebook', data: trend.length > 0 ? trend.map((t: any) => t.facebook || 0) : Array(14).fill(0), color: '#1877F2' },
+    { name: 'Instagram', data: trend.length > 0 ? trend.map((t: any) => t.instagram || 0) : Array(14).fill(0), color: '#E4405F' },
+    { name: 'TikTok', data: trend.length > 0 ? trend.map((t: any) => t.tiktok || 0) : Array(14).fill(0), color: '#00F2FE' },
+    { name: 'X (Twitter)', data: trend.length > 0 ? trend.map((t: any) => t.twitter || 0) : Array(14).fill(0), color: '#38BDF8' },
+    { name: 'YouTube', data: trend.length > 0 ? trend.map((t: any) => t.youtube || 0) : Array(14).fill(0), color: '#EF4444' },
   ]
 
   const trendChartOptions: ApexCharts.ApexOptions = {

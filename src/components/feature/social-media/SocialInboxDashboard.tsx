@@ -47,6 +47,8 @@ import {
   useGetCampaignConversationHistoryQuery,
   useCampaignInboxReplyMutation,
   useDeleteCampaignConversationMutation,
+  useUpdateConversationStatusMutation,
+  useUpdateConversationDetailsMutation,
 } from '@/redux/api/campaignInboxApi'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -267,8 +269,11 @@ export default function SocialInboxDashboard() {
     skip: !selectedConversationId,
   })
 
+  const [isInternalNote, setIsInternalNote] = useState(false)
   const [sendReply, { isLoading: isReplying }] = useCampaignInboxReplyMutation()
   const [deleteConversation, { isLoading: isDeleting }] = useDeleteCampaignConversationMutation()
+  const [updateStatus, { isLoading: isUpdatingStatus }] = useUpdateConversationStatusMutation()
+  const [updateDetails, { isLoading: isUpdatingDetails }] = useUpdateConversationDetailsMutation()
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -281,8 +286,19 @@ export default function SocialInboxDashboard() {
     }
   }, [searchParams])
 
+  // Robust parsing of conversations array
+  const rawList: any[] = Array.isArray(listData?.conversations)
+    ? listData.conversations
+    : Array.isArray(listData?.data?.conversations)
+    ? listData.data.conversations
+    : Array.isArray(listData?.data)
+    ? listData.data
+    : Array.isArray(listData)
+    ? listData
+    : []
+
   // Filter conversations based on CategoryTab and QuickFilter
-  const conversations = (listData?.conversations || []).filter((conv: any) => {
+  const conversations = rawList.filter((conv: any) => {
     const source = (conv.channel || conv.source || conv.platform || conv.metadata?.source || '').toLowerCase()
 
     // Tab filter
@@ -314,6 +330,13 @@ export default function SocialInboxDashboard() {
     return true
   })
 
+  // Auto-select first conversation on initial load or category change
+  useEffect(() => {
+    if (!selectedConversationId && conversations.length > 0) {
+      setSelectedConversationId(conversations[0].id)
+    }
+  }, [conversations, selectedConversationId])
+
   const selectedConversation =
     conversations.find((c: any) => c.id === selectedConversationId) ||
     (historyData?.conversation?.id === selectedConversationId ? historyData.conversation : null)
@@ -325,6 +348,38 @@ export default function SocialInboxDashboard() {
     router.push(`/social-media/inbox?conversationId=${convId}`, { scroll: false })
   }
 
+  const handleToggleStatus = async () => {
+    if (!selectedConversationId || !selectedConversation) return
+    const nextStatus = selectedConversation.status === 'resolved' ? 'open' : 'resolved'
+    try {
+      await updateStatus({
+        conversationId: selectedConversationId,
+        status: nextStatus,
+      }).unwrap()
+      toast.success(nextStatus === 'resolved' ? 'Conversation marked as resolved.' : 'Conversation reopened.')
+      refetchHistory()
+      refetchList()
+    } catch (err: any) {
+      toast.error(err?.data?.message || err?.message || 'Failed to update status')
+    }
+  }
+
+  const handleAssignAgent = async (agentName: string) => {
+    if (!selectedConversationId) return
+    setAssignedAgent(agentName)
+    try {
+      await updateDetails({
+        conversationId: selectedConversationId,
+        assignee: agentName,
+      }).unwrap()
+      toast.success(`Assigned to ${agentName}`)
+      refetchHistory()
+      refetchList()
+    } catch (err: any) {
+      toast.error(err?.data?.message || err?.message || 'Failed to assign agent')
+    }
+  }
+
   const handleSendReply = async () => {
     if (!replyText.trim() && attachedFiles.length === 0) return
     if (!selectedConversationId || isReplying) return
@@ -334,15 +389,16 @@ export default function SocialInboxDashboard() {
         conversationId: selectedConversationId,
         message: replyText.trim(),
         files: attachedFiles,
+        isNote: isInternalNote,
       }).unwrap()
 
       setReplyText('')
       setAttachedFiles([])
-      toast.success('Reply dispatched directly!')
+      toast.success(isInternalNote ? 'Internal team note added!' : 'Reply dispatched directly!')
       refetchHistory()
       refetchList()
     } catch (err: any) {
-      toast.error(err?.data?.message || 'Failed to send reply')
+      toast.error(err?.data?.message || err?.message || 'Failed to send reply')
     }
   }
 
@@ -728,12 +784,38 @@ export default function SocialInboxDashboard() {
                       {selectedConversation.userName || selectedConversation.title}
                     </h3>
 
-                    <div className="flex items-center gap-2 mt-0.5">
+                    <div className="flex flex-wrap items-center gap-2 mt-0.5">
                       {/* Assign dropdown */}
-                      <button className="text-xs text-primary font-medium flex items-center gap-1 hover:underline">
-                        <span>Assign to {assignedAgent}</span>
-                        <ChevronDown className="w-3 h-3" />
-                      </button>
+                      <div className="flex items-center gap-1 bg-muted/40 border border-glass-border rounded-md px-1.5 py-0.5 text-xs text-primary font-medium">
+                        <UserCheck className="w-3 h-3 text-primary" />
+                        <select
+                          value={assignedAgent}
+                          onChange={(e) => handleAssignAgent(e.target.value)}
+                          className="bg-transparent text-xs text-primary font-semibold focus:outline-none cursor-pointer"
+                        >
+                          <option value="Christopher Siegfried" className="bg-card text-foreground">Christopher Siegfried</option>
+                          <option value="Alex Morgan" className="bg-card text-foreground">Alex Morgan</option>
+                          <option value="Support Team" className="bg-card text-foreground">Support Team</option>
+                          <option value="AI Copilot" className="bg-card text-foreground">AI Copilot</option>
+                        </select>
+                      </div>
+
+                      {/* Status Toggle Button */}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleToggleStatus}
+                        disabled={isUpdatingStatus}
+                        className={cn(
+                          'h-6 px-2 rounded-md text-[11px] gap-1 font-semibold border-glass-border',
+                          selectedConversation.status === 'resolved'
+                            ? 'text-amber-500 bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/30'
+                            : 'text-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/30'
+                        )}
+                      >
+                        <CheckCircle2 className="w-3 h-3" />
+                        {selectedConversation.status === 'resolved' ? 'Reopen' : 'Mark Done'}
+                      </Button>
 
                       {selectedConversation.accountName && (
                         <span className="text-xs text-muted-foreground">
@@ -946,6 +1028,33 @@ export default function SocialInboxDashboard() {
 
               {/* Reply Composer */}
               <div className="p-4 bg-background border-t border-glass-border space-y-2">
+                {/* Reply Mode Toggle */}
+                <div className="flex items-center gap-1.5 pb-0.5">
+                  <button
+                    onClick={() => setIsInternalNote(false)}
+                    className={cn(
+                      'px-2.5 py-1 rounded-lg text-xs font-semibold transition-all',
+                      !isInternalNote
+                        ? 'bg-primary text-white shadow-xs'
+                        : 'text-muted-foreground hover:text-foreground'
+                    )}
+                  >
+                    Reply to Contact
+                  </button>
+                  <button
+                    onClick={() => setIsInternalNote(true)}
+                    className={cn(
+                      'px-2.5 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1',
+                      isInternalNote
+                        ? 'bg-amber-500 text-white shadow-xs'
+                        : 'text-muted-foreground hover:text-foreground'
+                    )}
+                  >
+                    <Bookmark className="w-3 h-3" />
+                    Internal Team Note
+                  </button>
+                </div>
+
                 <div className="flex items-end gap-2">
                   <input
                     type="file"
@@ -970,30 +1079,46 @@ export default function SocialInboxDashboard() {
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder={`Write a response to ${selectedConversation.userName || 'contact'}... (Enter to send)`}
-                    className="flex-1 p-3 rounded-lg text-xs bg-muted/20 border border-glass-border focus:border-primary/40 focus:outline-hidden resize-none"
+                    placeholder={
+                      isInternalNote
+                        ? `Add an internal note about ${selectedConversation.userName || 'contact'} (visible to team only)... (Enter to send)`
+                        : `Write a response to ${selectedConversation.userName || 'contact'}... (Enter to send)`
+                    }
+                    className={cn(
+                      'flex-1 p-3 rounded-lg text-xs border focus:outline-hidden resize-none transition-colors',
+                      isInternalNote
+                        ? 'bg-amber-500/10 border-amber-500/30 text-foreground focus:border-amber-500'
+                        : 'bg-muted/20 border-glass-border focus:border-primary/40'
+                    )}
                   />
 
                   <Button
                     onClick={handleSendReply}
                     disabled={isReplying || (!replyText.trim() && attachedFiles.length === 0)}
-                    className="h-10 px-4 rounded-lg text-xs font-semibold gap-1.5 bg-primary text-white hover:bg-primary/90 shadow-sm shrink-0"
+                    className={cn(
+                      'h-10 px-4 rounded-lg text-xs font-semibold gap-1.5 shadow-sm shrink-0 text-white',
+                      isInternalNote
+                        ? 'bg-amber-500 hover:bg-amber-600'
+                        : 'bg-primary hover:bg-primary/90'
+                    )}
                   >
                     {isReplying ? (
                       <RefreshCw className="w-4 h-4 animate-spin" />
                     ) : (
                       <>
                         <Send className="w-3.5 h-3.5" />
-                        Send
+                        {isInternalNote ? 'Save Note' : 'Send'}
                       </>
                     )}
                   </Button>
                 </div>
 
                 <div className="flex items-center justify-between text-[11px] text-muted-foreground px-1">
-                  <span className="flex items-center gap-1 text-emerald-500 font-medium">
+                  <span className={cn('flex items-center gap-1 font-medium', isInternalNote ? 'text-amber-500' : 'text-emerald-500')}>
                     <ShieldCheck className="w-3 h-3" />
-                    Dispatches directly to {selectedConversation.source?.replace('_', ' ') || 'contact'}
+                    {isInternalNote
+                      ? 'Private internal note (only visible to team members)'
+                      : `Dispatches directly to ${selectedConversation.source?.replace('_', ' ') || 'contact'}`}
                   </span>
                   <span>Press Enter to send</span>
                 </div>

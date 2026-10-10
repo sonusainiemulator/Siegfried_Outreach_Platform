@@ -2,6 +2,38 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-10 15:18:00 CEST] — 📬 Social DM Inbox & 📊 Advanced Social Analytics Full Fix & Stabilization
+
+### 📬 Social DM Inbox Enhancements (`SocialInboxDashboard.tsx` & Backend)
+- **Role & Permission Alignment (`broadcast-inbox.routes.js`)**:
+  - Expanded route permissions from strictly `'Manage Conversation'` to accept both `'Manage Conversation'` and `'Manage Posts'` (Social Studio module permission), eliminating 403 Forbidden errors for authorized agency managers and content operators.
+- **Admin & Cross-Workspace Visibility (`controllers/conversation.controller.js`)**:
+  - Updated `listBroadcastConversations` to recognize `super_admin` (`roleId.name === 'super_admin'` or reserved ID), granting platform administrators global access to incoming messages across channels instead of filtering only to their own single ID.
+  - Included inbound conversations with unassigned `userId: null` (direct webhooks from Instagram Direct, WhatsApp Business, Facebook Messenger, TikTok DMs, and Telegram bot), ensuring new leads appear immediately in the inbox.
+  - Enhanced platform filtering to check `metadata.source`, `channel`, and `platform` concurrently.
+- **Interactive Triage & Resolution Controls**:
+  - Implemented interactive Agent Assignment selector directly in the conversation header (`Christopher Siegfried`, `Alex Morgan`, `Support Team`, `AI Copilot`).
+  - Added One-Click "Mark as Resolved" / "Reopen" status toggle with live optimistic feedback and backend synchronization (`useUpdateConversationStatusMutation`).
+  - Added dual-mode composer toggle: **Direct Channel Reply** (dispatched externally to customer) vs **Internal Team Note** (stored privately in CRM thread for agent handoffs).
+  - Implemented automatic selection of the first conversation upon loading, eliminating empty-state screen on initial inbox navigation.
+  - Fixed error handling in `messaging.service.js` and `conversation.controller.js` so specific delivery diagnostics are surfaced to agents rather than silent failures.
+
+### 📊 Advanced Social Analytics Stabilization (`AdvancedSocialAnalytics.tsx` & Backend)
+- **Zero-Crash Guard on Social Accounts Array Mapping (`AdvancedSocialAnalytics.tsx`)**:
+  - Resolved fatal `TypeError: .map is not a function` when `useGetSocialAccountsQuery` returns `{ socialAccounts: [...] }` instead of an array.
+  - Safely extracts account arrays across all response variants (`socialAccounts`, `data`, or root array), with robust fallback mapping.
+- **Organization-Wide Aggregation & Admin Workspaces (`controllers/social-analytics.controller.js`)**:
+  - Fixed `isUserAdmin` detection by inspecting `req.user.roleId?.name === 'super_admin'`, enabling superadmins to view organizational aggregated analytics across all 38+ connected accounts and 186+ published posts.
+  - Enabled multi-workspace dropdown selector in `getWorkspaces` for superadmins to easily filter metrics by individual client account or view organization-wide performance.
+- **Dynamic Timeframe Trend Progression**:
+  - Upgraded `dailyPostImpressionTrend` in `getOverviewAnalytics` from a static 14-day loop to dynamically scale with the user's selected timeframe (`7d`, `30d`, `90d`, `1y`).
+  - Added fallback calendar labels in `OverviewTab.tsx` so ApexCharts initializes smoothly even with sparse or empty trend datasets.
+- **Formatter & Telemetry Normalization (`InstagramAnalyticsTab.tsx`)**:
+  - Fixed X-axis label formatter in `InstagramAnalyticsTab.tsx` to handle string types safely without runtime exceptions.
+  - Added `data` payload normalization in `getUserSocialAccounts` (`social-account.controller.js`) for seamless bidirectional compatibility.
+
+---
+
 ## 📍 [2026-10-08 20:25:00 CEST] — 🚀 Platform Resource Limits Expansion (2 GB Uploads, 1M Message Length, 1000 Devices, 10-Yr Sessions)
 
 ### ⚙️ System & Administration Setting Expansion

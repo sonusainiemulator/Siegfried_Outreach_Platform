@@ -89,7 +89,9 @@ export const AdvancedSocialAnalytics: React.FC = () => {
   )
 
   // Real Social Accounts & Posts REST Queries
-  const { data: accountsData, refetch: refetchAccounts } = useGetSocialAccountsQuery(undefined)
+  const { data: accountsData, refetch: refetchAccounts } = useGetSocialAccountsQuery(
+    targetWorkspace === 'all' ? undefined : { targetUserId: targetWorkspace }
+  )
   const { data: postsData, refetch: refetchPosts } = useGetSocialPostsQuery({ limit: 200 })
   const { data: dashboardData } = useGetDashboardDataQuery(undefined)
 
@@ -128,32 +130,51 @@ export const AdvancedSocialAnalytics: React.FC = () => {
     { id: 'settings', label: 'Settings', icon: Settings, color: 'text-slate-400' },
   ]
 
+  // Safe extraction of social accounts array
+  const rawAccountsList: any[] = Array.isArray(accountsData?.socialAccounts)
+    ? accountsData.socialAccounts
+    : Array.isArray(accountsData?.data)
+    ? accountsData.data
+    : Array.isArray(accountsData)
+    ? accountsData
+    : []
+
   // Merge real data
-  const realOverview = overviewData?.data || {
-    summary: {
-      totalPosts: dashboardData?.totalPosts || 0,
-      postsPublished: dashboardData?.totalPublished || 0,
-      totalReactions: 0,
-      totalShares: 0,
-      totalComments: 0,
-      totalViews: 0,
-      totalEngagements: 0,
-      engagementRate: '0.0%',
-    },
-    dailyPostImpressionTrend: [],
-    accountPerformance: (accountsData?.data || accountsData || []).map((a: any) => ({
-      id: a._id || a.id,
-      accountName: a.accountName,
-      platform: a.platform,
-      followers: a.followersCount || 0,
-      growth: '+0.0%',
-      impressions: 0,
-      engagements: 0,
-      engagementRate: '0.0%',
-      status: a.isActive ? 'Active' : 'Disconnected',
-    })),
-    platformEngagement: {},
-  }
+  const fallbackAccounts = rawAccountsList.map((a: any) => ({
+    id: a._id || a.id,
+    accountName: a.accountName,
+    platform: a.platform,
+    followers: a.followersCount || 0,
+    growth: '+0.0%',
+    impressions: 0,
+    engagements: 0,
+    engagementRate: '0.0%',
+    status: a.isActive ? 'Active' : 'Disconnected',
+  }))
+
+  const realOverview = overviewData?.data
+    ? {
+        ...overviewData.data,
+        accountPerformance:
+          overviewData.data.accountPerformance && overviewData.data.accountPerformance.length > 0
+            ? overviewData.data.accountPerformance
+            : fallbackAccounts,
+      }
+    : {
+        summary: {
+          totalPosts: dashboardData?.totalPosts || 0,
+          postsPublished: dashboardData?.totalPublished || 0,
+          totalReactions: 0,
+          totalShares: 0,
+          totalComments: 0,
+          totalViews: 0,
+          totalEngagements: 0,
+          engagementRate: '0.0%',
+        },
+        dailyPostImpressionTrend: [],
+        accountPerformance: fallbackAccounts,
+        platformEngagement: {},
+      }
 
   return (
     <div className="space-y-6 pb-12">
