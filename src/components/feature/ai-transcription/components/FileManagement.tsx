@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const MAX_DURATION_SECONDS = 3600 // 60 minutes
-const MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024 // 50 MB
+const MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024 // 500 MB
 
 const formatDuration = (seconds: number) => {
   if (!isFinite(seconds) || seconds <= 0) return '0:00'
@@ -140,7 +140,7 @@ const FileManagement = ({ file, onFileSelect, onTranscribe, isLoading, canTransc
             {t('drop_file_here', 'Drop your audio or video file here')}
           </h3>
           <p className="text-xs text-muted-foreground max-w-[360px] leading-relaxed mb-6">
-            {t('supported_formats', 'Supported formats: MP3, WAV, M4A, MP4, WebM (Max 50MB, up to 60 mins)')}
+            {t('supported_formats', 'Supported formats: MP3, WAV, M4A, MP4, WebM (Max 500MB, up to 60 mins)')}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 max-w-[400px] mb-6">
@@ -154,7 +154,7 @@ const FileManagement = ({ file, onFileSelect, onTranscribe, isLoading, canTransc
               <Clock className="h-3 w-3" /> {t('max_duration', 'Max 60 mins')}
             </Badge>
             <Badge variant="outline" className="text-[11px] font-normal gap-1 bg-background/50 border-border/80">
-              <HardDrive className="h-3 w-3" /> {t('max_size', 'Max 50 MB')}
+              <HardDrive className="h-3 w-3" /> {t('max_size', 'Max 500 MB')}
             </Badge>
           </div>
 
@@ -240,10 +240,10 @@ const FileManagement = ({ file, onFileSelect, onTranscribe, isLoading, canTransc
               <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" />
               <div className="text-xs space-y-1">
                 <p className="font-semibold text-sm">
-                  {t('file_size_exceeded', 'File size exceeds the 50MB limit.')}
+                  {t('file_size_exceeded', 'File size exceeds the 500MB limit.')}
                 </p>
                 <p className="text-destructive/90 leading-relaxed">
-                  File is {((file?.size || 0) / (1024 * 1024)).toFixed(2)} MB. Maximum allowed file size is 50 MB.
+                  File is {((file?.size || 0) / (1024 * 1024)).toFixed(2)} MB. Maximum allowed file size is 500 MB.
                 </p>
               </div>
             </div>
@@ -338,7 +338,7 @@ const FileManagement = ({ file, onFileSelect, onTranscribe, isLoading, canTransc
               ) : isSizeExceeded ? (
                 <>
                   <AlertTriangle className="h-4 w-4" />
-                  <span>Exceeds 50MB Limit</span>
+                  <span>Exceeds 500MB Limit</span>
                 </>
               ) : (
                 <>

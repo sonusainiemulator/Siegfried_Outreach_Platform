@@ -2,6 +2,28 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-11 21:04:00 CEST] — 🎙️ AI Transcription 500 MB Limit Extension & High-Definition Media Ingestion
+
+### 🚀 Speech-to-Text Capacity & File Size Limit Upgrade (`FileManagement.tsx`, `i18n.ts`, Backend & Nginx)
+- **10x File Size Cap Expansion (50 MB ➔ 500 MB)**:
+  - Upgraded frontend file size limit constant `MAX_FILE_SIZE_BYTES` in [FileManagement.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/components/feature/ai-transcription/components/FileManagement.tsx) from `50 MB` to **`500 MB`**, enabling high-definition WhatsApp video captures, long voice recordings, meeting clips, and podcasts up to 60 minutes.
+  - Eliminated the blocking inline warning banner and enabled the `Transcribe Audio & Video` action button for media files exceeding 50 MB (such as 62.61 MB WhatsApp MP4s).
+  - Updated all badges, format helper labels, size counters, and inline validation warnings across the interface.
+- **Bilingual Localization Standards (`i18n.ts`)**:
+  - Updated both **English** and **हिंदी (Hindi)** dictionaries with accurate 500 MB limits (`supported_formats`, `file_size_exceeded`, `max_size`, and `file_too_large`).
+- **Backend File Processing & Multipart Stream Alignment (`api.siegfriedoutreach.com`)**:
+  - Expanded `uploadSingle` middleware in `utils/upload.js` to accept route-level custom file size ceilings and configured the `/api-content/transcribe` route to accept files up to 500 MB without truncation.
+  - Expanded recognized audio/video MIME types to include `video/quicktime (.mov)`, `audio/x-m4a`, `audio/aac`, `audio/flac`, and `audio/wave`.
+  - Added media-type bypass in `asyncFileFilter` so audio and video files uploaded for transcription are never rejected due to generic workspace file extension filters.
+  - Increased Express body parser limits (`json` and `urlencoded`) to `500mb` in `app.js`.
+  - Configured robust fallback for audio duration extraction in `ai-content.controller.js` to inspect audio stream properties when container headers omit overall duration.
+- **Nginx Reverse Proxy & Timeout Hardening**:
+  - Validated that `client_max_body_size 2048m` is active across both `siegfriedoutreach.com` and `api.siegfriedoutreach.com` vhosts.
+  - Configured proxy timeouts (`proxy_connect_timeout 60s`, `proxy_read_timeout 300s`, `proxy_send_timeout 300s`) in `api.siegfriedoutreach.com.conf` to guarantee stable multipart uploads for large media files without 504 Gateway Timeouts.
+- **Production Verification**:
+  - Successfully executed `npm run build` with Turbopack (0 TypeScript errors, 0 Lint errors across all 265 routes).
+  - Reloaded Nginx and restarted PM2 services `frontend-app` and `api-backend`.
+
 ## 📍 [2026-10-10 15:47:00 CEST] — 🧹 Purge Dummy Conversations & Refine Social DM Inbox Scoping
 
 ### 📬 Social DM Inbox Data Hygiene & Channel Scoping (`conversation.controller.js` & MongoDB)
