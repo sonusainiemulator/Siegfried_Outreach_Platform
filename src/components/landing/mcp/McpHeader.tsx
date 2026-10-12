@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/constants/routes'
 import { mcpNavLinks } from '@/data/landingMcp'
+import useSettings from '@/hooks/useSettings'
+import { getMediaUrl } from '@/utils'
 import {
   Cpu,
   Copy,
@@ -18,9 +21,13 @@ import {
 import { toast } from 'sonner'
 
 export default function McpHeader() {
+  const { settings } = useSettings()
   const [scrolled, setScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  const logoUrl = getMediaUrl(settings?.landing_logo_url || settings?.logo_dark_url || settings?.logo_light_url)
+  const appName = settings?.app_name || 'Siegfried Outreach'
 
   useEffect(() => {
     const onScroll = () => {
@@ -46,26 +53,44 @@ export default function McpHeader() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-        {/* Left Brand: Clean & Fixed Width */}
+        {/* Left Brand: Clean & Dynamic */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[1.5px] shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-300">
-            <div className="w-full h-full bg-[#070A10] rounded-[10px] flex items-center justify-center">
-              <Cpu className="w-5 h-5 text-indigo-400" />
-            </div>
-          </div>
-          <div className="flex flex-col whitespace-nowrap">
-            <div className="flex items-center gap-2">
-              <span className="text-lg sm:text-xl font-black tracking-tight text-white font-outfit">
-                Siegfried Outreach
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-sm font-mono">
+          {logoUrl ? (
+            <div className="flex items-center gap-2.5">
+              <Image
+                src={logoUrl}
+                alt={appName}
+                width={200}
+                height={48}
+                className="h-9 sm:h-11 w-auto max-w-[190px] object-contain transition-transform group-hover:scale-[1.02]"
+                unoptimized
+              />
+              <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-sm font-mono shrink-0">
                 MCP
               </span>
             </div>
-            <span className="text-[11px] text-gray-400 font-medium tracking-wide">
-              Social Media Agent Server
-            </span>
-          </div>
+          ) : (
+            <>
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[1.5px] shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-300">
+                <div className="w-full h-full bg-[#070A10] rounded-[10px] flex items-center justify-center">
+                  <Cpu className="w-5 h-5 text-indigo-400" />
+                </div>
+              </div>
+              <div className="flex flex-col whitespace-nowrap">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg sm:text-xl font-black tracking-tight text-white font-outfit">
+                    {appName}
+                  </span>
+                  <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-sm font-mono">
+                    MCP
+                  </span>
+                </div>
+                <span className="text-[11px] text-gray-400 font-medium tracking-wide">
+                  Social Media Agent Server
+                </span>
+              </div>
+            </>
+          )}
         </Link>
 
         {/* Center Nav: Glass Pill */}

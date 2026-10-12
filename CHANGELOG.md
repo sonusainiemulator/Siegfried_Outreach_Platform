@@ -2,6 +2,24 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-12 22:10:00 CEST] — 🎨 Dynamic Favicon, Landing Page Header Logo & Brand Asset Synchronization
+
+### 🛠️ Backend Dynamic Settings Alignment (`/api/setting`, `/api/setting/public`)
+- **Restored Dynamic Settings Ingress**:
+  - Eliminated hardcoded brand asset overrides (`data.settings.logo_light_url`, `logo_dark_url`, `landing_logo_url`, `sidebar_logo_url`, `mobile_logo_url`, `favicon_url`, `favicon_notification_logo_url`, and `onboarding_logo_url`) in Next.js API routes (`src/app/api/setting/public/route.ts` and `src/app/api/setting/route.ts`).
+  - Added fallback protection so defaults are strictly utilized only when backend database attributes are unset or missing, allowing user-uploaded brand assets from the backend admin settings to propagate dynamically.
+  - Added `export const dynamic = 'force-dynamic'` and `export const revalidate = 0` to prevent Next.js from caching stale branding payloads.
+
+### 🌐 Dynamic Favicon & Browser Tab Metadata (`DynamicMetadata.tsx`, `public/favicon.ico`)
+- **Multi-Rel Icon Synchronization**:
+  - Upgraded [DynamicMetadata.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/layout/DynamicMetadata.tsx) to dynamically synchronize all browser icon descriptors (`link[rel="icon"]`, `link[rel="shortcut icon"]`, and `link[rel="apple-touch-icon"]`).
+  - Synchronized `/public/favicon.ico` with the active backend-configured favicon asset (`image-1791557766259-gyd0ll.png`) for instant initial HTTP requests.
+
+### 🖼️ Landing Page & Header Brand Logo Ingestion (`CampaignHubHeader.tsx`, `CampaignHubFooter.tsx`, `McpHeader.tsx`)
+- **Landing Logo Priority**:
+  - Updated [CampaignHubHeader.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/components/landing/campaign-hub/CampaignHubHeader.tsx) and [CampaignHubFooter.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/components/landing/campaign-hub/CampaignHubFooter.tsx) to prioritize `settings?.landing_logo_url` ahead of generic dark/light logos, ensuring the specific hero logo chosen in Logo Settings is presented on public landing pages.
+  - Connected [McpHeader.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/components/landing/mcp/McpHeader.tsx) to `useSettings` and `getMediaUrl` so that MCP landing pages dynamically display the brand's logo image and custom platform name.
+
 ## 📍 [2026-10-11 21:04:00 CEST] — 🎙️ AI Transcription 500 MB Limit Extension & High-Definition Media Ingestion
 
 ### 🚀 Speech-to-Text Capacity & File Size Limit Upgrade (`FileManagement.tsx`, `i18n.ts`, Backend & Nginx)

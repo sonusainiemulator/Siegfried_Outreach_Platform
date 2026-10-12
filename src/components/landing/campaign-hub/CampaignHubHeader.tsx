@@ -59,8 +59,8 @@ export default function CampaignHubHeader() {
   const isDark = !mounted || resolvedTheme === 'dark'
 
   const logoUrl = isDark
-    ? getMediaUrl(settings?.logo_dark_url || settings?.landing_logo_url) || '/images/siegfried-outreach-og.png'
-    : getMediaUrl(settings?.logo_light_url || settings?.landing_logo_url) || '/images/siegfried-outreach-og.png'
+    ? getMediaUrl(settings?.landing_logo_url || settings?.logo_dark_url || settings?.logo_light_url) || '/images/siegfried-outreach-og.png'
+    : getMediaUrl(settings?.landing_logo_url || settings?.logo_light_url || settings?.logo_dark_url) || '/images/siegfried-outreach-og.png'
   const appName = settings?.app_name || 'Siegfried Outreach'
   const { sectionRefs } = useSectionRefs()
   const router = useRouter()

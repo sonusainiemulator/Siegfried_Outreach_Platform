@@ -20,25 +20,30 @@ const DynamicMetadata = () => {
     document.documentElement.dir = direction
 
     if (settings) {
-
       // Update Title if default or not set
-      if (settings.app_name && (!document.title || document.title === 'Siegfried Outreach' || document.title === 'Create Next App')) {
+      if (settings.app_name && (!document.title || document.title === 'Siegfried Outreach' || document.title === 'Create Next App' || document.title.includes('Siegfried Outreach'))) {
         document.title = settings.app_name
       }
 
-      // Update Favicon
-      const faviconUrl = settings?.favicon_url ? getMediaUrl(settings.favicon_url) : '/images/siegfried-outreach-square.png'
+      // Update Favicon and Site Icons dynamically
+      const faviconTarget = settings?.favicon_url || settings?.sidebar_logo_url
+      const faviconUrl = faviconTarget ? getMediaUrl(faviconTarget) : '/images/siegfried-outreach-square.png'
       
-      let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']")
-
-      if (!link) {
-        link = document.createElement('link')
-        link.rel = 'icon'
-        document.getElementsByTagName('head')[0].appendChild(link)
-      }
-
       if (faviconUrl) {
-        link.href = faviconUrl
+        const iconRels = ['icon', 'shortcut icon', 'apple-touch-icon']
+        iconRels.forEach((rel) => {
+          const links = document.querySelectorAll(`link[rel="${rel}"]`)
+          if (links.length > 0) {
+            links.forEach((l) => {
+              (l as HTMLLinkElement).href = faviconUrl
+            })
+          } else {
+            const newLink = document.createElement('link')
+            newLink.rel = rel
+            newLink.href = faviconUrl
+            document.head.appendChild(newLink)
+          }
+        })
       }
     }
   }, [settings, direction, i18n.language])
