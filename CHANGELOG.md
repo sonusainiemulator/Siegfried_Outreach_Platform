@@ -2,6 +2,14 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-12 22:22:00 CEST] — 💎 Add Dedicated KarolixOSLogo Component
+
+### 🎨 Brand Identity Component (`KarolixOSLogo.tsx`)
+- **Created [KarolixOSLogo.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/components/reusable/KarolixOSLogo.tsx)**:
+  - Implemented the official `KarolixOSLogo` brand component featuring the circular `TT` monogram badge with electric-blue gradient, bold `Karolix` typography, and the uppercase `AI BUSINESS OPERATING SYSTEM` subtitle.
+  - Supports configurable size props (`sm`, `md`, `lg`), subtitle toggle (`showSubtitle`), and optional navigation routing (`href`).
+  - Resolves `ReferenceError: KarolixOSLogo is not defined` whenever referenced in auth flows or layout headers.
+
 ## 📍 [2026-10-12 22:10:00 CEST] — 🎨 Dynamic Favicon, Landing Page Header Logo & Brand Asset Synchronization
 
 ### 🛠️ Backend Dynamic Settings Alignment (`/api/setting`, `/api/setting/public`)
