@@ -2,6 +2,13 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-16 07:56:00 CEST] — 🧹 Header Clean Up: Remove Request Demo Action Link
+
+### 🧭 Navigation Actions Streamlining (`CampaignHubHeader.tsx`)
+- **Removed "Request Demo" Link**:
+  - Removed the secondary `Request Demo` button link from the desktop header navigation actions in [CampaignHubHeader.tsx](file:///www/wwwroot/siegfriedoutreach.com/src/components/landing/campaign-hub/CampaignHubHeader.tsx).
+  - Streamlined the right header action zone to directly feature the high-converting `Log In` link and `Start Your Free Trial` primary CTA alongside the theme toggle.
+
 ## 📍 [2026-10-16 07:42:00 CEST] — 🎨 Pricing Switcher Contrast & Navigation Dropdown Backdrop Fixes
 
 ### 💳 Landing Page Pricing Switcher Contrast (`CampaignHubPricing.tsx`)

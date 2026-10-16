@@ -452,14 +452,6 @@ export default function CampaignHubHeader() {
               Log In
             </Link>
 
-            {/* Request Demo */}
-            <Link
-              href="/support"
-              className="hidden md:inline-flex items-center justify-center px-4 py-2 rounded-full border border-border/80 hover:border-foreground/40 text-xs sm:text-sm font-semibold text-foreground bg-card/60 hover:bg-card transition-all cursor-pointer shadow-sm"
-            >
-              Request Demo
-            </Link>
-
             {/* Start Your Free Trial CTA button */}
             <Link
               href={ROUTES.AUTH.REGISTER}
