@@ -20,6 +20,21 @@ export const PlanCard = ({
   const translate = t || ((key: string, options?: any) => options?.defaultValue || key)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
 
+  const formatFeatureValue = (val: any) => {
+    if (val === -1) return translate('unlimited', { defaultValue: 'Unlimited' })
+    if (
+      val === 0 &&
+      (plan.slug?.toLowerCase().includes('enterprise') ||
+        plan.name?.toLowerCase().includes('enterprise') ||
+        plan.plan_type === 'lifetime' ||
+        Number(plan.amount) >= 50)
+    ) {
+      return translate('unlimited', { defaultValue: 'Unlimited' })
+    }
+    if (val === null || val === undefined) return '0'
+    return typeof val === 'number' ? val.toLocaleString() : String(val)
+  }
+
   return (
     <div
       className={cn(
@@ -38,7 +53,7 @@ export const PlanCard = ({
 
       <div className="mb-6">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className={cn('text-xl font-black font-medium leading-tight', isPro ? 'text-foreground' : '')}>
+          <h3 className={cn('text-xl font-bold leading-tight', isPro ? 'text-foreground' : '')}>
             {plan.name}
           </h3>
         </div>
@@ -47,12 +62,20 @@ export const PlanCard = ({
         </p>
       </div>
 
-      <div className="mb-6 flex items-baseline gap-1">
-        <span className="text-3xl font-black tracking-tight">
-          {plan.currency === 'INR' ? '₹' : plan.currency === 'EUR' ? '€' : plan.currency === 'GBP' ? '£' : '$'}
-          {price}
-        </span>
-        <span className="text-muted-foreground font-medium">/{billingCycleLabel}</span>
+      <div className="mb-6">
+        <div className="flex items-baseline gap-1">
+          <span className="text-3xl font-black tracking-tight">
+            {plan.currency === 'INR' ? '₹' : plan.currency === 'EUR' ? '€' : plan.currency === 'GBP' ? '£' : '$'}
+            {price}
+          </span>
+          <span className="text-muted-foreground font-medium">/{billingCycleLabel}</span>
+        </div>
+        {billingCycleLabel === 'yr' && Number(price) > 0 && (
+          <p className="text-xs text-primary font-semibold mt-1">
+            ≈ {plan.currency === 'INR' ? '₹' : plan.currency === 'EUR' ? '€' : plan.currency === 'GBP' ? '£' : '$'}
+            {(Number(price) / 12).toFixed(2)}/mo · Billed annually
+          </p>
+        )}
       </div>
 
       <div className="space-y-4 mb-4">
@@ -120,7 +143,7 @@ export const PlanCard = ({
             </div>
             <span>
               {translate(feat.label, { defaultValue: String(feat.label).replace(/_/g, ' ') })}:{' '}
-              <span className="font-bold">{plan[feat.key] || 0}</span>
+              <span className="font-bold">{formatFeatureValue(plan[feat.key])}</span>
             </span>
           </div>
         ))}
@@ -150,7 +173,7 @@ export const PlanCard = ({
         onClick={onSubscribe}
         disabled={isDisabled}
         className={cn(
-          'w-full h-12 rounded-[8px] font-nedium text-base btn-color border-none transition-transform active:scale-95',
+          'w-full h-12 rounded-[8px] font-medium text-base btn-color border-none transition-transform active:scale-95',
           isActive
             ? 'bg-green-500 text-white hover:bg-green-600 shadow-green-500/20'
             : isPro

@@ -104,39 +104,45 @@ export default function CampaignHubPricing() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex justify-center items-center mt-8 sm:mt-10"
           >
-            <div className="bg-slate-200/80 dark:bg-dark-base/80 backdrop-blur-md border border-slate-300/80 dark:border-white/10 p-1.5 rounded-[20px] flex items-center gap-1 shadow-lg max-sm:flex-col max-sm:w-full max-sm:p-2">
-              {pricingTabs.map((tab) => (
-                <Button
-                  key={tab}
-                  onClick={() => setActiveTab(tab as any)}
-                  className={cn(
-                    'relative px-8 py-2.5 rounded-[14px] font-bold text-xs sm:text-[13px] uppercase tracking-[0.1em] transition-all duration-300 flex items-center justify-center min-w-[140px] overflow-hidden max-sm:w-full max-sm:px-4 max-sm:py-2',
-                    activeTab === tab ? 'text-primary dark:text-white bg-white dark:bg-transparent shadow-sm' : 'text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white/80 bg-transparent',
-                  )}
-                >
-                  {activeTab === tab && (
-                    <>
-                      <motion.div
-                        layoutId="activeTabBackground"
-                        className="absolute inset-0 bg-white dark:bg-gradient-to-tr dark:from-primary/20 dark:via-white/10 dark:to-transparent border border-slate-200 dark:border-white/10 rounded-[14px]"
-                        transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
-                      />
-                      <motion.div
-                        layoutId="activeTabGlow"
-                        className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 dark:via-white/40 to-transparent"
-                        transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
-                      />
-                      {/* Principal Glow */}
-                      <motion.div
-                        layoutId="activeTabMainGlow"
-                        className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-4 bg-primary/30 blur-[10px] rounded-full"
-                        transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
-                      />
-                    </>
-                  )}
-                  <span className="relative z-10">{tab}</span>
-                </Button>
-              ))}
+            <div className="bg-slate-200/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-300/80 dark:border-white/10 p-1.5 rounded-[20px] flex items-center gap-1 shadow-lg max-sm:flex-col max-sm:w-full max-sm:p-2">
+              {pricingTabs.map((tab) => {
+                const isActive = activeTab === tab
+                return (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActiveTab(tab as any)}
+                    className={cn(
+                      'relative px-8 py-2.5 rounded-[14px] font-extrabold text-xs sm:text-[13px] uppercase tracking-[0.1em] transition-all duration-300 flex items-center justify-center min-w-[140px] overflow-hidden max-sm:w-full max-sm:px-4 max-sm:py-2.5 cursor-pointer select-none',
+                      isActive
+                        ? 'text-white'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
+                    )}
+                  >
+                    {isActive && (
+                      <>
+                        <motion.div
+                          layoutId="activeTabBackground"
+                          className="absolute inset-0 bg-primary bg-gradient-to-r from-primary via-blue-600 to-indigo-600 border border-white/20 rounded-[14px] shadow-[0_4px_20px_rgba(56,189,248,0.35)]"
+                          transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
+                        />
+                        <motion.div
+                          layoutId="activeTabGlow"
+                          className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent"
+                          transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
+                        />
+                        {/* Principal Glow */}
+                        <motion.div
+                          layoutId="activeTabMainGlow"
+                          className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-4 bg-primary/40 blur-[10px] rounded-full"
+                          transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
+                        />
+                      </>
+                    )}
+                    <span className="relative z-10">{tab}</span>
+                  </button>
+                )
+              })}
             </div>
           </motion.div>
         </div>

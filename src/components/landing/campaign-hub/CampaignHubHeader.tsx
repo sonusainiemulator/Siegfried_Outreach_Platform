@@ -69,13 +69,34 @@ export default function CampaignHubHeader() {
   const [scrolled, setScrolled] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const navRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20)
+      setActiveDropdown(null)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setActiveDropdown(null)
+      }
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveDropdown(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
   }, [])
 
   const handleMouseEnter = (menu: string) => {
@@ -213,7 +234,7 @@ export default function CampaignHubHeader() {
           </Link>
 
           {/* Desktop Navigation Links with Dropdown Menus */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 relative" aria-label="Main navigation">
+          <nav ref={navRef} className="hidden lg:flex items-center gap-1 xl:gap-2 relative" aria-label="Main navigation">
             {/* Platform Dropdown */}
             <div
               className="relative"
@@ -221,6 +242,8 @@ export default function CampaignHubHeader() {
               onMouseLeave={handleMouseLeave}
             >
               <button
+                type="button"
+                onClick={() => setActiveDropdown((prev) => (prev === 'platform' ? null : 'platform'))}
                 className={cn(
                   'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer',
                   activeDropdown === 'platform'
@@ -244,7 +267,7 @@ export default function CampaignHubHeader() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-[520px] rounded-2xl p-4 bg-card/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-border/80 shadow-2xl grid grid-cols-2 gap-2 z-50"
+                    className="absolute top-full left-0 mt-2 w-[520px] rounded-2xl p-4 bg-white dark:bg-[#0c101d] border border-slate-200/90 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] grid grid-cols-2 gap-2 z-50"
                   >
                     {platformItems.map((item, i) => {
                       const Icon = item.icon
@@ -253,7 +276,7 @@ export default function CampaignHubHeader() {
                           key={i}
                           href={item.href}
                           onClick={() => setActiveDropdown(null)}
-                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/60 transition-colors group/item"
+                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group/item"
                         >
                           <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform">
                             <Icon className="w-4 h-4" />
@@ -284,6 +307,8 @@ export default function CampaignHubHeader() {
               onMouseLeave={handleMouseLeave}
             >
               <button
+                type="button"
+                onClick={() => setActiveDropdown((prev) => (prev === 'solutions' ? null : 'solutions'))}
                 className={cn(
                   'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer',
                   activeDropdown === 'solutions'
@@ -307,7 +332,7 @@ export default function CampaignHubHeader() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-[460px] rounded-2xl p-4 bg-card/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-border/80 shadow-2xl grid grid-cols-2 gap-2 z-50"
+                    className="absolute top-full left-0 mt-2 w-[460px] rounded-2xl p-4 bg-white dark:bg-[#0c101d] border border-slate-200/90 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] grid grid-cols-2 gap-2 z-50"
                   >
                     {solutionsItems.map((item, i) => {
                       const Icon = item.icon
@@ -316,7 +341,7 @@ export default function CampaignHubHeader() {
                           key={i}
                           href={item.href}
                           onClick={() => setActiveDropdown(null)}
-                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/60 transition-colors group/item"
+                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group/item"
                         >
                           <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform">
                             <Icon className="w-4 h-4" />
@@ -340,6 +365,8 @@ export default function CampaignHubHeader() {
               onMouseLeave={handleMouseLeave}
             >
               <button
+                type="button"
+                onClick={() => setActiveDropdown((prev) => (prev === 'resources' ? null : 'resources'))}
                 className={cn(
                   'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-semibold transition-colors cursor-pointer',
                   activeDropdown === 'resources'
@@ -363,7 +390,7 @@ export default function CampaignHubHeader() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-[460px] rounded-2xl p-4 bg-card/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-border/80 shadow-2xl grid grid-cols-2 gap-2 z-50"
+                    className="absolute top-full left-0 mt-2 w-[460px] rounded-2xl p-4 bg-white dark:bg-[#0c101d] border border-slate-200/90 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] grid grid-cols-2 gap-2 z-50"
                   >
                     {resourcesItems.map((item, i) => {
                       const Icon = item.icon
@@ -372,7 +399,7 @@ export default function CampaignHubHeader() {
                           key={i}
                           href={item.href}
                           onClick={() => setActiveDropdown(null)}
-                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-muted/60 transition-colors group/item"
+                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group/item"
                         >
                           <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform">
                             <Icon className="w-4 h-4" />

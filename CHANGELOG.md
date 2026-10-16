@@ -2,6 +2,51 @@
 
 All notable changes, fixes, and feature additions are documented in this file.
 
+## 📍 [2026-10-16 07:42:00 CEST] — 🎨 Pricing Switcher Contrast & Navigation Dropdown Backdrop Fixes
+
+### 💳 Landing Page Pricing Switcher Contrast (`CampaignHubPricing.tsx`)
+- **Fixed Invisible Active Tab Text in Dark Mode**:
+  - Resolved low-contrast bug where the active "SUBSCRIPTION" tab rendered white text on an un-cleared white background (`bg-white`) in dark mode, making the switcher button text virtually invisible.
+  - Replaced generic button variants with semantic `<button type="button">` controls featuring a luminous electric-blue gradient background (`dark:bg-gradient-to-r dark:from-primary dark:via-blue-600 dark:to-indigo-600`) with bold white text and a glowing drop shadow (`dark:shadow-[0_0_20px_rgba(56,189,248,0.35)]`) in dark mode, and an elevated white card with primary-blue typography in light mode.
+  - Inactive tabs now have distinct muted states (`text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white`) with full accessibility across both modes.
+
+### 🧭 Navigation Dropdown Backdrop & Interaction Polish (`CampaignHubHeader.tsx`)
+- **Solid Opaque Dropdown Backgrounds**:
+  - Eliminated translucent backgrounds (`bg-card/95 dark:bg-slate-900/95 backdrop-blur-2xl`) across `Platform`, `Solutions`, and `Resources` dropdown panels, which previously let high-contrast section titles like "Simple & Transparent" bleed through when scrolled.
+  - Replaced with 100% solid, opaque backdrops (`bg-white dark:bg-[#0c101d] border border-slate-200/90 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)]`) and refined hover styling (`hover:bg-slate-100 dark:hover:bg-white/[0.06]`).
+- **Interaction & Dismissal Hardening**:
+  - Added click-to-toggle support on dropdown navigation buttons.
+  - Added auto-dismiss on page scroll (`window.addEventListener('scroll')`) preventing open dropdowns from floating stuck over page content.
+  - Added global click-outside and `Escape` key listeners to dismiss dropdowns smoothly.
+
+### 🏷️ Plan Card Display Enhancements (`PlanCard.tsx`)
+- **Enterprise Unlimited Feature Fallback & Annual Cost Helper**:
+  - Added `formatFeatureValue` helper to display "Unlimited" for Enterprise and lifetime tiers instead of unconfigured `0` values.
+  - Added monthly equivalent pricing breakdown (`≈ .XX/mo · Billed annually`) for yearly subscription cards.
+  - Corrected typographic class names (`font-medium` and `font-bold`).
+
+## 📍 [2026-10-16 07:42:00 CEST] — 💎 Navigation Dropdown Opacity, Pricing Tab Contrast & Enterprise Tier Fixes
+
+### 🧭 Navigation & Dropdown Polish (`CampaignHubHeader.tsx`)
+- **Opaque Dropdown Menus**:
+  - Replaced translucent background classes (`bg-card/95 dark:bg-slate-900/95 backdrop-blur-2xl`) across **Platform**, **Solutions**, and **Resources** dropdown menus with 100% solid, opaque backgrounds (`bg-white dark:bg-[#0c101d] border border-slate-200/90 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)]`).
+  - Completely fixed background bleed-through and visual text collision where hero/pricing section headings ("Simple & Transparent" and subtitles) showed through open dropdown items.
+  - Added click toggle handlers alongside mouse hover listeners to ensure smooth behavior on both pointer and touch devices.
+
+### 💳 Pricing Tab Active Contrast & Accessibility (`CampaignHubPricing.tsx`)
+- **Eliminated White-on-White Contrast Issue**:
+  - Standardized the active billing tab pill (`SUBSCRIPTION`, `PREPAID`, `LIFETIME`) with a vibrant primary royal-blue/indigo gradient (`bg-primary bg-gradient-to-r from-primary via-blue-600 to-indigo-600 border border-white/20 shadow-[0_4px_20px_rgba(56,189,248,0.35)]`).
+  - Guaranteed high-contrast, crystal-clear white text (`text-white font-extrabold`) in both light and dark modes, removing washed-out white text on white pill backgrounds.
+  - Improved subtle styling and smooth hover states for inactive tab options.
+
+### 🏢 Enterprise Plan Features & Annual Pricing Breakdown (`PlanCard.tsx`)
+- **Unlimited Feature Limits for Enterprise Tiers**:
+  - Implemented `formatFeatureValue` helper to properly handle `0` and `-1` values on enterprise plans and high-tier packages.
+  - Fixed misleading `0` values on **Enterprise Elite** ($99.99/mo) and Lifetime plans: now cleanly displays **`Unlimited`** for Total Credits, Chatbot Creation Limit, Publish Post Per Day, and Broadcast Per Day.
+- **Annual Price Transparency**:
+  - Added calculated monthly-equivalent breakdown (`≈ $83.33/mo · Billed annually`) for yearly plans (e.g. Starter Plan at $1000/yr), making annual savings intuitive and clear when compared to monthly tiers.
+  - Corrected button typography typo (`font-nedium` -> `font-medium`) and title font-weight hierarchy.
+
 ## 📍 [2026-10-12 22:22:00 CEST] — 💎 Add Dedicated KarolixOSLogo Component
 
 ### 🎨 Brand Identity Component (`KarolixOSLogo.tsx`)
